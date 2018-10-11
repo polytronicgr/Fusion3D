@@ -1,32 +1,31 @@
-# Prerequisites
-*.d
+# Build and Release Folders
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+bin-debug/
+bin-release/
+[Oo]bj/ # FlashDevelop obj
+[Bb]in/ # FlashDevelop bin
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# Other files and folders
+.settings/
 
 # Executables
+*.swf
+*.air
+*.ipa
+*.apk
+*.cache
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
+
 *.exe
-*.out
-*.app
+*.dll
+*.xml
+*.db
+*.pdb
+.vs/
+*.vtex
+packages/
+obj/
+

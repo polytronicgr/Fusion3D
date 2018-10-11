@@ -1,0 +1,26 @@
+#version 330 core
+
+// Input vertex data, different for all executions of this shader.
+layout(location = 0) in vec3 vP;
+
+
+
+// Values that stay constant for the whole mesh.
+uniform mat4 cam;
+uniform mat4 model;
+uniform mat4 proj;
+
+
+out vec3 fVert;
+
+
+void main(){
+
+	
+	fVert = vec3(model * vec4(vP,1.0));
+
+	gl_Position = proj * cam * model * vec4(vP,1);
+
+	
+}
+

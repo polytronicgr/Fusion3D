@@ -1,2 +1,4 @@
-# Vivid3D
-Advanced 3D/2D Graphics engine and application framework, including flexible custom UI. Wrote using OpenTK/OpenGL4.5
+# Vivid3D - Engine & Editors & TestBeds
+This is for our Vivid3D engine.
+
+Our game, Star Knights, will be in another repo. This repo will have it's name changed.

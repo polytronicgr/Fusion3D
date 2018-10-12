@@ -14,6 +14,11 @@ namespace DataCore.DataTypes
             set;
         }
 
+        public DataString()
+        {
+
+        }
+
         public DataString(string data)
         {
             String = data;
@@ -23,6 +28,11 @@ namespace DataCore.DataTypes
         {
             _RawData = Encoding.ASCII.GetBytes(String);
             _Bytes = _RawData.Length;
+        }
+
+        public override void Reconstruct()
+        {
+            String = Encoding.ASCII.GetString(_RawData);
         }
 
     }

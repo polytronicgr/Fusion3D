@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Projects");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Projects");
             this.projTree = new System.Windows.Forms.TreeView();
             this.button1 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.projInfo = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -41,10 +41,10 @@
             // 
             this.projTree.Location = new System.Drawing.Point(12, 12);
             this.projTree.Name = "projTree";
-            treeNode1.Name = "ProjRoot";
-            treeNode1.Text = "Projects";
+            treeNode2.Name = "ProjRoot";
+            treeNode2.Text = "Projects";
             this.projTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.projTree.Size = new System.Drawing.Size(191, 391);
             this.projTree.TabIndex = 0;
             this.projTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.projTree_AfterSelect);
@@ -59,13 +59,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.NewProject_Click);
             // 
-            // richTextBox1
+            // projInfo
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(209, 184);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(524, 219);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
+            this.projInfo.Location = new System.Drawing.Point(209, 184);
+            this.projInfo.Name = "projInfo";
+            this.projInfo.Size = new System.Drawing.Size(524, 219);
+            this.projInfo.TabIndex = 2;
+            this.projInfo.Text = "";
             // 
             // label1
             // 
@@ -102,7 +102,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.projInfo);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.projTree);
             this.Name = "ProjectManager";
@@ -114,7 +114,7 @@
 
         #endregion
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox projInfo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button2;

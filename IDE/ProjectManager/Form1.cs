@@ -54,10 +54,19 @@ namespace ProjectManager
 
         private void projTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
+           
             var node = e.Node;
+
+            if (node == null) return;
+            if (ProjMap.ContainsKey(node) == false) return;
             var path = ProjMap[node];
 
             var np = new ProjectCore.Project(path);
+
+            var txt = "Project:" + np.Name + "\n";
+            txt = txt + "Author:" + np.Author + "\n";
+            txt = txt + "Info:" + np.Info;
+            projInfo.Text = txt;
 
 
 

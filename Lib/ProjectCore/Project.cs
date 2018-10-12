@@ -11,6 +11,9 @@ namespace ProjectCore
 
         public DataIO ProjData = null;
         public string BasePath { get; set; }
+        public string Name { get; set; }
+        public string Info { get; set; }
+        public string Author { get; set; }
         
 
         public Project(string path)
@@ -18,6 +21,14 @@ namespace ProjectCore
             BasePath = ProjectPath + path + "\\";
 
             ProjData = new DataIO(BasePath + "projectData");
+
+            dynamic name = ProjData.GetData("Name");
+            dynamic info = ProjData.GetData("Info");
+            dynamic author = ProjData.GetData("Author");
+            Name = name.String;
+            Info = info.String;
+            Author = author.String;
+            
 
 
 

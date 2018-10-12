@@ -6,6 +6,12 @@ namespace DataCore
 {
     public class Data
     {
+        public Data()
+        {
+            Generated = false;
+        }
+
+        public bool Generated { get; set; }
 
         public int Bytes
         {
@@ -37,6 +43,11 @@ namespace DataCore
         public virtual void GenerateBytes()
         {
          
+        }
+        
+        public virtual void Reconstruct()
+        {
+
         }
 
     }

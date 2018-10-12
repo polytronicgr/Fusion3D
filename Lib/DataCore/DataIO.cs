@@ -15,6 +15,8 @@ namespace DataCore
 
 
         public List<DataEntry> Data { get; set; }
+        public FileStream DataFile;
+        public BinaryReader DataR;
 
         public DataIO(string path)
         {
@@ -31,6 +33,49 @@ namespace DataCore
         public void LoadIndex()
         {
 
+            var index = File.Open(DataPath + ".index", FileMode.Open);
+
+            BinaryReader ir = new BinaryReader(index);
+
+            int ic = ir.ReadInt32();
+
+            Data.Clear();
+
+            for(int i = 0; i < ic; i++)
+            {
+
+                var entry = new DataEntry();
+                entry.Begin = ir.ReadInt32();
+                entry.Size = ir.ReadInt32();
+                entry.Compressed = ir.ReadBoolean();
+                entry.Type = ir.ReadString();
+                entry.Name = ir.ReadString();
+                Data.Add(entry);
+
+            }
+
+            index.Close();
+     
+
+        }
+
+        public void OpenData()
+        {
+
+
+            DataFile = File.Open(DataPath, FileMode.Open);
+            DataR = new BinaryReader(DataFile);
+           
+
+        }
+
+        public void CloseData()
+        {
+
+            DataFile.Flush();
+            DataFile.Close();
+            DataFile = null;
+            DataR = null;
 
         }
 
@@ -44,14 +89,16 @@ namespace DataCore
 
             foreach(var entry in Data)
             {
-               
+                if (entry.Data.Generated == false)
+                {
                     entry.Data.GenerateBytes();
+                }
                 
                 dw.Write(entry.Data.RawData);
             }
 
             data.Flush();
-            data.Dispose();
+            data.Close();
 
         }
 
@@ -76,16 +123,54 @@ namespace DataCore
 
             index.Flush();
 
-            index.Dispose();
+            index.Close();
 
 
+        }
+
+        public Data GetData(string name)
+        {
+
+            foreach(var entry in Data)
+            {
+                if(entry.Name == name)
+                {
+                 
+                    if(entry.Loaded == false)
+                    {
+
+                        OpenData();
+
+                        DataFile.Seek(entry.Begin, SeekOrigin.Begin);
+                        var dat = DataR.ReadBytes(entry.Size);
+
+                        CloseData();
+
+                        entry.Loaded = true;
+                        entry.Data = Activator.CreateInstance(Type.GetType("DataCore.DataTypes."+entry.Type)) as Data;
+                        entry.Data.RawData = dat;
+                        entry.Data.Reconstruct();
+                        return entry.Data;
+
+                    }
+                    else
+                    {
+                        return entry.Data;
+                    }
+
+
+                }
+            }
+
+            return null;
         }
 
         public void AddData(Data data,string name)
         {
 
             var entry = new DataEntry();
-
+            if (data.Generated == false) data.GenerateBytes();
+ 
             entry.Name = name;
             entry.Size = data.Bytes;
             entry.Loaded = true;

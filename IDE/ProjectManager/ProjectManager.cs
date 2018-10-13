@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 namespace ProjectManager
 {
     public partial class ProjectManager : Form
@@ -16,6 +17,7 @@ namespace ProjectManager
         public static ProjectManager Main = null;
         public NewProjectForm NewProject;
         public Dictionary<TreeNode, string> ProjMap = new Dictionary<TreeNode, string>();
+        public ProjectCore.Project ActiveProject;
 
         public ProjectManager()
         {
@@ -41,7 +43,7 @@ namespace ProjectManager
 
             //    P
             }
-
+            projTree.Nodes[0].Expand();
         }
 
 
@@ -67,9 +69,31 @@ namespace ProjectManager
             txt = txt + "Author:" + np.Author + "\n";
             txt = txt + "Info:" + np.Info;
             projInfo.Text = txt;
+            ActiveProject = np;
+            iconImg.Image = np.Icon;
+            iconImg.Invalidate();
 
 
+        }
 
+        private void LoadProject_Click(object sender, EventArgs e)
+        {
+            if(ActiveProject == null)
+            {
+                MessageBox.Show("No project selected.", "Vivid3D");
+                return;
+            }
+            RunProject(ActiveProject);
+        }
+
+        public void RunProject(ProjectCore.Project proj)
+        {
+            var proc = new Process();
+            Console.WriteLine("Starting:" + proj.IDEPath);
+       
+            proc.StartInfo = new ProcessStartInfo("VividEdit.exe", proj.IDEPath);
+            proc.Start();
+            Environment.Exit(2);
         }
     }
 }

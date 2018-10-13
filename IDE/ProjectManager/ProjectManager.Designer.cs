@@ -35,6 +35,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.iconImg = new System.Windows.Forms.PictureBox();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iconImg)).BeginInit();
             this.SuspendLayout();
             // 
             // projTree
@@ -61,7 +64,7 @@
             // 
             // projInfo
             // 
-            this.projInfo.Location = new System.Drawing.Point(209, 184);
+            this.projInfo.Location = new System.Drawing.Point(223, 274);
             this.projInfo.Name = "projInfo";
             this.projInfo.Size = new System.Drawing.Size(524, 219);
             this.projInfo.TabIndex = 2;
@@ -78,27 +81,38 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.iconImg);
             this.groupBox1.Location = new System.Drawing.Point(223, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(510, 132);
+            this.groupBox1.Size = new System.Drawing.Size(256, 256);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Project Icon";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(541, 410);
+            this.button2.Location = new System.Drawing.Point(555, 514);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(192, 23);
             this.button2.TabIndex = 5;
             this.button2.Text = "Load Project";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.LoadProject_Click);
+            // 
+            // iconImg
+            // 
+            this.iconImg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iconImg.Location = new System.Drawing.Point(3, 16);
+            this.iconImg.Name = "iconImg";
+            this.iconImg.Size = new System.Drawing.Size(250, 237);
+            this.iconImg.TabIndex = 0;
+            this.iconImg.TabStop = false;
             // 
             // ProjectManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(747, 447);
+            this.ClientSize = new System.Drawing.Size(760, 545);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -107,6 +121,8 @@
             this.Controls.Add(this.projTree);
             this.Name = "ProjectManager";
             this.Text = "Vivid - Project Manager";
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.iconImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -119,6 +135,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TreeView projTree;
+        private System.Windows.Forms.PictureBox iconImg;
     }
 }
 

@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\VividEdit\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -49,11 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="ProjectManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ProjectManager.Designer.cs">
+      <DependentUpon>ProjectManager.cs</DependentUpon>
     </Compile>
     <Compile Include="NewProjectForm.cs">
       <SubType>Form</SubType>
@@ -63,8 +63,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="ProjectManager.resx">
+      <DependentUpon>ProjectManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewProjectForm.resx">
       <DependentUpon>NewProjectForm.cs</DependentUpon>

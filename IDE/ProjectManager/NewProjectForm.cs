@@ -18,6 +18,8 @@ namespace ProjectManager
             InitializeComponent();
         }
 
+        public string ImgPath = "";
+
         private void SelectImage_Click(object sender, EventArgs e)
         {
             selectImg.Filter = "Images|*.jpg;*.bmp;*.png;*.tga";
@@ -26,7 +28,7 @@ namespace ProjectManager
 
             Image img = new Bitmap(new Bitmap(selectImg.FileName), 256, 256);
 
-
+            ImgPath = selectImg.FileName;
 
             projImg.Image = img;
             projImg.Invalidate();
@@ -36,7 +38,7 @@ namespace ProjectManager
         private void CreateProject_Click(object sender, EventArgs e)
         {
 
-            var proj = new Project(projName.Text, projInfo.Text, projAuthor.Text);
+            var proj = new Project(projName.Text, projInfo.Text, projAuthor.Text, new Bitmap(new Bitmap(ImgPath), 256, 256));
             ProjectManager.Main.ScanForProjects();
             this.Close();
 

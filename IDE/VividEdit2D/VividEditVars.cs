@@ -7,14 +7,14 @@ using WeifenLuo;
 using WeifenLuo.WinFormsUI;
 using WeifenLuo.WinFormsUI.Docking;
 
-
-namespace VividEdit2D
+using VividEdit.Forms;
+namespace VividEdit
 {
     public partial class VividEdit 
     {
 
         public DockPanel MainDock;
-
+        public Editor3D DockEdit3D;
 
 
     }

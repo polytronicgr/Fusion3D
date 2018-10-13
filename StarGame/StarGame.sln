@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VividEdit", "..\IDE\VividEdit2D\VividEdit.csproj", "{232A99DA-EFE2-47FB-8FAB-A24400629828}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManager", "..\IDE\ProjectManager\ProjectManager.csproj", "{E061FCBA-F045-4183-AF42-A09D67117762}"
+	ProjectSection(ProjectDependencies) = postProject
+		{232A99DA-EFE2-47FB-8FAB-A24400629828} = {232A99DA-EFE2-47FB-8FAB-A24400629828}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCore", "..\Lib\DataCore\DataCore.csproj", "{6165B697-9DF1-4655-BBF6-E6AAF805D0F6}"
 EndProject

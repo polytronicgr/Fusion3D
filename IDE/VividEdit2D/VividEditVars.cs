@@ -17,6 +17,7 @@ namespace VividEdit
         public Editor3D DockEdit3D;
         public AppGraph DockAppGraph;
         public ContentExplorer DockContentExplorer;
+        public ConsoleView DockConsoleView;
 
     }
 }

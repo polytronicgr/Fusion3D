@@ -76,6 +76,12 @@
     <Compile Include="Forms\AppGraph.Designer.cs">
       <DependentUpon>AppGraph.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ConsoleView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConsoleView.Designer.cs">
+      <DependentUpon>ConsoleView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ContentExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,12 @@
     <Compile Include="VividEditVars.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\ConsoleView.resx">
+      <DependentUpon>ConsoleView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ContentExplorer.resx">
+      <DependentUpon>ContentExplorer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor3D.resx">
       <DependentUpon>Editor3D.cs</DependentUpon>
     </EmbeddedResource>

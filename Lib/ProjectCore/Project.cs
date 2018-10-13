@@ -48,6 +48,7 @@ namespace ProjectCore
             IDEPath = name;
             Directory.CreateDirectory(ProjectPath + name);
             Directory.CreateDirectory(ProjectPath + name + "\\Content\\");
+            
             BasePath = ProjectPath + name + "\\";
             ContentPath = BasePath + "Content\\";
 

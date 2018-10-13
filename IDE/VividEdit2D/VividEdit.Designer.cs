@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // VividEdit
+            // VEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1233, 727);
             this.IsMdiContainer = true;
-            this.Name = "VividEdit";
+            this.Name = "VEdit";
             this.Text = "Vivid Editor 2D - Alpha";
             this.Load += new System.EventHandler(this.VividEdit_Load);
             this.ResumeLayout(false);

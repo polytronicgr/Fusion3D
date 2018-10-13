@@ -24,10 +24,10 @@ namespace VividEdit
                 MessageBox.Show("The ide cannot be started directlly.\nUse the project manager to create/load projects.", "VividEdit");
                 Environment.Exit(0);
             }
-            VividEdit.BeginProject = args[0];
+            VEdit.BeginProject = args[0];
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new VividEdit());
+            Application.Run(new VEdit());
         }
     }
 }

@@ -10,12 +10,13 @@ using WeifenLuo.WinFormsUI.Docking;
 using VividEdit.Forms;
 namespace VividEdit
 {
-    public partial class VividEdit 
+    public partial class VEdit 
     {
 
         public DockPanel MainDock;
         public Editor3D DockEdit3D;
-
+        public AppGraph DockAppGraph;
+        public ContentExplorer DockContentExplorer;
 
     }
 }

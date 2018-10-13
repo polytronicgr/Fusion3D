@@ -1,6 +1,6 @@
 ﻿namespace VividEdit.Forms
 {
-    partial class Editor3D
+    partial class AppGraph
     {
         /// <summary>
         /// Required designer variable.
@@ -28,33 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.vivid3DDisplay1 = new VividEdit.Forms.Vivid3DDisplay();
-            this.SuspendLayout();
-            // 
-            // vivid3DDisplay1
-            // 
-            this.vivid3DDisplay1.BackColor = System.Drawing.Color.Black;
-            this.vivid3DDisplay1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vivid3DDisplay1.Location = new System.Drawing.Point(0, 0);
-            this.vivid3DDisplay1.Name = "vivid3DDisplay1";
-            this.vivid3DDisplay1.Size = new System.Drawing.Size(800, 450);
-            this.vivid3DDisplay1.TabIndex = 0;
-            this.vivid3DDisplay1.VSync = false;
-            // 
-            // Editor3D
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.vivid3DDisplay1);
-            this.Name = "Editor3D";
-            this.Text = "Editor3D";
-            this.ResumeLayout(false);
-
+            this.Text = "AppGraph";
         }
 
         #endregion
-
-        private VividEdit.Forms.Vivid3DDisplay vivid3DDisplay1;
     }
 }

@@ -70,11 +70,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AppGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AppGraph.Designer.cs">
+      <DependentUpon>AppGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ContentExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ContentExplorer.Designer.cs">
+      <DependentUpon>ContentExplorer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Editor3D.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Editor3D.Designer.cs">
       <DependentUpon>Editor3D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Vivid3DDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Vivid3DDisplay.Designer.cs">
+      <DependentUpon>Vivid3DDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="VividEdit.cs">
       <SubType>Form</SubType>
@@ -89,6 +107,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\Editor3D.resx">
       <DependentUpon>Editor3D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Vivid3DDisplay.resx">
+      <DependentUpon>Vivid3DDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VividEdit.resx">
       <DependentUpon>VividEdit.cs</DependentUpon>

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using WeifenLuo;
 using WeifenLuo.WinFormsUI;
 using WeifenLuo.WinFormsUI.Docking;
+using VividEdit.Forms;
 namespace VividEdit
 {
     public partial class VEdit : Form
@@ -25,10 +26,9 @@ namespace VividEdit
             MainDock = new DockPanel();
             MainDock.Dock = DockStyle.Fill;
             this.Controls.Add(MainDock);
-           // DockEdit3D = new Forms.Editor3D();
+            // DockEdit3D = new Forms.Editor3D();
             //DockEdit3D.Show();
-           // DockEdit3D.Show(MainDock, DockState.Document);
-
+            // DockEdit3D.Show(MainDock, DockState.Document);
 
         }
 
@@ -43,7 +43,8 @@ namespace VividEdit
             DockConsoleView.Show(MainDock, DockState.DockBottom);
             DockEdit3D.Show(MainDock, DockState.Document);
 
-            
+            ConsoleView.Log("Vivid Editor started up.", "IDE");
+            ConsoleView.Log("Scanning default Content folder.", "IDE");
         }
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)

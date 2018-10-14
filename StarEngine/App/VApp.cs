@@ -22,7 +22,7 @@ namespace Vivid3D.App
     }
     public class VForm : VividApp
     {
-        public void SetSize(int w,int h)
+        public static void SetSize(int w,int h)
         {
             AppInfo.W = w;
             AppInfo.H = h;
@@ -31,9 +31,17 @@ namespace Vivid3D.App
             GL.Viewport(0, 0,w,h);
             GL.Scissor(0, 0, w, h);
             VPen.SetProj(0, 0, w, h);
+
+            if (UI.UISys.ActiveUI != null)
+            {
+                UI.UISys.ActiveUI.OnResize(w,h);
+                // GL.DepthFunc(DepthFunction.Lequal);
+            }
+
         }
-         public void Set(int w,int h)
+         public static void Set(int w,int h)
         {
+            
             GL.ClearColor(System.Drawing.Color.AliceBlue);
             GL.Enable(EnableCap.DepthTest);
             AppInfo.W = w;
@@ -59,6 +67,39 @@ namespace Vivid3D.App
             GL.DepthFunc(DepthFunction.Less);
            // UI.UISys.ActiveUI.OnResize(Width, Height);
             VPen.SetProj(0, 0, w, h);
+            VPen.InitDraw();
+            Vivid3D.Sound.StarSoundSys.Init();
+
+            AppInfo.W = w;
+            AppInfo.H = h;
+            AppInfo.RW = w;
+            AppInfo.RH = h;
+
+            GL.Viewport(0, 0, w,h);
+            GL.Scissor(0, 0, w, h);
+            GL.Disable(EnableCap.Blend);
+            GL.Disable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
+            GL.Disable(EnableCap.StencilTest);
+            GL.Disable(EnableCap.ScissorTest);
+            //  GL.Disable(EnableCap.Lighting);
+
+            //GL.DepthFunc(DepthFunction.Greater);
+
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.DepthRange(0, 1);
+
+            GL.ClearDepth(1.0f);
+            GL.DepthFunc(DepthFunction.Lequal);
+
+            VPen.SetProj(0, 0, w, h);
+            if (UI.UISys.ActiveUI != null)
+            {
+                UI.UISys.ActiveUI.OnResize(w, h);
+                // GL.DepthFunc(DepthFunction.Lequal);
+            }
         }
 
     }

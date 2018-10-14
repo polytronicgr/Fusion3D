@@ -142,7 +142,10 @@ namespace Vivid3D.Scene
         }
         public override void Init()
         {
-            Renderer = new VRMultiPass();
+           
+           
+           //     Renderer = new VRMultiPass();
+           
         }
         public void AddMesh(VMesh mesh)
         {

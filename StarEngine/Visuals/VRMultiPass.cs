@@ -17,4 +17,15 @@ namespace Vivid3D.Visuals
             Layers.Add(new VRLMultiPass());
         }
     }
+    public class VRNoFx : VRenderer
+    {
+        public VRNoFx()
+        {
+
+        }
+        public override void Init()
+        {
+            Layers.Add(new VRLNoFX());
+        }
+    }
 }

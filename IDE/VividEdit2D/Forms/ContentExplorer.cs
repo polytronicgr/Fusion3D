@@ -13,6 +13,7 @@ using WeifenLuo.WinFormsUI;
 using WeifenLuo.WinFormsUI.Docking;
 namespace VividEdit.Forms
 {
+    public delegate void OpenFile(ContentFile file);
     public partial class ContentExplorer : DockContent
     {
 
@@ -21,6 +22,8 @@ namespace VividEdit.Forms
         public List<ContentBase> Content = new List<ContentBase>();
 
         public static ContentExplorer Main = null;
+
+        public static OpenFile FileOpen;
 
         public ContentExplorer()
         {

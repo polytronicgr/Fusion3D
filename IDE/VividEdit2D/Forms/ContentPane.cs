@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 namespace VividEdit.Forms
 {
+
     public partial class ContentPane : UserControl
     {
 
@@ -18,6 +19,8 @@ namespace VividEdit.Forms
         public Bitmap IconFolder;
         public List<ContentBase> Content = new List<ContentBase>();
         public Stack<string> Paths = new Stack<string>();
+     
+
         public ContentPane()
         {
             InitializeComponent();
@@ -166,6 +169,10 @@ namespace VividEdit.Forms
                     if (dc is ContentFolder)
                     {
                         ContentExplorer.Main.SetFolder(dc.Path);
+                    }
+                    if(dc is ContentFile)
+                    {
+                        ContentExplorer.FileOpen?.Invoke(dc as ContentFile);
                     }
                     return;
                 }

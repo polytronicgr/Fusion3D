@@ -54,6 +54,14 @@ namespace VividEdit
             ConsoleView.Log("Scanning default Content folder:"+CurProject.ContentPath, "IDE");
             DockContentExplorer.SetFolder(CurProject.ContentPath);
             ConsoleView.Log("IDE initialized.", "IDE");
+
+            ContentExplorer.FileOpen = FileOpen;
+            
+        }
+
+        public void FileOpen(ContentFile file)
+        {
+            
         }
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)

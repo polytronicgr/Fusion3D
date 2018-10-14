@@ -6,6 +6,21 @@ using System.Threading.Tasks;
 
 namespace Vivid3D.Effect
 {
+
+    public class ENoFX : Effect3D
+    {
+        public ENoFX() : base("","Data/Shader/vsNoFX.glsl","Data/Shader/fsNoFX.glsl")
+        {
+
+        }
+        public override void SetPars()
+        {
+            SetMat("model", Effect.FXG.Local);
+            SetMat("view", FXG.Cam.CamWorld);
+            SetMat("proj", FXG.Cam.ProjMat);
+            SetTex("tC", 0);
+        }
+    }
     public class EMultiPass3D : Effect3D
     {
         public EMultiPass3D() : base("", "Data/Shader/vsMP1.glsl", "Data/Shader/fsMP1.glsl")

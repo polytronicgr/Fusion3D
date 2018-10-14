@@ -35,7 +35,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "Vivid3DDisplay";
+            this.Load += new System.EventHandler(this.Vivid3DDisplay_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Vivid3DDisplay_Paint);
+            this.Resize += new System.EventHandler(this.Vivid3DDisplay_Resize);
             this.ResumeLayout(false);
 
         }

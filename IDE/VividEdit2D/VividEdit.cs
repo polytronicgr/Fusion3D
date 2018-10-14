@@ -36,7 +36,7 @@ namespace VividEdit
         private void VividEdit_Load(object sender, EventArgs e)
         {
             DockAppGraph = new Forms.AppGraph();
-            DockEdit3D = new Forms.Editor3D();
+            DockEdit3D = new Forms.Editor();
             DockContentExplorer = new Forms.ContentExplorer();
             DockConsoleView = new Forms.ConsoleView();
             DockAppGraph.Show(MainDock, DockState.DockLeft);

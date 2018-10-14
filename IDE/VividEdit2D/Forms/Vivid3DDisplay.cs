@@ -46,8 +46,12 @@ namespace VividEdit.Forms
             SwapBuffers();
         }
 
+        bool loaded = false;
         private void Vivid3DDisplay_Load(object sender, EventArgs e)
         {
+
+
+            Vivid3D.Texture.VTex2D.Lut.Clear();
             VForm.Set(Width, Height);
             Grid = GeoGen.Quad(100, 100);
             Grid.AlwaysAlpha = true;
@@ -74,4 +78,5 @@ namespace VividEdit.Forms
 
         }
     }
+ 
 }

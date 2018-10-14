@@ -39,6 +39,7 @@ namespace Vivid3D.App
             }
 
         }
+        static bool done = false;
          public static void Set(int w,int h)
         {
             
@@ -50,8 +51,10 @@ namespace Vivid3D.App
             AppInfo.RH = h;
             AppInfo.Full = false;
             AppInfo.App = "GLApp";
-            Import.Import.RegDefaults();
-          
+            if (!done)
+            {
+                Import.Import.RegDefaults();
+            }
             GL.Viewport(0, 0, w, h);
             GL.Scissor(0, 0,w,h);
             GL.Disable(EnableCap.Blend);
@@ -67,9 +70,11 @@ namespace Vivid3D.App
             GL.DepthFunc(DepthFunction.Less);
            // UI.UISys.ActiveUI.OnResize(Width, Height);
             VPen.SetProj(0, 0, w, h);
-            VPen.InitDraw();
-            Vivid3D.Sound.StarSoundSys.Init();
-
+            if (!done)
+            {
+                VPen.InitDraw();
+                Vivid3D.Sound.StarSoundSys.Init();
+            }
             AppInfo.W = w;
             AppInfo.H = h;
             AppInfo.RW = w;
@@ -100,6 +105,7 @@ namespace Vivid3D.App
                 UI.UISys.ActiveUI.OnResize(w, h);
                 // GL.DepthFunc(DepthFunction.Lequal);
             }
+            done = true;
         }
 
     }

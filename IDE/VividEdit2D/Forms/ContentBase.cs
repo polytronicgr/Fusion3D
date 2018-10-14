@@ -12,6 +12,7 @@ namespace VividEdit.Forms
 
         public string Name { get; set; }
         public Bitmap Icon { get; set; }
+        public string Path { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 

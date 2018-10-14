@@ -20,11 +20,13 @@ namespace VividEdit.Forms
         public Bitmap IconFolder;
         public List<ContentBase> Content = new List<ContentBase>();
 
+        public static ContentExplorer Main = null;
+
         public ContentExplorer()
         {
 
             InitializeComponent();
-
+            Main = this;
 
         }
         public void SetFolder(string path)

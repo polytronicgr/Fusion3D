@@ -13,10 +13,11 @@ namespace VividEdit.Forms
     public partial class ContentPane : UserControl
     {
 
+        public string CurPath;
         public Bitmap IconFile;
         public Bitmap IconFolder;
         public List<ContentBase> Content = new List<ContentBase>();
-
+        public Stack<string> Paths = new Stack<string>();
         public ContentPane()
         {
             InitializeComponent();
@@ -32,7 +33,9 @@ namespace VividEdit.Forms
 
         public void SetFolder(string path)
         {
-
+            LastPath = CurPath;
+            CurPath = path;
+            Paths.Push(path);
             var dir = new DirectoryInfo(path);
 
             Content.Clear();
@@ -44,6 +47,7 @@ namespace VividEdit.Forms
                 var cfold = new ContentFolder();
                 cfold.Icon = IconFolder;
                 cfold.Name = fold.Name;
+                cfold.Path = fold.FullName;
                 Content.Add(cfold);
                 ConsoleView.Log("Scanned Folder:" + fold.Name, "Content");
 
@@ -55,6 +59,7 @@ namespace VividEdit.Forms
                 var cfile = new ContentFile();
                 cfile.Icon = IconFile;
                 cfile.Name = file.Name;
+                cfile.Path = file.FullName;
                 Content.Add(cfile);
                 ConsoleView.Log("Scanned File:" + file.Name, "Content");
 
@@ -133,11 +138,49 @@ namespace VividEdit.Forms
         }
 
         public ContentBase ActiveContent = null;
-
+        public int lastMD = 0;
+        public string LastPath = "";
         private void ContentPane_MouseDown_1(object sender, MouseEventArgs e)
         {
+
+            if(e.Button == MouseButtons.Right)
+            {
+                Console.WriteLine("Paths:" + Paths.Count);
+                if (Paths.Count > 1)
+                {
+                    Paths.Pop();
+                    ContentExplorer.Main.SetFolder(Paths.Pop());
+                }
+                return;
+                
+            }
+
+            int td = Environment.TickCount;
+
+            if(td-lastMD<300)
+            {
+                var dc = GetContentAt(e.X, e.Y);
+                if (dc != null)
+                {
+
+                    if (dc is ContentFolder)
+                    {
+                        ContentExplorer.Main.SetFolder(dc.Path);
+                    }
+                    return;
+                }
+            }
+
+            lastMD = td;
+
             var con = GetContentAt(e.X, e.Y);
-            ActiveContent = con;
+            if (con == ActiveContent)
+            {
+                ActiveContent = null;
+            }
+            else {
+                ActiveContent = con;
+            }
             Invalidate();
         }
 
@@ -175,6 +218,8 @@ namespace VividEdit.Forms
 
 
             }
+
+            e.Graphics.DrawString("Path:" + CurPath, SystemFonts.SmallCaptionFont, Brushes.Black, 5, 5);
 
         }
 

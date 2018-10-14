@@ -56,7 +56,7 @@
       <HintPath>..\StarGame\packages\AssimpNet.4.1.0-rc2\lib\net40\AssimpNet.dll</HintPath>
     </Reference>
     <Reference Include="irrKlang.NET4">
-      <HintPath>..\Dlls\irrKlang.NET4.dll</HintPath>
+      <HintPath>..\..\..\..\VividEdit\dll\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\StarGame\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>

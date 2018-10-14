@@ -50,6 +50,7 @@ namespace VividEdit.Forms
         {
             VForm.Set(Width, Height);
             Grid = GeoGen.Quad(100, 100);
+            Grid.AlwaysAlpha = true;
             var mat = new Vivid3D.Material.Material3D();
             Grid.Renderer = new VRNoFx();     
             mat.TCol = new Vivid3D.Texture.VTex2D("data\\ui\\grid.png", Vivid3D.Texture.LoadMethod.Single, true);

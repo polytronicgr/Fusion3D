@@ -18,6 +18,7 @@ namespace Vivid3D.Scene
         public Vector3 LocalPos = Vector3.Zero;
         public Vector3 LocalScale = Vector3.One;
         public Matrix4 LocalTurn = Matrix4.Identity;
+        public bool AlwaysAlpha = false;
         public Vector3 WorldPos
         {
             get

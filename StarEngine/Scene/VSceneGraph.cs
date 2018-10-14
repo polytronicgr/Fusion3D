@@ -15,6 +15,7 @@ namespace Vivid3D.Scene
         public List<GraphLight3D> Lights = new List<GraphLight3D>();
         public GraphCam3D CamOverride = null;
         public GraphNode3D Root = new GraphNode3D();
+        public SceneGraph3D SubGraph = null;
         public void BeginFrame()
         {
             BeginFrameNode(Root);
@@ -131,12 +132,20 @@ namespace Vivid3D.Scene
 
                 foreach (var c in Cams)
                 {
+                    if (node.AlwaysAlpha)
+                    {
+                        GL.Enable(EnableCap.Blend);
+                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                        node.Present(c);
+                        continue;
+                    }
                     if (node.Lit)
                     {
                         bool first = true;
                         foreach (var l in Lights)
                         {
                             GraphLight3D.Active = l;
+
                             if (first)
                             {
                                 first = false;
@@ -229,7 +238,7 @@ namespace Vivid3D.Scene
         }
         public virtual void Render()
         {
-
+            SubGraph?.Render();
             RenderNode(Root);
            
 

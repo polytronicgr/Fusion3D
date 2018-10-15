@@ -42,9 +42,80 @@ namespace VividEdit.Forms
             Dis.EvMouseMoved = ON_MouseMove;
             Dis.EvMouseDown = ON_MouseDown;
             Dis.EvMouseUp = ON_MouseUp;
+            Dis.EvKeyDown = ON_KeyDown;
+            Dis.EvKeyUp = ON_KeyUp;
             this.Controls.Add(Dis);
 //            dosize = true;
 
+        }
+
+
+        Vector3 moveV = Vector3.Zero;
+        bool moving = false;
+        float moveS = 2.0f;
+        bool fast = false;
+        float mX=0, mY=0, mZ=0;
+        void ON_KeyDown(Keys k)
+        {
+
+           
+         
+                
+            
+
+            switch (k)
+            {
+                case Keys.S:
+                    moving = true;
+                    mZ = 1.0f;
+                    break;
+                case Keys.A:
+                    moving = true;
+                    mX = -1;
+                    break;
+                case Keys.D:
+                    moving = true;
+                    mX = 1;
+                    break;
+                case Keys.W:
+                    moving = true;
+                    mZ = -1;
+                    break;
+                case Keys.Shift:
+                case Keys.LShiftKey:
+                case Keys.ShiftKey:
+                    moveS = 5.0f;
+                    break;
+            }
+
+        }
+
+        void ON_KeyUp(Keys k)
+        {
+
+
+            switch (k)
+            {
+
+                case Keys.A:
+                    mX = 0;
+                    break;
+                case Keys.S:
+                    mZ = 0;
+                    break;
+                case Keys.D:
+                    mX = 0;
+                    break;
+                case Keys.W:
+                    moving = false;
+                    mZ = 0; 
+                break;
+                case Keys.Shift:
+                case Keys.LShiftKey:
+                case Keys.ShiftKey:
+                    moveS = 2.0f;
+                    break;
+            }
         }
 
         bool rotate = false;
@@ -72,7 +143,7 @@ namespace VividEdit.Forms
             if (rotate)
             {
                 Cam.Turn(new Vector3(-ry, -rx, 0), Space.Local);
-                Dis.Invalidate();
+             
             }
         }
 
@@ -139,6 +210,17 @@ namespace VividEdit.Forms
             {
                 //ON_Resize();
             }
+        }
+
+        private void EditTimer_Tick(object sender, EventArgs e)
+        {
+            if (moving)
+            {
+                Cam.Move(new Vector3(mX * moveS,mY * moveS,mZ * moveS), Space.Local);
+                
+            }
+
+            Dis.Invalidate();
         }
     }
 }

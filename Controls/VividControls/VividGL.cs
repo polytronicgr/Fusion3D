@@ -20,6 +20,8 @@ namespace VividControls
         public OnMouseMove EvMouseMoved = null;
         public OnMousedown EvMouseDown = null;
         public OnMouseUp EvMouseUp = null;
+        public OnKeyDown EvKeyDown = null;
+        public OnKeyUp  EvKeyUp = null;
         public VividGL(OnLoad load) : base(new OpenTK.Graphics.GraphicsMode(32,24,0,16))
         {
             EvLoad = load;
@@ -54,6 +56,16 @@ namespace VividControls
             EvMouseUp?.Invoke(e.Button);
         }
 
+        private void VividGL_KeyDown(object sender, KeyEventArgs e)
+        {
+            EvKeyDown?.Invoke(e.KeyCode);
+        }
+
+        private void VividGL_KeyUp(object sender, KeyEventArgs e)
+        {
+            EvKeyUp?.Invoke(e.KeyCode);
+        }
+
         private void VividGL_MouseMove(object sender, MouseEventArgs e)
         {
             if (lX == -1)
@@ -75,4 +87,6 @@ namespace VividControls
     public delegate void OnMouseMove(int x, int y, int dx, int dy);
     public delegate void OnMousedown(MouseButtons b);
     public delegate void OnMouseUp(MouseButtons b);
+    public delegate void OnKeyDown(Keys k);
+    public delegate void OnKeyUp(Keys k);
 }

@@ -28,7 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.EditTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // EditTimer
+            // 
+            this.EditTimer.Enabled = true;
+            this.EditTimer.Interval = 40;
+            this.EditTimer.Tick += new System.EventHandler(this.EditTimer_Tick);
             // 
             // Editor
             // 
@@ -43,5 +51,7 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer EditTimer;
     }
 }

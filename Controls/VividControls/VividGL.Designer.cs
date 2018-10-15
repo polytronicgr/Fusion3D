@@ -38,6 +38,8 @@
             this.Size = new System.Drawing.Size(284, 166);
             this.Load += new System.EventHandler(this.VividGL_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.VividGL_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VividGL_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VividGL_KeyUp);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VividGL_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VividGL_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VividGL_MouseUp);

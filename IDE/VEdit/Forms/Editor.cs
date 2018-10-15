@@ -14,7 +14,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using Vivid3D.App;
 using Vivid3D.Scene;
 using Vivid3D.Gen;
-using Vivid3D.UI;
+
 using Vivid3D.Lighting;
 using Vivid3D.Visuals;
 using OpenTK;

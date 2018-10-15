@@ -39,24 +39,57 @@ namespace VividEdit.Forms
             Dis.Size = new Size(Width, Height);
             Dis.EvPaint = ON_Paint;
             Dis.EvResize = ON_Resize;
+            Dis.EvMouseMoved = ON_MouseMove;
+            Dis.EvMouseDown = ON_MouseDown;
+            Dis.EvMouseUp = ON_MouseUp;
             this.Controls.Add(Dis);
 //            dosize = true;
 
         }
+
+        bool rotate = false;
+
+        void ON_MouseDown(MouseButtons b)
+        {
+            if(b==MouseButtons.Right)
+            {
+                rotate = true;
+            }
+        }
+
+        void ON_MouseUp(MouseButtons b)
+        {
+            if (b == MouseButtons.Right)
+            {
+                rotate = false;
+            }
+        }
+
+        void ON_MouseMove(int x, int y, int dx, int dy)
+        {
+            float rx = ((float)dx) * 0.2f;
+            float ry = ((float)dy) * 0.2f;
+            if (rotate)
+            {
+                Cam.Turn(new Vector3(-ry, -rx, 0), Space.Local);
+                Dis.Invalidate();
+            }
+        }
+
         public bool dosize = false;
         void ON_Load()
         {
             Dis.Size = new Size(Width, Height);
             VForm.Set(Width, Height);
             Grid = GeoGen.Quad(100, 100);
-            //Grid.Rot(new Vector3(-90, 0, 0), Space.Local);
+            Grid.Rot(new Vector3(-90, 0, 0), Space.Local);
 
 
             Grid.AlwaysAlpha = true;
             var mat = new Vivid3D.Material.Material3D();
             Grid.Renderer = new VRNoFx();
             Vivid3D.Texture.VTex2D.Lut.Clear();
-            mat.TCol = new Vivid3D.Texture.VTex2D("data\\ui\\grid2.jpg", Vivid3D.Texture.LoadMethod.Single, true);
+            mat.TCol = new Vivid3D.Texture.VTex2D("data\\ui\\grid.png", Vivid3D.Texture.LoadMethod.Single, true);
             Grid.Meshes[0].Mat = mat;
             Light = new GraphLight3D();
             Graph = new SceneGraph3D();
@@ -66,7 +99,7 @@ namespace VividEdit.Forms
             Graph.Add(Cam);
             //Cam.Rot(new Vector3(45, 0, 0), Space.Local);
             //    Grid.Rot(new Vector3(-30, 0, 0), Space.Local);
-            Cam.Pos(new Vector3(0, 0, 350), Space.Local);
+            Cam.Pos(new Vector3(0, 100, 350), Space.Local);
           //  Cam.Rot(new Vector3(-10, 0, 0), Space.Local);
             //Cam.LookAt(new Vector3(0, 0, 0), Vector3.UnitY);
         }
@@ -74,7 +107,7 @@ namespace VividEdit.Forms
         {
           
 
-            GL.ClearColor(0.7f, 0.7f, 0.1f, 1.0f);
+            GL.ClearColor(0.7f, 0.7f, 0.7f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             // if (run)

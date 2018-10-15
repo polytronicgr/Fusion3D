@@ -17,7 +17,10 @@ namespace VividControls
         public OnLoad EvLoad = null;
         public OnPaint EvPaint = null;
         public OnResize EvResize = null;
-        public VividGL(OnLoad load) : base(new OpenTK.Graphics.GraphicsMode(32,24,0,8))
+        public OnMouseMove EvMouseMoved = null;
+        public OnMousedown EvMouseDown = null;
+        public OnMouseUp EvMouseUp = null;
+        public VividGL(OnLoad load) : base(new OpenTK.Graphics.GraphicsMode(32,24,0,16))
         {
             EvLoad = load;
             InitializeComponent();
@@ -38,8 +41,38 @@ namespace VividControls
         {
             EvResize?.Invoke();
         }
+
+        int lX = -1, lY = -1;
+
+        private void VividGL_MouseDown(object sender, MouseEventArgs e)
+        {
+            EvMouseDown?.Invoke(e.Button);
+        }
+
+        private void VividGL_MouseUp(object sender, MouseEventArgs e)
+        {
+            EvMouseUp?.Invoke(e.Button);
+        }
+
+        private void VividGL_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (lX == -1)
+            {
+                lX = e.X;
+                lY = e.Y;
+            }
+            int dx = e.X - lX;
+            int dy = e.Y - lY;
+            EvMouseMoved?.Invoke(e.X, e.Y, dx, dy);
+            lX = e.X;
+            lY = e.Y;
+
+        }
     }
     public delegate void OnLoad();
     public delegate void OnPaint();
     public delegate void OnResize();
+    public delegate void OnMouseMove(int x, int y, int dx, int dy);
+    public delegate void OnMousedown(MouseButtons b);
+    public delegate void OnMouseUp(MouseButtons b);
 }

@@ -51,8 +51,17 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AssimpNet, Version=4.1.0.0, Culture=neutral, PublicKeyToken=7c35138f0d61254b, processorArchitecture=MSIL">
+      <HintPath>..\packages\AssimpNet.4.1.0-rc2\lib\net40\AssimpNet.dll</HintPath>
+    </Reference>
     <Reference Include="irrKlang.NET4">
       <HintPath>..\Dll\irrKlang.NET4.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="PhysX.Net, Version=0.11.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\PhysX.Net.0.11.0-alpha\lib\net471\PhysX.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,6 +73,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=47d7877cb3620160">
+      <HintPath>..\packages\zlib.net.1.0.4.0\lib\zlib.net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\AppLog.cs" />
@@ -170,18 +182,17 @@
     <Folder Include="UI\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AssimpNet">
-      <Version>4.1.0-rc2</Version>
-    </PackageReference>
-    <PackageReference Include="OpenTK">
-      <Version>3.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="PhysX.Net">
-      <Version>0.11.0-alpha</Version>
-    </PackageReference>
-    <PackageReference Include="zlib.net">
-      <Version>1.0.4</Version>
-    </PackageReference>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AssimpNet.4.1.0-rc2\build\AssimpNet.targets" Condition="Exists('..\packages\AssimpNet.4.1.0-rc2\build\AssimpNet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\AssimpNet.4.1.0-rc2\build\AssimpNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AssimpNet.4.1.0-rc2\build\AssimpNet.targets'))" />
+    <Error Condition="!Exists('..\packages\PhysX.Net.0.11.0-alpha\Build\PhysX.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PhysX.Net.0.11.0-alpha\Build\PhysX.Net.targets'))" />
+  </Target>
+  <Import Project="..\packages\PhysX.Net.0.11.0-alpha\Build\PhysX.Net.targets" Condition="Exists('..\packages\PhysX.Net.0.11.0-alpha\Build\PhysX.Net.targets')" />
 </Project>

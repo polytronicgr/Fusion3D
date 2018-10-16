@@ -45,9 +45,12 @@ namespace Vivid3D.PostProcess
             // GL.Disable(EnableCap.Blend);
             Active = this;
              FB.Bind();
+            GL.ClearColor(1,0.8f,0.8f,0.8f);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
               Scene.Render();
                FB.Release();
-        //    GL.Disable(EnableCap.Blend);
+            GL.Disable(EnableCap.Blend);
+
             //GL.DrawBuffer(DrawBufferMode.Back);
             foreach(var p in Processes)
             {
@@ -63,8 +66,12 @@ namespace Vivid3D.PostProcess
                 FB2 = ob;
 
             }
-          //  GL.Viewport(0, 0, 1024, 768);
-           DrawQuad();
+            //  GL.Viewport(0, 0, 1024, 768);
+            GL.Disable(EnableCap.Blend);
+            GL.ClearColor(1.0f, 0.8f, 0.8f, 0.8f);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            DrawQuad();
+
         }
         public int qva = 0, qvb = 0;
         public void DrawQuad()

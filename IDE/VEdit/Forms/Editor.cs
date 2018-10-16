@@ -33,6 +33,8 @@ namespace VividEdit.Forms
         public NodePicked Picked = null;
         public Vivid3D.Texture.VTex2D XIcon, YIcon, ZIcon;
         bool iconLoaded = false;
+        public Vivid3D.PostProcess.PostProcessRender PRen;
+        public Vivid3D.PostProcess.Processes.VPPBlur PPBlur;
         public Editor()
         {
             InitializeComponent();
@@ -319,7 +321,7 @@ namespace VividEdit.Forms
         {
             EMode = EditMode.Scale;
         }
-
+        
         void ON_Load()
         {
             Dis.Size = new Size(Width, Height);
@@ -346,6 +348,12 @@ namespace VividEdit.Forms
             Graph.Add(Light);
             Cam = new GraphCam3D();
             Graph.Add(Cam);
+            PRen = new Vivid3D.PostProcess.PostProcessRender(Width, Height);
+            PPBlur = new Vivid3D.PostProcess.Processes.VPPBlur();
+            PPBlur.Blur = 0.4f;
+            PRen.Scene = Graph;
+            PRen.Add(PPBlur);
+
             //Cam.Rot(new Vector3(45, 0, 0), Space.Local);
             //    Grid.Rot(new Vector3(-30, 0, 0), Space.Local);
             Cam.Pos(new Vector3(0, 100, 350), Space.Local);
@@ -368,7 +376,11 @@ namespace VividEdit.Forms
             //    Graph?.Render();
             // }
             Graph?.RenderShadows();
+            PRen.Render();
+
+
             Graph?.Render();
+            
 
             if (CurNode != null)
             {

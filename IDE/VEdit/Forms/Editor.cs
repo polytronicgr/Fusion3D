@@ -126,6 +126,19 @@ namespace VividEdit.Forms
             {
                 rotate = true;
             }
+            if (b == MouseButtons.Left)
+            {
+              
+                //Graph.CamPick(mX, mY);
+                var res = Graph.CamPick(msX, msY);
+                if (res != null)
+                {
+                    Console.WriteLine("Picked:" + res.Node.Name);
+                }
+
+            }
+            // var l = Graph.GetList(true);
+               
         }
 
         void ON_MouseUp(MouseButtons b)
@@ -135,7 +148,7 @@ namespace VividEdit.Forms
                 rotate = false;
             }
         }
-
+        public int msX, msY;
         void ON_MouseMove(int x, int y, int dx, int dy)
         {
             float rx = ((float)dx) * 0.2f;
@@ -145,6 +158,8 @@ namespace VividEdit.Forms
                 Cam.Turn(new Vector3(-ry, -rx, 0), Space.Local);
              
             }
+            msX = x;
+            msY = y;
         }
 
         public bool dosize = false;

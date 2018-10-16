@@ -67,6 +67,7 @@ namespace VividEdit.Forms
         float moveS = 2.0f;
         bool fast = false;
         float mX=0, mY=0, mZ=0;
+        bool spaceLock = false;
         void ON_KeyDown(Keys k)
         {
 
@@ -97,6 +98,7 @@ namespace VividEdit.Forms
                 case Keys.LShiftKey:
                 case Keys.ShiftKey:
                     moveS = 5.0f;
+                    spaceLock = true;
                     break;
             }
 
@@ -126,6 +128,7 @@ namespace VividEdit.Forms
                 case Keys.LShiftKey:
                 case Keys.ShiftKey:
                     moveS = 2.0f;
+                    spaceLock = false;
                     break;
             }
         }
@@ -233,14 +236,16 @@ namespace VividEdit.Forms
                     {
 
 
-                        if (SMode == SpaceMode.Local)
+                        if (SMode == SpaceMode.Local || spaceLock == true)
                         {
                             CurNode.Move(mov, Space.Local);
                         }
                         else
                         {
+                            mov.Y = -mov.Y;
                             var mv = Vector3.TransformPosition(mov, Cam.World);
                             mv = mv - Cam.WorldPos;
+
 
                             var tn = CurNode.TopList;
                             if (tn == null) return;
@@ -250,9 +255,10 @@ namespace VividEdit.Forms
                             {
                                 nm = nm * tn2.World.Inverted();
                             }
-                            if (true)
+                            if (zLock)
                             {
-                                mv.Y = -mv.Y;
+                                //mv.Z = -mv.Z;
+
 
                             }
                             else
@@ -262,8 +268,10 @@ namespace VividEdit.Forms
                             }
                             if (zLock)
                             {
-                                mv.Y = -mv.Y;
+                            
                             }
+                            //mv.Y = -mv.Y;
+
                             mv = Vector3.TransformPosition(mv, nm);
                             //mv.Y = -mv.Y;
                             //if (zLock)

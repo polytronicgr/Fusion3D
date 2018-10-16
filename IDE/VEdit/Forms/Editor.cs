@@ -47,7 +47,7 @@ namespace VividEdit.Forms
             Dis.EvKeyDown = ON_KeyDown;
             Dis.EvKeyUp = ON_KeyUp;
             this.Controls.Add(Dis);
-          
+            this.ContextMenuStrip = contextMenuStrip1;
 //            dosize = true;
 
         }
@@ -140,7 +140,7 @@ namespace VividEdit.Forms
         bool xLock=false, yLock=false, zLock=false;
         void ON_MouseDown(MouseButtons b)
         {
-            if(b==MouseButtons.Right)
+            if(b==MouseButtons.Middle)
             {
                 rotate = true;
             }
@@ -194,7 +194,7 @@ namespace VividEdit.Forms
         GraphNode3D CurNode = null;
         void ON_MouseUp(MouseButtons b)
         {
-            if (b == MouseButtons.Right)
+            if (b == MouseButtons.Middle)
             {
                 rotate = false;
             }
@@ -227,17 +227,59 @@ namespace VividEdit.Forms
             }
             if (CurNode != null)
             {
-                if (xLock||yLock||zLock)
+                if (EMode == EditMode.Move)
                 {
-                    
-                
-                    CurNode.Move(mov, Space.Local);
-               
+                    if (xLock || yLock || zLock)
+                    {
+
+
+                        if (SMode == SpaceMode.Local)
+                        {
+                            CurNode.Move(mov, Space.Local);
+                        }
+                        else
+                        {
+                            CurNode.LocalPos = CurNode.LocalPos + mov;
+                        }
+                    }
+                }
+                else if (EMode == EditMode.Rotate)
+                {
+                    if (xLock || yLock || zLock)
+                    {
+
+
+                        if (SMode == SpaceMode.Local)
+                        {
+                            CurNode.Turn(mov, Space.Local);
+                        }
+                        else
+                        {
+                            CurNode.LocalPos = CurNode.LocalPos + mov;
+                        }
+                    }
                 }
             }
+
         }
         public int tX=20, tY=20;
         public bool dosize = false;
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            EMode = EditMode.Move;
+        }
+
+        private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EMode = EditMode.Rotate;
+        }
+
+        private void scaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EMode = EditMode.Scale;
+        }
+
         void ON_Load()
         {
             Dis.Size = new Size(Width, Height);
@@ -270,6 +312,10 @@ namespace VividEdit.Forms
           //  Cam.Rot(new Vector3(-10, 0, 0), Space.Local);
             //Cam.LookAt(new Vector3(0, 0, 0), Vector3.UnitY);
         }
+
+        EditMode EMode = EditMode.Move;
+        SpaceMode SMode = SpaceMode.Local;
+
         void ON_Paint()
         {
           
@@ -301,6 +347,15 @@ namespace VividEdit.Forms
                 Vivid3D.Draw.VPen.Rect(tX + 80, tY - 3, 32, 32, XIcon);
                 Vivid3D.Draw.VPen.Rect(tX + 32, tY - 32, 32, 32, ZIcon);
 
+                switch (EMode)
+                {
+                    case EditMode.Move:
+                        Vivid3D.Draw.VPen.Rect(6, 6, 16, 16, YIcon);
+                        Vivid3D.Draw.VPen.Rect(30,16, 16,16, XIcon);
+                        Vivid3D.Draw.VPen.Rect(20, 8, 16, 16, ZIcon);
+                        break;
+                }
+
             }
             Dis.SwapBuffers();
         }
@@ -311,6 +366,7 @@ namespace VividEdit.Forms
             Dis.Invalidate();
 
         }
+        
         public void InitSize()
         {
             ON_Resize();
@@ -340,4 +396,13 @@ namespace VividEdit.Forms
         }
     }
     public delegate void NodePicked(Vivid3D.Scene.GraphNode3D node);
+    public enum EditMode
+    {
+        Move,Rotate,Scale
+    }
+    public enum SpaceMode
+    {
+        Local,Global
+    }
 }
+

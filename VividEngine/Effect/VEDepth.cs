@@ -17,7 +17,7 @@ namespace Vivid3D.Effect
          
             //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
             SetMat("model", Effect.FXG.Local);
-            SetMat("cam", FXG.Cam.CamWorld);
+            SetMat("view", FXG.Cam.CamWorld);
             SetMat("proj", FXG.Cam.ProjMat);
             SetVec3("camP", FXG.Cam.WorldPos);
             SetFloat("minZ", FXG.Cam.MinZ);

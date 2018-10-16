@@ -106,6 +106,10 @@ namespace Vivid3D.Scene
         public bool CastShadows = true;
         public bool CastDepth = true;
         public Matrix4 PrevWorld;
+        public void AddProxy(GraphNode3D node)
+        {
+            Sub.Add(node);
+        }
         public void Add(GraphNode3D node)
         {
             Sub.Add(node);

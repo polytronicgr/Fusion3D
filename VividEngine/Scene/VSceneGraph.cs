@@ -65,18 +65,19 @@ namespace Vivid3D.Scene
             {
                 //foreach (var n in Nodes)
                 //{
-                  RenderNodeDepth(Root,CamOverride);
-                    
-                //}
-            } else
-                foreach (var c in Cams)
-                {
+                RenderNodeDepth(Root, CamOverride);
 
-                    //foreach (var n in Nodes)
-                   // {
-                      //  n.PresentDepth(c);
-                    //}
-                }
+                //}
+            }
+            else
+
+            {
+                RenderNodeDepth(Root, Cams[0]);
+            }
+                //foreach (var c in Cams)
+                
+
+                
         }
         public virtual void RenderShadows()
         {

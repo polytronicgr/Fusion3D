@@ -107,7 +107,8 @@ namespace VEdit
                     ConsoleView.Log("Imported:" + file.Path + "-3D Data", "Content");
                     var g=DockEdit3D.GetGraph();
                     g.Add(ent);
-
+                    DockEdit3D.Selected.Root.Sub.Clear();
+                    DockEdit3D.Selected.Add(ent);
                     rebuildUI();
 
                     break;

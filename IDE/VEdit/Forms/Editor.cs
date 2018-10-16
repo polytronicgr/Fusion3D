@@ -186,6 +186,8 @@ namespace VividEdit.Forms
                     Console.WriteLine("Picked:" + res.Node.Name);
                     Picked?.Invoke(res.Node);
                     CurNode = res.Node;
+                    Selected.Root.Sub.Clear();
+                    Selected.Root.AddProxy(CurNode);
                 }
                 else
                 {
@@ -349,10 +351,16 @@ namespace VividEdit.Forms
             Cam = new GraphCam3D();
             Graph.Add(Cam);
             PRen = new Vivid3D.PostProcess.PostProcessRender(Width, Height);
-            PPBlur = new Vivid3D.PostProcess.Processes.VPPBlur();
-            PPBlur.Blur = 0.4f;
+            var vo = new Vivid3D.PostProcess.Processes.PPOutLine();
+
+            //PPBlur.Blur = 0.4f;
             PRen.Scene = Graph;
-            PRen.Add(PPBlur);
+            PRen.Add(vo);
+            Selected = new SceneGraph3D();
+            Selected.Add(Cam);
+            Selected.Add(Light);
+            Selected.Add(Grid);
+            vo.OutLineGraph = Selected;
 
             //Cam.Rot(new Vector3(45, 0, 0), Space.Local);
             //    Grid.Rot(new Vector3(-30, 0, 0), Space.Local);
@@ -360,7 +368,7 @@ namespace VividEdit.Forms
           //  Cam.Rot(new Vector3(-10, 0, 0), Space.Local);
             //Cam.LookAt(new Vector3(0, 0, 0), Vector3.UnitY);
         }
-
+        public SceneGraph3D Selected;
         EditMode EMode = EditMode.Move;
         SpaceMode SMode = SpaceMode.Global;
 

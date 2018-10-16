@@ -34,6 +34,7 @@ namespace Vivid3D.PostProcess.Processes
             
 
             DFB.BB.Bind(0);
+            bb.Bind(1);
             BFX.Bind();
 
         }
@@ -44,6 +45,7 @@ namespace Vivid3D.PostProcess.Processes
         public override void Release(VTex2D bb)
         {
             BFX.Release();
+            bb.Release(1);
             DFB.BB.Release(0);
         }
     }
@@ -57,7 +59,7 @@ namespace Vivid3D.PostProcess.Processes
         public override void SetPars()
         {
             SetTex("tR", 0);
-          
+            SetTex("tB", 1);
         }
     }
 }

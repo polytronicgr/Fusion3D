@@ -49,7 +49,7 @@ namespace VividEdit.Forms
 
         }
 
-
+        public SceneGraph3D GetGraph() { return Graph; }
         Vector3 moveV = Vector3.Zero;
         bool moving = false;
         float moveS = 2.0f;
@@ -163,6 +163,12 @@ namespace VividEdit.Forms
             mat.TCol = new Vivid3D.Texture.VTex2D("data\\ui\\grid.png", Vivid3D.Texture.LoadMethod.Single, true);
             Grid.Meshes[0].Mat = mat;
             Light = new GraphLight3D();
+            Light.Pos(new Vector3(20, 120, 250), Space.Local);
+            Light.Range = 800;
+            Light.On = true;
+            Light.Diff = new Vector3(2, 2, 2);
+            Light.CastShadows = true;
+            
             Graph = new SceneGraph3D();
             Graph.Add(Grid);
             Graph.Add(Light);
@@ -185,7 +191,7 @@ namespace VividEdit.Forms
             //{
             //    Graph?.Render();
             // }
-
+            Graph?.RenderShadows();
             Graph?.Render();
             Dis.SwapBuffers();
         }
@@ -217,6 +223,7 @@ namespace VividEdit.Forms
             if (moving)
             {
                 Cam.Move(new Vector3(mX * moveS,mY * moveS,mZ * moveS), Space.Local);
+               // Light.LocalPos = Cam.LocalPos;
                 
             }
 

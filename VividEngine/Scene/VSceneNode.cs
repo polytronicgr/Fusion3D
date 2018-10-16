@@ -51,7 +51,18 @@ namespace Vivid3D.Scene
                 return r;
             }
         }
-   
+    public void SetMultiPass()
+        {
+            if (this is GraphEntity3D)
+            {
+                dynamic tn = this;
+                tn.Renderer = new Visuals.VRMultiPass();
+            }
+            foreach(var n in Sub)
+            {
+                n.SetMultiPass();
+            }
+        }
         public GraphNode3D Top = null;
         public List<GraphNode3D> Sub = new List<GraphNode3D>();
         public VInfoMap<string, object> Links = new VInfoMap<string, object>();
@@ -60,6 +71,11 @@ namespace Vivid3D.Scene
         public bool CastShadows = true;
         public bool CastDepth = true;
         public Matrix4 PrevWorld;
+        public void Add(GraphNode3D node)
+        {
+            Sub.Add(node);
+            node.Top = this;
+        }
         public void StartFrame()
         {
             PrevWorld = World;

@@ -32,7 +32,7 @@ namespace Vivid3D.Import
         }
         public static GraphNode3D ImportNode(string path)
         {
-            string key = new FileInfo(path).Extension;
+            string key = new FileInfo(path).Extension.ToLower();
             var imp = Imports[key];
             var r=imp.LoadNode(path);
             return r;

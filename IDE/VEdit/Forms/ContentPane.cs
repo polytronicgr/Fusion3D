@@ -51,7 +51,10 @@ namespace VividEdit.Forms
                 cfold.Icon = IconFolder;
                 cfold.Name = fold.Name;
                 cfold.Path = fold.FullName;
+                //cfold.DetermineType();
+
                 Content.Add(cfold);
+
                 ConsoleView.Log("Scanned Folder:" + fold.Name, "Content");
 
             }
@@ -63,8 +66,9 @@ namespace VividEdit.Forms
                 cfile.Icon = IconFile;
                 cfile.Name = file.Name;
                 cfile.Path = file.FullName;
+                cfile.DetermineType();
                 Content.Add(cfile);
-                ConsoleView.Log("Scanned File:" + file.Name, "Content");
+                ConsoleView.Log("Scanned File:" + file.Name+" Type:"+cfile.Type, "Content");
 
             }
 
@@ -172,6 +176,7 @@ namespace VividEdit.Forms
                     }
                     if(dc is ContentFile)
                     {
+                        Console.WriteLine("Opened:" + dc.Name);
                         ContentExplorer.FileOpen?.Invoke(dc as ContentFile);
                     }
                     return;

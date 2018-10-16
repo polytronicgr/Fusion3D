@@ -11,6 +11,7 @@ using WeifenLuo;
 using WeifenLuo.WinFormsUI;
 using WeifenLuo.WinFormsUI.Docking;
 using VividEdit.Forms;
+using Vivid3D.Import;
 namespace VEdit
 {
     public partial class VEdit : Form
@@ -63,6 +64,28 @@ namespace VEdit
 
         public void FileOpen(ContentFile file)
         {
+
+
+            switch (file.Type)
+            {
+                case "3D":
+
+                    var ent = Import.ImportNode(file.Path);
+                    ent.SetMultiPass();
+                    var e = ent as Vivid3D.Scene.GraphEntity3D;
+                    var tm = new Vivid3D.Material.Material3D();
+                    tm.TCol = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1.jpg", Vivid3D.Texture.LoadMethod.Single, true);
+                    tm.TNorm = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1_nrm.png", Vivid3D.Texture.LoadMethod.Single,true);
+                    e.SetMat(tm);
+
+                    Console.WriteLine("Imported:" + file.Path);
+                    ConsoleView.Log("Imported:" + file.Path + "-3D Data", "Content");
+                    var g=DockEdit3D.GetGraph();
+                    g.Add(ent);
+
+                    break;
+            }
+
 
         }
 

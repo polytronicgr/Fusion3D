@@ -32,6 +32,10 @@ namespace VividEdit.Forms
             Main = this;
 
         }
+
+
+        
+
         public void SetFolder(string path)
         {
             contentPane.SetFolder(path);

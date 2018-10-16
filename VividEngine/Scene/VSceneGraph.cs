@@ -10,7 +10,7 @@ namespace Vivid3D.Scene
 {
     public class SceneGraph3D
     {
-        public List<GraphNode3D> Nodes = new List<GraphNode3D>();
+ //       public List<GraphNode3D> Nodes = new List<GraphNode3D>();
         public List<GraphCam3D> Cams = new List<GraphCam3D>();
         public List<GraphLight3D> Lights = new List<GraphLight3D>();
         public GraphCam3D CamOverride = null;
@@ -42,12 +42,12 @@ namespace Vivid3D.Scene
         }
         public virtual void Add(GraphNode3D n)
         {
-            Root.Sub.Add(n);
+            Root.Add(n);
             n.Top = Root;
         }
         public virtual void Clean()
         {
-            Nodes.Clear();
+         
         }
         public virtual void Bind()
         {

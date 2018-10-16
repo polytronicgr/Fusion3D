@@ -35,7 +35,7 @@
             // EditTimer
             // 
             this.EditTimer.Enabled = true;
-            this.EditTimer.Interval = 40;
+            this.EditTimer.Interval = 25;
             this.EditTimer.Tick += new System.EventHandler(this.EditTimer_Tick);
             // 
             // Editor

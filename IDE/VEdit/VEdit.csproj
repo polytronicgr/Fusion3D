@@ -90,6 +90,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AppGraph.resx">
+      <DependentUpon>AppGraph.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConsoleView.resx">
       <DependentUpon>ConsoleView.cs</DependentUpon>
     </EmbeddedResource>

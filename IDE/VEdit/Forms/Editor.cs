@@ -30,7 +30,7 @@ namespace VividEdit.Forms
         public GraphEntity3D Grid;
         public GraphLight3D Light;
         public GraphCam3D Cam;
-
+        public NodePicked Picked = null;
         public Editor()
         {
             InitializeComponent();
@@ -134,13 +134,19 @@ namespace VividEdit.Forms
                 if (res != null)
                 {
                     Console.WriteLine("Picked:" + res.Node.Name);
+                    Picked?.Invoke(res.Node);
+                    CurNode = res.Node;
+                }
+                else
+                {
+                    CurNode = null;
                 }
 
             }
             // var l = Graph.GetList(true);
                
         }
-
+        GraphNode3D CurNode = null;
         void ON_MouseUp(MouseButtons b)
         {
             if (b == MouseButtons.Right)
@@ -161,7 +167,7 @@ namespace VividEdit.Forms
             msX = x;
             msY = y;
         }
-
+        public int tX=20, tY=20;
         public bool dosize = false;
         void ON_Load()
         {
@@ -208,6 +214,22 @@ namespace VividEdit.Forms
             // }
             Graph?.RenderShadows();
             Graph?.Render();
+
+            if (CurNode != null)
+            {
+
+                var res = Vivid3D.Pick.Picker.CamTo2D(Cam, CurNode.WorldPos);
+
+                tX = (int)res.X;
+                tY = (int)res.Y;
+
+                Vivid3D.Draw.VPen.Rect(tX-3, tY-3, 6, 6, new Vector4(1, 1, 1, 1));
+
+                Vivid3D.Draw.VPen.Rect(tX - 6, tY - 80, 32, 32, new Vector4(1, 0, 0, 1));
+                Vivid3D.Draw.VPen.Rect(tX + 80, tY - 3, 32, 32, new Vector4(0, 1, 0, 1));
+                Vivid3D.Draw.VPen.Rect(tX + 32, tY - 32, 32, 32, new Vector4(0, 0, 1, 1));
+
+            }
             Dis.SwapBuffers();
         }
         void ON_Resize()
@@ -245,4 +267,5 @@ namespace VividEdit.Forms
             Dis.Invalidate();
         }
     }
+    public delegate void NodePicked(Vivid3D.Scene.GraphNode3D node);
 }

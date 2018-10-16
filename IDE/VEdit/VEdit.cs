@@ -60,6 +60,31 @@ namespace VEdit
             ConsoleView.Log("IDE initialized.", "IDE");
 
             ContentExplorer.FileOpen = FileOpen;
+            DockEdit3D.Picked = ON_Picked;
+        }
+
+
+        void ON_Picked(Vivid3D.Scene.GraphNode3D n)
+        {
+            Console.WriteLine("Selected:" + n.Name);
+            DockAppGraph.Select(n);
+
+            OpenTK.Vector2 pos = Vivid3D.Pick.Picker.CamTo2D(DockEdit3D.Graph.Cams[0], n.WorldPos);
+
+
+            DockEdit3D.tX = (int)pos.X;
+            DockEdit3D.tY = (int)pos.Y;
+
+
+        }
+
+        void rebuildUI()
+
+        {
+
+            DockAppGraph.Graph = DockEdit3D.GetGraph();
+            DockAppGraph.Rebuild();
+
         }
 
         public void FileOpen(ContentFile file)
@@ -82,6 +107,8 @@ namespace VEdit
                     ConsoleView.Log("Imported:" + file.Path + "-3D Data", "Content");
                     var g=DockEdit3D.GetGraph();
                     g.Add(ent);
+
+                    rebuildUI();
 
                     break;
             }

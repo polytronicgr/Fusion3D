@@ -14,9 +14,55 @@ namespace VividEdit.Forms
 {
     public partial class AppGraph : DockContent
     {
+        public Vivid3D.Scene.SceneGraph3D Graph = null;
+        public Dictionary<Vivid3D.Scene.GraphNode3D, TreeNode> nodeMap = new Dictionary<Vivid3D.Scene.GraphNode3D, TreeNode>();
+        public List<Vivid3D.Scene.GraphNode3D> AllNodes = new List<Vivid3D.Scene.GraphNode3D>();
         public AppGraph()
         {
             InitializeComponent();
+        }
+        public void Rebuild()
+        {
+
+            nodeMap.Clear();
+            AllNodes.Clear();
+            appTree.Nodes[0].Nodes.Clear();
+
+            var nb = appTree.Nodes[0];
+
+            AddNode(Graph.Root,nb);
+
+        }
+        public void Select(Vivid3D.Scene.GraphNode3D n)
+        {
+            if (nodeMap.ContainsKey(n) == false) return;
+            var tn = nodeMap[n];
+            tn.TreeView.SelectedNode = tn;
+            return;
+            foreach(var cn in AllNodes)
+            {
+                if(cn == n)
+                {
+
+                }
+            }
+        }
+        void AddNode(Vivid3D.Scene.GraphNode3D n,TreeNode t)
+        {
+
+
+            AllNodes.Add(n);
+            var nn = new TreeNode(n.Name);
+
+            nodeMap.Add(n, nn);
+
+            t.Nodes.Add(nn);
+
+            foreach(var n2 in n.Sub)
+            {
+                AddNode(n2, nn);
+            }
+
         }
     }
 }

@@ -19,6 +19,31 @@ namespace Vivid3D.Pick
     public class Picker
     {
 
+        private static Vector2 Convert(
+  Vector3 pos,
+  Matrix4 viewMatrix,
+  Matrix4 projectionMatrix,
+  int screenWidth,
+  int screenHeight)
+        {
+           
+            pos = Vector3.TransformPerspective(pos, viewMatrix);
+            pos = Vector3.TransformPerspective(pos, projectionMatrix);
+            pos.X /= pos.Z;
+            pos.Y /= pos.Z;
+            pos.X = (pos.X + 1) * screenWidth / 2;
+            pos.Y = (pos.Y + 1) * screenHeight / 2;
+
+            return new Vector2(pos.X,screenHeight- pos.Y);
+        }
+
+        public static Vector2 CamTo2D(Vivid3D.Scene.GraphCam3D cam,Vector3 pos)
+        {
+
+            return Convert(pos, cam.CamWorld, cam.ProjMat, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
+
+        }
+
         private const double Epsilon = 0.000001d;
 
         public static Vector3? GetTimeAndUvCoord(Vector3 rayOrigin, Vector3 rayDirection, Vector3 vert0, Vector3 vert1, Vector3 vert2)

@@ -19,6 +19,45 @@ namespace Vivid3D.Scene
         public Vector3 LocalScale = Vector3.One;
         public Matrix4 LocalTurn = Matrix4.Identity;
         public bool AlwaysAlpha = false;
+        public GraphNode3D TopTop
+        {
+            get
+            {
+                if (Top != null)
+                {
+                    return Top.TopTop;
+                }
+                else
+                {
+                    return this;
+                }
+            }
+        }
+        public List<GraphNode3D> TopList
+        {
+            get
+            {
+                List<GraphNode3D> tl = new List<GraphNode3D>();
+                if (Top != null)
+                {
+                    Top.AddTop(tl);
+                    return tl;
+                }
+                else
+                {
+                    return null;
+                }
+                return null;
+            }
+        }
+        public void AddTop(List<GraphNode3D> l)
+        {
+            l.Add(this);
+            if (Top != null)
+            {
+                Top.AddTop(l);
+            }
+        }
         public Vector3 WorldPos
         {
             get

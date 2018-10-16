@@ -239,7 +239,39 @@ namespace VividEdit.Forms
                         }
                         else
                         {
-                            CurNode.LocalPos = CurNode.LocalPos + mov;
+                            var mv = Vector3.TransformPosition(mov, Cam.World);
+                            mv = mv - Cam.WorldPos;
+
+                            var tn = CurNode.TopList;
+                            if (tn == null) return;
+                            Matrix4 nm = Matrix4.Identity;
+
+                            foreach(var tn2 in tn)
+                            {
+                                nm = nm * tn2.World.Inverted();
+                            }
+                            if (true)
+                            {
+                                mv.Y = -mv.Y;
+
+                            }
+                            else
+                            {
+                                //mv.X = -mv.X;
+
+                            }
+                            if (zLock)
+                            {
+                                mv.Y = -mv.Y;
+                            }
+                            mv = Vector3.TransformPosition(mv, nm);
+                            //mv.Y = -mv.Y;
+                            //if (zLock)
+                           // {
+                              
+                            //}
+                            CurNode.LocalPos = CurNode.LocalPos + mv;
+
                         }
                     }
                 }
@@ -314,7 +346,7 @@ namespace VividEdit.Forms
         }
 
         EditMode EMode = EditMode.Move;
-        SpaceMode SMode = SpaceMode.Local;
+        SpaceMode SMode = SpaceMode.Global;
 
         void ON_Paint()
         {

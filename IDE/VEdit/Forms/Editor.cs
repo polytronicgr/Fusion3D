@@ -31,6 +31,8 @@ namespace VividEdit.Forms
         public GraphLight3D Light;
         public GraphCam3D Cam;
         public NodePicked Picked = null;
+        public Vivid3D.Texture.VTex2D XIcon, YIcon, ZIcon;
+        bool iconLoaded = false;
         public Editor()
         {
             InitializeComponent();
@@ -45,8 +47,18 @@ namespace VividEdit.Forms
             Dis.EvKeyDown = ON_KeyDown;
             Dis.EvKeyUp = ON_KeyUp;
             this.Controls.Add(Dis);
+          
 //            dosize = true;
 
+        }
+
+        public void LoadIcons()
+        {
+            if (iconLoaded) return;
+            XIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconx.png", Vivid3D.Texture.LoadMethod.Single, true);
+            YIcon = new Vivid3D.Texture.VTex2D("data\\icon\\icony.png", Vivid3D.Texture.LoadMethod.Single, true);
+            ZIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconz.png", Vivid3D.Texture.LoadMethod.Single, true);
+            iconLoaded = true;
         }
 
         public SceneGraph3D GetGraph() { return Graph; }
@@ -222,12 +234,15 @@ namespace VividEdit.Forms
 
                 tX = (int)res.X;
                 tY = (int)res.Y;
+                LoadIcons();
+
+                Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
 
                 Vivid3D.Draw.VPen.Rect(tX-3, tY-3, 6, 6, new Vector4(1, 1, 1, 1));
 
-                Vivid3D.Draw.VPen.Rect(tX - 6, tY - 80, 32, 32, new Vector4(1, 0, 0, 1));
-                Vivid3D.Draw.VPen.Rect(tX + 80, tY - 3, 32, 32, new Vector4(0, 1, 0, 1));
-                Vivid3D.Draw.VPen.Rect(tX + 32, tY - 32, 32, 32, new Vector4(0, 0, 1, 1));
+                Vivid3D.Draw.VPen.Rect(tX - 6, tY - 80, 32, 32, YIcon);
+                Vivid3D.Draw.VPen.Rect(tX + 80, tY - 3, 32, 32, XIcon);
+                Vivid3D.Draw.VPen.Rect(tX + 32, tY - 32, 32, 32, ZIcon);
 
             }
             Dis.SwapBuffers();

@@ -131,7 +131,13 @@ namespace VividEdit.Forms
         }
 
         bool rotate = false;
-
+        bool InRect(int rx,int ry,int rw,int rh)
+        {
+            int x = msX;
+            int y = msY;
+            return (x >= rx && y >= ry && x <= (rx + rw) && y <= (ry + rh));
+        }
+        bool xLock=false, yLock=false, zLock=false;
         void ON_MouseDown(MouseButtons b)
         {
             if(b==MouseButtons.Right)
@@ -140,7 +146,34 @@ namespace VividEdit.Forms
             }
             if (b == MouseButtons.Left)
             {
-              
+
+                xLock = false;
+                yLock = false;
+                zLock = false;
+                if (InRect(tX - 6, tY - 80, 32, 32))
+                {
+                    yLock = true;
+                    xLock = false;
+                    zLock = false;
+                    return;
+                }
+                if (InRect(tX + 80, tY - 3, 32, 32))
+                {
+                    xLock = true;
+                    yLock = false;
+                    zLock = false;
+                    return;
+                }
+                if (InRect(tX + 32, tY - 32, 32, 32))
+                {
+                    zLock = true;
+                    yLock = false;
+                    xLock = false;
+                    return;
+                }
+
+
+
                 //Graph.CamPick(mX, mY);
                 var res = Graph.CamPick(msX, msY);
                 if (res != null)
@@ -165,6 +198,7 @@ namespace VividEdit.Forms
             {
                 rotate = false;
             }
+            xLock = yLock = zLock = false;
         }
         public int msX, msY;
         void ON_MouseMove(int x, int y, int dx, int dy)
@@ -174,10 +208,33 @@ namespace VividEdit.Forms
             if (rotate)
             {
                 Cam.Turn(new Vector3(-ry, -rx, 0), Space.Local);
-             
+
             }
             msX = x;
             msY = y;
+            Vector3 mov = Vector3.Zero;
+            if (xLock)
+            {
+                mov = new Vector3(dx, 0, 0);
+            }
+            if (yLock)
+            {
+                mov = new Vector3(0, dy, 0);
+            }
+            if (zLock)
+            {
+                mov = new Vector3(0, 0, dx);
+            }
+            if (CurNode != null)
+            {
+                if (xLock||yLock||zLock)
+                {
+                    
+                
+                    CurNode.Move(mov, Space.Local);
+               
+                }
+            }
         }
         public int tX=20, tY=20;
         public bool dosize = false;

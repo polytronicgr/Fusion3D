@@ -23,13 +23,9 @@ namespace Vivid3D.Scene
         {
             get
             {
-                var p = Vector3.Zero;
-                if (Top != null)
-                {
-                    p = Top.WorldPos;
-                }
-                p = p + LocalPos;
-                return p;
+                var v = World;
+
+                return v.ExtractTranslation();
             }
         }
         public Matrix4 World
@@ -41,7 +37,7 @@ namespace Vivid3D.Scene
                 {
                     r = Top.World;
                 }
-                r = (LocalTurn *Matrix4.CreateTranslation(LocalPos))*r;
+                r = (LocalTurn * Matrix4.CreateTranslation(LocalPos))*r;
 
 
 
@@ -128,10 +124,12 @@ namespace Vivid3D.Scene
             if(s==Space.Local)
             {
 
-
+                Console.WriteLine("NV:" + v);
+                var ov = WorldPos;
                 var nv = Vector3.TransformPosition(v,World);
+                var mm = nv - ov;
 
-                LocalPos = nv;//Matrix4.Invert(nv);
+                LocalPos = LocalPos + mm;//Matrix4.Invert(nv);
                 //LocalPos = LocalPos + new Vector3(nv.X, nv.Y, nv.Z);
 
 

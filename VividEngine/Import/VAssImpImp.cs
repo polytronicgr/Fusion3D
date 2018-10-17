@@ -99,7 +99,7 @@ namespace Vivid3D.Import
                 }
                 for (int i = 0; i < m2.NumVertices; i++)
                 {
-                    var v = m.Vertices[i] * new Vector3D(15, 15, 15);
+                    var v = m.Vertices[i];// * new Vector3D(15, 15, 15);
                     var n = m.Normals[i];
                     var t = m.TextureCoordinateChannels[0];
                     Vector3D tan, bi;

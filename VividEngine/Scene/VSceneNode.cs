@@ -81,7 +81,7 @@ namespace Vivid3D.Scene
                 {
                     r = Top.World;
                 }
-                r = (LocalTurn * Matrix4.CreateTranslation(LocalPos))*r;
+                r = (Matrix4.CreateScale(LocalScale) * LocalTurn * Matrix4.CreateTranslation(LocalPos))*r;
 
 
 

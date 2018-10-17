@@ -31,7 +31,7 @@ namespace VividEdit.Forms
         public GraphLight3D Light;
         public GraphCam3D Cam;
         public NodePicked Picked = null;
-        public Vivid3D.Texture.VTex2D XIcon, YIcon, ZIcon;
+        public Vivid3D.Texture.VTex2D XIcon, YIcon, ZIcon, SIcon;
         bool iconLoaded = false;
         public Vivid3D.PostProcess.PostProcessRender PRen;
         public Vivid3D.PostProcess.Processes.VPPBlur PPBlur;
@@ -61,6 +61,7 @@ namespace VividEdit.Forms
             XIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconx.png", Vivid3D.Texture.LoadMethod.Single, true);
             YIcon = new Vivid3D.Texture.VTex2D("data\\icon\\icony.png", Vivid3D.Texture.LoadMethod.Single, true);
             ZIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconz.png", Vivid3D.Texture.LoadMethod.Single, true);
+            SIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconscale.png", Vivid3D.Texture.LoadMethod.Single, true);
             iconLoaded = true;
         }
 
@@ -143,6 +144,7 @@ namespace VividEdit.Forms
             int y = msY;
             return (x >= rx && y >= ry && x <= (rx + rw) && y <= (ry + rh));
         }
+        bool allLock = false;
         bool xLock=false, yLock=false, zLock=false;
         void ON_MouseDown(MouseButtons b)
         {
@@ -156,6 +158,15 @@ namespace VividEdit.Forms
                 xLock = false;
                 yLock = false;
                 zLock = false;
+                if(EMode == EditMode.Scale)
+                {
+                    if (InRect(tX - 16, tY - 16, 32, 32))
+                    {
+                        allLock = true;
+                        xLock = yLock = zLock = false;
+                        return;
+                    }
+                }
                 if (InRect(tX - 6, tY - 80, 32, 32))
                 {
                     yLock = true;
@@ -207,6 +218,7 @@ namespace VividEdit.Forms
                 rotate = false;
             }
             xLock = yLock = zLock = false;
+            allLock = false;
         }
         public int msX, msY;
         void ON_MouseMove(int x, int y, int dx, int dy)
@@ -221,6 +233,10 @@ namespace VividEdit.Forms
             msX = x;
             msY = y;
             Vector3 mov = Vector3.Zero;
+            if (allLock)
+            {
+                mov = new Vector3(dx, dx, dx);
+            }
             if (xLock)
             {
                 mov = new Vector3(dx, 0, 0);
@@ -320,6 +336,12 @@ namespace VividEdit.Forms
                             CurNode.Turn(mov, Space.Local); ;
                         }
                     }
+                }else if (EMode == EditMode.Scale)
+                {
+                    mov.X = mov.X * 0.02f;
+                    mov.Y = mov.Y * 0.02f;
+                    mov.Z = mov.Z * 0.02f;
+                    CurNode.LocalScale = CurNode.LocalScale + mov;
                 }
             }
 
@@ -424,7 +446,6 @@ namespace VividEdit.Forms
                 Vivid3D.Draw.VPen.Rect(tX - 6, tY - 80, 32, 32, YIcon);
                 Vivid3D.Draw.VPen.Rect(tX + 80, tY - 3, 32, 32, XIcon);
                 Vivid3D.Draw.VPen.Rect(tX + 32, tY - 32, 32, 32, ZIcon);
-
                 switch (EMode)
                 {
                     case EditMode.Move:
@@ -434,6 +455,10 @@ namespace VividEdit.Forms
                         break;
                     case EditMode.Rotate:
                         Vivid3D.Draw.VPen.Rect(6, 6, 64, 64, RIcon);
+                        break;
+                    case EditMode.Scale:
+                        Vivid3D.Draw.VPen.Rect(6, 6, 64, 64, SIcon);
+                        Vivid3D.Draw.VPen.Rect(tX - 16, tY - 16, 32, 32, SIcon);
                         break;
                 }
 

@@ -81,11 +81,14 @@ namespace Vivid3D.Import
                 }
                 if (mat.HasColorSpecular)
                 {
-                 //   vm.Spec = CTV(mat.ColorSpecular);
+                    vm.Spec = CTV(mat.ColorSpecular);
+                    Console.WriteLine("Spec:" + vm.Spec);
                 }
                 if (mat.HasShininess)
                 {
-               //     vm.Shine = mat.Shininess;
+                    vm.Shine = 1.0f;
+                    //vm.Shine = 0.3f+ mat.Shininess;
+                    Console.WriteLine("Shine:" + vm.Shine);
                 }
 
                 Console.WriteLine("Spec:" + vm.Spec);

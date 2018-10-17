@@ -384,18 +384,19 @@ namespace VividEdit.Forms
             Light.Pos(new Vector3(20, 120, 250), Space.Local);
             Light.Range = 800;
             Light.On = true;
-            Light.Diff = new Vector3(2, 2, 2);
+            Light.Diff = new Vector3(3, 3, 3);
             Light.CastShadows = true;
+            Light.Spec = new Vector3(2, 2, 2);
             var l2 = new GraphLight3D();
             l2.LocalPos = new Vector3(-90, 90, -80);
             l2.Range = 800;
             l2.On = true;
-            l2.Diff = new Vector3(0.3f, 1.5f, 1.5f);
+            l2.Diff = new Vector3(0.8f, 1.8f, 1.8f);
             l2.CastShadows = true;
             var l3 = new GraphLight3D();
             l3.LocalPos = new Vector3(70, 120, 80);
-            l3.Diff = new Vector3(1.4f, 0.2f, 0.2f);
-            l3.Range = 600;
+            l3.Diff = new Vector3(1.4f, 2.2f, 2.2f);
+            l3.Range = 800;
             l3.On = true;
             l3.CastShadows = true;
 

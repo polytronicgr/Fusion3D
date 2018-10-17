@@ -392,16 +392,19 @@ namespace VividEdit.Forms
             Graph.Add(Cam);
             PRen = new Vivid3D.PostProcess.PostProcessRender(Width, Height);
             var vo = new Vivid3D.PostProcess.Processes.PPOutLine();
-
+            var bpp = new Vivid3D.PostProcess.Processes.VPPBlur();
             //PPBlur.Blur = 0.4f;
             PRen.Scene = Graph;
             PRen.Add(vo);
+          //  vo.SubProcesses.Add(bpp);
+            //PRen.Add(bpp);
+
             Selected = new SceneGraph3D();
             Selected.Add(Cam);
             Selected.Add(Light);
             Selected.Add(Grid);
             vo.OutLineGraph = Selected;
-
+            Vivid3D.ImageProcessing.ImageProcessor.InitIP();
             //Cam.Rot(new Vector3(45, 0, 0), Space.Local);
             //    Grid.Rot(new Vector3(-30, 0, 0), Space.Local);
             Cam.Pos(new Vector3(0, 100, 350), Space.Local);
@@ -416,7 +419,7 @@ namespace VividEdit.Forms
         {
           
 
-            GL.ClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+            GL.ClearColor(0, 0, 0, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             // if (run)

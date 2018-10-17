@@ -19,12 +19,14 @@ namespace Vivid3D.PostProcess
         public List<VPostProcess> Processes = new List<VPostProcess>();
         public VFrameBuffer FB = null;
         public VFrameBuffer FB2 = null;
+        public static VFrameBuffer RBuf = null;
         public int IW, IH;
         public VEQuadR QFX = null;
         public PostProcessRender(int w,int h)
         {
             IW = w;
             IH = h;
+            RBuf = new VFrameBuffer(w, h);
             FB = new VFrameBuffer(w, h);
             FB2 = new VFrameBuffer(w, h);
             QFX = new VEQuadR();
@@ -44,8 +46,18 @@ namespace Vivid3D.PostProcess
         {
             // GL.Disable(EnableCap.Blend);
             Active = this;
-             FB.Bind();
-            GL.ClearColor(1,0.8f,0.8f,0.8f);
+
+            RBuf.Bind();
+             GL.ClearColor(0,0,0,1);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+              Scene.Render();
+            RBuf.Release();
+
+            GL.Disable(EnableCap.Blend);
+
+
+            FB.Bind();
+            GL.ClearColor(0,0,0,1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
               Scene.Render();
                FB.Release();
@@ -60,8 +72,15 @@ namespace Vivid3D.PostProcess
                 p.Render(FB.BB);
                 FB2.Release();
                 p.Release(FB.BB);
-                //FB2.Release(); 
+                p.PostBind(FB2.BB);
                 var ob = FB;
+                FB = FB2;
+                FB2 = ob;
+                FB2.Bind();
+                p.PostRender(FB.BB);
+                FB2.Release();
+                //FB2.Release(); 
+                ob = FB;
                 FB = FB2;
                 FB2 = ob;
 
@@ -71,6 +90,7 @@ namespace Vivid3D.PostProcess
             GL.ClearColor(1.0f, 0.8f, 0.8f, 0.8f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             DrawQuad();
+
 
         }
         public int qva = 0, qvb = 0;

@@ -15,8 +15,9 @@ namespace Vivid3D.Material
         public VTex2D TAO;
         public VTexCube TEnv;
         public float envS = 0.1f;
-        public OpenTK.Vector3 Spec = new OpenTK.Vector3(0.9f, 0.9f, 1.4f);
-        public float Shine = 0.8f;
+        public OpenTK.Vector3 Diff = new OpenTK.Vector3(1, 1, 1);
+        public OpenTK.Vector3 Spec = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
+        public float Shine = 0.6f;
         public static Material3D Active = null;
         public void LoadTexs(string folder,string name)
         {
@@ -29,7 +30,10 @@ namespace Vivid3D.Material
 
             if (TNorm != null) TNorm.Bind(1);
 
-            if (TEnv != null) TEnv.Bind(2);
+            //if (TSpec != null) TSpec.Bind(2);
+
+           if (TEnv != null) TEnv.Bind(2);
+            if (TSpec != null) TSpec.Bind(3);
            
             Active = this;
         }
@@ -38,8 +42,12 @@ namespace Vivid3D.Material
             if (TCol != null) TCol.Release(0);
           
             if(TNorm!=null) TNorm.Release(1);
+            //if (TSpec != null) TSpec.Release(2);
             if(TEnv!=null) TEnv.Release(2);
+            if (TSpec != null) TSpec.Release(3);
             Active = null;
+
+
         }
     }
 }

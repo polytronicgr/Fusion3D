@@ -21,7 +21,7 @@ namespace Vivid3D.Lighting
         public bool CastShadows = true;
         public LightType Type = LightType.Point;
         public Vector3 Diff = new Vector3(0.5f, 0.5f, 0.5f);
-        public Vector3 Spec = new Vector3(0.8f, 0.8f, 1.2f);
+        public Vector3 Spec = new Vector3(0.4f, 0.4f, 0.4f);
         public Vector3 Amb = new Vector3(0, 0, 0);
         public float Atten = 0.002f;
         public float AmbCE = 0.005f;

@@ -15,20 +15,37 @@ namespace Vivid3D.Import
     {
         public static string IPath = "";
         public static float ScaleX = 1, ScaleY = 1, ScaleZ = 1;
-
+        public static Texture.VTex2D NormBlank = null, DiffBlank, SpecBlank, MetalBlank;
+        public static OpenTK.Vector3 CTV(Color4D col)
+        {
+            return new OpenTK.Vector3(col.R, col.G, col.B);
+        }
         public override GraphNode3D LoadNode(string path)
         {
+
+            if (NormBlank == null)
+            {
+                NormBlank = new Texture.VTex2D("data\\tex\\normblank.png", Texture.LoadMethod.Single, false);
+                DiffBlank = new Texture.VTex2D("data\\tex\\diffblank.png", Texture.LoadMethod.Single, false);
+                SpecBlank = new Texture.VTex2D("data\\tex\\specblank.png", Texture.LoadMethod.Single, false);
+            }
+
+
+
             GraphEntity3D root = new GraphEntity3D();
             string file = path;
      
             var e = new Assimp.AssimpContext();
-            var c1 = new Assimp.Configs.NormalSmoothingAngleConfig(45);
+            var c1 = new Assimp.Configs.NormalSmoothingAngleConfig(75);
             e.SetConfig(c1);
+            
+            
             Console.WriteLine("Impporting:" + file);
             Assimp.Scene s = null;
             try
             {
-               s = e.ImportFile(file, PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.Triangulate | PostProcessSteps.GenerateNormals);
+                
+                s = e.ImportFile(file, PostProcessSteps.OptimizeGraph | PostProcessSteps.OptimizeMeshes | PostProcessSteps.FindDegenerates | PostProcessSteps.FindInvalidData ); 
             }
             catch(AssimpException ae)
             {
@@ -43,7 +60,9 @@ namespace Vivid3D.Import
             {
 
                 var vm = new Material.Material3D();
-              
+                vm.TCol = DiffBlank;
+                vm.TNorm = NormBlank;
+                vm.TSpec = SpecBlank;
                 var m2 = new VMesh(m.GetIndices().Length,m.VertexCount);
                 ml2.Add(m2);
                // ml.Add(m.Name, m2);
@@ -53,10 +72,35 @@ namespace Vivid3D.Import
                 m2.Name = m.Name;
                 var mat = s.Materials[m.MaterialIndex];
                 TextureSlot t1;
+
+                var sc = mat.GetMaterialTextureCount(TextureType.Unknown);
+                Console.WriteLine("SC:" + sc);
+                if (mat.HasColorDiffuse)
+                {
+                    vm.Diff = CTV(mat.ColorDiffuse);
+                }
+                if (mat.HasColorSpecular)
+                {
+                 //   vm.Spec = CTV(mat.ColorSpecular);
+                }
+                if (mat.HasShininess)
+                {
+               //     vm.Shine = mat.Shininess;
+                }
+
+                Console.WriteLine("Spec:" + vm.Spec);
+                //for(int ic = 0; ic < sc; ic++)
+                ///{
+                if (sc > 0)
+                {
+                    var tex2 = mat.GetMaterialTextures(TextureType.Unknown)[0];
+                                     vm.TSpec = new Texture.VTex2D(IPath + "\\" + tex2.FilePath, Texture.LoadMethod.Single, false);
+                }
+
                 if (mat.GetMaterialTextureCount(TextureType.Normals) > 0)
                 {
                     var ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
-                    Console.WriteLine("Norm:"+ntt.FilePath);
+                //    Console.WriteLine("Norm:"+ntt.FilePath);
                     vm.TNorm = new Texture.VTex2D(IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false);
                 }
 
@@ -71,13 +115,13 @@ namespace Vivid3D.Import
                     {
                         try
                         {
-                            Console.Write("t1:" + t1.FilePath);
+                  //          Console.Write("t1:" + t1.FilePath);
                             vm.TCol = new Texture.VTex2D(IPath +"\\"+ t1.FilePath,Texture.LoadMethod.Single, false);
                             if (File.Exists(IPath + "norm" + t1.FilePath))
                             {
 //                                vm.TNorm = new Texture.VTex2D(IPath + "norm" + t1.FilePath,Texture.LoadMethod.Single, false);
 
-                                Console.WriteLine("TexLoaded");
+                    //            Console.WriteLine("TexLoaded");
                             }
                         }
                         catch
@@ -166,6 +210,7 @@ namespace Vivid3D.Import
             r1.LocalTurn = lt.ClearTranslation();
             r1.LocalTurn = r1.LocalTurn.ClearScale();
             r1.LocalPos = lt.ExtractTranslation();
+            
  
             r1.LocalScale = lt.ExtractScale();
            // r1.LocalPos = new OpenTK.Vector3(r1.LocalPos.X + 100, 0, 0);

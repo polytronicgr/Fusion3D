@@ -45,9 +45,14 @@ namespace Vivid3D.Effect
             SetFloat("matS", Material.Material3D.Active.Shine);
             SetVec3("matSpec", Material.Material3D.Active.Spec);
             SetFloat("envS", Material.Material3D.Active.envS);
+            SetVec3("matDiff", Material.Material3D.Active.Diff);
             SetTex("tC", 0);
             SetTex("tN", 1);
+            //SetTex("tSpec", 2);
+
+
             SetTex("tS", 2);
+            SetTex("tSpec", 3);
         }
     }
 }

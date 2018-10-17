@@ -113,10 +113,10 @@ namespace VEdit
                     ent.SetMultiPass();
                     var e = ent as Vivid3D.Scene.GraphEntity3D;
                     var tm = new Vivid3D.Material.Material3D();
-       //             tm.TCol = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1.jpg", Vivid3D.Texture.LoadMethod.Single, true);
-         //           tm.TNorm = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1_nrm.png", Vivid3D.Texture.LoadMethod.Single,true);
-                  //  e.SetMat(tm);
-
+                    //             tm.TCol = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1.jpg", Vivid3D.Texture.LoadMethod.Single, true);
+                    //           tm.TNorm = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1_nrm.png", Vivid3D.Texture.LoadMethod.Single,true);
+                    //  e.SetMat(tm);
+                    ent.LocalScale = new OpenTK.Vector3(1,1,1);
                     Console.WriteLine("Imported:" + file.Path);
                     ConsoleView.Log("Imported:" + file.Path + "-3D Data", "Content");
                     var g=DockEdit3D.GetGraph();

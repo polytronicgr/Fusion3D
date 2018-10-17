@@ -103,6 +103,7 @@ namespace VividEdit.Forms
                 case Keys.ShiftKey:
                     moveS = 5.0f;
                     spaceLock = true;
+                    fast = true;
                     break;
             }
 
@@ -133,6 +134,7 @@ namespace VividEdit.Forms
                 case Keys.ShiftKey:
                     moveS = 2.0f;
                     spaceLock = false;
+                    fast = false;
                     break;
             }
         }
@@ -384,10 +386,26 @@ namespace VividEdit.Forms
             Light.On = true;
             Light.Diff = new Vector3(2, 2, 2);
             Light.CastShadows = true;
+            var l2 = new GraphLight3D();
+            l2.LocalPos = new Vector3(-90, 90, -80);
+            l2.Range = 800;
+            l2.On = true;
+            l2.Diff = new Vector3(0.3f, 1.5f, 1.5f);
+            l2.CastShadows = true;
+            var l3 = new GraphLight3D();
+            l3.LocalPos = new Vector3(70, 120, 80);
+            l3.Diff = new Vector3(1.4f, 0.2f, 0.2f);
+            l3.Range = 600;
+            l3.On = true;
+            l3.CastShadows = true;
+
             
             Graph = new SceneGraph3D();
             Graph.Add(Grid);
             Graph.Add(Light);
+            Graph.Add(l2);
+            Graph.Add(l3);
+
             Cam = new GraphCam3D();
             Graph.Add(Cam);
             PRen = new Vivid3D.PostProcess.PostProcessRender(Width, Height);
@@ -417,8 +435,11 @@ namespace VividEdit.Forms
 
         void ON_Paint()
         {
-          
 
+            if (fast)
+            {
+                Light.LocalPos = Cam.LocalPos;
+            }
             GL.ClearColor(0, 0, 0, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -427,7 +448,7 @@ namespace VividEdit.Forms
             //    Graph?.Render();
             // }
             Graph?.RenderShadows();
-            PRen.Render();
+            //PRen.Render();
 
 
             Graph?.Render();

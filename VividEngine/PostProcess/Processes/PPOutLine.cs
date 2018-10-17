@@ -53,7 +53,7 @@ namespace Vivid3D.PostProcess.Processes
         }
         public override void PostBind(VTex2D bb)
         {
-         pi = ImageProcessing.ImageProcessor.BlurImage(bb, 0.8f);
+         pi = ImageProcessing.ImageProcessor.BlurImage(bb, 0.3f);
 
         }
 

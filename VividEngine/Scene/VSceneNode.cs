@@ -15,6 +15,9 @@ namespace Vivid3D.Scene
     {
         public bool On = true;
         public string Name = "";
+        static int nn = 0;
+
+
         public Vector3 LocalPos = Vector3.Zero;
         public Vector3 LocalScale = Vector3.One;
         public Matrix4 LocalTurn = Matrix4.Identity;
@@ -33,6 +36,7 @@ namespace Vivid3D.Scene
                 }
             }
         }
+        public bool BreakTop = false;
         public List<GraphNode3D> TopList
         {
             get
@@ -53,6 +57,7 @@ namespace Vivid3D.Scene
         public void AddTop(List<GraphNode3D> l)
         {
             l.Add(this);
+            if (BreakTop) return;
             if (Top != null)
             {
                 Top.AddTop(l);
@@ -124,6 +129,8 @@ namespace Vivid3D.Scene
         {
             Init();
             Rot(new Vector3(0, 0, 0), Space.Local);
+            Name = "Node:" + nn;
+            nn++;
         }
         public virtual void Init()
         {

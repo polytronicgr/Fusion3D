@@ -17,6 +17,7 @@ namespace VividEdit.Forms
         public Vivid3D.Scene.SceneGraph3D Graph = null;
         public Dictionary<Vivid3D.Scene.GraphNode3D, TreeNode> nodeMap = new Dictionary<Vivid3D.Scene.GraphNode3D, TreeNode>();
         public List<Vivid3D.Scene.GraphNode3D> AllNodes = new List<Vivid3D.Scene.GraphNode3D>();
+        public SelectedNode Selected = null;
         public AppGraph()
         {
             InitializeComponent();
@@ -64,5 +65,18 @@ namespace VividEdit.Forms
             }
 
         }
+
+        private void appTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var an = e.Node;
+            foreach(var key in nodeMap.Keys)
+            {
+                if (nodeMap[key] == an)
+                {
+                    Selected?.Invoke(key);
+                }
+            }
+        }
     }
+    public delegate void SelectedNode(Vivid3D.Scene.GraphNode3D node);
 }

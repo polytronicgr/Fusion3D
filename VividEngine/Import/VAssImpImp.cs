@@ -44,7 +44,7 @@ namespace Vivid3D.Import
 
                 var vm = new Material.Material3D();
               
-                var m2 = new VMesh(m.VertexCount, m.GetIndices().Length);
+                var m2 = new VMesh(m.GetIndices().Length,m.VertexCount);
                 ml2.Add(m2);
                // ml.Add(m.Name, m2);
 
@@ -53,7 +53,14 @@ namespace Vivid3D.Import
                 m2.Name = m.Name;
                 var mat = s.Materials[m.MaterialIndex];
                 TextureSlot t1;
-               
+                if (mat.GetMaterialTextureCount(TextureType.Normals) > 0)
+                {
+                    var ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
+                    Console.WriteLine("Norm:"+ntt.FilePath);
+                    vm.TNorm = new Texture.VTex2D(IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false);
+                }
+
+                
                 if (mat.GetMaterialTextureCount(TextureType.Diffuse) > 0)
                 {
                     
@@ -64,10 +71,11 @@ namespace Vivid3D.Import
                     {
                         try
                         {
-                            vm.TCol = new Texture.VTex2D(IPath + t1.FilePath,Texture.LoadMethod.Single, false);
+                            Console.Write("t1:" + t1.FilePath);
+                            vm.TCol = new Texture.VTex2D(IPath +"\\"+ t1.FilePath,Texture.LoadMethod.Single, false);
                             if (File.Exists(IPath + "norm" + t1.FilePath))
                             {
-                                vm.TNorm = new Texture.VTex2D(IPath + "norm" + t1.FilePath,Texture.LoadMethod.Single, false);
+//                                vm.TNorm = new Texture.VTex2D(IPath + "norm" + t1.FilePath,Texture.LoadMethod.Single, false);
 
                                 Console.WriteLine("TexLoaded");
                             }
@@ -91,7 +99,7 @@ namespace Vivid3D.Import
                 }
                 for (int i = 0; i < m2.NumVertices; i++)
                 {
-                    var v = m.Vertices[i];
+                    var v = m.Vertices[i] * new Vector3D(15, 15, 15);
                     var n = m.Normals[i];
                     var t = m.TextureCoordinateChannels[0];
                     Vector3D tan, bi;
@@ -112,7 +120,9 @@ namespace Vivid3D.Import
                     }
                     else
                     {
-                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(t[i]));
+                        var tv = t[i];
+                        tv.Y = 1.0f - tv.Y;
+                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(tv));
                     }
                 }
                 int[] id = m.GetIndices();
@@ -142,6 +152,11 @@ namespace Vivid3D.Import
             root.Sub.Add(r1);
             r1.Top = root;
             r1.Name = s.Name;
+            if (s.Name.ToLower().Contains("root"))
+            {
+                r1.Name =r1.Name+ "*";
+                r1.BreakTop = true;
+            }
 
 
             //r1.LocalTurn = new OpenTK.Matrix4(s.Transform.A1, s.Transform.A2, s.Transform.A3, s.Transform.A4, s.Transform.B1, s.Transform.B2, s.Transform.B3, s.Transform.B4, s.Transform.C1, s.Transform.C2, s.Transform.C3, s.Transform.C4, s.Transform.D1, s.Transform.D2, s.Transform.D3, s.Transform.D4);

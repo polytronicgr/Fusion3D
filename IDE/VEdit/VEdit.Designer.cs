@@ -34,7 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1136, 892);
+            this.ClientSize = new System.Drawing.Size(1590, 1061);
             this.IsMdiContainer = true;
             this.Name = "VEdit";
             this.Text = "Form1";

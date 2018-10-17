@@ -67,6 +67,7 @@ namespace VividEdit.Forms
                 cfile.Name = file.Name;
                 cfile.Path = file.FullName;
                 cfile.DetermineType();
+                cfile.BasePath = Paths.Peek();                
                 Content.Add(cfile);
                 ConsoleView.Log("Scanned File:" + file.Name+" Type:"+cfile.Type, "Content");
 

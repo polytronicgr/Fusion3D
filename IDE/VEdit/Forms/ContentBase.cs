@@ -16,7 +16,7 @@ namespace VividEdit.Forms
         public int X { get; set; }
         public int Y { get; set; }
         public string Type = "";
-
+        public string BasePath = "";
         public void DetermineType()
         {
             string ext = new FileInfo(Path).Extension.ToLower();
@@ -26,6 +26,7 @@ namespace VividEdit.Forms
                 case ".obj":
                 case ".blend":
                 case ".fbx":
+                case ".gltf":
                     Type = "3D";
                     break;
                 case ".bmp":

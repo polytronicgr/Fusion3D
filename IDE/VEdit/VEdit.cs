@@ -53,6 +53,7 @@ namespace VEdit
 
             ConsoleView.Log("Loading project:" + BeginProject, "IDE");
             CurProject = new ProjectCore.Project(BeginProject);
+            AssImpImport.IPath = CurProject.ContentPath;
             ConsoleView.Log("Project loaded.", "IDE");
 
             ConsoleView.Log("Scanning default Content folder:" + CurProject.ContentPath, "IDE");
@@ -61,8 +62,17 @@ namespace VEdit
 
             ContentExplorer.FileOpen = FileOpen;
             DockEdit3D.Picked = ON_Picked;
+            DockAppGraph.Selected = ON_SelectNode;
         }
 
+
+        void ON_SelectNode(Vivid3D.Scene.GraphNode3D n)
+        {
+            if (n == null) return;
+            DockEdit3D.Selected.Root.Sub.Clear();
+            DockEdit3D.Selected.Root.AddProxy(n);
+            DockEdit3D.CurNode = n;
+        }
 
         void ON_Picked(Vivid3D.Scene.GraphNode3D n)
         {
@@ -95,13 +105,17 @@ namespace VEdit
             {
                 case "3D":
 
+                    AssImpImport.IPath = file.BasePath;
+                    Console.WriteLine(AssImpImport.IPath);
+                    //while (true) { }
+
                     var ent = Import.ImportNode(file.Path);
                     ent.SetMultiPass();
                     var e = ent as Vivid3D.Scene.GraphEntity3D;
                     var tm = new Vivid3D.Material.Material3D();
-                    tm.TCol = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1.jpg", Vivid3D.Texture.LoadMethod.Single, true);
-                    tm.TNorm = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1_nrm.png", Vivid3D.Texture.LoadMethod.Single,true);
-                    e.SetMat(tm);
+       //             tm.TCol = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1.jpg", Vivid3D.Texture.LoadMethod.Single, true);
+         //           tm.TNorm = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1_nrm.png", Vivid3D.Texture.LoadMethod.Single,true);
+                  //  e.SetMat(tm);
 
                     Console.WriteLine("Imported:" + file.Path);
                     ConsoleView.Log("Imported:" + file.Path + "-3D Data", "Content");

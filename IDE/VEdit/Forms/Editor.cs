@@ -53,10 +53,11 @@ namespace VividEdit.Forms
 //            dosize = true;
 
         }
-
+        public Vivid3D.Texture.VTex2D RIcon;
         public void LoadIcons()
         {
             if (iconLoaded) return;
+            RIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconrot.png", Vivid3D.Texture.LoadMethod.Single, true);
             XIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconx.png", Vivid3D.Texture.LoadMethod.Single, true);
             YIcon = new Vivid3D.Texture.VTex2D("data\\icon\\icony.png", Vivid3D.Texture.LoadMethod.Single, true);
             ZIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconz.png", Vivid3D.Texture.LoadMethod.Single, true);
@@ -198,7 +199,7 @@ namespace VividEdit.Forms
             // var l = Graph.GetList(true);
                
         }
-        GraphNode3D CurNode = null;
+        public GraphNode3D CurNode = null;
         void ON_MouseUp(MouseButtons b)
         {
             if (b == MouseButtons.Middle)
@@ -234,6 +235,10 @@ namespace VividEdit.Forms
             }
             if (CurNode != null)
             {
+                if(EMode == EditMode.Rotate)
+                {
+
+                }
                 if (EMode == EditMode.Move)
                 {
                     if (xLock || yLock || zLock)
@@ -247,16 +252,27 @@ namespace VividEdit.Forms
                         else
                         {
                             mov.Y = -mov.Y;
+                            
                             var mv = Vector3.TransformPosition(mov, Cam.World);
                             mv = mv - Cam.WorldPos;
+                            float oy = mv.Y;
+                            //mv.Y = mv.Z;
+                            //mv.Z = oy;
 
 
                             var tn = CurNode.TopList;
+
                             if (tn == null) return;
                             Matrix4 nm = Matrix4.Identity;
-
-                            foreach(var tn2 in tn)
+                            //tn.Remove(tn[0]) ;
+                            //tn.Remove(tn[0]);
+                            //tn.Remove(tn[tn.Count - 1]);
+                            //tn.Remove(tn[tn.Count - 1]);
+                            //tn.Remove(tn[0]);
+                            Console.WriteLine("!!!");
+                            foreach (var tn2 in tn)
                             {
+                                //    Console.WriteLine("Tn2:" + tn2.Name);
                                 nm = nm * tn2.World.Inverted();
                             }
                             if (zLock)
@@ -276,7 +292,7 @@ namespace VividEdit.Forms
                             }
                             //mv.Y = -mv.Y;
 
-                            mv = Vector3.TransformPosition(mv, nm);
+                            mv = Vector3.TransformVector(mv, nm);
                             //mv.Y = -mv.Y;
                             //if (zLock)
                            // {
@@ -292,14 +308,16 @@ namespace VividEdit.Forms
                     if (xLock || yLock || zLock)
                     {
 
-
+                        float y1 = mov.Y;
+                        mov.Y = mov.Z;
+                        mov.Z = y1;
                         if (SMode == SpaceMode.Local)
                         {
                             CurNode.Turn(mov, Space.Local);
                         }
                         else
                         {
-                            CurNode.LocalPos = CurNode.LocalPos + mov;
+                            CurNode.Turn(mov, Space.Local); ;
                         }
                     }
                 }
@@ -413,6 +431,9 @@ namespace VividEdit.Forms
                         Vivid3D.Draw.VPen.Rect(6, 6, 16, 16, YIcon);
                         Vivid3D.Draw.VPen.Rect(30,16, 16,16, XIcon);
                         Vivid3D.Draw.VPen.Rect(20, 8, 16, 16, ZIcon);
+                        break;
+                    case EditMode.Rotate:
+                        Vivid3D.Draw.VPen.Rect(6, 6, 64, 64, RIcon);
                         break;
                 }
 

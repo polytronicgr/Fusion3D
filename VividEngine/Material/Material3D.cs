@@ -17,7 +17,7 @@ namespace Vivid3D.Material
         public float envS = 0.1f;
         public OpenTK.Vector3 Diff = new OpenTK.Vector3(1, 1, 1);
         public OpenTK.Vector3 Spec = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
-        public float Shine = 0.6f;
+        public float Shine = 0.2f;
         public static Material3D Active = null;
         public void LoadTexs(string folder,string name)
         {

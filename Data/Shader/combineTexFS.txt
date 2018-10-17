@@ -1,0 +1,28 @@
+#version 330 core
+
+in vec2 UV;
+
+out vec3 color;
+
+uniform sampler2D tR1;
+uniform sampler2D tR2;
+
+uniform float level;
+
+
+
+void main(){
+ 
+    
+    vec3 f1 = texture2D(tR1,UV).rgb;
+    vec3 f2 = texture2D(tR2,UV).rgb;
+    
+    f1 = f1 * level;
+    f2 = f2 * (1.0-level);
+
+    f1 = (f1 + f2) * 2;
+
+    color = f1;
+
+
+}

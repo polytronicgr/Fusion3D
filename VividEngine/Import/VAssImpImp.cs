@@ -86,7 +86,7 @@ namespace Vivid3D.Import
                 }
                 if (mat.HasShininess)
                 {
-                    vm.Shine = 1.0f;
+                   
                     //vm.Shine = 0.3f+ mat.Shininess;
                     Console.WriteLine("Shine:" + vm.Shine);
                 }
@@ -163,7 +163,8 @@ namespace Vivid3D.Import
                     }
                     if (t.Count() == 0) 
                     {
-                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(t[i]));
+
+                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(new Vector3D(0,0,0)));
                     }
                     else
                     {

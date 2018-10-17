@@ -449,12 +449,13 @@ namespace VividEdit.Forms
             //    Graph?.Render();
             // }
             Graph?.RenderShadows();
-            //PRen.Render();
+            PRen.Render();
 
+            Vivid3D.Effect.EMultiPass3D.LightMod = 0.4f;
 
-            Graph?.Render();
+            //Graph?.Render();
             
-
+            
             if (CurNode != null)
             {
 

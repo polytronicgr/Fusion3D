@@ -56,6 +56,7 @@
             this.appTree.Size = new System.Drawing.Size(800, 450);
             this.appTree.TabIndex = 0;
             this.appTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.appTree_AfterSelect);
+            this.appTree.MouseClick += new System.Windows.Forms.MouseEventHandler(this.appTree_MouseClick);
             // 
             // AppGraph
             // 

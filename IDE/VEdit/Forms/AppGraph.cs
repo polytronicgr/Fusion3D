@@ -77,6 +77,16 @@ namespace VividEdit.Forms
                 }
             }
         }
+
+        private void appTree_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+
+                
+
+            }
+        }
     }
     public delegate void SelectedNode(Vivid3D.Scene.GraphNode3D node);
 }

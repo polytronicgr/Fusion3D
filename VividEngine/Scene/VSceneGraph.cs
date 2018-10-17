@@ -16,7 +16,23 @@ namespace Vivid3D.Scene
         public GraphCam3D CamOverride = null;
         public GraphNode3D Root = new GraphNode3D();
         public SceneGraph3D SubGraph = null;
+
+        public void BeginRun()
+        {
+
+        }
+        public void PauseRun()
+        {
+
+        }
+
+        public void EndRun()
+        {
+
+        }
+
         public void BeginFrame()
+    
         {
             BeginFrameNode(Root);
             foreach(var c in Cams)

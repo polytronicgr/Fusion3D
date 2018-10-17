@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Vivid3D.Data;
 using OpenTK;
+using Vivid3D.Script;
 namespace Vivid3D.Scene
 {
     public enum Space
@@ -16,6 +17,7 @@ namespace Vivid3D.Scene
         public bool On = true;
         public string Name = "";
         static int nn = 0;
+        public ScriptBase Script { get; set; }
 
 
         public Vector3 LocalPos = Vector3.Zero;

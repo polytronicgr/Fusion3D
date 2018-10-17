@@ -21,6 +21,30 @@ namespace Vivid3D.Effect
             SetTex("tC", 0);
         }
     }
+    public class ELightMap : Effect3D
+    {
+        public static float LightMod = 1.0f;
+        public static float MatMod = 1.0f;
+        public ELightMap() : base("", "Data/Shader/vsLightMap.glsl", "Data/Shader/fsLightMap.glsl")
+        {
+
+        }
+        public override void SetPars()
+        {
+
+            //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
+            SetMat("model", Effect.FXG.Local);
+            SetMat("view", FXG.Cam.CamWorld);
+            SetMat("proj", FXG.Cam.ProjMat);
+         
+            SetTex("tC", 0);
+      
+            //SetTex("tSpec", 2);
+
+
+        }
+    }
+
     public class EMultiPass3D : Effect3D
     {
         public static float LightMod = 1.0f;

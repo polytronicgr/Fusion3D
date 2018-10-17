@@ -405,7 +405,7 @@ namespace VividEdit.Forms
             Graph.Add(Grid);
             Graph.Add(Light);
             Graph.Add(l2);
-            Graph.Add(l3);
+         //   Graph.Add(l3);
 
             Cam = new GraphCam3D();
             Graph.Add(Cam);

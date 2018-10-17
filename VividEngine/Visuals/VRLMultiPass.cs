@@ -49,6 +49,51 @@ namespace Vivid3D.Visuals
             m.Mat.Release();
         }
     }
+    public class VRLLightMap : VRenderLayer
+    {
+        public ELightMap FX;
+        public override void Init()
+        {
+            FX = new ELightMap();
+        }
+        public override void Render(VMesh m, VVisualizer v)
+        {
+
+            m.Mat.BindLightmap();
+            /* if (Lighting.GraphLight3D.Active != null)
+             {
+                 Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
+             }
+             */
+            if (FXG.FXOverride != null)
+            {
+                FXG.FXOverride.Bind();
+            }
+            else
+            {
+                FX.Bind();
+            }
+            v.SetMesh(m);
+            v.Bind();
+            v.Visualize();
+            v.Release();
+            if (FXG.FXOverride != null)
+            {
+                FXG.FXOverride.Release();
+            }
+            else
+            {
+                FX.Release();
+            }
+            /*
+            if (Lighting.GraphLight3D.Active != null)
+            {
+                Lighting.GraphLight3D.Active.ShadowFB.Cube.Release(2);
+            }
+            */
+            m.Mat.ReleaseLightmap();
+        }
+    }
     public class VRLNoFX : VRenderLayer
     {
         public ENoFX FX;

@@ -28,4 +28,15 @@ namespace Vivid3D.Visuals
             Layers.Add(new VRLNoFX());
         }
     }
+    public class VRLightMap : VRenderer
+    {
+        public VRLightMap()
+        {
+
+        }
+        public override void Init()
+        {
+            Layers.Add(new VRLLightMap());
+        }
+    }
 }

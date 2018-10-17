@@ -93,6 +93,18 @@ namespace Vivid3D.Scene
                 return r;
             }
         }
+        public void SetLightmap()
+        {
+            if (this is GraphEntity3D)
+            {
+                dynamic tn = this;
+                tn.Renderer = new Visuals.VRLightMap();
+            }
+            foreach (var n in Sub)
+            {
+                n.SetLightmap();
+            }
+        }
     public void SetMultiPass()
         {
             if (this is GraphEntity3D)

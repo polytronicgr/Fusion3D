@@ -31,7 +31,7 @@ namespace VividEdit.Forms
         public GraphLight3D Light;
         public GraphCam3D Cam;
         public NodePicked Picked = null;
-        public Vivid3D.Texture.VTex2D XIcon, YIcon, ZIcon, SIcon;
+        public Vivid3D.Texture.VTex2D XIcon, YIcon, ZIcon, SIcon, LightIcon;
         bool iconLoaded = false;
         public Vivid3D.PostProcess.PostProcessRender PRen;
         public Vivid3D.PostProcess.Processes.VPPBlur PPBlur;
@@ -62,6 +62,7 @@ namespace VividEdit.Forms
             YIcon = new Vivid3D.Texture.VTex2D("data\\icon\\icony.png", Vivid3D.Texture.LoadMethod.Single, true);
             ZIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconz.png", Vivid3D.Texture.LoadMethod.Single, true);
             SIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconscale.png", Vivid3D.Texture.LoadMethod.Single, true);
+            LightIcon = new Vivid3D.Texture.VTex2D("data\\icon\\iconlight.png", Vivid3D.Texture.LoadMethod.Single, true);
             iconLoaded = true;
         }
 
@@ -454,17 +455,28 @@ namespace VividEdit.Forms
             Vivid3D.Effect.EMultiPass3D.LightMod = 0.4f;
 
             //Graph?.Render();
-            
-            
+            LoadIcons();
+
+            foreach (var rl in Graph.Lights)
+            {
+
+                var lp = Vivid3D.Pick.Picker.CamTo2D(Cam, rl.LocalPos);
+                Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
+                Vivid3D.Draw.VPen.Rect(lp.X - 16, lp.Y - 16, 32, 32, LightIcon);
+
+
+            }
+
+
             if (CurNode != null)
             {
+                
 
                 var res = Vivid3D.Pick.Picker.CamTo2D(Cam, CurNode.WorldPos);
 
                 tX = (int)res.X;
                 tY = (int)res.Y;
-                LoadIcons();
-
+                
                 Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
 
                 Vivid3D.Draw.VPen.Rect(tX-3, tY-3, 6, 6, new Vector4(1, 1, 1, 1));

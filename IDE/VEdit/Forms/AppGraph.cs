@@ -83,9 +83,22 @@ namespace VividEdit.Forms
             if(e.Button == MouseButtons.Right)
             {
 
-                
+                //contextMenuStrip1.Show();
+                 
 
             }
+        }
+
+        private void pointLightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var p = VEdit.VEdit.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -30));
+            var nl = new Vivid3D.Lighting.GraphLight3D();
+            nl.LocalPos = p;
+            nl.Range = 800;
+            nl.Diff = new OpenTK.Vector3(3, 0, 0);
+            nl.CastShadows = true;
+            VEdit.VEdit.Main.DockEdit3D.Graph.Add(nl);
+            VividEdit.Forms.ConsoleView.Log("Added point light at (" + p + ")", "Editor");
         }
     }
     public delegate void SelectedNode(Vivid3D.Scene.GraphNode3D node);

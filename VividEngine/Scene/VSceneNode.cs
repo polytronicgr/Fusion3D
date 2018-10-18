@@ -117,6 +117,10 @@ namespace Vivid3D.Scene
                 n.SetMultiPass();
             }
         }
+        public Vector3 Transform(Vector3 p)
+        {
+            return Vector3.TransformPosition(p, World);
+        }
         public GraphNode3D Top = null;
         public List<GraphNode3D> Sub = new List<GraphNode3D>();
         public VInfoMap<string, object> Links = new VInfoMap<string, object>();

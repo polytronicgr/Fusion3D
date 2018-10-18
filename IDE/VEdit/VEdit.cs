@@ -24,11 +24,12 @@ namespace VEdit
         public AppGraph DockAppGraph;
         public ContentExplorer DockContentExplorer;
         public ConsoleView DockConsoleView;
+        public static VEdit Main = null;
 
         public VEdit()
         {
             InitializeComponent();
-
+            Main = this;
             MainDock = new DockPanel();
             MainDock.Dock = DockStyle.Fill;
             this.Controls.Add(MainDock);

@@ -51,6 +51,7 @@ namespace Vivid3D.Import
             {
                 Console.WriteLine(ae);
                 Console.WriteLine("Failed to import");
+                Environment.Exit(-1);
             }
                 Console.WriteLine("Imported.");
             Dictionary<string, VMesh> ml = new Dictionary<string, VMesh>();

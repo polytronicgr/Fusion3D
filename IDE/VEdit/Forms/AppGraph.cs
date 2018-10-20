@@ -31,9 +31,14 @@ namespace VividEdit.Forms
 
             var nb = appTree.Nodes[0];
 
+            RebuildGraph();
             AddNode(Graph.Root,nb);
             foreach(var l in lights)
             {
+                if (!LightTreeMap.ContainsKey(l))
+                {
+                    LightTreeMap.Add(l, new TreeNode("Light"));
+                }
                 var tn = LightTreeMap[l];
                 nodeMap[l] = tn;
             }
@@ -53,17 +58,32 @@ namespace VividEdit.Forms
                 }
             }
         }
-        void AddNode(Vivid3D.Scene.GraphNode3D n,TreeNode t)
+        void AddNode(Vivid3D.Scene.GraphNode3D n, TreeNode t)
         {
 
 
             AllNodes.Add(n);
-            var nn = new TreeNode(n.Name);
+            var nn = new TreeNode(n.Name+":Pos:"+n.LocalPos+":Scale:"+n.LocalScale);
 
             nodeMap.Add(n, nn);
 
             t.Nodes.Add(nn);
 
+            var gen = n as Vivid3D.Scene.GraphEntity3D;
+
+            foreach (var n4 in gen.Meshes)
+            {
+                TreeNode g = new TreeNode(n4.Mat.TCol.W + " H:" + n4.Mat.TCol.H);
+                t.Nodes.Add(g);
+
+                for (int i = 0; i < n4.NumVertices*3; i+=3)
+                {
+
+//                    TreeNode vn = new TreeNode("(" + n4.Vertices[i] + "," + n4.Vertices[i + 1] + "," + n4.Vertices[i + 2]);
+                
+  //                  t.Nodes[t.Nodes.Count - 1].Nodes.Add(vn);
+                }
+            }
             foreach(var n2 in n.Sub)
             {
                 AddNode(n2, nn);
@@ -123,6 +143,10 @@ namespace VividEdit.Forms
             appTree.Nodes[4].Nodes.Clear();
             foreach(var l in lights)
             {
+                if (LightTreeMap.ContainsKey(l) == false)
+                {
+                    LightTreeMap[l] = new TreeNode("Light:");
+                }
                 var tn = LightTreeMap[l];
                 appTree.Nodes[4].Nodes.Add(tn);
             }
@@ -157,6 +181,27 @@ namespace VividEdit.Forms
             saveFileDialog1.ShowDialog();
 
             VEdit.VEdit.Main.DockEdit3D.Graph.SaveGraph(saveFileDialog1.FileName);
+        }
+
+        private void loadRootGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "VividGraph|*.vg";
+            openFileDialog1.ShowDialog();
+            VEdit.VEdit.Main.DockEdit3D.Graph = new Vivid3D.Scene.SceneGraph3D();
+            VEdit.VEdit.Main.DockEdit3D.Graph.LoadGraph(openFileDialog1.FileName);
+            VEdit.VEdit.Main.DockEdit3D.Graph.Root.SetMultiPass();
+            VEdit.VEdit.Main.DockEdit3D.PRen.SetScene(VEdit.VEdit.Main.DockEdit3D.Graph);
+            Graph = VEdit.VEdit.Main.DockEdit3D.Graph;
+            lights = Graph.Lights;
+            foreach(var l in lights)
+            {
+                l.Selected = VEdit.VEdit.Main.DockEdit3D.ON_LightSelected;
+            }
+            VEdit.VEdit.Main.DockEdit3D.Selected.Root.Sub.Clear();
+            VEdit.VEdit.Main.DockEdit3D.Cam = VEdit.VEdit.Main.DockEdit3D.Graph.Cams[0];
+            VEdit.VEdit.Main.DockEdit3D.Selected.Cams.Clear();
+            VEdit.VEdit.Main.DockEdit3D.Selected.Cams.Add( VEdit.VEdit.Main.DockEdit3D.Cam);
+            Rebuild();
         }
     }
     public delegate void SelectedNode(Vivid3D.Scene.GraphNode3D node);

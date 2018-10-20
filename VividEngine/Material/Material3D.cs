@@ -20,6 +20,12 @@ namespace Vivid3D.Material
         public float Shine = 2.0f;
         public static Material3D Active = null;
 
+        public Material3D()
+        {
+        //    TNorm = new Texture.VTex2D("data\\tex\\normblank.png", Texture.LoadMethod.Single, false);
+          //  TCol = new Texture.VTex2D("data\\tex\\diffblank.png", Texture.LoadMethod.Single, false);
+           // TSpec  = new Texture.VTex2D("data\\tex\\specblank.png", Texture.LoadMethod.Single, false);
+        }
         public void Write()
         {
             Help.IOHelp.WriteVec(Diff);
@@ -43,6 +49,7 @@ namespace Vivid3D.Material
         }
         public void Read()
         {
+            Console.WriteLine("Thread:" + System.Threading.Thread.CurrentThread.Name + System.Threading.Thread.CurrentThread);
             Diff = Help.IOHelp.ReadVec3();
             Spec = Help.IOHelp.ReadVec3();
             Shine = Help.IOHelp.ReadFloat();

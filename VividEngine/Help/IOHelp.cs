@@ -23,7 +23,7 @@ namespace Vivid3D.Help
             w.Write(v.X);
             w.Write(v.Y);
             w.Write(v.Z);
-            w.Write(v.Z);
+            w.Write(v.W);
         }
         public static void WriteVec(OpenTK.Vector3 v)
         {

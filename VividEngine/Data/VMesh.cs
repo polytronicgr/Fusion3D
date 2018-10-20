@@ -64,7 +64,7 @@ namespace Vivid3D.Data
             }
             for(int i = 0;i< UV.Length; i++)
             {
-                Help.IOHelp.WriteFloat(i);
+                Help.IOHelp.WriteFloat(UV[i]);
             }
             for(int i = 0; i < Indices.Length; i++)
             {
@@ -82,6 +82,7 @@ namespace Vivid3D.Data
             Norm = new float[nv * 3];
             Bi = new float[nv * 3];
             Tan = new float[nv * 3];
+            Indices = new uint[ni];
             for (int i = 0; i < nv*3; i++)
             {
                 Vertices[i] = Help.IOHelp.ReadFloat();
@@ -89,6 +90,7 @@ namespace Vivid3D.Data
                 Bi[i] = Help.IOHelp.ReadFloat();
                 Tan[i] = Help.IOHelp.ReadFloat();
             }
+        
             UV = new float[nv * 2];
             for(int i = 0; i < nv * 2; i++)
             {
@@ -98,7 +100,7 @@ namespace Vivid3D.Data
             {
                 Indices[i] = (uint)Help.IOHelp.ReadInt();
             }
-            Viz = new VVisualizer(nv, ni);
+            Viz = new VVVBO(nv, ni);
             Final();
             Mat = new Material3D();
             Mat.Read();

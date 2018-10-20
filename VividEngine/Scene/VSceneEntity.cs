@@ -122,6 +122,7 @@ namespace Vivid3D.Scene
 
         public void Write()
         {
+            
             Help.IOHelp.WriteMatrix(LocalTurn);
             Help.IOHelp.WriteVec(LocalPos);
             Help.IOHelp.WriteVec(LocalScale);
@@ -168,6 +169,7 @@ namespace Vivid3D.Scene
                 gn.Top = this;
                 gn.Read();
             }
+            SetMultiPass();
         }
 
         public void GetVerts(List<Vector3> verts,GraphEntity3D node)

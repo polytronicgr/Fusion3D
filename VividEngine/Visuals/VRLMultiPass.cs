@@ -16,7 +16,7 @@ namespace Vivid3D.Visuals
         }
         public override void Render(VMesh m, VVisualizer v)
         {
-
+          
             m.Mat.Bind();
             if (Lighting.GraphLight3D.Active != null)
             {

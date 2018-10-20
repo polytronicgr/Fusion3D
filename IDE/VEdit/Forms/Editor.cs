@@ -193,7 +193,19 @@ namespace VividEdit.Forms
                     return;
                 }
 
+                CurNode = null;
+                foreach (var l in Graph.Lights)
+                {
 
+                    var sp = Vivid3D.Pick.Picker.CamTo2D(Cam, l.LocalPos);
+                    if (InRect((int)sp.X - 16, (int)sp.Y - 16, 32, 32))
+                    {
+                        Console.WriteLine("Picked Light");
+                        l.Select();
+                        return;
+                    }
+
+                }
 
                 //Graph.CamPick(mX, mY);
                 var res = Graph.CamPick(msX, msY);
@@ -208,17 +220,7 @@ namespace VividEdit.Forms
                 }
                 else
                 {
-                    CurNode = null;
-                    foreach(var l in Graph.Lights)
-                    {
 
-                        var sp = Vivid3D.Pick.Picker.CamTo2D(Cam, l.LocalPos);
-                        if (InRect((int)sp.X - 16, (int)sp.Y - 16, 32, 32))
-                        {
-                            l.Select();
-                        }
-
-                    }
                 //    CurNode = null;
                 }
 
@@ -470,7 +472,7 @@ namespace VividEdit.Forms
             l.Selected = ON_LightSelected;
         }
 
-        void ON_LightSelected(GraphNode3D node)
+        public void ON_LightSelected(GraphNode3D node)
         {
 
 
@@ -495,8 +497,8 @@ namespace VividEdit.Forms
             //    Graph?.Render();
             // }
             Graph?.RenderShadows();
-            PRen.Render();
-
+              PRen.Render();
+           // Graph?.Render();
             Vivid3D.Effect.EMultiPass3D.LightMod = 0.4f;
 
             //Graph?.Render();

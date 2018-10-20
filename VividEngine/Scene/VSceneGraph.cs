@@ -68,12 +68,14 @@ namespace Vivid3D.Scene
             {
                 var nc = new GraphCam3D();
                 nc.Read();
+                Cams.Add(nc);
             }
             int lc = r.ReadInt32();
-            for(int i = 0; i < cc; i++)
+            for(int i = 0; i < lc; i++)
             {
                 var nl = new Vivid3D.Lighting.GraphLight3D();
                 nl.Read();
+                Lights.Add(nl);
             }
             var re = new GraphEntity3D();
             Root = re;
@@ -201,6 +203,11 @@ namespace Vivid3D.Scene
                 {
                     if (node.AlwaysAlpha)
                     {
+                        var ge = node as GraphEntity3D;
+                        if (ge.Renderer is Visuals.VRMultiPass)
+                        {
+                            ge.Renderer = new Visuals.VRNoFx();
+                        }
                         GL.Enable(EnableCap.Blend);
                         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                         node.Present(c);
@@ -224,6 +231,11 @@ namespace Vivid3D.Scene
                                 GL.BlendFunc(BlendingFactor.One, BlendingFactor.One);
                             }
                            // Console.WriteLine("Presenting:" + node.Name);
+                           if(node.Name.Contains("Merged"))
+                            {
+                                int v = 2;
+
+                            }
                             node.Present(c);
 
                             //                        foreach (var n in Nodes)

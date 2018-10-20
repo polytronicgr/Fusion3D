@@ -153,6 +153,30 @@ namespace Vivid3D.Texture
             H = Help.IOHelp.ReadInt();
             Alpha = Help.IOHelp.ReadBool();
             RawData = Help.IOHelp.ReadBytes();
+           // GL.ActiveTexture(TextureUnit.Texture0);
+
+            GL.Enable(EnableCap.Texture2D);
+            ID = GL.GenTexture();
+
+            GL.BindTexture(TextureTarget.Texture2D, ID);
+
+
+            if (Alpha)
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, RawData);
+            }
+            else
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, W, H, 0, PixelFormat.Rgb, PixelType.UnsignedByte, RawData);
+            }
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
         public VTex2D(int w,int h,byte[] dat,bool alpha = true)
         {
@@ -216,6 +240,7 @@ namespace Vivid3D.Texture
                 Path = ot.Path;
                 Alpha = ot.Alpha;
                 Name = ot.Name;
+                RawData = ot.RawData;
                 return;
             }
             else
@@ -347,11 +372,7 @@ namespace Vivid3D.Texture
         }
         public override void Bind(int texu)
         {
-            if(Loaded==true && Binded==false)
-            {
-                BindData();
-                Binded = true;
-            }
+            
 
             GL.Enable(EnableCap.Texture2D);
             GL.ActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));

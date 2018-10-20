@@ -180,6 +180,9 @@
     <PackageReference Include="AssimpNet">
       <Version>4.1.0-rc2</Version>
     </PackageReference>
+    <PackageReference Include="assimp_native">
+      <Version>4.0.1</Version>
+    </PackageReference>
     <PackageReference Include="OpenTK">
       <Version>3.0.1</Version>
     </PackageReference>

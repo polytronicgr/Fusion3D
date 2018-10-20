@@ -175,6 +175,7 @@ namespace VividEdit.Forms
                     yLock = true;
                     xLock = false;
                     zLock = false;
+                    Console.WriteLine("Left");
                     return;
                 }
                 if (InRect(tX + 80, tY - 3, 32, 32))
@@ -199,6 +200,7 @@ namespace VividEdit.Forms
                 if (res != null)
                 {
                     Console.WriteLine("Picked:" + res.Node.Name);
+
                     Picked?.Invoke(res.Node);
                     CurNode = res.Node;
                     Selected.Root.Sub.Clear();
@@ -207,6 +209,17 @@ namespace VividEdit.Forms
                 else
                 {
                     CurNode = null;
+                    foreach(var l in Graph.Lights)
+                    {
+
+                        var sp = Vivid3D.Pick.Picker.CamTo2D(Cam, l.LocalPos);
+                        if (InRect((int)sp.X - 16, (int)sp.Y - 16, 32, 32))
+                        {
+                            l.Select();
+                        }
+
+                    }
+                //    CurNode = null;
                 }
 
             }
@@ -262,14 +275,30 @@ namespace VividEdit.Forms
                 {
                     if (xLock || yLock || zLock)
                     {
-
+                        //Console.WriteLine("Moved:" + mov);
 
                         if (SMode == SpaceMode.Local || spaceLock == true)
                         {
+                        //    Console.WriteLine("Moving");
                             CurNode.Move(mov, Space.Local);
                         }
                         else
                         {
+                      //      Console.WriteLine("Moving node.");
+                            if(CurNode.Top == null)
+                            {
+
+                                mov.Y = -mov.Y;
+                                mov = mov * 0.1f;
+
+                                var mv2 = Vector3.TransformPosition(mov, Cam.World);
+                                mv2 = mv2 - Cam.WorldPos;
+                                float oy2 = mv2.Y;
+                                CurNode.LocalPos = CurNode.LocalPos+mv2;
+                                //Console.WriteLine("Rooted!");
+
+                            }
+
                             mov.Y = -mov.Y;
                             
                             var mv = Vector3.TransformPosition(mov, Cam.World);
@@ -404,8 +433,8 @@ namespace VividEdit.Forms
             
             Graph = new SceneGraph3D();
             Graph.Add(Grid);
-            Graph.Add(Light);
-            Graph.Add(l2);
+          //  Graph.Add(Light);
+         //   Graph.Add(l2);
          //   Graph.Add(l3);
 
             Cam = new GraphCam3D();
@@ -434,6 +463,22 @@ namespace VividEdit.Forms
         public SceneGraph3D Selected;
         EditMode EMode = EditMode.Move;
         SpaceMode SMode = SpaceMode.Global;
+
+        public void AddLight(Vivid3D.Lighting.GraphLight3D l)
+        {
+            Graph.Lights.Add(l);
+            l.Selected = ON_LightSelected;
+        }
+
+        void ON_LightSelected(GraphNode3D node)
+        {
+
+
+            CurNode = node;
+            ConsoleView.Log("Light Selected", "Info");
+            Console.WriteLine("Light On :" + (node == null).ToString());
+            VEdit.VEdit.Main.DockClassInspect.Inspect(node as object);
+        }
 
         void ON_Paint()
         {
@@ -470,7 +515,7 @@ namespace VividEdit.Forms
 
             if (CurNode != null)
             {
-                
+               // Console.WriteLine("Node render");
 
                 var res = Vivid3D.Pick.Picker.CamTo2D(Cam, CurNode.WorldPos);
 

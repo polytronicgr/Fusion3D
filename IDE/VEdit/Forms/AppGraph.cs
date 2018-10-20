@@ -32,6 +32,11 @@ namespace VividEdit.Forms
             var nb = appTree.Nodes[0];
 
             AddNode(Graph.Root,nb);
+            foreach(var l in lights)
+            {
+                var tn = LightTreeMap[l];
+                nodeMap[l] = tn;
+            }
 
         }
         public void Select(Vivid3D.Scene.GraphNode3D n)
@@ -65,7 +70,7 @@ namespace VividEdit.Forms
             }
 
         }
-
+        public Vivid3D.Scene.GraphNode3D SelectedNode = null;
         private void appTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var an = e.Node;
@@ -73,6 +78,7 @@ namespace VividEdit.Forms
             {
                 if (nodeMap[key] == an)
                 {
+                    SelectedNode = key;
                     Selected?.Invoke(key);
                 }
             }
@@ -91,14 +97,66 @@ namespace VividEdit.Forms
 
         private void pointLightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var p = VEdit.VEdit.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -30));
+            var p = VEdit.VEdit.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -150));
             var nl = new Vivid3D.Lighting.GraphLight3D();
             nl.LocalPos = p;
             nl.Range = 800;
-            nl.Diff = new OpenTK.Vector3(3, 0, 0);
+            nl.Diff = new OpenTK.Vector3(2, 2, 2);
             nl.CastShadows = true;
-            VEdit.VEdit.Main.DockEdit3D.Graph.Add(nl);
+            VEdit.VEdit.Main.AddLight(nl);
             VividEdit.Forms.ConsoleView.Log("Added point light at (" + p + ")", "Editor");
+        }
+        public Dictionary<TreeNode, Vivid3D.Lighting.GraphLight3D> TreeLightMap = new Dictionary<TreeNode, Vivid3D.Lighting.GraphLight3D>();
+        public Dictionary<Vivid3D.Lighting.GraphLight3D,TreeNode> LightTreeMap = new Dictionary< Vivid3D.Lighting.GraphLight3D,TreeNode>();
+        public void AddLight(Vivid3D.Lighting.GraphLight3D l)
+        {
+            var ltn = new TreeNode("Light:" + Vivid3D.Lighting.GraphLight3D.LightNum);
+            TreeLightMap.Add(ltn, l);
+            LightTreeMap.Add(l, ltn);
+            lights.Add(l);
+            nodeMap.Add(l, ltn);
+            RebuildGraph();
+            
+        }
+        public void RebuildGraph()
+        {
+            appTree.Nodes[4].Nodes.Clear();
+            foreach(var l in lights)
+            {
+                var tn = LightTreeMap[l];
+                appTree.Nodes[4].Nodes.Add(tn);
+            }
+        }
+
+        public List<Vivid3D.Lighting.GraphLight3D> lights = new List<Vivid3D.Lighting.GraphLight3D>();
+
+        private void alignToCameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedNode != null)
+            {
+                SelectedNode.LocalPos = VEdit.VEdit.Main.DockEdit3D.Cam.LocalPos;
+                SelectedNode.LocalTurn = VEdit.VEdit.Main.DockEdit3D.Cam.LocalTurn;
+                Console.WriteLine("Align To Camera");
+
+            }
+        }
+
+        private void placeInFrontOfCameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedNode != null)
+            {
+                var np = VEdit.VEdit.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -80));
+                SelectedNode.LocalPos = np;
+
+            }
+        }
+
+        private void saveGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "VividGraph|*.vg";
+            saveFileDialog1.ShowDialog();
+
+            VEdit.VEdit.Main.DockEdit3D.Graph.SaveGraph(saveFileDialog1.FileName);
         }
     }
     public delegate void SelectedNode(Vivid3D.Scene.GraphNode3D node);

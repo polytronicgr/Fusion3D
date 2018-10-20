@@ -22,6 +22,7 @@ namespace Vivid3D.Lighting
         public LightType Type = LightType.Point;
         public Vector3 Diff = new Vector3(0.5f, 0.5f, 0.5f);
         public Vector3 Spec = new Vector3(0.4f, 0.4f, 0.4f);
+        public static int LightNum = 0;
         public Vector3 Amb = new Vector3(0,0,0);
         public float Atten = 0.002f;
      //   public Vector3 AmbCE = 0.3f;
@@ -32,6 +33,27 @@ namespace Vivid3D.Lighting
         {
             //    ShadowMap = new Texture.VTexCube(Quality.ShadowMapWidth, Quality.ShadowMapHeight);
             CreateShadowFBO();
+            LightNum++;
+        }
+        public void Write()
+        {
+            Help.IOHelp.WriteMatrix(LocalTurn);
+            Help.IOHelp.WriteVec(LocalPos);
+            Help.IOHelp.WriteVec(Diff);
+            Help.IOHelp.WriteVec(Spec);
+            Help.IOHelp.WriteVec(Amb);
+            Help.IOHelp.WriteFloat(Range);
+            Help.IOHelp.WriteBool(CastShadows);
+        }
+        public void Read()
+        {
+            LocalTurn = Help.IOHelp.ReadMatrix();
+            LocalPos = Help.IOHelp.ReadVec3();
+            Diff = Help.IOHelp.ReadVec3();
+            Spec = Help.IOHelp.ReadVec3();
+            Amb = Help.IOHelp.ReadVec3();
+            Range = Help.IOHelp.ReadFloat();
+            CastShadows = Help.IOHelp.ReadBool();
         }
         public void CreateShadowFBO()
         {

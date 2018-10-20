@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using Vivid3D.Help;
 using Vivid3D.App;
 namespace Vivid3D.Scene
 {
@@ -16,6 +17,20 @@ namespace Vivid3D.Scene
             {
                 return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FOV), AppInfo.RW / AppInfo.RH, MinZ, MaxZ);
             }
+        }
+        public void Write(System.IO.BinaryWriter w)
+        {
+            IOHelp.WriteMatrix(LocalTurn);
+            IOHelp.WriteVec(LocalPos);
+            IOHelp.WriteFloat(MinZ);
+            IOHelp.WriteFloat(MaxZ);
+        }
+        public void Read()
+        {
+            LocalTurn = IOHelp.ReadMatrix();
+            LocalPos = IOHelp.ReadVec3();
+            MinZ = IOHelp.ReadFloat();
+            MaxZ = IOHelp.ReadFloat();
         }
         public override void Rot(Vector3 r, Space s)
         {

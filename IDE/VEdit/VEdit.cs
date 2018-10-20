@@ -24,6 +24,7 @@ namespace VEdit
         public AppGraph DockAppGraph;
         public ContentExplorer DockContentExplorer;
         public ConsoleView DockConsoleView;
+        public ClassInspector DockClassInspect;
         public static VEdit Main = null;
 
         public VEdit()
@@ -42,11 +43,18 @@ namespace VEdit
             DockEdit3D = new Editor();
             DockContentExplorer = new ContentExplorer();
             DockConsoleView = new ConsoleView();
+            DockClassInspect = new ClassInspector();
             DockAppGraph.Show(MainDock, DockState.DockLeft);
             DockConsoleView.Show(MainDock, DockState.DockBottom);
             DockContentExplorer.Show(MainDock, DockState.DockBottom);
+            DockClassInspect.Show(MainDock, DockState.DockRightAutoHide);
+           // DockContentExplorer.Show(MainDock, DockState.Document);
+
+            //DockEdit3D.Show(MainDock, DockState.Document);
+            DockClassInspect.Show(MainDock, DockState.DockRight);
 
             DockEdit3D.Show(MainDock, DockState.Document);
+
             DockEdit3D.dosize = true;
             DockEdit3D.InitSize();
 
@@ -73,6 +81,22 @@ namespace VEdit
             DockEdit3D.Selected.Root.Sub.Clear();
             DockEdit3D.Selected.Root.AddProxy(n);
             DockEdit3D.CurNode = n;
+            if(n is Vivid3D.Lighting.GraphLight3D)
+            {
+                Console.WriteLine("SelLight");
+            }
+        }
+
+        public void BeginInspect()
+        {
+            DockClassInspect.BeginInspect();
+            Console.WriteLine("Begun inspec.");    
+        }
+
+        public void EndInspect()
+        {
+            Console.WriteLine("End Inspect.");
+            DockClassInspect.EndInspect();
         }
 
         void ON_Picked(Vivid3D.Scene.GraphNode3D n)
@@ -95,6 +119,15 @@ namespace VEdit
 
             DockAppGraph.Graph = DockEdit3D.GetGraph();
             DockAppGraph.Rebuild();
+
+        }
+
+        public void AddLight(Vivid3D.Lighting.GraphLight3D l)
+        {
+
+            DockAppGraph.AddLight(l);
+            DockEdit3D.AddLight(l);
+
 
         }
 

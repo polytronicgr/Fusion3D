@@ -12,7 +12,7 @@ namespace Vivid3D.Scene
     {
         Local,World
     }
-    public class GraphNode3D
+    public class GraphNode3D : VividBase
     {
         public bool On = true;
         public string Name = "";
@@ -236,6 +236,12 @@ namespace Vivid3D.Scene
         {
 
         }
+        public void Select()
+        {
+            Selected?.Invoke(this);
+        }
+        public NodeSelected Selected = null;
     }
+    public delegate void NodeSelected(GraphNode3D node);
 }
 

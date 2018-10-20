@@ -38,6 +38,12 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alignToCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.placeInFrontOfCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,24 +77,64 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createToolStripMenuItem});
+            this.createToolStripMenuItem,
+            this.nodeToolStripMenuItem,
+            this.graphToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(109, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
             // 
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pointLightToolStripMenuItem});
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createToolStripMenuItem.Text = "Create";
             // 
             // pointLightToolStripMenuItem
             // 
             this.pointLightToolStripMenuItem.Name = "pointLightToolStripMenuItem";
-            this.pointLightToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pointLightToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.pointLightToolStripMenuItem.Text = "Point Light";
             this.pointLightToolStripMenuItem.Click += new System.EventHandler(this.pointLightToolStripMenuItem_Click);
+            // 
+            // nodeToolStripMenuItem
+            // 
+            this.nodeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alignToCameraToolStripMenuItem,
+            this.placeInFrontOfCameraToolStripMenuItem});
+            this.nodeToolStripMenuItem.Name = "nodeToolStripMenuItem";
+            this.nodeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nodeToolStripMenuItem.Text = "Node";
+            // 
+            // alignToCameraToolStripMenuItem
+            // 
+            this.alignToCameraToolStripMenuItem.Name = "alignToCameraToolStripMenuItem";
+            this.alignToCameraToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.alignToCameraToolStripMenuItem.Text = "Align To Camera";
+            this.alignToCameraToolStripMenuItem.Click += new System.EventHandler(this.alignToCameraToolStripMenuItem_Click);
+            // 
+            // placeInFrontOfCameraToolStripMenuItem
+            // 
+            this.placeInFrontOfCameraToolStripMenuItem.Name = "placeInFrontOfCameraToolStripMenuItem";
+            this.placeInFrontOfCameraToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.placeInFrontOfCameraToolStripMenuItem.Text = "Place In Front Of Camera";
+            this.placeInFrontOfCameraToolStripMenuItem.Click += new System.EventHandler(this.placeInFrontOfCameraToolStripMenuItem_Click);
+            // 
+            // graphToolStripMenuItem
+            // 
+            this.graphToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveGraphToolStripMenuItem});
+            this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
+            this.graphToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.graphToolStripMenuItem.Text = "Graph";
+            // 
+            // saveGraphToolStripMenuItem
+            // 
+            this.saveGraphToolStripMenuItem.Name = "saveGraphToolStripMenuItem";
+            this.saveGraphToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveGraphToolStripMenuItem.Text = "Save Graph";
+            this.saveGraphToolStripMenuItem.Click += new System.EventHandler(this.saveGraphToolStripMenuItem_Click);
             // 
             // AppGraph
             // 
@@ -109,5 +155,11 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pointLightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alignToCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem placeInFrontOfCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveGraphToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

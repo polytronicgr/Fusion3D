@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Vivid3D.Lighting;
 using OpenTK;
+using System.IO;
 using OpenTK.Graphics.OpenGL4;
 namespace Vivid3D.Scene
 {
@@ -30,7 +31,29 @@ namespace Vivid3D.Scene
         {
 
         }
+        public void SaveGraph(string file)
+        {
+            FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write);
+            BinaryWriter bw = new BinaryWriter(fs);
 
+            Help.IOHelp.w = bw;
+
+            bw.Write(Cams.Count);
+            foreach(var c in Cams)
+            {
+                c.Write(bw);
+            }
+            bw.Write(Lights.Count);
+            foreach(var c in Lights)
+            {
+                c.Write(bw);
+            }
+            Root.Write(bw);
+
+
+            fs.Flush();
+            fs.Close();
+        }
         public void BeginFrame()
     
         {

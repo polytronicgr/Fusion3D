@@ -19,6 +19,50 @@ namespace Vivid3D.Material
         public OpenTK.Vector3 Spec = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
         public float Shine = 2.0f;
         public static Material3D Active = null;
+
+        public void Write()
+        {
+            Help.IOHelp.WriteVec(Diff);
+            Help.IOHelp.WriteVec(Spec);
+            Help.IOHelp.WriteFloat(Shine);
+            Help.IOHelp.WriteBool(TCol != null);
+            if (TCol != null)
+            {
+                TCol.Write();
+            }
+            Help.IOHelp.WriteBool(TNorm != null);
+            if (TNorm != null)
+            {
+                TNorm.Write();
+            }
+            Help.IOHelp.WriteBool(TSpec != null);
+            if (TSpec != null)
+            {
+                TSpec.Write();
+            }
+        }
+        public void Read()
+        {
+            Diff = Help.IOHelp.ReadVec3();
+            Spec = Help.IOHelp.ReadVec3();
+            Shine = Help.IOHelp.ReadFloat();
+            if (Help.IOHelp.ReadBool())
+            {
+                TCol = new VTex2D();
+                TCol.Read();
+            }
+            if (Help.IOHelp.ReadBool())
+            {
+                TNorm = new VTex2D();
+                TNorm.Read();
+            }
+            if(Help.IOHelp.ReadBool())
+            {
+                TSpec = new VTex2D();
+                TSpec.Read();
+            }
+        }
+
         public void LoadTexs(string folder,string name)
         {
             TCol = new VTex2D(folder + "//" + name + "_c.png",LoadMethod.Single,false);

@@ -45,6 +45,64 @@ namespace Vivid3D.Data
                 Vertices[vid + 2] *= z;
             }
         }
+        public VMesh()
+        {
+
+        }
+
+        public void Write()
+        {
+            Help.IOHelp.WriteInt(NumVertices);
+            Help.IOHelp.WriteInt(NumIndices);
+            for(int i = 0; i<Vertices.Length; i++)
+            {
+                Help.IOHelp.WriteFloat(Vertices[i]);
+                Help.IOHelp.WriteFloat(Norm[i]);
+               
+                Help.IOHelp.WriteFloat(Bi[i]);
+                Help.IOHelp.WriteFloat(Tan[i]);
+            }
+            for(int i = 0;i< UV.Length; i++)
+            {
+                Help.IOHelp.WriteFloat(i);
+            }
+            for(int i = 0; i < Indices.Length; i++)
+            {
+                Help.IOHelp.WriteInt((int)Indices[i]);
+            }
+            Mat.Write();
+        }
+        public void Read()
+        {
+            int nv = Help.IOHelp.ReadInt();
+            int ni = Help.IOHelp.ReadInt();
+            NumVerts = nv;
+      
+            Vertices = new float[nv * 3];
+            Norm = new float[nv * 3];
+            Bi = new float[nv * 3];
+            Tan = new float[nv * 3];
+            for (int i = 0; i < nv*3; i++)
+            {
+                Vertices[i] = Help.IOHelp.ReadFloat();
+                Norm[i] = Help.IOHelp.ReadFloat();
+                Bi[i] = Help.IOHelp.ReadFloat();
+                Tan[i] = Help.IOHelp.ReadFloat();
+            }
+            UV = new float[nv * 2];
+            for(int i = 0; i < nv * 2; i++)
+            {
+                UV[i] = Help.IOHelp.ReadFloat();
+            }
+            for(int i = 0; i < ni; i++)
+            {
+                Indices[i] = (uint)Help.IOHelp.ReadInt();
+            }
+            Viz = new VVisualizer(nv, ni);
+            Final();
+            Mat = new Material3D();
+            Mat.Read();
+        }
         public VMesh(int indices,int vertices)
         {
             //Data = new VVertex3D(vertices);

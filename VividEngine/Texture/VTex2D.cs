@@ -136,6 +136,24 @@ namespace Vivid3D.Texture
             GL.PixelStore(PixelStoreParameter.PackAlignment, 4 * 4);
         }
 
+        public VTex2D()
+        {
+
+        }
+        public void Write()
+        {
+            Help.IOHelp.WriteInt(W);
+            Help.IOHelp.WriteInt(H);
+            Help.IOHelp.WriteBool(Alpha);
+            Help.IOHelp.WriteBytes(RawData);
+        }
+        public void Read()
+        {
+            W = Help.IOHelp.ReadInt();
+            H = Help.IOHelp.ReadInt();
+            Alpha = Help.IOHelp.ReadBool();
+            RawData = Help.IOHelp.ReadBytes();
+        }
         public VTex2D(int w,int h,byte[] dat,bool alpha = true)
         {
             GL.ActiveTexture(TextureUnit.Texture0);

@@ -18,7 +18,7 @@ namespace Vivid3D.Scene
                 return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FOV), AppInfo.RW / AppInfo.RH, MinZ, MaxZ);
             }
         }
-        public void Write(System.IO.BinaryWriter w)
+        public void Write()
         {
             IOHelp.WriteMatrix(LocalTurn);
             IOHelp.WriteVec(LocalPos);

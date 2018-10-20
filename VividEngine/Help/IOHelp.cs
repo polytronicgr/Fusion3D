@@ -39,6 +39,32 @@ namespace Vivid3D.Help
         {
             w.Write(v);
         }
+        public static void WriteString(string s)
+        {
+            w.Write(s);
+        }
+        public static void WriteInt(int v)
+        {
+            w.Write(v);
+        }
+        public static int ReadInt()
+        {
+            return r.ReadInt32();
+        }
+        public static void WriteBytes(byte[] b)
+        {
+            w.Write(b.Length);
+            w.Write(b);
+        }
+        public static byte[] ReadBytes()
+        {
+            int bc = r.ReadInt32();
+            return r.ReadBytes(bc);
+        }
+        public static string ReadString()
+        {
+            return r.ReadString();
+        }
         public static OpenTK.Matrix4 ReadMatrix()
         {
             var m = new OpenTK.Matrix4(ReadVec4(), ReadVec4(), ReadVec4(), ReadVec4());

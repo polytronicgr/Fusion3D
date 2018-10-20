@@ -15,7 +15,7 @@ namespace Vivid3D.Scene
         public List<GraphCam3D> Cams = new List<GraphCam3D>();
         public List<GraphLight3D> Lights = new List<GraphLight3D>();
         public GraphCam3D CamOverride = null;
-        public GraphNode3D Root = new GraphNode3D();
+        public GraphNode3D Root = new GraphEntity3D();
         public SceneGraph3D SubGraph = null;
 
         public void BeginRun()
@@ -41,18 +41,45 @@ namespace Vivid3D.Scene
             bw.Write(Cams.Count);
             foreach(var c in Cams)
             {
-                c.Write(bw);
+                c.Write();
             }
             bw.Write(Lights.Count);
             foreach(var c in Lights)
             {
-                c.Write(bw);
+                c.Write();
             }
-            Root.Write(bw);
+            var r = Root as GraphEntity3D;
+            if (Root != null)
+            {
+                r.Write();
+            }
 
 
             fs.Flush();
             fs.Close();
+        }
+        public void LoadGraph(string file)
+        {
+            FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+            BinaryReader r = new BinaryReader(fs);
+            Help.IOHelp.r = r;
+            int cc = r.ReadInt32();
+            for(int i = 0; i < cc; i++)
+            {
+                var nc = new GraphCam3D();
+                nc.Read();
+            }
+            int lc = r.ReadInt32();
+            for(int i = 0; i < cc; i++)
+            {
+                var nl = new Vivid3D.Lighting.GraphLight3D();
+                nl.Read();
+            }
+            var re = new GraphEntity3D();
+            Root = re;
+            re.Read();
+            fs.Close();
+
         }
         public void BeginFrame()
     

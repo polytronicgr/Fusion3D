@@ -119,6 +119,57 @@ namespace Vivid3D.Scene
                 DScale(x, y, z, snode as GraphEntity3D);
             }
         }
+
+        public void Write()
+        {
+            Help.IOHelp.WriteMatrix(LocalTurn);
+            Help.IOHelp.WriteVec(LocalPos);
+            Help.IOHelp.WriteVec(LocalScale);
+            Help.IOHelp.WriteString(Name);
+            Help.IOHelp.WriteBool(AlwaysAlpha);
+            Help.IOHelp.WriteBool(On);
+            Help.IOHelp.WriteInt(Sub.Count);
+
+            int mc = Meshes.Count;
+            Help.IOHelp.WriteInt(mc);
+            foreach (var msh in Meshes)
+            {
+                
+                msh.Write();
+            }
+            foreach (var sn in Sub)
+            {
+                var e = sn as GraphEntity3D;
+                e.Write();
+
+
+            }
+        }
+        public void Read()
+        {
+            LocalTurn = Help.IOHelp.ReadMatrix();
+            LocalPos = Help.IOHelp.ReadVec3();
+            LocalScale = Help.IOHelp.ReadVec3();
+            Name = Help.IOHelp.ReadString();
+            AlwaysAlpha = Help.IOHelp.ReadBool();
+            On = Help.IOHelp.ReadBool();
+            int ns = Help.IOHelp.ReadInt();
+            int mc = Help.IOHelp.ReadInt();
+            for (int m = 0; m < mc; m++)
+            {
+                var msh = new VMesh();
+                msh.Read();
+                Meshes.Add(msh);
+            }
+            for (int i = 0; i < ns; i++)
+            {
+                var gn = new GraphEntity3D();
+                Sub.Add(gn);
+                gn.Top = this;
+                gn.Read();
+            }
+        }
+
         public void GetVerts(List<Vector3> verts,GraphEntity3D node)
         {
             foreach(var m in node.Meshes)

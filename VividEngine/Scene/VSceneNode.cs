@@ -158,6 +158,8 @@ namespace Vivid3D.Scene
         {
 
         }
+      
+
         public virtual void AddLink(string name,object obj)
         {
             Links.Add(name, obj);

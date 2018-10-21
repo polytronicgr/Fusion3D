@@ -52,6 +52,10 @@ namespace VividEdit.Forms.Inspectors
 
 
         }
+        public override void AlignV()
+        {
+            Align();
+        }
         public void Align()
         {
             IPos.Value = Light.LocalPos;

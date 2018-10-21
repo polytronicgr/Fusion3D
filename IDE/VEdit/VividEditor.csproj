@@ -91,6 +91,12 @@
     <Compile Include="Forms\Inspectors\InspectorBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Forms\Inspectors\InspectorEntity.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Inspectors\InspectorEntity.Designer.cs">
+      <DependentUpon>InspectorEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Inspectors\InspectorLight.cs">
       <SubType>UserControl</SubType>
     </Compile>

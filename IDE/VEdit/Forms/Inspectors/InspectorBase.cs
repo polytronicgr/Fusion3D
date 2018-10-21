@@ -12,5 +12,10 @@ namespace VividEdit.Forms.Inspectors
         public bool Inspecting = true;
 
 
+
+        public virtual void AlignV()
+        {
+
+        }
     }
 }

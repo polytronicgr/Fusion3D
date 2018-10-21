@@ -217,6 +217,7 @@ namespace VividEdit.Forms
                     CurNode = res.Node;
                     Selected.Root.Sub.Clear();
                     Selected.Root.AddProxy(CurNode);
+                    VividEdit.VividED.Main.DockClassInspect.Inspect(res.Node);
                 }
                 else
                 {
@@ -479,7 +480,7 @@ namespace VividEdit.Forms
             CurNode = node;
             ConsoleView.Log("Light Selected", "Info");
             Console.WriteLine("Light On :" + (node == null).ToString());
-            VEdit.VEdit.Main.DockClassInspect.Inspect(node as object);
+            VividEdit.VividED.Main.DockClassInspect.Inspect(node as object);
         }
 
         void ON_Paint()

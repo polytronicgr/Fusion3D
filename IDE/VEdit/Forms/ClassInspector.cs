@@ -22,6 +22,24 @@ namespace VividEdit.Forms
         public Inspectors.InspectorBase IC = null;
         public void Inspect(object cls)
         {
+            if(cls is Vivid3D.Scene.GraphEntity3D)
+            {
+                var cls2 = cls as Vivid3D.Scene.GraphEntity3D;
+                this.Text = "Inspecting:" + cls2.Name + "(3D Entity)";
+                if (IC != null)
+                {
+                    this.Controls.Remove(IC);
+                }
+                var ei = new Inspectors.InspectorEntity();
+                Inspecting = ei;
+                ei.Entity = cls2;
+                ei.Align();
+                ei.StartTick();
+                IC = ei;
+                ei.Location = new Point(0, 20);
+                this.Controls.Add(ei);
+                this.Show();
+            }
             if(cls is Vivid3D.Lighting.GraphLight3D)
             {
                 var cl = cls as Vivid3D.Lighting.GraphLight3D;
@@ -49,6 +67,7 @@ namespace VividEdit.Forms
             if (Inspecting != null)
             {
                 Inspecting.Inspecting = true;
+                Inspecting.AlignV();
             }
         }
         public void EndInspect()
@@ -65,12 +84,12 @@ namespace VividEdit.Forms
             if (inspectBox.Checked)
             {
                 Console.WriteLine("Changed True");
-                VEdit.VEdit.Main.BeginInspect();
+                VividEdit.VividED.Main.BeginInspect();
             }
             else
             //    Console.WriteLine("Changed false");
             {
-                VEdit.VEdit.Main.EndInspect();
+                VividEdit.VividED.Main.EndInspect();
             }
         }
 

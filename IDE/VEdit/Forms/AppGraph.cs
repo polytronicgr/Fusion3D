@@ -117,13 +117,13 @@ namespace VividEdit.Forms
 
         private void pointLightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var p = VEdit.VEdit.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -150));
+            var p = VividEdit.VividED.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -150));
             var nl = new Vivid3D.Lighting.GraphLight3D();
             nl.LocalPos = p;
             nl.Range = 800;
             nl.Diff = new OpenTK.Vector3(2, 2, 2);
             nl.CastShadows = true;
-            VEdit.VEdit.Main.AddLight(nl);
+            VividEdit.VividED.Main.AddLight(nl);
             VividEdit.Forms.ConsoleView.Log("Added point light at (" + p + ")", "Editor");
         }
         public Dictionary<TreeNode, Vivid3D.Lighting.GraphLight3D> TreeLightMap = new Dictionary<TreeNode, Vivid3D.Lighting.GraphLight3D>();
@@ -158,8 +158,8 @@ namespace VividEdit.Forms
         {
             if (SelectedNode != null)
             {
-                SelectedNode.LocalPos = VEdit.VEdit.Main.DockEdit3D.Cam.LocalPos;
-                SelectedNode.LocalTurn = VEdit.VEdit.Main.DockEdit3D.Cam.LocalTurn;
+                SelectedNode.LocalPos = VividEdit.VividED.Main.DockEdit3D.Cam.LocalPos;
+                SelectedNode.LocalTurn = VividEdit.VividED.Main.DockEdit3D.Cam.LocalTurn;
                 Console.WriteLine("Align To Camera");
 
             }
@@ -169,7 +169,7 @@ namespace VividEdit.Forms
         {
             if (SelectedNode != null)
             {
-                var np = VEdit.VEdit.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -80));
+                var np = VividEdit.VividED.Main.DockEdit3D.Cam.Transform(new OpenTK.Vector3(0, 0, -80));
                 SelectedNode.LocalPos = np;
 
             }
@@ -180,27 +180,27 @@ namespace VividEdit.Forms
             saveFileDialog1.Filter = "VividGraph|*.vg";
             saveFileDialog1.ShowDialog();
 
-            VEdit.VEdit.Main.DockEdit3D.Graph.SaveGraph(saveFileDialog1.FileName);
+            VividEdit.VividED.Main.DockEdit3D.Graph.SaveGraph(saveFileDialog1.FileName);
         }
 
         private void loadRootGraphToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "VividGraph|*.vg";
             openFileDialog1.ShowDialog();
-            VEdit.VEdit.Main.DockEdit3D.Graph = new Vivid3D.Scene.SceneGraph3D();
-            VEdit.VEdit.Main.DockEdit3D.Graph.LoadGraph(openFileDialog1.FileName);
-            VEdit.VEdit.Main.DockEdit3D.Graph.Root.SetMultiPass();
-            VEdit.VEdit.Main.DockEdit3D.PRen.SetScene(VEdit.VEdit.Main.DockEdit3D.Graph);
-            Graph = VEdit.VEdit.Main.DockEdit3D.Graph;
+            VividEdit.VividED.Main.DockEdit3D.Graph = new Vivid3D.Scene.SceneGraph3D();
+            VividEdit.VividED.Main.DockEdit3D.Graph.LoadGraph(openFileDialog1.FileName);
+            VividEdit.VividED.Main.DockEdit3D.Graph.Root.SetMultiPass();
+            VividEdit.VividED.Main.DockEdit3D.PRen.SetScene(VividEdit.VividED.Main.DockEdit3D.Graph);
+            Graph = VividEdit.VividED.Main.DockEdit3D.Graph;
             lights = Graph.Lights;
             foreach(var l in lights)
             {
-                l.Selected = VEdit.VEdit.Main.DockEdit3D.ON_LightSelected;
+                l.Selected = VividEdit.VividED.Main.DockEdit3D.ON_LightSelected;
             }
-            VEdit.VEdit.Main.DockEdit3D.Selected.Root.Sub.Clear();
-            VEdit.VEdit.Main.DockEdit3D.Cam = VEdit.VEdit.Main.DockEdit3D.Graph.Cams[0];
-            VEdit.VEdit.Main.DockEdit3D.Selected.Cams.Clear();
-            VEdit.VEdit.Main.DockEdit3D.Selected.Cams.Add( VEdit.VEdit.Main.DockEdit3D.Cam);
+            VividEdit.VividED.Main.DockEdit3D.Selected.Root.Sub.Clear();
+            VividEdit.VividED.Main.DockEdit3D.Cam = VividEdit.VividED.Main.DockEdit3D.Graph.Cams[0];
+            VividEdit.VividED.Main.DockEdit3D.Selected.Cams.Clear();
+            VividEdit.VividED.Main.DockEdit3D.Selected.Cams.Add( VividEdit.VividED.Main.DockEdit3D.Cam);
             Rebuild();
         }
     }

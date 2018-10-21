@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VEdit
+namespace VividEdit
 {
     static class Program
     {
@@ -15,10 +15,10 @@ namespace VEdit
         static void Main()
         {
 
-            VEdit.BeginProject = "ScopeNine - Tech Demo One";
+            VividED.BeginProject = "ScopeNine - Tech Demo One";
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new VEdit());
+            Application.Run(new VividED());
         }
     }
 }

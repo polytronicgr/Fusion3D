@@ -12,9 +12,9 @@ using WeifenLuo.WinFormsUI;
 using WeifenLuo.WinFormsUI.Docking;
 using VividEdit.Forms;
 using Vivid3D.Import;
-namespace VEdit
+namespace VividEdit
 {
-    public partial class VEdit : Form
+    public partial class VividED : Form
     {
 
         public static string BeginProject = "";
@@ -25,9 +25,9 @@ namespace VEdit
         public ContentExplorer DockContentExplorer;
         public ConsoleView DockConsoleView;
         public ClassInspector DockClassInspect;
-        public static VEdit Main = null;
+        public static VividED Main = null;
 
-        public VEdit()
+        public VividED()
         {
             InitializeComponent();
             Main = this;

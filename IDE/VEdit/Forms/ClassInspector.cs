@@ -22,6 +22,25 @@ namespace VividEdit.Forms
         public Inspectors.InspectorBase IC = null;
         public void Inspect(object cls)
         {
+            if(cls is Vivid3D.Material.Material3D)
+            {
+                var cls3 = cls as Vivid3D.Material.Material3D;
+                this.Text = "Inspecting Material";
+                if (IC != null)
+                {
+                    this.Controls.Remove(IC);
+
+                }
+                var mi = new Inspectors.InspectorMaterial();
+                Inspecting = mi;
+                mi.Mat = cls3;
+                mi.Align();
+                mi.StartTick();
+                IC = mi;
+                mi.Location = new Point(0, 20);
+                this.Controls.Add(mi);
+                this.Show();
+            }
             if(cls is Vivid3D.Scene.GraphEntity3D)
             {
                 var cls2 = cls as Vivid3D.Scene.GraphEntity3D;
@@ -60,6 +79,7 @@ namespace VividEdit.Forms
                 this.Show();
 
             }
+            IC.SetUI();
         }
 
         public void BeginInspect()

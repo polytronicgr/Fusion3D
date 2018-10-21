@@ -17,5 +17,9 @@ namespace VividEdit.Forms.Inspectors
         {
 
         }
+        public virtual void SetUI()
+        {
+
+        }
     }
 }

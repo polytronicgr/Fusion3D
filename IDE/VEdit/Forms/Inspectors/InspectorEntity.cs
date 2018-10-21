@@ -24,8 +24,35 @@ namespace VividEdit.Forms.Inspectors
             this.Controls.Add(IPos);
             IPos.Location = new Point(6, 6);
             IPos.Show();
-       
+
             this.Size = new Size(512, 1000);
+            int vy = 40;
+            int mi = 0;
+           
+        }
+        public override void SetUI()
+        {
+            int mi = 0;
+            int vy = 60;
+            foreach (var m in Entity.Meshes)
+            {
+                var b = new Button();
+                b.Text = "Mesh:" + mi + " Material Edit" + mi;
+                mi++;
+                b.Location = new Point(6, vy);
+                b.Size = new Size(120, 25);
+                b.Click += (sender,e) =>
+                {
+                    VividEdit.VividED.Main.DockClassInspect.Inspect(m.Mat);
+                };
+                this.Controls.Add(b);
+            }
+        }
+        private void B_Click(object sender, EventArgs e)
+        {
+            //VividEdit.VividED.Main.DockClassInspect.Inspect(
+             // )
+           // throw new NotImplementedException();
         }
 
         private void Nt_Tick(object sender, EventArgs e)

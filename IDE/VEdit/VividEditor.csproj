@@ -106,6 +106,12 @@
     <Compile Include="Forms\Inspectors\InspectorLightControl.Designer.cs">
       <DependentUpon>InspectorLightControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Inspectors\InspectorMaterial.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Inspectors\InspectorMaterial.Designer.cs">
+      <DependentUpon>InspectorMaterial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Inspectors\ValueTypes\InspectBool.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,6 +123,12 @@
     </Compile>
     <Compile Include="Forms\Inspectors\ValueTypes\InspectFloat.Designer.cs">
       <DependentUpon>InspectFloat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Inspectors\ValueTypes\InspectTexture.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Inspectors\ValueTypes\InspectTexture.Designer.cs">
+      <DependentUpon>InspectTexture.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Inspectors\ValueTypes\InspectVec3.cs">
       <SubType>UserControl</SubType>
@@ -158,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inspectors\ValueTypes\InspectFloat.resx">
       <DependentUpon>InspectFloat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Inspectors\ValueTypes\InspectTexture.resx">
+      <DependentUpon>InspectTexture.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inspectors\ValueTypes\InspectVec3.resx">
       <DependentUpon>InspectVec3.cs</DependentUpon>

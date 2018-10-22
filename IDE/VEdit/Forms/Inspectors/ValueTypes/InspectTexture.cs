@@ -22,18 +22,32 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             var bm = new Bitmap(Value.W, Value.H);
             byte[] bs = Value.RawData;
             int i = 0;
-            for (int y = 0; y < Value.H; y++)
-            {
-                for(int x = 0; x < Value.W; x++)
-                {
+            var nbm = new Bitmap(texView.Width, texView.Height);
 
-                    Color p = Color.FromArgb(bs[i], bs[i + 1], bs[i + 2]);
-                    bm.SetPixel(x, y, p);
-                    i += 3;
+            float xr = (float)Value.W / (float)texView.Width;
+            float yr = (float)Value.H / (float)texView.Height;
+            
+            int bsiz = 3;
+            if (Value.Alpha) bsiz = 4;
+
+            for(int y = 0; y < texView.Height; y++)
+            {
+                for(int x = 0; x < texView.Width; x++)
+                {
+                    int nx = (int)((float)x * xr);
+                    int ny = (int)((float)y * yr);
+
+                    int loc = (int)((nx * bsiz) + (ny * Value.W * bsiz));
+
+                    Color p = Color.FromArgb(255, bs[loc], bs[loc + 1], bs[loc + 2]);
+                    nbm.SetPixel(x, y, p);
+
+
                 }
             }
-            bm = new Bitmap(bm, new Size(texView.Width, texView.Height));
-            texView.Image = bm;
+
+
+            texView.Image = nbm;
             texView.Invalidate();
 
         }

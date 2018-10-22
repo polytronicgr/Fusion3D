@@ -95,7 +95,7 @@ namespace Vivid3D.Scene
         }
         public void SetLightmap()
         {
-            if (this is GraphEntity3D)
+            if (this is GraphEntity3D || this is Terrain.GraphTerrain)
             {
                 dynamic tn = this;
                 tn.Renderer = new Visuals.VRLightMap();
@@ -107,7 +107,7 @@ namespace Vivid3D.Scene
         }
     public void SetMultiPass()
         {
-            if (this is GraphEntity3D)
+            if (this is GraphEntity3D || this is Terrain.GraphTerrain)
             {
                 dynamic tn = this;
                 tn.Renderer = new Visuals.VRMultiPass();

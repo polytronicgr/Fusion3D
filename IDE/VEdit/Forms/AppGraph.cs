@@ -73,8 +73,8 @@ namespace VividEdit.Forms
 
             foreach (var n4 in gen.Meshes)
             {
-                TreeNode g = new TreeNode(n4.Mat.TCol.W + " H:" + n4.Mat.TCol.H);
-                t.Nodes.Add(g);
+             //   TreeNode g = new TreeNode(n4.Mat.TCol.W + " H:" + n4.Mat.TCol.H);
+            //    t.Nodes.Add(g);
 
                 for (int i = 0; i < n4.NumVertices*3; i+=3)
                 {
@@ -202,6 +202,22 @@ namespace VividEdit.Forms
             VividEdit.VividED.Main.DockEdit3D.Selected.Cams.Clear();
             VividEdit.VividED.Main.DockEdit3D.Selected.Cams.Add( VividEdit.VividED.Main.DockEdit3D.Cam);
             Rebuild();
+        }
+
+        private void newFlatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var nt = new Vivid3D.Terrain.GraphTerrain(1000, 1000, -1, 64, 64);
+            var tmat = nt.Meshes[0].Mat;
+
+            tmat.TCol = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockCol2.png", Vivid3D.Texture.LoadMethod.Single, false);
+            tmat.TNorm = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockNorm2.png", Vivid3D.Texture.LoadMethod.Single, false);
+
+
+
+
+
+            VividEdit.VividED.Main.AddEnt(nt);
+
         }
     }
     public delegate void SelectedNode(Vivid3D.Scene.GraphNode3D node);

@@ -41,7 +41,7 @@ namespace VividEdit.Forms
                 this.Controls.Add(mi);
                 this.Show();
             }
-            if(cls is Vivid3D.Scene.GraphEntity3D)
+            if(cls is Vivid3D.Scene.GraphEntity3D || cls is Vivid3D.Terrain.GraphTerrain)
             {
                 var cls2 = cls as Vivid3D.Scene.GraphEntity3D;
                 this.Text = "Inspecting:" + cls2.Name + "(3D Entity)";

@@ -163,8 +163,98 @@ namespace Vivid3D.Data
         {
             return Indices;
         }
+        public int[] TriVert(int id)
+        {
+            int[] i = new int[3];
+            i[0] = (int)Indices[id * 3];
+            i[1] = (int)Indices[id * 3 + 1];
+            i[2] =(int)Indices[id * 3 + 2];
+            return i;
+        }
+        public Vector3 TriPos(int id)
+        {
+            var ii = TriVert(id);
+            return new Vector3(Vertices[ii[0]], Vertices[ii[1]], Vertices[ii[2]]);
+        }
+
+
+        public Vector3 GetPos(int id)
+        {
+            id = (int)Indices[id];
+            return new Vector3(Vertices[id * 3], Vertices[id * 3 + 1], Vertices[id * 3 + 2]);
+        }
+        public Vector3 GetUV(int id)
+        {
+            id = (int)Indices[id];
+            return new Vector3(UV[id * 2], UV[id * 2 + 1], 0);
+        }
+        public Vector3 GetNorm(int id)
+        {
+            id = (int)Indices[id];
+            return new Vector3(Norm[id * 3], Norm[id * 3 + 1], Norm[id * 3 + 2]);
+        }
+        public void SetNorm(int id, Vector3 n, Vector3 bi, Vector3 tan)
+        {
+            id = (int)Indices[id];
+            Norm[id * 3] = n.X;
+            Norm[id * 3 + 1] = n.Y;
+            Norm[id * 3 + 2] = n.Z;
+
+            Bi[id * 3] = bi.X;
+            Bi[id * 3 + 1] = bi.Y;
+            Bi[id * 3 + 2] = bi.Z;
+
+            Tan[id * 3] = tan.X;
+            Tan[id * 3 + 1] = tan.Y;
+            Tan[id * 3 + 2] = tan.Z;
+        }
+        public void GenerateTangents()
+        {
+            // Vector3 v1, v2, v3;
+            // Vector3 u1, u2, u3;
+            for (int i = 0; i < Indices.Length; i+=3)
+            {
+                Vector3 v1, v2, v3;
+                v1 = GetPos(i);
+                v2 = GetPos(i+1);
+                v3 = GetPos(i+2);
+
+                Vector3 t1, t2, t3;
+
+                t1 = GetUV(i);
+                t2 = GetUV(i + 1);
+                t3 = GetUV(i + 2);
+
+                Vector3 v2v1 = v2 - v1;
+                Vector3 v3v1 = v3 - v1;
+
+                float c1 = t2.X - t1.X;
+                float c2 = t2.Y - t1.Y;
+
+                float c3 = t3.X - t1.X;
+                float c4 = t3.Y - t1.Y;
+
+                Vector3 n = GetNorm(i);
+
+                Vector3 tan = new Vector3(c3 * v2v1.X - c2 * v3v1.X, c3 * v2v1.Y - c2 * v3v1.Y, c3 * v2v1.Z - c2 * v3v1.Z);
+                Vector3 bi = Vector3.Cross(n, tan).Normalized();
+                Vector3 st = Vector3.Cross(bi, n).Normalized();
+
+                SetNorm(i, n, bi, tan);
+                SetNorm(i + 1, n, bi, tan);
+                SetNorm(i + 2, n, bi, tan);
+
+
+
+            }
+
+        }
         public void Final()
         {
+            if (Viz == null)
+            {
+                Viz = new VVVBO(NumVerts, NumIndices);
+            }
             Viz.SetMesh(this);
             Viz.Final();
         }

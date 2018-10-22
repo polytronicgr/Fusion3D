@@ -75,6 +75,7 @@
     <Compile Include="PostProcess\Processes\PPOutLine.cs" />
     <Compile Include="Scene\VividBase.cs" />
     <Compile Include="Script\ScriptBase.cs" />
+    <Compile Include="Terrain\GraphTerrain.cs" />
     <Compile Include="Visuals\VRenderer.cs" />
     <Compile Include="Visuals\VRendererSimple.cs" />
     <Compile Include="Visuals\VRenderLayer.cs" />

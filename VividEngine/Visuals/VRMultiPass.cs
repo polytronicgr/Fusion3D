@@ -28,6 +28,17 @@ namespace Vivid3D.Visuals
             Layers.Add(new VRLNoFX());
         }
     }
+    public class VRTerrain : VRenderer
+    {
+        public VRTerrain()
+        {
+
+        }
+        public override void Init()
+        {
+            Layers.Add(new VRLTerrain());
+        }
+    }
     public class VRLightMap : VRenderer
     {
         public VRLightMap()

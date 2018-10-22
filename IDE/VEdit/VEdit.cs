@@ -131,6 +131,13 @@ namespace VividEdit
 
         }
 
+        public void AddEnt(Vivid3D.Scene.GraphEntity3D e)
+        {
+            DockEdit3D.Graph.Add(e);
+            DockEdit3D.Selected.Root.Sub.Clear();
+            DockEdit3D.Selected.Add(e);
+            rebuildUI();
+        }
         public void FileOpen(ContentFile file)
         {
 

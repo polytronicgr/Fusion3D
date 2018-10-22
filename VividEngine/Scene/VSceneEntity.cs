@@ -71,7 +71,7 @@ namespace Vivid3D.Scene
             }
             foreach(var snode in node.Sub)
             {
-                if (snode is GraphEntity3D)
+                if (snode is GraphEntity3D || snode is Terrain.GraphTerrain)
                 {
                     GetBounds(snode as GraphEntity3D);
                 }
@@ -217,7 +217,7 @@ namespace Vivid3D.Scene
             }
             foreach(var n in Sub)
             {
-                if(n is GraphEntity3D)
+                if (n is GraphEntity3D || n is Terrain.GraphTerrain) ;
                 {
                     var ge = n as GraphEntity3D;
                     ge.SetMat(mat);
@@ -299,6 +299,7 @@ namespace Vivid3D.Scene
             {
                 Effect.FXG.Mesh = m;
                 Renderer.Render(m);
+                Console.WriteLine("Renderer:" + Renderer.ToString() + " MeshI" + m.NumIndices);
             }
           
         }

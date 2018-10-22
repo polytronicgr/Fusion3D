@@ -184,7 +184,12 @@ namespace Vivid3D.Scene
         }
         public virtual void RenderNode(GraphNode3D node)
         {
+            Console.WriteLine("RenderNode:" + node.Name);
+            if(node.Name == "Terrain")
+            {
+                int g = 2;
 
+            }
             if (CamOverride != null)
             {
                 foreach (var l in Lights)

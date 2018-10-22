@@ -22,9 +22,9 @@ namespace Vivid3D.Material
 
         public Material3D()
         {
-        //    TNorm = new Texture.VTex2D("data\\tex\\normblank.png", Texture.LoadMethod.Single, false);
-          //  TCol = new Texture.VTex2D("data\\tex\\diffblank.png", Texture.LoadMethod.Single, false);
-           // TSpec  = new Texture.VTex2D("data\\tex\\specblank.png", Texture.LoadMethod.Single, false);
+            TNorm = new Texture.VTex2D("data\\tex\\normblank.png", Texture.LoadMethod.Single, false);
+            TCol = new Texture.VTex2D("data\\tex\\diffblank.png", Texture.LoadMethod.Single, false);
+            TSpec  = new Texture.VTex2D("data\\tex\\specblank.png", Texture.LoadMethod.Single, false);
         }
         public void Write()
         {

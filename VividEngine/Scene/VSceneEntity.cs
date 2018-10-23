@@ -39,6 +39,9 @@ namespace Vivid3D.Scene
 
         public Matrix4 GlobalInverse;
 
+        public Animation.Animator Animator = new Animation.Animator();
+
+
         public void GetBounds(GraphEntity3D node)
         {
             foreach(var m in node.Meshes)

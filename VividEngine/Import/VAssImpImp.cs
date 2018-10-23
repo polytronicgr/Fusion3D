@@ -64,11 +64,17 @@ namespace Vivid3D.Import
 
             root.GlobalInverse = ToTK(tf);
 
+            var boneToWeight = new Dictionary<uint, List<VertexWeight>>();
 
+            //s.Animations[0].NodeAnimationChannels[0].
+            //s.Animations[0].anim
 
+            root.Animator.InitAssImp(model);
+
+     
             foreach (var m in s.Meshes)
             {
-
+                
                 
 
                 Console.WriteLine("M:" + m.Name + " Bones:" + m.BoneCount);
@@ -221,6 +227,18 @@ namespace Vivid3D.Import
 
             return root as GraphNode3D;
         }
+
+        public void ExtractBoneWeights(Mesh mesh,IDictionary<uint,List<VertexWeight>> vertexToBoneWeight)
+        {
+            foreach(var bone in mesh.Bones)
+            {
+
+                // int bone 
+
+
+            }
+        }
+
         private OpenTK.Matrix4 ToTK(Matrix4x4 mat)
         {
             return new OpenTK.Matrix4(mat.A1, mat.B1, mat.C1, mat.D1,mat.A2, mat.B2, mat.C2, mat.D2, mat.A3, mat.B3, mat.C3, mat.D3, mat.A4, mat.B4,mat.C4, mat.D4);

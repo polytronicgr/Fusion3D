@@ -146,8 +146,20 @@ namespace Vivid3D.Data
             VertexData[id].BiNorm = b;
             VertexData[id].UV = uv;
 
+
        
         }
+        public void SetVertexBones(int id,int b0,int b1,int b2,int b3)
+        {
+            VertexData[id].BoneIndices = new int[4];
+            VertexData[id].BoneIndices[0] = b0;
+            VertexData[id].BoneIndices[1] = b1;
+            VertexData[id].BoneIndices[2] = b2;
+            VertexData[id].BoneIndices[3] = b3;
+        }
+
+
+
         public void SetTri(int id,int v0,int v1,int v2)
         {
             TriData[id].V0 = v0;

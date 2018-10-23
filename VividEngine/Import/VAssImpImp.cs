@@ -69,7 +69,7 @@ namespace Vivid3D.Import
             //s.Animations[0].NodeAnimationChannels[0].
             //s.Animations[0].anim
 
-            root.Animator.InitAssImp(model);
+       //     root.Animator.InitAssImp(model);
 
      
             foreach (var m in s.Meshes)

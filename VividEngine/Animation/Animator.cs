@@ -46,6 +46,13 @@ namespace Vivid3D.Animation
             Animations = new List<AnimEvaluator>();
         }
 
+        public void SetAnimationIndex(int index)
+        {
+
+            CurrentAnimationIndex = index;
+
+        }
+
         public void InitAssImp(Assimp.Scene aiRoot,Scene.GraphEntity3D root)
         {
             if (aiRoot.HasAnimations == false)
@@ -55,7 +62,86 @@ namespace Vivid3D.Animation
 
             _skeleton = CreateBoneTree(aiRoot.RootNode, null);
 
+            foreach (var mesh in aiRoot.Meshes)
+            {
+                foreach (var bone in mesh.Bones)
+                {
+                    Bone found;
+                    if (!_bonesByName.TryGetValue(bone.Name, out found)) continue;
+
+                    var skip = (from t in _bones let bname = bone.Name where t.Name == bname select t).Any();
+                    if (skip) continue;
+
+                    found.Offset = OpenTK.Matrix4.Transpose(ToTK(bone.OffsetMatrix));
+                    _bones.Add(found);
+                    _bonesToIndex[found.Name] = _bones.IndexOf(found);
+                }
+                var mesh1 = mesh;
+                foreach (var bone in _bonesByName.Keys.Where(b => mesh1.Bones.All(b1 => b1.Name != b) && b.StartsWith("Bone")))
+                {
+                    _bonesByName[bone].Offset = _bonesByName[bone].Parent.Offset;
+                    _bones.Add(_bonesByName[bone]);
+                    _bonesToIndex[bone] = _bones.IndexOf(_bonesByName[bone]);
+                }
+
+            }
+            ExtractAnimations(aiRoot);
+
+            const float timestep = 1.0f / 30.0f;
+            for (var i = 0; i < Animations.Count; i++)
+            {
+                SetAnimationIndex(i);
+                var dt = 0.0f;
+                for (var ticks = 0.0f; ticks < Animations[i].Duration; ticks += Animations[i].TicksPerSecond / 30.0f)
+                {
+                    dt += timestep;
+                    Calculate(dt);
+                    var trans = new List<OpenTK.Matrix4>();
+                    for (var a = 0; a < _bones.Count; a++)
+                    {
+                        var rotMat = _bones[a].Offset * _bones[a].GlobalTransform;
+                        trans.Add(rotMat);
+                    }
+                    Animations[i].Transforms.Add(trans);
+                }
+            }
+            Console.WriteLine("Finished loading animations with " + _bones.Count + " bones");
+
         }
+        private void Calculate(float dt)
+        {
+            if ((CurrentAnimationIndex < 0) | (CurrentAnimationIndex >= Animations.Count))
+            {
+                return;
+            }
+            Animations[CurrentAnimationIndex].Evaluate(dt, _bonesByName);
+            UpdateTransforms(_skeleton);
+        }
+
+        private static void UpdateTransforms(Bone node)
+        {
+            CalculateBoneToWorldTransform(node);
+            foreach (var child in node.Children)
+            {
+                UpdateTransforms(child);
+            }
+        }
+
+        private void ExtractAnimations(Assimp.Scene scene)
+        {
+            foreach (var animation in scene.Animations)
+            {
+                Animations.Add(new AnimEvaluator(animation));
+            }
+            for (var i = 0; i < Animations.Count; i++)
+            {
+                _animationNameToId[Animations[i].Name] = i;
+            }
+            CurrentAnimationIndex = 0;
+        }
+
+
+
         private OpenTK.Matrix4 ToTK(Assimp.Matrix4x4 mat)
         {
             return new OpenTK.Matrix4(mat.A1, mat.B1, mat.C1, mat.D1, mat.A2, mat.B2, mat.C2, mat.D2, mat.A3, mat.B3, mat.C3, mat.D3, mat.A4, mat.B4, mat.C4, mat.D4);
@@ -148,8 +234,218 @@ namespace Vivid3D.Animation
         private float LastTime { get; set; }
         public float TicksPerSecond { get; set; }
         public float Duration { get; private set; }
-        private List<Tuple<int, int, int>> LastPositions { get; set; }
+        private List<MutableTuple<int, int, int>> LastPositions = new List<MutableTuple<int, int, int>>();
         public List<List<OpenTK.Matrix4>> Transforms { get; private set; }
+
+        public void Evaluate(float dt, Dictionary<string, Bone> bones)
+        {
+            dt *= TicksPerSecond;
+            var time = 0.0f;
+            if (Duration > 0.0f)
+            {
+                time = dt % Duration;
+            }
+            for (int i = 0; i < Channels.Count; i++)
+            {
+                var channel = Channels[i];
+                if (!bones.ContainsKey(channel.Name))
+                {
+                    Console.WriteLine("Did not find the bone node " + channel.Name);
+                    continue;
+                }
+                // interpolate position keyframes
+                var pPosition = new OpenTK.Vector3();
+                if (channel.PositionKeys.Count > 0)
+                {
+                    var frame = (time >= LastTime) ? LastPositions[i].Item1 : 0;
+                    while (frame < channel.PositionKeys.Count - 1)
+                    {
+                        if (time < channel.PositionKeys[frame + 1].Time)
+                        {
+                            break;
+                        }
+                        frame++;
+                    }
+                    if (frame >= channel.PositionKeys.Count)
+                    {
+                        frame = 0;
+                    }
+
+                    var nextFrame = (frame + 1) % channel.PositionKeys.Count;
+
+                    var key = channel.PositionKeys[frame];
+                    var nextKey = channel.PositionKeys[nextFrame];
+                    var diffTime = nextKey.Time - key.Time;
+                    if (diffTime < 0.0)
+                    {
+                        diffTime += Duration;
+                    }
+                    if (diffTime > 0.0)
+                    {
+                        var factor = (float)((time - key.Time) / diffTime);
+                        pPosition = key.Value + (nextKey.Value - key.Value) * factor;
+                    }
+                    else
+                    {
+                        pPosition = key.Value;
+                    }
+                    var tl = LastPositions[i];
+                    tl.Item1 = frame;
+                    LastPositions[i].Item1 = frame;
+
+                }
+                // interpolate rotation keyframes
+                
+
+                var pRot = new OpenTK.Quaternion(0, 0, 0, 1);
+                if (channel.RotationKeys.Count > 0)
+                {
+                    var frame = (time >= LastTime) ? LastPositions[i].Item2 : 0;
+                    while (frame < channel.RotationKeys.Count - 1)
+                    {
+                        if (time < channel.RotationKeys[frame + 1].Time)
+                        {
+                            break;
+                        }
+                        frame++;
+                    }
+                    if (frame >= channel.RotationKeys.Count)
+                    {
+                        frame = 0;
+                    }
+                    var nextFrame = (frame + 1) % channel.RotationKeys.Count;
+
+                    var key = channel.RotationKeys[frame];
+                    var nextKey = channel.RotationKeys[nextFrame];
+                    key.Value.Normalize();
+                    nextKey.Value.Normalize();
+                    var diffTime = nextKey.Time - key.Time;
+                    if (diffTime < 0.0)
+                    {
+                        diffTime += Duration;
+                    }
+                    if (diffTime > 0)
+                    {
+                        var factor = (float)((time - key.Time) / diffTime);
+                        pRot = OpenTK.Quaternion.Slerp(key.Value, nextKey.Value, factor);
+                    }
+                    else
+                    {
+                        pRot = key.Value;
+                    }
+                    LastPositions[i].Item1 = frame;
+
+                }
+                // interpolate scale keyframes
+                var pscale = new OpenTK.Vector3(1);
+                if (channel.ScalingKeys.Count > 0)
+                {
+                    var frame = (time >= LastTime) ? LastPositions[i].Item3 : 0;
+                    while (frame < channel.ScalingKeys.Count - 1)
+                    {
+                        if (time < channel.ScalingKeys[frame + 1].Time)
+                        {
+                            break;
+                        }
+                        frame++;
+                    }
+                    if (frame >= channel.ScalingKeys.Count)
+                    {
+                        frame = 0;
+                    }
+                    LastPositions[i].Item3 = frame;
+                }
+
+                OpenTK.Matrix4 mat = OpenTK.Matrix4.CreateFromQuaternion(pRot);
+
+                // create the combined transformation matrix
+               
+                mat.M11 *= pscale.X; mat.M12 *= pscale.X; mat.M13 *= pscale.X;
+                mat.M21 *= pscale.Y; mat.M22 *= pscale.Y; mat.M23 *= pscale.Y;
+                mat.M31 *= pscale.Z; mat.M32 *= pscale.Z; mat.M33 *= pscale.Z;
+                mat.M41 = pPosition.X; mat.M42 = pPosition.Y; mat.M43 = pPosition.Z;
+
+                // transpose to get DirectX style matrix
+                mat.Transpose();
+                bones[channel.Name].LocalTransform = mat;
+            }
+            LastTime = time;
+        }
+
+        public List<OpenTK.Matrix4> GetTransforms(float dt)
+        {
+            return Transforms[GetFrameIndexAt(dt)];
+        }
+
+
+
+        private int GetFrameIndexAt(float dt)
+        {
+            dt *= TicksPerSecond;
+            var time = 0.0f;
+            if (Duration > 0.0f)
+            {
+                time = dt % Duration;
+            }
+            var percent = time / Duration;
+            if (!PlayAnimationForward)
+            {
+                percent = (percent - 1.0f) * -1.0f;
+            }
+            var frameIndexAt = (int)(Transforms.Count * percent);
+            return frameIndexAt;
+        }
+
+        public AnimEvaluator(Assimp.Animation anim)
+        {
+
+            LastTime = 0.0f;
+            TicksPerSecond = anim.TicksPerSecond > 0.0f ? (float)anim.TicksPerSecond : 920.0f;
+            Duration = (float)anim.DurationInTicks;
+            Name = anim.Name;
+            Channels = new List<AnimChannel>();
+            foreach (var channel in anim.NodeAnimationChannels)
+            {
+                var nac = new AnimChannel();
+                var c = new AnimChannel();
+                var pk = new List<VectorKey>();
+                var rk = new List<QuatKey>();
+                var sk = new List<VectorKey>();
+                foreach(var k in channel.PositionKeys)
+                {
+                    var npk = new VectorKey();
+                    npk.Time = k.Time;
+                    npk.Value = new OpenTK.Vector3(k.Value.X, k.Value.Y, k.Value.Z);
+
+                    pk.Add(npk);
+                }
+                foreach(var k in channel.RotationKeys)
+                {
+                    var nrk = new QuatKey();
+                    nrk.Time = k.Time;
+                    nrk.Value = new OpenTK.Quaternion(k.Value.X, k.Value.Y, k.Value.Z, k.Value.W);
+                    rk.Add(nrk);
+                }
+                foreach(var s in channel.ScalingKeys)
+                {
+                    var nsk = new VectorKey();
+                    nsk.Time = s.Time;
+                    nsk.Value = new OpenTK.Vector3(s.Value.X, s.Value.Y, s.Value.Z);
+                    sk.Add(nsk);
+                }
+                nac.PositionKeys = pk;
+                nac.RotationKeys = rk;
+                nac.ScalingKeys = sk;
+                Channels.Add(nac);
+           
+            }
+            LastPositions = Enumerable.Repeat(new MutableTuple<int, int, int>(0, 0, 0), anim.NodeAnimationChannelCount).ToList();
+            Transforms = new List<List<OpenTK.Matrix4>>();
+            PlayAnimationForward = true;
+
+        }
+
+
 
         public AnimEvaluator(Anim anim)
         {
@@ -169,9 +465,22 @@ namespace Vivid3D.Animation
                 };
                 Channels.Add(c);
             }
-            LastPositions = Enumerable.Repeat(new Tuple<int, int, int>(0, 0, 0), anim.NodeAnimationChannelCount).ToList();
+            LastPositions = Enumerable.Repeat(new MutableTuple<int, int, int>(0, 0, 0), anim.NodeAnimationChannels.Count).ToList();
             Transforms = new List<List<OpenTK.Matrix4>>();
             PlayAnimationForward = true;
         }
+    }
+    public class MutableTuple<T1, T2, T3>
+    {
+        public MutableTuple(T1 i, T2 i1, T3 i2)
+        {
+            Item1 = i;
+            Item2 = i1;
+            Item3 = i2;
+        }
+
+        public T1 Item1 { get; set; }
+        public T2 Item2 { get; set; }
+        public T3 Item3 { get; set; }
     }
 }

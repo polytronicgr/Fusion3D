@@ -183,6 +183,39 @@ namespace Vivid3D.Animation
 
         }
 
+        public bool SetAnimation(string animation)
+        {
+            int index;
+            if (_animationNameToId.TryGetValue(animation, out index))
+            {
+                var oldIndex = CurrentAnimationIndex;
+                CurrentAnimationIndex = index;
+                return oldIndex != CurrentAnimationIndex;
+            }
+            return false;
+        }
+        public void PlayAnimationForward()
+        {
+            Animations[CurrentAnimationIndex].PlayAnimationForward = true;
+        }
+        public void PlayAnimationBackward()
+        {
+            Animations[CurrentAnimationIndex].PlayAnimationForward = false;
+        }
+        public void AdjustAnimationSpeedBy(float prc)
+        {
+            Animations[CurrentAnimationIndex].TicksPerSecond *= prc;
+        }
+        public void AdjustAnimationSpeedTo(float ticksPerSec)
+        {
+            Animations[CurrentAnimationIndex].TicksPerSecond = ticksPerSec;
+        }
+        public List<OpenTK.Matrix4> GetTransforms(float dt)
+        {
+            return Animations[CurrentAnimationIndex].GetTransforms(dt);
+        }
+
+
         private static void CalculateBoneToWorldTransform(Bone child)
         {
             child.GlobalTransform = child.LocalTransform;

@@ -304,6 +304,7 @@ namespace Vivid3D.Scene
         }
         public Vivid3D.Pick.PickResult CamPick(int x,int y)
         {
+            return null;
             var res = new Pick.PickResult();
 
             var nl = GetList(true);

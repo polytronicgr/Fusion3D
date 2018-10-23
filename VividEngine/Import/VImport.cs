@@ -18,6 +18,7 @@ namespace Vivid3D.Import
             RegImp(".dae", new AssImpImport());
             RegImp(".b3d", new AssImpImport());
             RegImp(".gltf", new AssImpImport());
+            RegImp(".x", new AssImpImport());
         }
         public static void RegImp(string key,Importer imp)
         {

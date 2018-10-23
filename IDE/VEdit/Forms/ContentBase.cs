@@ -27,6 +27,7 @@ namespace VividEdit.Forms
                 case ".blend":
                 case ".fbx":
                 case ".gltf":
+                case ".x":
                     Type = "3D";
                     break;
                 case ".bmp":

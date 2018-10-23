@@ -45,7 +45,7 @@ namespace Vivid3D.Import
             try
             {
 
-                s = e.ImportFile(file, PostProcessSteps.OptimizeMeshes | PostProcessSteps.OptimizeGraph| PostProcessSteps.FindInvalidData | PostProcessSteps.FindDegenerates | PostProcessSteps.Triangulate | PostProcessSteps.ValidateDataStructure);
+                s = e.ImportFile(file, PostProcessSteps.OptimizeMeshes | PostProcessSteps.OptimizeGraph | PostProcessSteps.FindInvalidData | PostProcessSteps.FindDegenerates | PostProcessSteps.Triangulate | PostProcessSteps.ValidateDataStructure | PostProcessSteps.CalculateTangentSpace);
             }
             catch(AssimpException ae)
             {
@@ -129,7 +129,7 @@ namespace Vivid3D.Import
                 if (mat.GetMaterialTextureCount(TextureType.Normals) > 0)
                 {
                     var ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
-                //    Console.WriteLine("Norm:"+ntt.FilePath);
+                    Console.WriteLine("Norm:"+ntt.FilePath);
                     vm.TNorm = new Texture.VTex2D(IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false);
                 }
 
@@ -138,14 +138,16 @@ namespace Vivid3D.Import
                 {
                     
                     t1 = mat.GetMaterialTextures(TextureType.Diffuse)[0];
+                    Console.WriteLine("DiffTex:" + t1.FilePath);
 
+                    
 
                     if (t1.FilePath != null)
                     {
                         try
                         {
                   //          Console.Write("t1:" + t1.FilePath);
-                            vm.TCol = new Texture.VTex2D(IPath +"\\"+ t1.FilePath,Texture.LoadMethod.Single, false);
+                            vm.TCol = new Texture.VTex2D(IPath +"\\"+ t1.FilePath.Replace(".dds",".png"),Texture.LoadMethod.Single, false);
                             if (File.Exists(IPath + "norm" + t1.FilePath))
                             {
 //                                vm.TNorm = new Texture.VTex2D(IPath + "norm" + t1.FilePath,Texture.LoadMethod.Single, false);

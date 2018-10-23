@@ -36,6 +36,9 @@ namespace Vivid3D.Scene
         }
         private float sw, sh, sd;
         private float bw, bh, bd;
+
+        public Matrix4 GlobalInverse;
+
         public void GetBounds(GraphEntity3D node)
         {
             foreach(var m in node.Meshes)
@@ -299,7 +302,7 @@ namespace Vivid3D.Scene
             {
                 Effect.FXG.Mesh = m;
                 Renderer.Render(m);
-                Console.WriteLine("Renderer:" + Renderer.ToString() + " MeshI" + m.NumIndices);
+            
             }
           
         }

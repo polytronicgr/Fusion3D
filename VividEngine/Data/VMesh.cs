@@ -8,11 +8,27 @@ using Vivid3D.Material;
 using Vivid3D.Visuals;
 namespace Vivid3D.Data
 {
+    public struct Vertex
+    {
+        public Vector3 Pos;
+        public Vector3 Norm;
+        public Vector2 UV;
+        public Vector3 BiNorm;
+        public Vector3 Tan;
+        public float Weight;
+        public int[] BoneIndices;
+    }
+    public struct Tri
+    {
+        public int V0, V1, v2;
+    }
     public class VMesh
     {
         public VVisualizer Viz = null;
         public string Name = "NoName";
         public VVertex3D Data = null;
+        public Vertex[] VertexData;
+        public Tri[] TriData;
         public float[] Vertices = null;
         public float[] UV = null;
         public float[] Norm = null;
@@ -25,18 +41,19 @@ namespace Vivid3D.Data
         {
             get
             {
-                return NumVerts;
+                return VertexData.Length;
             }
         }
         public int NumIndices
         {
             get
             {
-                return Indices.Length;
+                return TriData.Length * 3;
             }
         }
         public void Scale(float x,float y,float z)
         {
+            return;
             for(int i = 0; i < NumVertices; i++)
             {
                 int vid = i * 3;
@@ -109,39 +126,37 @@ namespace Vivid3D.Data
         {
             //Data = new VVertex3D(vertices);
             Indices = new uint[indices];
-            Vertices = new float[vertices * 3];
-            Norm = new float[vertices * 3];
-            UV = new float[vertices * 2];
-            Bi = new float[vertices * 3];
-            Tan = new float[vertices * 3];
+            //Vertices = new float[vertices * 3];
+            //Norm = new float[vertices * 3];
+            //UV = new float[vertices * 2];
+            //Bi = new float[vertices * 3];
+            //Tan = new float[vertices * 3];
             Viz = new VVVBO(vertices, indices);
+            VertexData = new Vertex[vertices];
+            TriData = new Tri[indices / 3];
+
             NumVerts = vertices;
         }
         public void SetVertex(int id,Vector3 pos,Vector3 t,Vector3 b,Vector3 n,Vector2 uv)
         {
-            int uid = id * 2;
-            id = id * 3;
-            Vertices[id] = pos.X;
-            Vertices[id + 1] = pos.Y;
-            Vertices[id + 2] = pos.Z;
-            Norm[id] = n.X;
-            Norm[id + 1] = n.Y;
-            Norm[id + 2] = n.Z;
-            Tan[id] = t.X;
-            Tan[id + 1] = t.Y;
-            Tan[id + 2] = t.Z;
-            Bi[id] = b.X;
-            Bi[id + 1] = b.Y;
-            Bi[id + 2] = b.Z;
-            UV[uid] = uv.X;
-            UV[uid+1] = uv.Y;
-            //uv.Y = 1 - uv.Y;
-           
-            //Data.SetVertex(id, pos, t, b, n, uv);
+
+            VertexData[id].Pos = pos;
+            VertexData[id].Norm = n;
+            VertexData[id].Tan = t;
+            VertexData[id].BiNorm = b;
+            VertexData[id].UV = uv;
+
+       
+        }
+        public void SetTri(int id,int v0,int v1,int v2)
+        {
+            TriData[id].V0 = v0;
+            TriData[id].V1 = v1;
+            TriData[id].v2 = v2;
         }
         public void SetIndex(int id,uint vertex)
         {
-            Indices[id] = vertex;
+        //    Indices[id] = vertex;
         }
         public void Clean()
         {
@@ -210,6 +225,7 @@ namespace Vivid3D.Data
         }
         public void GenerateTangents()
         {
+            return;
             // Vector3 v1, v2, v3;
             // Vector3 u1, u2, u3;
             for (int i = 0; i < Indices.Length; i+=3)

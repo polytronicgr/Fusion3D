@@ -184,7 +184,7 @@ namespace Vivid3D.Scene
         }
         public virtual void RenderNode(GraphNode3D node)
         {
-            Console.WriteLine("RenderNode:" + node.Name);
+           // Console.WriteLine("RenderNode:" + node.Name);
             if(node.Name == "Terrain")
             {
                 int g = 2;

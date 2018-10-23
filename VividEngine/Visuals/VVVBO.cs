@@ -29,33 +29,64 @@ namespace Vivid3D.Visuals
             va = GL.GenVertexArray();
             GL.BindVertexArray(va);
 
+            float[] verts = new float[md.NumVertices * 3];
+            float[] norms = new float[md.NumVertices * 3];
+            float[] bi = new float[md.NumVertices * 3];
+            float[] tan = new float[md.NumVertices * 3];
+            float[] uv = new float[md.NumVertices * 2];
+            int vi = 0;
+            for (int i = 0; i < md.NumVertices; i++)
+            {
+                verts[vi] = md.VertexData[i].Pos.X;
+                verts[vi + 1] = md.VertexData[i].Pos.Y;
+                verts[vi + 2] = md.VertexData[i].Pos.Z;
+                norms[vi] = md.VertexData[i].Norm.X;
+                norms[vi + 1] = md.VertexData[i].Norm.Y;
+                norms[vi + 2] = md.VertexData[i].Norm.Z;
+                bi[vi] = md.VertexData[i].BiNorm.X;
+                bi[vi + 1] = md.VertexData[i].BiNorm.Y;
+                bi[vi + 2] = md.VertexData[i].BiNorm.Z;
+                tan[vi] = md.VertexData[i].Tan.X;
+                tan[vi + 1] = md.VertexData[i].Tan.Y;
+                tan[vi + 2] = md.VertexData[i].Tan.Z;
+
+                vi += 3;
+            }
+            vi = 0;
+            for(int i = 0; i < md.NumVertices; i++)
+            {
+                uv[vi] = md.VertexData[i].UV.X;
+                uv[vi + 1] = md.VertexData[i].UV.Y;
+                vi += 2;
+            }
+
             vert_vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vert_vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices*3*4),md.Vertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices*3*4),verts, BufferUsageHint.StaticDraw);
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             uv_vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, uv_vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 2 * 4), md.UV, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 2 * 4), uv, BufferUsageHint.StaticDraw);
             GL.EnableVertexAttribArray(1);
             GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 
             norm_vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, norm_vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 3 * 4), md.Norm, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 3 * 4), norms, BufferUsageHint.StaticDraw);
             GL.EnableVertexAttribArray(2);
             GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             bi_vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, bi_vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 3 * 4), md.Bi, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 3 * 4), bi, BufferUsageHint.StaticDraw);
             GL.EnableVertexAttribArray(3);
             GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             tan_vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, tan_vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 3 * 4), md.Tan, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 3 * 4), tan, BufferUsageHint.StaticDraw);
             GL.EnableVertexAttribArray(4);
             GL.VertexAttribPointer(4, 3, VertexAttribPointerType.Float, false, 0, 0);
 
@@ -80,8 +111,19 @@ namespace Vivid3D.Visuals
 
             eb = GL.GenBuffer();
 
+            uint[] indices = new uint[md.TriData.Length * 3];
+
+            int ti = 0;
+            for(int i = 0; i < md.TriData.Length; i++)
+            {
+                indices[ti] = (uint)md.TriData[i].V0;
+                indices[ti + 1] = (uint)md.TriData[i].V1;
+                indices[ti + 2] = (uint)md.TriData[i].v2;
+                ti += 3;
+            }
+
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eb);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(Indices * 4), md.Indices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(Indices * 4), indices, BufferUsageHint.StaticDraw);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }

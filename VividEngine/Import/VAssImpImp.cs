@@ -44,8 +44,8 @@ namespace Vivid3D.Import
             Assimp.Scene s = null;
             try
             {
-                
-                s = e.ImportFile(file, PostProcessSteps.OptimizeGraph | PostProcessSteps.OptimizeMeshes | PostProcessSteps.FindDegenerates | PostProcessSteps.FindInvalidData ); 
+
+                s = e.ImportFile(file, PostProcessSteps.OptimizeMeshes | PostProcessSteps.OptimizeGraph| PostProcessSteps.FindInvalidData | PostProcessSteps.FindDegenerates | PostProcessSteps.Triangulate | PostProcessSteps.ValidateDataStructure);
             }
             catch(AssimpException ae)
             {
@@ -56,10 +56,24 @@ namespace Vivid3D.Import
                 Console.WriteLine("Imported.");
             Dictionary<string, VMesh> ml = new Dictionary<string, VMesh>();
             List<VMesh> ml2 = new List<VMesh>();
+            Console.WriteLine("animCount:" + s.AnimationCount);
+
+            var tf = s.RootNode.Transform;
+
+            tf.Inverse();
+
+            root.GlobalInverse = ToTK(tf);
+
+
 
             foreach (var m in s.Meshes)
             {
 
+                
+
+                Console.WriteLine("M:" + m.Name + " Bones:" + m.BoneCount);
+                Console.WriteLine("AA:" + m.HasMeshAnimationAttachments);
+ 
                 var vm = new Material.Material3D();
                 vm.TCol = DiffBlank;
                 vm.TNorm = NormBlank;
@@ -67,7 +81,12 @@ namespace Vivid3D.Import
                 var m2 = new VMesh(m.GetIndices().Length,m.VertexCount);
                 ml2.Add(m2);
                // ml.Add(m.Name, m2);
+               for(int b = 0; b < m.BoneCount; b++)
+                {
+                    uint index = 0;
+                    string name = m.Bones[b].Name;
 
+                }
                 m2.Mat = vm;
                // root.AddMesh(m2);
                 m2.Name = m.Name;
@@ -177,26 +196,39 @@ namespace Vivid3D.Import
                 int[] id = m.GetIndices();
                 int fi = 0;
                 uint[] nd = new uint[id.Length];
-                for (int i = 0; i < id.Length; i++)
+                for (int i = 0; i < id.Length; i+=3)
                 {
-                    nd[i] = (uint)id[i];
+                    //Tri t = new Tri();
+                    //t.V0 = (int)nd[i];
+                   // t.V1 = (int)nd[i + 1];
+                   // t.v2 = (int)nd[i + 2];
+
+                    // nd[i] = (uint)id[i];
+                    m2.SetTri(i / 3, (int)id[i], (int)id[i + 1], (int)id[i + 2]);
+
+
                 }
 
                 m2.Indices = nd;
-                m2.Scale(AssImpImport.ScaleX, AssImpImport.ScaleY, AssImpImport.ScaleZ);
+                //m2.Scale(AssImpImport.ScaleX, AssImpImport.ScaleY, AssImpImport.ScaleZ);
                 m2.Final();
-         
+                
             }
 
             ProcessNode(root, s.RootNode, ml2);
-         
- 
+
+            
+
             return root as GraphNode3D;
+        }
+        private OpenTK.Matrix4 ToTK(Matrix4x4 mat)
+        {
+            return new OpenTK.Matrix4(mat.A1, mat.B1, mat.C1, mat.D1,mat.A2, mat.B2, mat.C2, mat.D2, mat.A3, mat.B3, mat.C3, mat.D3, mat.A4, mat.B4,mat.C4, mat.D4);
         }
 
         private void ProcessNode(GraphEntity3D root, Assimp.Node s,List<VMesh> ml)
         {
-
+  
             GraphEntity3D r1 = new GraphEntity3D();
             root.Sub.Add(r1);
             r1.Top = root;

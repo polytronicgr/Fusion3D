@@ -29,13 +29,17 @@ namespace Vivid3D.Gen
             mesh.SetVertex(2, v3, z, z, z, new Vector2(1, 1));
             mesh.SetVertex(3, v4, z, z, z, new Vector2(0, 1));
 
-            mesh.SetIndex(0, 0);
+            mesh.SetTri(0, 0, 1, 2);
+            mesh.SetTri(1, 2, 3, 0);
+
+            /*
+                        mesh.SetIndex(0, 0);
             mesh.SetIndex(1, 1);
             mesh.SetIndex(2, 2);
             mesh.SetIndex(3, 2);
             mesh.SetIndex(4, 3);
             mesh.SetIndex(5, 0);
-
+            */
             mesh.Final();
 
             r.AddMesh(mesh);

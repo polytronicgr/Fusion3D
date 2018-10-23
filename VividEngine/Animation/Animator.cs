@@ -46,6 +46,18 @@ namespace Vivid3D.Animation
             Animations = new List<AnimEvaluator>();
         }
 
+        public int GetBoneIndex(string name)
+        {
+
+            if (_bonesToIndex.ContainsKey(name))
+            {
+
+                return _bonesToIndex[name];
+            }
+            return -1;
+        }
+
+
         public void SetAnimationIndex(int index)
         {
 
@@ -61,7 +73,7 @@ namespace Vivid3D.Animation
             }
 
             _skeleton = CreateBoneTree(aiRoot.RootNode, null);
-
+            Console.WriteLine("Proc bones:" + _skeleton.Name + " C:" + _skeleton.Children.Count);
             foreach (var mesh in aiRoot.Meshes)
             {
                 foreach (var bone in mesh.Bones)
@@ -440,7 +452,7 @@ namespace Vivid3D.Animation
             foreach (var channel in anim.NodeAnimationChannels)
             {
                 var nac = new AnimChannel();
-                var c = new AnimChannel();
+        
                 var pk = new List<VectorKey>();
                 var rk = new List<QuatKey>();
                 var sk = new List<VectorKey>();
@@ -466,6 +478,7 @@ namespace Vivid3D.Animation
                     nsk.Value = new OpenTK.Vector3(s.Value.X, s.Value.Y, s.Value.Z);
                     sk.Add(nsk);
                 }
+                nac.Name = channel.NodeName;
                 nac.PositionKeys = pk;
                 nac.RotationKeys = rk;
                 nac.ScalingKeys = sk;

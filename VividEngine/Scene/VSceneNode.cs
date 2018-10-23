@@ -105,6 +105,10 @@ namespace Vivid3D.Scene
                 n.SetLightmap();
             }
         }
+        public virtual void UpdateNode(float t)
+        {
+
+        }
     public void SetMultiPass()
         {
             if (this is GraphEntity3D || this is Terrain.GraphTerrain)
@@ -194,7 +198,8 @@ namespace Vivid3D.Scene
             if(s==Space.Local)
             {
 
-                Console.WriteLine("NV:" + v);
+
+                //Console.WriteLine("NV:" + v);
                 var ov = WorldPos;
                 var nv = Vector3.TransformPosition(v,World);
                 var mm = nv - ov;

@@ -20,6 +20,282 @@ namespace Vivid3D.Import
         {
             return new OpenTK.Vector3(col.R, col.G, col.B);
         }
+        Animation.Animator _ta;
+        private void ExtractBoneWeightsFromMesh(Mesh mesh, IDictionary<uint, List<VertexWeight>> vertToBoneWeight)
+        {
+            foreach (var bone in mesh.Bones)
+            {
+                var boneIndex = _ta.GetBoneIndex(bone.Name);
+                // bone weights are recorded per bone in assimp, with each bone containing a list of the vertices influenced by it
+                // we really want the reverse mapping, i.e. lookup the vertexID and get the bone id and weight
+                // We'll support up to 4 bones per vertex, so we need a list of weights for each vertex
+                foreach (var weight in bone.VertexWeights)
+                {
+                    if (vertToBoneWeight.ContainsKey((uint)weight.VertexID))
+                    {
+                        vertToBoneWeight[(uint)weight.VertexID].Add(new VertexWeight((int)boneIndex, weight.Weight));
+                    }
+                    else
+                    {
+                        vertToBoneWeight[(uint)weight.VertexID] = new List<VertexWeight>(
+                            new[] { new VertexWeight((int)boneIndex, weight.Weight) }
+                        );
+                    }
+                }
+            }
+        }
+
+        public override GraphNode3D LoadAnimNode(string path)
+        {
+
+            if (NormBlank == null)
+            {
+                NormBlank = new Texture.VTex2D("data\\tex\\normblank.png", Texture.LoadMethod.Single, false);
+                DiffBlank = new Texture.VTex2D("data\\tex\\diffblank.png", Texture.LoadMethod.Single, false);
+                SpecBlank = new Texture.VTex2D("data\\tex\\specblank.png", Texture.LoadMethod.Single, false);
+            }
+
+
+
+            GraphAnimEntity3D root = new GraphAnimEntity3D();
+            string file = path;
+
+            var e = new Assimp.AssimpContext();
+            var c1 = new Assimp.Configs.NormalSmoothingAngleConfig(75);
+            e.SetConfig(c1);
+
+
+            Console.WriteLine("Impporting:" + file);
+            Assimp.Scene s = null;
+            try
+            {
+
+                s = e.ImportFile(file, PostProcessSteps.OptimizeMeshes | PostProcessSteps.OptimizeGraph | PostProcessSteps.FindInvalidData | PostProcessSteps.FindDegenerates | PostProcessSteps.Triangulate | PostProcessSteps.ValidateDataStructure | PostProcessSteps.CalculateTangentSpace);
+            }
+            catch (AssimpException ae)
+            {
+                Console.WriteLine(ae);
+                Console.WriteLine("Failed to import");
+                Environment.Exit(-1);
+            }
+            Console.WriteLine("Imported.");
+            Dictionary<string, VMesh> ml = new Dictionary<string, VMesh>();
+            List<VMesh> ml2 = new List<VMesh>();
+            Console.WriteLine("animCount:" + s.AnimationCount);
+
+            var tf = s.RootNode.Transform;
+
+            tf.Inverse();
+
+            root.GlobalInverse = ToTK(tf);
+
+            var boneToWeight = new Dictionary<uint, List<VertexWeight>>();
+
+            root.Animator = new Animation.Animator();
+
+            if (s.AnimationCount > 0)
+            {
+                Console.WriteLine("Processing animations.");
+                root.Animator.InitAssImp(s, root);
+                Console.WriteLine("Processed.");
+                _ta = root.Animator;
+            }
+            var vertToBoneWeight = new Dictionary<uint, List<VertexWeight>>();
+
+
+
+
+            //s.Animations[0].NodeAnimationChannels[0].
+            //s.Animations[0].anim
+
+            //     root.Animator.InitAssImp(model);
+
+
+            foreach (var m in s.Meshes)
+            {
+
+
+
+                Console.WriteLine("M:" + m.Name + " Bones:" + m.BoneCount);
+                Console.WriteLine("AA:" + m.HasMeshAnimationAttachments);
+
+                var vm = new Material.Material3D();
+                vm.TCol = DiffBlank;
+                vm.TNorm = NormBlank;
+                vm.TSpec = SpecBlank;
+                var m2 = new VMesh(m.GetIndices().Length, m.VertexCount);
+                ml2.Add(m2);
+                // ml.Add(m.Name, m2);
+                for (int b = 0; b < m.BoneCount; b++)
+                {
+                    uint index = 0;
+                    string name = m.Bones[b].Name;
+
+                }
+                m2.Mat = vm;
+                // root.AddMesh(m2);
+                m2.Name = m.Name;
+                var mat = s.Materials[m.MaterialIndex];
+                TextureSlot t1;
+
+                var sc = mat.GetMaterialTextureCount(TextureType.Unknown);
+                Console.WriteLine("SC:" + sc);
+                if (mat.HasColorDiffuse)
+                {
+                    vm.Diff = CTV(mat.ColorDiffuse);
+                }
+                if (mat.HasColorSpecular)
+                {
+                    vm.Spec = CTV(mat.ColorSpecular);
+                    Console.WriteLine("Spec:" + vm.Spec);
+                }
+                if (mat.HasShininess)
+                {
+
+                    //vm.Shine = 0.3f+ mat.Shininess;
+                    Console.WriteLine("Shine:" + vm.Shine);
+                }
+
+                Console.WriteLine("Spec:" + vm.Spec);
+                //for(int ic = 0; ic < sc; ic++)
+                ///{
+                if (sc > 0)
+                {
+                    var tex2 = mat.GetMaterialTextures(TextureType.Unknown)[0];
+                    vm.TSpec = new Texture.VTex2D(IPath + "\\" + tex2.FilePath, Texture.LoadMethod.Single, false);
+                }
+
+                if (mat.GetMaterialTextureCount(TextureType.Normals) > 0)
+                {
+                    var ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
+                    Console.WriteLine("Norm:" + ntt.FilePath);
+                    vm.TNorm = new Texture.VTex2D(IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false);
+                }
+
+
+                if (mat.GetMaterialTextureCount(TextureType.Diffuse) > 0)
+                {
+
+                    t1 = mat.GetMaterialTextures(TextureType.Diffuse)[0];
+                    Console.WriteLine("DiffTex:" + t1.FilePath);
+
+
+
+                    if (t1.FilePath != null)
+                    {
+                        try
+                        {
+                            //          Console.Write("t1:" + t1.FilePath);
+                            vm.TCol = new Texture.VTex2D(IPath + "\\" + t1.FilePath.Replace(".dds", ".png"), Texture.LoadMethod.Single, false);
+                            if (File.Exists(IPath + "norm" + t1.FilePath))
+                            {
+                                //                                vm.TNorm = new Texture.VTex2D(IPath + "norm" + t1.FilePath,Texture.LoadMethod.Single, false);
+
+                                //            Console.WriteLine("TexLoaded");
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    if (true)
+                    {
+
+                        if (new FileInfo(t1.FilePath).Exists == true)
+                        {
+                            //  var tex = App.AppSal.CreateTex2D();
+                            //  tex.Path = t1.FilePath;
+                            // tex.Load();
+                            //m2.DiffuseMap = tex;
+                        }
+                    }
+                }
+
+                ExtractBoneWeightsFromMesh(m, vertToBoneWeight);
+
+
+                for (int i = 0; i < m2.NumVertices; i++)
+                {
+                    var v = m.Vertices[i];// * new Vector3D(15, 15, 15);
+                    var n = m.Normals[i];
+                    var t = m.TextureCoordinateChannels[0];
+                    Vector3D tan, bi;
+                    if (m.Tangents != null && m.Tangents.Count > 0)
+                    {
+
+                        tan = m.Tangents[i];
+                        bi = m.BiTangents[i];
+                    }
+                    else
+                    {
+                        tan = new Vector3D(0, 0, 0);
+                        bi = new Vector3D(0, 0, 0);
+                    }
+                    if (t.Count() == 0)
+                    {
+
+                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(new Vector3D(0, 0, 0)));
+                    }
+                    else
+                    {
+                        var tv = t[i];
+                        tv.Y = 1.0f - tv.Y;
+                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(tv));
+                    }
+
+                    var weights = vertToBoneWeight[(uint)i].Select(w => w.Weight).ToArray();
+                    var boneIndices = vertToBoneWeight[(uint)i].Select(w => (byte)w.VertexID).ToArray();
+
+                    m2.SetVertexBone(i, weights.First(), boneIndices);
+
+                    //var v = new PosNormalTexTanSkinned(pos, norm.ToVector3(), texC.ToVector2(), tan.ToVector3(), weights.First(), boneIndices);
+                    //verts.Add(v);
+
+
+                }
+                int[] id = m.GetIndices();
+                int fi = 0;
+                uint[] nd = new uint[id.Length];
+                for (int i = 0; i < id.Length; i += 3)
+                {
+                    //Tri t = new Tri();
+                    //t.V0 = (int)nd[i];
+                    // t.V1 = (int)nd[i + 1];
+                    // t.v2 = (int)nd[i + 2];
+
+                    // nd[i] = (uint)id[i];
+                    m2.SetTri(i / 3, (int)id[i], (int)id[i + 1], (int)id[i + 2]);
+
+
+                }
+
+
+
+                m2.Indices = nd;
+                //m2.Scale(AssImpImport.ScaleX, AssImpImport.ScaleY, AssImpImport.ScaleZ);
+                m2.Final();
+
+            }
+
+            ProcessNode(root, s.RootNode, ml2);
+
+            foreach (var ac in root.Clips)
+            {
+                Console.WriteLine("Anims:" + ac);
+            }
+            root.AnimName = "Run";
+            /*
+            while (true)
+            {
+
+
+            }
+            */
+            return root as GraphNode3D;
+        }
+
+
         public override GraphNode3D LoadNode(string path)
         {
 
@@ -65,6 +341,20 @@ namespace Vivid3D.Import
             root.GlobalInverse = ToTK(tf);
 
             var boneToWeight = new Dictionary<uint, List<VertexWeight>>();
+
+            root.Animator = new Animation.Animator();
+
+            if (s.AnimationCount > 0)
+            {
+                Console.WriteLine("Processing animations.");
+                root.Animator.InitAssImp(s, root);
+                Console.WriteLine("Processed.");
+                _ta = root.Animator;
+            }
+                var vertToBoneWeight = new Dictionary<uint, List<VertexWeight>>();
+
+            
+
 
             //s.Animations[0].NodeAnimationChannels[0].
             //s.Animations[0].anim
@@ -172,6 +462,10 @@ namespace Vivid3D.Import
                         }
                     }
                 }
+
+                ExtractBoneWeightsFromMesh(m, vertToBoneWeight);
+
+
                 for (int i = 0; i < m2.NumVertices; i++)
                 {
                     var v = m.Vertices[i];// * new Vector3D(15, 15, 15);
@@ -200,6 +494,16 @@ namespace Vivid3D.Import
                         tv.Y = 1.0f - tv.Y;
                         m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(tv));
                     }
+
+                    var weights = vertToBoneWeight[(uint)i].Select(w => w.Weight).ToArray();
+                    var boneIndices = vertToBoneWeight[(uint)i].Select(w => (byte)w.VertexID).ToArray();
+
+                    m2.SetVertexBone(i, weights.First(), boneIndices);
+
+                    //var v = new PosNormalTexTanSkinned(pos, norm.ToVector3(), texC.ToVector2(), tan.ToVector3(), weights.First(), boneIndices);
+                    //verts.Add(v);
+
+
                 }
                 int[] id = m.GetIndices();
                 int fi = 0;
@@ -217,6 +521,8 @@ namespace Vivid3D.Import
 
                 }
 
+
+
                 m2.Indices = nd;
                 //m2.Scale(AssImpImport.ScaleX, AssImpImport.ScaleY, AssImpImport.ScaleZ);
                 m2.Final();
@@ -225,8 +531,18 @@ namespace Vivid3D.Import
 
             ProcessNode(root, s.RootNode, ml2);
 
-            
+            foreach (var ac in root.Clips)
+            {
+                Console.WriteLine("Anims:" + ac);
+            }
+            root.AnimName = "Run";
+            /*
+            while (true)
+            {
 
+
+            }
+            */
             return root as GraphNode3D;
         }
 

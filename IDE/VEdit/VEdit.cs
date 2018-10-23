@@ -150,7 +150,7 @@ namespace VividEdit
                     Console.WriteLine(AssImpImport.IPath);
                     //while (true) { }
 
-                    var ent = Import.ImportNode(file.Path);
+                    var ent = Import.ImportAnimNode(file.Path);
                     ent.SetMultiPass();
                     var e = ent as Vivid3D.Scene.GraphEntity3D;
                     var tm = new Vivid3D.Material.Material3D();

@@ -32,6 +32,13 @@ namespace Vivid3D.Import
             }
             return null;
         }
+        public static GraphNode3D ImportAnimNode(string path)
+        {
+            string key = new FileInfo(path).Extension.ToLower();
+            var imp = Imports[key];
+            var r = imp.LoadAnimNode(path);
+            return r;
+        }
         public static GraphNode3D ImportNode(string path)
         {
             string key = new FileInfo(path).Extension.ToLower();

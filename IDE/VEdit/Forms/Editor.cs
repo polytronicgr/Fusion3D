@@ -492,7 +492,7 @@ namespace VividEdit.Forms
             }
             GL.ClearColor(0, 0, 0, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+            Graph?.Root.UpdateNode(0.1f);
             // if (run)
             //{
             //    Graph?.Render();

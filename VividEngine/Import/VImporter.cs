@@ -13,6 +13,10 @@ namespace Vivid3D.Import
         {
             return null;
         }
+        public virtual GraphNode3D LoadAnimNode(string path)
+        {
+            return null;
+        }
         public virtual SceneGraph3D LoadScene(string path)
         {
 

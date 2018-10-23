@@ -24,6 +24,13 @@ namespace Vivid3D.Data
     }
     public class VMesh
     {
+        public class Subset
+        {
+            public int VertexStart;
+            public int VertexCount;
+            public int FaceStart;
+            public int FaceCount;
+        }
         public VVisualizer Viz = null;
         public string Name = "NoName";
         public VVertex3D Data = null;
@@ -149,6 +156,29 @@ namespace Vivid3D.Data
 
        
         }
+        public void SetVertexBone(int id,float weight,byte[] bones)
+        {
+            VertexData[id].Weight = weight;
+            VertexData[id].BoneIndices = new int[4];
+            if(bones.Length>0)
+            {
+                VertexData[id].BoneIndices[0] = bones[0];
+            }
+            if (bones.Length > 1)
+            {
+                VertexData[id].BoneIndices[1] = bones[1];
+            }
+            if (bones.Length > 2)
+            {
+                VertexData[id].BoneIndices[2] = bones[2];
+            }
+            if (bones.Length > 3)
+            {
+                VertexData[id].BoneIndices[3] = bones[3];
+            }
+            //    SetVertexBones(id, bones[0], bones[1], bones[2], bones[3]);
+        }
+
         public void SetVertexBones(int id,int b0,int b1,int b2,int b3)
         {
             VertexData[id].BoneIndices = new int[4];
@@ -287,4 +317,7 @@ namespace Vivid3D.Data
             Viz.Final();
         }
     }
+
+
+
 }

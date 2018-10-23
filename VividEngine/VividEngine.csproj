@@ -74,6 +74,7 @@
     <Compile Include="Pick\Picker.cs" />
     <Compile Include="Pick\PickResult.cs" />
     <Compile Include="PostProcess\Processes\PPOutLine.cs" />
+    <Compile Include="Scene\GraphAnimEntity3D.cs" />
     <Compile Include="Scene\VividBase.cs" />
     <Compile Include="Script\ScriptBase.cs" />
     <Compile Include="Terrain\GraphTerrain.cs" />

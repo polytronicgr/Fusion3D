@@ -50,6 +50,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.terrainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newFlatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromHeightMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -173,7 +174,8 @@
             // terrainToolStripMenuItem
             // 
             this.terrainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newFlatToolStripMenuItem});
+            this.newFlatToolStripMenuItem,
+            this.fromHeightMapToolStripMenuItem});
             this.terrainToolStripMenuItem.Name = "terrainToolStripMenuItem";
             this.terrainToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.terrainToolStripMenuItem.Text = "Terrain";
@@ -184,6 +186,13 @@
             this.newFlatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newFlatToolStripMenuItem.Text = "New Flat";
             this.newFlatToolStripMenuItem.Click += new System.EventHandler(this.newFlatToolStripMenuItem_Click);
+            // 
+            // fromHeightMapToolStripMenuItem
+            // 
+            this.fromHeightMapToolStripMenuItem.Name = "fromHeightMapToolStripMenuItem";
+            this.fromHeightMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fromHeightMapToolStripMenuItem.Text = "From HeightMap";
+            this.fromHeightMapToolStripMenuItem.Click += new System.EventHandler(this.fromHeightMapToolStripMenuItem_Click);
             // 
             // AppGraph
             // 
@@ -216,5 +225,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem terrainToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newFlatToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fromHeightMapToolStripMenuItem;
     }
 }

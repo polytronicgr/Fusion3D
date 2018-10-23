@@ -211,13 +211,28 @@ namespace VividEdit.Forms
 
             tmat.TCol = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockCol2.png", Vivid3D.Texture.LoadMethod.Single, false);
             tmat.TNorm = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockNorm2.png", Vivid3D.Texture.LoadMethod.Single, false);
-
+            tmat.TSpec = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\specnone.png", Vivid3D.Texture.LoadMethod.Single);
 
 
 
 
             VividEdit.VividED.Main.AddEnt(nt);
 
+        }
+
+        private void fromHeightMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var nt = new Vivid3D.Terrain.GraphTerrain(42000, 42000, -1, 512,512, new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath+"Maps\\testMap1.png", Vivid3D.Texture.LoadMethod.Single, false)) ;
+            var tmat = nt.Meshes[0].Mat;
+
+            tmat.TCol = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockCol2.png", Vivid3D.Texture.LoadMethod.Single, false);
+            tmat.TNorm = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockNorm2.png", Vivid3D.Texture.LoadMethod.Single, false);
+            tmat.TSpec = new Vivid3D.Texture.VTex2D(VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\specnone.png", Vivid3D.Texture.LoadMethod.Single);
+
+
+
+
+            VividEdit.VividED.Main.AddEnt(nt);
         }
     }
     public delegate void SelectedNode(Vivid3D.Scene.GraphNode3D node);

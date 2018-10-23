@@ -121,10 +121,11 @@ namespace Vivid3D.Lighting
                     Cam.LookAtZero(new Vector3(-1, 0, 0), new Vector3(0, -1, 0));
                     break;
                 case TextureTarget.TextureCubeMapPositiveY:
-                    Cam.LookAtZero(new Vector3(0, 1, 0), new Vector3(0, 0, 1));
+               
+                    Cam.LookAtZero(new Vector3(0, -1, 0), new Vector3(0, 0, -1));
                     break;
                 case TextureTarget.TextureCubeMapNegativeY:
-                    Cam.LookAtZero(new Vector3(0, -1, 0), new Vector3(0, 0, -1));
+                    Cam.LookAtZero(new Vector3(0, 1, 0), new Vector3(0, 0, 1));
                     break;
                 case TextureTarget.TextureCubeMapPositiveZ:
                     Cam.LookAtZero(new Vector3(0, 0, 1), new Vector3(0, -1, 0));

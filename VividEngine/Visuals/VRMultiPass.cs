@@ -50,4 +50,15 @@ namespace Vivid3D.Visuals
             Layers.Add(new VRLLightMap());
         }
     }
+    public class VRMultiPassAnim : VRenderer
+    {
+        public VRMultiPassAnim()
+        {
+
+        }
+        public override void Init()
+        {
+            Layers.Add(new VRLMultiPassAnim());
+        }
+    }
 }

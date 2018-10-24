@@ -24,6 +24,32 @@ namespace Vivid3D.Visuals
         {
             md = m;
         }
+        public override void FinalAnim()
+        {
+            Final();  
+        }
+        public override void Update()
+        {
+
+            float[] verts = new float[md.NumVertices * 3];
+
+            int vi = 0;
+            for(int i = 0; i < md.NumVertices; i++)
+            {
+                verts[vi] = md.VertexData[i].Pos.X;
+                verts[vi + 1] = md.VertexData[i].Pos.Y;
+                verts[vi + 2] = md.VertexData[i].Pos.Z;
+                vi += 3;
+            }
+
+
+            //vert_vbo = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vert_vbo);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices * 3 * 4), verts, BufferUsageHint.DynamicDraw);
+            GL.EnableVertexAttribArray(0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
+
+        }
         public override void Final()
         {
             va = GL.GenVertexArray();
@@ -62,7 +88,7 @@ namespace Vivid3D.Visuals
 
             vert_vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vert_vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices*3*4),verts, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(md.NumVertices*3*4),verts, BufferUsageHint.DynamicDraw);
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
 
@@ -142,6 +168,10 @@ namespace Vivid3D.Visuals
         {
             GL.BindVertexArray(0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+        }
+        public override void Visualize(int sub)
+        {
+            GL.DrawElements(BeginMode.Triangles, Indices, DrawElementsType.UnsignedInt, md.Subs[sub].FaceStart * 3);
         }
         public override void Visualize()
         {

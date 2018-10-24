@@ -250,6 +250,24 @@ namespace Vivid3D.Data
             id = (int)Indices[id];
             return new Vector3(Norm[id * 3], Norm[id * 3 + 1], Norm[id * 3 + 2]);
         }
+        public VMesh Clone()
+        {
+            var cm = new VMesh();
+            cm.VertexData = new Vertex[VertexData.Length];
+            for(int v = 0; v < VertexData.Length; v++)
+            {
+                cm.VertexData[v] = VertexData[v];
+            }
+            cm.TriData = new Tri[TriData.Length];
+            for(int t = 0; t < TriData.Length; t++)
+            {
+                cm.TriData[t] = TriData[t];
+            }
+            cm.NumVerts = NumVerts;
+            cm.Mat = Mat;
+            return cm;
+
+        }
         public void SetNorm(int id, Vector3 n, Vector3 bi, Vector3 tan)
         {
             id = (int)Indices[id];
@@ -306,6 +324,13 @@ namespace Vivid3D.Data
 
             }
 
+        }
+        public List<Subset> Subs = new List<Subset>();
+        public void FinalAnim()
+        {
+            Viz = new VVVBO(VertexData.Length, TriData.Length * 3);
+            Viz.SetMesh(this);
+            Viz.FinalAnim();
         }
         public void Final()
         {

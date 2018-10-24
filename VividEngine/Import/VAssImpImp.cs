@@ -110,7 +110,136 @@ namespace Vivid3D.Import
 
             //     root.Animator.InitAssImp(model);
 
+            List<Vivid3D.Data.Vertex> _vertices = new List<Vertex>();
+            List<Vivid3D.Data.Tri> _tris = new List<Tri>();
 
+            List<Vertex> ExtractVertices(Mesh m,Dictionary<uint,List<VertexWeight>> vtb)
+            {
+                List<Vertex> rl = new List<Vertex>();
+
+                for(int i = 0; i < m.VertexCount; i++)
+                {
+                    var pos = m.HasVertices ? m.Vertices[i] : new Assimp.Vector3D();
+                    var norm = m.HasNormals ? m.Normals[i] : new Assimp.Vector3D();
+                    var tan = m.HasTangentBasis ? m.Tangents[i] : new Assimp.Vector3D();
+                    var bi = m.HasTangentBasis ? m.BiTangents[i] : new Assimp.Vector3D();
+
+                    var nv = new Vertex();
+                    nv.Pos = new OpenTK.Vector3(pos.X, pos.Y, pos.Z);
+                    nv.Norm = new OpenTK.Vector3(norm.X, norm.Y, norm.Z);
+                    nv.Tan = new OpenTK.Vector3(tan.X, tan.Y, tan.Z);
+                    nv.BiNorm = new OpenTK.Vector3(bi.X, bi.Y, bi.Z);
+
+                    if (m.HasTextureCoords(0))
+                    {
+
+                        var coord = m.TextureCoordinateChannels[0][i];
+                        nv.UV = new OpenTK.Vector2(coord.X, coord.Y);
+
+                    }
+
+                    var weights = vtb[(uint)i].Select(w => w.Weight).ToArray();
+                    var boneIndices = vtb[(uint)i].Select(w => (byte)w.VertexID).ToArray();
+
+                    nv.Weight = weights.First();
+                    nv.BoneIndices = new int[4];
+                    nv.BoneIndices[0] = boneIndices[0];
+                    if (boneIndices.Length > 1)
+                    {
+                        nv.BoneIndices[1] = boneIndices[1];
+                    }
+                    if (boneIndices.Length > 2)
+                    {
+                        nv.BoneIndices[2] = boneIndices[2];
+                    }
+                    if (boneIndices.Length > 3)
+                    {
+                        nv.BoneIndices[3] = boneIndices[3];
+                    }
+                    rl.Add(nv);
+
+
+                }
+
+                return rl;
+
+            }
+
+            root.Mesh = new VMesh();
+
+
+
+            foreach (var m in s.Meshes)
+            {
+
+                ExtractBoneWeightsFromMesh(m, vertToBoneWeight);
+                var sub = new Vivid3D.Data.VMesh.Subset();
+                sub.VertexCount = m.VertexCount;
+                sub.VertexStart = _vertices.Count;
+                sub.FaceStart = _tris.Count;
+                sub.FaceCount = m.FaceCount;
+
+                root.Mesh.Subs.Add(sub);
+
+                var verts = ExtractVertices(m, vertToBoneWeight);
+
+                _vertices.AddRange(verts);
+
+                
+
+                var indices = m.GetIndices().Select(i => (short)(i + (uint)sub.VertexStart)).ToList();
+
+                for(int i = 0; i < indices.Count; i+=3)
+                {
+
+                    var t = new Tri();
+                    t.V0 = indices[i];
+                    t.V1 = indices[i + 1];
+                    t.v2 = indices[i + 2];
+                    _tris.Add(t);
+
+                }
+
+
+
+
+            }
+
+            root.Mesh.VertexData = _vertices.ToArray();
+            root.Mesh.TriData = _tris.ToArray();
+
+            root.Mesh.FinalAnim();
+            root.Renderer = new Visuals.VRMultiPassAnim();
+
+            root.Meshes.Add(root.Mesh.Clone());
+            root.Meshes[0].FinalAnim();
+
+            
+            root.Mesh.Mat = new Material.Material3D();
+            root.Meshes[0].Mat = root.Mesh.Mat;
+            //r1.LocalTurn = new OpenTK.Matrix4(s.Transform.A1, s.Transform.A2, s.Transform.A3, s.Transform.A4, s.Transform.B1, s.Transform.B2, s.Transform.B3, s.Transform.B4, s.Transform.C1, s.Transform.C2, s.Transform.C3, s.Transform.C4, s.Transform.D1, s.Transform.D2, s.Transform.D3, s.Transform.D4);
+            root.LocalTurn = new OpenTK.Matrix4(s.RootNode.Transform.A1, s.RootNode.Transform.B1, s.RootNode.Transform.C1, s.RootNode.Transform.D1, s.RootNode.Transform.A2, s.RootNode.Transform.B2, s.RootNode.Transform.C2, s.RootNode.Transform.D2, s.RootNode.Transform.A3, s.RootNode.Transform.B3, s.RootNode.Transform.C3, s.RootNode.Transform.D3, s.RootNode.Transform.A4, s.RootNode.Transform.B4, s.RootNode.Transform.C4, s.RootNode.Transform.D4);
+
+
+            root.LocalTurn = ToTK(s.RootNode.Children[0].Transform);
+            var lt = root.LocalTurn;
+
+            root.LocalTurn = lt.ClearTranslation();
+            root.LocalTurn = root.LocalTurn.ClearScale();
+            root.LocalPos = lt.ExtractTranslation();
+
+
+            root.LocalScale = lt.ExtractScale();
+
+            root.AnimName = "Run";
+
+
+
+
+            return root;
+
+
+            /*
             foreach (var m in s.Meshes)
             {
 
@@ -292,6 +421,7 @@ namespace Vivid3D.Import
 
             }
             */
+            
             return root as GraphNode3D;
         }
 
@@ -342,17 +472,10 @@ namespace Vivid3D.Import
 
             var boneToWeight = new Dictionary<uint, List<VertexWeight>>();
 
-            root.Animator = new Animation.Animator();
+            //root.Animator = new Animation.Animator();
 
-            if (s.AnimationCount > 0)
-            {
-                Console.WriteLine("Processing animations.");
-                root.Animator.InitAssImp(s, root);
-                Console.WriteLine("Processed.");
-                _ta = root.Animator;
-            }
-                var vertToBoneWeight = new Dictionary<uint, List<VertexWeight>>();
 
+      
             
 
 
@@ -463,8 +586,7 @@ namespace Vivid3D.Import
                     }
                 }
 
-                ExtractBoneWeightsFromMesh(m, vertToBoneWeight);
-
+    
 
                 for (int i = 0; i < m2.NumVertices; i++)
                 {
@@ -495,11 +617,7 @@ namespace Vivid3D.Import
                         m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(tv));
                     }
 
-                    var weights = vertToBoneWeight[(uint)i].Select(w => w.Weight).ToArray();
-                    var boneIndices = vertToBoneWeight[(uint)i].Select(w => (byte)w.VertexID).ToArray();
-
-                    m2.SetVertexBone(i, weights.First(), boneIndices);
-
+      
                     //var v = new PosNormalTexTanSkinned(pos, norm.ToVector3(), texC.ToVector2(), tan.ToVector3(), weights.First(), boneIndices);
                     //verts.Add(v);
 
@@ -531,11 +649,6 @@ namespace Vivid3D.Import
 
             ProcessNode(root, s.RootNode, ml2);
 
-            foreach (var ac in root.Clips)
-            {
-                Console.WriteLine("Anims:" + ac);
-            }
-            root.AnimName = "Run";
             /*
             while (true)
             {

@@ -24,6 +24,10 @@ namespace Vivid3D.Visuals
         {
 
         }
+        public virtual void FinalAnim()
+        {
+
+        }
         public virtual void Final()
         {
 
@@ -37,7 +41,14 @@ namespace Vivid3D.Visuals
         {
 
         }
+        public virtual void Update()
+        {
 
+        }
+        public virtual void Visualize(int sub)
+        {
+
+        }
         public virtual void Visualize()
         {
 

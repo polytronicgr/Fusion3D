@@ -107,7 +107,10 @@ namespace Vivid3D.Scene
         }
         public virtual void UpdateNode(float t)
         {
-
+            foreach (var n in Sub)
+            {
+                n.UpdateNode(t);
+            }
         }
     public void SetMultiPass()
         {

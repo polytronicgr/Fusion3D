@@ -84,7 +84,7 @@ namespace Vivid3D.Animation
                     var skip = (from t in _bones let bname = bone.Name where t.Name == bname select t).Any();
                     if (skip) continue;
 
-                    found.Offset = OpenTK.Matrix4.Transpose(ToTK(bone.OffsetMatrix));
+                    found.Offset = ToTK(bone.OffsetMatrix);
                     _bones.Add(found);
                     _bonesToIndex[found.Name] = _bones.IndexOf(found);
                 }
@@ -174,7 +174,7 @@ namespace Vivid3D.Animation
             }
             _bonesByName[internalNode.Name] = internalNode;
             var trans = node.Transform;
-            trans.Transpose();
+           // trans.Transpose();
 
             internalNode.LocalTransform = ToTK(trans);
             internalNode.OriginalLocalTransform = internalNode.LocalTransform;
@@ -401,20 +401,32 @@ namespace Vivid3D.Animation
                     LastPositions[i].Item3 = frame;
                 }
 
-                OpenTK.Matrix4 mat = OpenTK.Matrix4.CreateFromQuaternion(pRot);
+                //OpenTK.Matrix4 mat = OpenTK.Matrix4.CreateFromQuaternion(pRot);
 
                 // create the combined transformation matrix
-               
-                mat.M11 *= pscale.X; mat.M12 *= pscale.X; mat.M13 *= pscale.X;
-                mat.M21 *= pscale.Y; mat.M22 *= pscale.Y; mat.M23 *= pscale.Y;
-                mat.M31 *= pscale.Z; mat.M32 *= pscale.Z; mat.M33 *= pscale.Z;
-                mat.M41 = pPosition.X; mat.M42 = pPosition.Y; mat.M43 = pPosition.Z;
+
+             
+
+                var mat = new Assimp.Matrix4x4(new Assimp.Quaternion(pRot.W, pRot.X, pRot.Y, pRot.Z).GetMatrix());
+
+                mat.A1 *= pscale.X; mat.B1 *= pscale.X; mat.C1 *= pscale.X;
+                mat.A2 *= pscale.Y; mat.B2 *= pscale.Y; mat.C2 *= pscale.Y;
+                mat.A3 *= pscale.Z; mat.B3 *= pscale.Z; mat.C3 *= pscale.Z;
+                mat.A4 = pPosition.X; mat.B4 = pPosition.Y; mat.C4 = pPosition.Z;
 
                 // transpose to get DirectX style matrix
-                mat.Transpose();
-                bones[channel.Name].LocalTransform = mat;
+                //mat.Transpose();
+                //mat.Inverse();
+
+
+                bones[channel.Name].LocalTransform = ToTK(mat);
             }
             LastTime = time;
+        }
+
+        OpenTK.Matrix4 ToTK(Assimp.Matrix4x4 mat)
+        {
+            return new OpenTK.Matrix4(mat.A1, mat.B1, mat.C1, mat.D1, mat.A2, mat.B2, mat.C2, mat.D2, mat.A3, mat.B3, mat.C3, mat.D3, mat.A4, mat.B4, mat.C4, mat.D4);
         }
 
         public List<OpenTK.Matrix4> GetTransforms(float dt)

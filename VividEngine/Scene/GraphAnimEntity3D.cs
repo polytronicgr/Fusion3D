@@ -89,10 +89,22 @@ namespace Vivid3D.Scene
 
                     //OpenTK.Vector3 p = OpenTK.Vector3.TransformVector(v.Pos, bones[v.BoneIndices[0]]); // OpenTK.Vector4.Transform(bones[v.BoneIndices[0]], new OpenTK.Vector4(v.Pos,1.0f));
 
-                    OpenTK.Vector4 p = OpenTK.Vector4.Transform(new OpenTK.Vector4(v.Pos, 1.0f), bones[v.BoneIndices[0]]);
+                    OpenTK.Vector3 p;// = OpenTK.Vector4.Transform(new OpenTK.Vector4(v.Pos, 1.0f), bones[v.BoneIndices[0]]);
 
+
+                    p = OpenTK.Vector3.TransformPosition(v.Pos, bones[v.BoneIndices[0]]);
+
+                    OpenTK.Vector3 n = OpenTK.Vector3.TransformNormal(v.Norm, bones[v.BoneIndices[0]]);
+
+                    OpenTK.Vector3 t = OpenTK.Vector3.TransformNormal(v.Tan, bones[v.BoneIndices[0]]);
+
+                    OpenTK.Vector3 b = OpenTK.Vector3.TransformNormal(v.BiNorm, bones[v.BoneIndices[0]]);
 
                     Meshes[0].VertexData[vi].Pos = new OpenTK.Vector3(p);
+                    Meshes[0].VertexData[vi].Norm = new OpenTK.Vector3(n);
+                    Meshes[0].VertexData[vi].Tan = new OpenTK.Vector3(t);
+                    Meshes[0].VertexData[vi].BiNorm = new OpenTK.Vector3(b);
+
 
                     //p += weight1 * 
 

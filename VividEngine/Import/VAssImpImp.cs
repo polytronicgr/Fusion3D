@@ -134,7 +134,7 @@ namespace Vivid3D.Import
                     {
 
                         var coord = m.TextureCoordinateChannels[0][i];
-                        nv.UV = new OpenTK.Vector2(coord.X, coord.Y);
+                        nv.UV = new OpenTK.Vector2(coord.X,1- coord.Y);
 
                     }
 
@@ -194,8 +194,8 @@ namespace Vivid3D.Import
 
                     var t = new Tri();
                     t.V0 = indices[i];
-                    t.V1 = indices[i + 1];
-                    t.v2 = indices[i + 2];
+                    t.V1 = indices[i + 2];
+                    t.v2 = indices[i + 1];
                     _tris.Add(t);
 
                 }
@@ -214,9 +214,93 @@ namespace Vivid3D.Import
             root.Meshes.Add(root.Mesh.Clone());
             root.Meshes[0].FinalAnim();
 
-            
-            root.Mesh.Mat = new Material.Material3D();
+            var m1 = new Material.Material3D();
+            m1.TCol = DiffBlank;
+            m1.TNorm = NormBlank;
+            m1.TSpec = SpecBlank;
+            root.Mesh.Mat = m1;
             root.Meshes[0].Mat = root.Mesh.Mat;
+
+            var mat = s.Materials[0];
+            TextureSlot t1;
+
+            var sc = mat.GetMaterialTextureCount(TextureType.Unknown);
+            Console.WriteLine("SC:" + sc);
+            if (mat.HasColorDiffuse)
+            {
+                m1.Diff = CTV(mat.ColorDiffuse);
+            }
+            if (mat.HasColorSpecular)
+            {
+                m1.Spec = CTV(mat.ColorSpecular);
+            //    Console.WriteLine("Spec:" + vm.Spec);
+            }
+
+            if (mat.HasShininess)
+            {
+
+                //vm.Shine = 0.3f+ mat.Shininess;
+               // Console.WriteLine("Shine:" + vm.Shine);
+            }
+
+            //Console.WriteLine("Spec:" + vm.Spec);
+            //for(int ic = 0; ic < sc; ic++)
+            ///{
+            if (sc > 0)
+            {
+                var tex2 = mat.GetMaterialTextures(TextureType.Unknown)[0];
+                m1.TSpec = new Texture.VTex2D(IPath + "\\" + tex2.FilePath, Texture.LoadMethod.Single, false);
+            }
+
+            if (mat.GetMaterialTextureCount(TextureType.Normals) > 0)
+            {
+                var ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
+                Console.WriteLine("Norm:" + ntt.FilePath);
+                m1.TNorm = new Texture.VTex2D(IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false);
+            }
+
+
+            if (mat.GetMaterialTextureCount(TextureType.Diffuse) > 0)
+            {
+
+                t1 = mat.GetMaterialTextures(TextureType.Diffuse)[0];
+                Console.WriteLine("DiffTex:" + t1.FilePath);
+
+
+
+                if (t1.FilePath != null)
+                {
+                    try
+                    {
+                        //          Console.Write("t1:" + t1.FilePath);
+                        m1.TCol = new Texture.VTex2D(IPath + "\\" + t1.FilePath.Replace(".dds", ".png"), Texture.LoadMethod.Single, false);
+                        if (File.Exists(IPath + "norm" + t1.FilePath))
+                        {
+                            //                                vm.TNorm = new Texture.VTex2D(IPath + "norm" + t1.FilePath,Texture.LoadMethod.Single, false);
+
+                            //            Console.WriteLine("TexLoaded");
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                if (true)
+                {
+
+                    if (new FileInfo(t1.FilePath).Exists == true)
+                    {
+                        //  var tex = App.AppSal.CreateTex2D();
+                        //  tex.Path = t1.FilePath;
+                        // tex.Load();
+                        //m2.DiffuseMap = tex;
+                    }
+                }
+            }
+
+
+
             //r1.LocalTurn = new OpenTK.Matrix4(s.Transform.A1, s.Transform.A2, s.Transform.A3, s.Transform.A4, s.Transform.B1, s.Transform.B2, s.Transform.B3, s.Transform.B4, s.Transform.C1, s.Transform.C2, s.Transform.C3, s.Transform.C4, s.Transform.D1, s.Transform.D2, s.Transform.D3, s.Transform.D4);
             root.LocalTurn = new OpenTK.Matrix4(s.RootNode.Transform.A1, s.RootNode.Transform.B1, s.RootNode.Transform.C1, s.RootNode.Transform.D1, s.RootNode.Transform.A2, s.RootNode.Transform.B2, s.RootNode.Transform.C2, s.RootNode.Transform.D2, s.RootNode.Transform.A3, s.RootNode.Transform.B3, s.RootNode.Transform.C3, s.RootNode.Transform.D3, s.RootNode.Transform.A4, s.RootNode.Transform.B4, s.RootNode.Transform.C4, s.RootNode.Transform.D4);
 

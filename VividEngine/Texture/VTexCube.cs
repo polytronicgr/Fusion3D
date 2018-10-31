@@ -1,11 +1,8 @@
-﻿using System;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
 using System.Drawing;
+
 namespace Vivid3D.Texture
 {
     public class VTexCube : VTexBase
@@ -32,30 +29,26 @@ namespace Vivid3D.Texture
             GL.TexImage2D(TextureTarget.TextureCubeMapNegativeY, 0, PixelInternalFormat.Rgb, w, h, 0, PixelFormat.Rgb, PixelType.UnsignedByte, f5);
             GL.TexImage2D(TextureTarget.TextureCubeMapPositiveY, 0, PixelInternalFormat.Rgb, w, h, 0, PixelFormat.Rgb, PixelType.UnsignedByte, f0);
 
-
-
-
             //for (int i = 0; i < 6; i++)
             // {
             //   GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgb, w, h, 0, PixelFormat.Rgb, PixelType.UnsignedByte, ll[i]);
             //}
         }
-        public VTexCube(int w,int h)
+
+        public VTexCube(int w, int h)
         {
             W = w;
             H = h;
             D = 1;
             GL.ActiveTexture(TextureUnit.Texture0);
             GenMap();
-            for(int i=0;i<6;i++)
+            for (int i = 0; i < 6; i++)
             {
                 //TextureTarget.
                 GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgb, w, h, 0, PixelFormat.Rgb, PixelType.UnsignedByte, IntPtr.Zero);
             }
-
-
         }
-      
+
         public byte[] Dat(string pf)
         {
             var TexData = new Bitmap(pf);
@@ -72,11 +65,11 @@ namespace Vivid3D.Texture
                     pixs[loc++] = p.G;
                     pixs[loc++] = p.B;
                     pixs[loc++] = p.A;
-
                 }
             }
             return pixs;
         }
+
         private void GenMap()
         {
             ID = GL.GenTexture();
@@ -87,12 +80,14 @@ namespace Vivid3D.Texture
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
         }
+
         public override void Bind(int texu)
         {
             GL.ActiveTexture(TextureUnit.Texture0 + texu);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.BindTexture(TextureTarget.TextureCubeMap, ID);
         }
+
         public override void Release(int texu)
         {
             GL.ActiveTexture(TextureUnit.Texture0 + texu);

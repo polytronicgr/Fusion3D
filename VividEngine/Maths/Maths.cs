@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
+using System;
+
 namespace Vivid3D.Util
 {
     public static class Maths
@@ -12,33 +9,37 @@ namespace Vivid3D.Util
         {
             return (float)Math.PI * d / 180.0f;
         }
+
         public static float RadToDeg(float r)
         {
             return r * (180.0f / (float)Math.PI);
         }
+
         public static float Cos(float d)
         {
             return (float)Math.Cos(DegToRad(d));
         }
+
         public static float Sin(float d)
         {
             return (float)Math.Sin(DegToRad(d));
         }
-        public static Vector2 Push(Vector2 p,float x,float y)
+
+        public static Vector2 Push(Vector2 p, float x, float y)
         {
             return new Vector2(p.X + x, p.Y + y);
         }
+
         public static Vector2[] Push(Vector2[] p, float x, float y, float scale = 1.0f)
         {
-
             for (int i = 0; i < 4; i++)
             {
                 p[i].X = p[i].X + x * scale;
                 p[i].Y = p[i].Y + y * scale;
             }
             return p;
-
         }
+
         public static Vector2 Point(float x, float y)
         {
             return new Vector2(x, y);
@@ -50,13 +51,12 @@ namespace Vivid3D.Util
             return p3.Length;
         }
 
-     
-
         public static void Rotate(ref Vector2 p, ref float a, ref Vector2 res)
         {
             res.X = p.X * Cos(a) - p.Y * Sin(a);
             res.Y = p.X * Sin(a) + p.Y * Cos(a);
         }
+
         public static Vector2[] Rotate(Vector2[] p, float a, float s = 1.0f)
         {
             for (int i = 0; i < 4; i++)
@@ -65,6 +65,7 @@ namespace Vivid3D.Util
             }
             return p;
         }
+
         public static Vector2 Rotate(ref Vector2 p, ref float a)
         {
             var res = new Vector2();
@@ -149,27 +150,26 @@ namespace Vivid3D.Util
             }
             return res;
         }
+
         public static Vector2[] RotateOC(float[] x, float[] y, float rot, float scale, float xo, float yo)
         {
             Vector2[] res = new Vector2[4];
             for (int i = 0; i < 4; i++)
             {
                 res[i] = RotateOC(x[i], y[i], rot, scale, xo, yo);
-
             }
             return res;
         }
 
         public static Vector2 RotateOC(float x, float y, float rot, float scale, float xo, float yo)
         {
-
             Vector2 res;
 
             res = Rotate(x, y, rot, scale);
 
             return res;
-
         }
+
         public static Vector2 Rotate(float x, float y, float rot, float scale)
         {
             Vector2 res = new Vector2();
@@ -183,8 +183,6 @@ namespace Vivid3D.Util
             res.Y = res.Y * scale;
 
             return res;
-
         }
-
     }
 }

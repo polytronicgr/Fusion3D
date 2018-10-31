@@ -1,20 +1,17 @@
-﻿using System;
-using System.IO;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Drawing;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+using System.IO;
+using System.Threading;
 
 namespace Vivid3D.Texture
 {
     public enum LoadMethod
     {
-        Single,Multi
+        Single, Multi
     }
+
     public class VTex2D : VTexBase
     {
         public Thread LoadThread = null;
@@ -35,9 +32,9 @@ namespace Vivid3D.Texture
             H = bh;
             Alpha = true;
             return;
-            for(int y = 0; y < bh; y++)
+            for (int y = 0; y < bh; y++)
             {
-                for(int x = 0; x < bw; x++)
+                for (int x = 0; x < bw; x++)
                 {
                     byte[] col = r.ReadBytes(4);
                     System.Drawing.Color nc = System.Drawing.Color.FromArgb(col[3], col[0], col[1], col[2]);
@@ -47,12 +44,14 @@ namespace Vivid3D.Texture
             W = bw;
             H = bh;
         }
+
         public void SkipBitmap(BinaryReader r)
         {
             short bw = r.ReadInt16();
             short bh = r.ReadInt16();
             r.BaseStream.Seek(bw * bh * 4, SeekOrigin.Current);
         }
+
         public void SaveTex(string p)
         {
             if (string.IsNullOrEmpty(p))
@@ -62,22 +61,22 @@ namespace Vivid3D.Texture
             if (File.Exists(p)) return;
             FileStream fs = new FileStream(p, FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
-          
-            
-                var sd = new Bitmap(TexData, 32, 32);
-                WriteBitmap(sd,w);
-                WriteBitmap(TexData,w);
-          
+
+            var sd = new Bitmap(TexData, 32, 32);
+            WriteBitmap(sd, w);
+            WriteBitmap(TexData, w);
+
             fs.Flush();
             fs.Close();
         }
-        public void WriteBitmap(Bitmap b,BinaryWriter w)
+
+        public void WriteBitmap(Bitmap b, BinaryWriter w)
         {
             w.Write((short)b.Width);
             w.Write((short)b.Height);
-            for(int y = 0; y < b.Height; y++)
+            for (int y = 0; y < b.Height; y++)
             {
-                for(int x = 0; x < b.Width; x++)
+                for (int x = 0; x < b.Width; x++)
                 {
                     var p = b.GetPixel(x, y);
                     w.Write(p.R);
@@ -87,14 +86,14 @@ namespace Vivid3D.Texture
                 }
             }
         }
-        public void CopyTex(int x,int y)
+
+        public void CopyTex(int x, int y)
         {
             GL.Enable(EnableCap.Texture2D);
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, this.ID);
-            GL.CopyTexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, x,y, W, H);
+            GL.CopyTexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, x, y, W, H);
             GL.BindTexture(TextureTarget.Texture2D, 0);
-
         }
 
         ~VTex2D()
@@ -107,10 +106,9 @@ namespace Vivid3D.Texture
             GL.DeleteTexture(ID);
         }
 
-        public VTex2D(int w,int h,bool alpha=false)
+        public VTex2D(int w, int h, bool alpha = false)
         {
             GenTex(w, h, alpha);
-
         }
 
         private void GenTex(int w, int h, bool alpha)
@@ -138,8 +136,8 @@ namespace Vivid3D.Texture
 
         public VTex2D()
         {
-
         }
+
         public void Write()
         {
             Help.IOHelp.WriteInt(W);
@@ -147,19 +145,19 @@ namespace Vivid3D.Texture
             Help.IOHelp.WriteBool(Alpha);
             Help.IOHelp.WriteBytes(RawData);
         }
+
         public void Read()
         {
             W = Help.IOHelp.ReadInt();
             H = Help.IOHelp.ReadInt();
             Alpha = Help.IOHelp.ReadBool();
             RawData = Help.IOHelp.ReadBytes();
-           // GL.ActiveTexture(TextureUnit.Texture0);
+            // GL.ActiveTexture(TextureUnit.Texture0);
 
             GL.Enable(EnableCap.Texture2D);
             ID = GL.GenTexture();
 
             GL.BindTexture(TextureTarget.Texture2D, ID);
-
 
             if (Alpha)
             {
@@ -178,7 +176,8 @@ namespace Vivid3D.Texture
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
-        public VTex2D(int w,int h,byte[] dat,bool alpha = true)
+
+        public VTex2D(int w, int h, byte[] dat, bool alpha = true)
         {
             GL.ActiveTexture(TextureUnit.Texture0);
             Alpha = alpha;
@@ -200,26 +199,27 @@ namespace Vivid3D.Texture
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
             GL.PixelStore(PixelStoreParameter.PackAlignment, 4 * 4);
             pixs = dat;
-
         }
+
         public string Name
         {
             get;
             set;
         }
+
         public string Path
         {
             get;
             set;
         }
+
         public byte[] RawData;
         public static byte[] TmpStore = null;
-      
+
         public static Dictionary<string, VTex2D> Lut = new Dictionary<string, VTex2D>();
 
-        public VTex2D(string path,LoadMethod lm,bool alpha = true)
+        public VTex2D(string path, LoadMethod lm, bool alpha = true)
         {
-
             if (File.Exists(path) == false)
             {
                 return;
@@ -232,7 +232,6 @@ namespace Vivid3D.Texture
 
             if (Lut.ContainsKey(path))
             {
-
                 var ot = Lut[path];
                 ID = ot.ID;
                 W = ot.W;
@@ -248,11 +247,7 @@ namespace Vivid3D.Texture
                 Lut.Add(path, this);
             }
 
-
-
             Console.WriteLine("Reading:" + path);
-
-
 
             GL.Enable(EnableCap.Texture2D);
             ID = GL.GenTexture();
@@ -277,11 +272,9 @@ namespace Vivid3D.Texture
 
                 fs.Close();
                 fs = null;
-
             }
             else
             {
-
                 Bitmap img = new Bitmap(path);
                 //System.Drawing.Imaging.BitmapData dat = img.LockBits( new Rectangle(0, 0, img.Width, img.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.);
 
@@ -296,8 +289,6 @@ namespace Vivid3D.Texture
 
                 //GL.TexImage2D(TextureTarget.Texture2D,0,PixelInternalFormat.)
 
-
-
                 int pi = 0;
                 for (int y = 0; y < img.Height; y++)
                 {
@@ -311,7 +302,6 @@ namespace Vivid3D.Texture
                         {
                             RawData[pi++] = pix.A;
                         }
-
                     }
                 }
 
@@ -352,9 +342,11 @@ namespace Vivid3D.Texture
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
-        bool PreLoaded = false;
-        FileStream nf;
-        BinaryReader nr;
+
+        private bool PreLoaded = false;
+        private FileStream nf;
+        private BinaryReader nr;
+
         public void T_LoadVTex()
         {
             ReadBitmap(nr);
@@ -369,41 +361,41 @@ namespace Vivid3D.Texture
             nf.Close();
             nf = null;
             nr = null;
-
         }
+
         public override void Bind(int texu)
         {
-            
-
             GL.Enable(EnableCap.Texture2D);
             GL.ActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
-          //  GL.ClientActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
+            //  GL.ClientActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
             GL.BindTexture(TextureTarget.Texture2D, ID);
         }
+
         public override void Release(int texu)
         {
             GL.ActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
-           // GL.ClientActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
+            // GL.ClientActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
             GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.Disable(EnableCap.Texture2D);
         }
+
         public void SetPix()
         {
             pixs = new byte[W * H * 4];
             int loc = 0;
-            for (int y=0;y<H;y++)
+            for (int y = 0; y < H; y++)
             {
-                for(int x=0;x<W;x++)
+                for (int x = 0; x < W; x++)
                 {
                     var p = TexData.GetPixel(x, y);
                     pixs[loc++] = p.R;
                     pixs[loc++] = p.G;
                     pixs[loc++] = p.B;
                     pixs[loc++] = p.A;
-                  
                 }
             }
         }
+
         public void BindData()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -414,14 +406,13 @@ namespace Vivid3D.Texture
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
             GL.PixelStore(PixelStoreParameter.PackAlignment, 4 * 4);
-           GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixs);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixs);
             GL.Disable(EnableCap.Texture2D);
-
         }
+
         public void T_LoadTex()
         {
-       
-            TexData = new Bitmap(Path); 
+            TexData = new Bitmap(Path);
 
             W = TexData.Width;
             H = TexData.Height;

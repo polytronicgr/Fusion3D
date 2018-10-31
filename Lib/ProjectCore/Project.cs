@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
-using DataCore;
+﻿using DataCore;
 using DataCore.DataTypes;
+using System.IO;
 
 namespace ProjectCore
 {
@@ -35,20 +34,14 @@ namespace ProjectCore
             Author = author.String;
             IDEPath = idepath.String;
             Icon = icon.Map;
-
-            
-
-
-
         }
 
-        public Project(string name,string info,string author,System.Drawing.Bitmap icon)
+        public Project(string name, string info, string author, System.Drawing.Bitmap icon)
         {
-
             IDEPath = name;
             Directory.CreateDirectory(ProjectPath + name);
             Directory.CreateDirectory(ProjectPath + name + "\\Content\\");
-            
+
             BasePath = ProjectPath + name + "\\";
             ContentPath = BasePath + "Content\\";
 
@@ -61,9 +54,6 @@ namespace ProjectCore
             ProjData.AddData(new DataBitmap(icon), "Icon");
 
             ProjData.Save();
-
-
         }
-
     }
 }

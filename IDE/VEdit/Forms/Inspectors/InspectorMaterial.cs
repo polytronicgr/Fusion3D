@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VividEdit.Forms.Inspectors
@@ -17,6 +11,7 @@ namespace VividEdit.Forms.Inspectors
         public ValueTypes.InspectVec3 Spec;
         public ValueTypes.InspectFloat Shine;
         public ValueTypes.InspectTexture ColTex;
+
         public InspectorMaterial()
         {
             InitializeComponent();
@@ -44,20 +39,22 @@ namespace VividEdit.Forms.Inspectors
             ColTex.Location = new Point(6, 170);
             ColTex.Show();
             Size = new Size(1000, 1000);
-
-
         }
-        Timer nt = new Timer();
+
+        private Timer nt = new Timer();
+
         public void StartTick()
         {
             nt.Interval = 40;
             nt.Tick += Nt_Tick;
             nt.Enabled = true;
         }
+
         public override void AlignV()
         {
             Align();
         }
+
         public void Align()
         {
             Diff.Value = Mat.Diff;
@@ -69,16 +66,15 @@ namespace VividEdit.Forms.Inspectors
             Shine.AlignToValue();
             ColTex.AlignToValue();
         }
+
         private void Nt_Tick(object sender, EventArgs e)
         {
             if (Inspecting)
             {
-
                 Mat.Diff = Diff.Value;
                 Mat.Spec = Spec.Value;
                 Mat.Shine = Shine.Value;
                 Mat.TCol = ColTex.Value;
-
             }
         }
     }

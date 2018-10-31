@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vivid3D.Font;
 using Vivid3D.Input;
 using Vivid3D.Logic;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+
 namespace Vivid3D.Resonance
 {
     public class UI
     {
-
         public static UIForm TopForm = null;
         public Logics Logics = new Logics();
         public Logics Graphics = new Logics();
@@ -26,12 +21,14 @@ namespace Vivid3D.Resonance
         public UI()
         {
             InitUI();
-            for(int i = 0; i < 32; i++)
+            for (int i = 0; i < 32; i++)
             {
                 Pressed[i] = null;
             }
         }
+
         private Texture.VTex2D Black = null;
+
         public void InitUI()
         {
             Black = new Texture.VTex2D("data\\ui\\black.png", Texture.LoadMethod.Single, false);
@@ -39,11 +36,10 @@ namespace Vivid3D.Resonance
         }
 
         public bool FirstMouse = true;
-        public static int MX,MY,MXD,MYD;
+        public static int MX, MY, MXD, MYD;
 
         public void Update()
         {
-
             Logics.SmartUpdate();
 
             if (FirstMouse)
@@ -66,7 +62,7 @@ namespace Vivid3D.Resonance
             {
                 UpdateUpdateList(Root);
             }
-            foreach(var form in UpdateList)
+            foreach (var form in UpdateList)
             {
                 form.Update?.Invoke();
             }
@@ -75,32 +71,24 @@ namespace Vivid3D.Resonance
 
             if (top != null)
             {
-
                 if (TopForm != top)
                 {
                     if (TopForm != null)
                     {
-
                         if (TopForm != Pressed[0])
                         {
                             TopForm.MouseLeave?.Invoke();
                         }
                     }
 
-
                     top.MouseEnter?.Invoke();
-
                 }
-
-
             }
             if (top != null)
             {
                 if (top == TopForm)
                 {
-
                     top.MouseMove?.Invoke(MX - top.GX, MY - top.GY, MXD, MYD);
-
                 }
             }
             if (top == null)
@@ -117,7 +105,6 @@ namespace Vivid3D.Resonance
 
             if (Active != null)
             {
-
                 var key = VInput.KeyIn();
                 if (key != OpenTK.Input.Key.LastKey)
                 {
@@ -139,7 +126,7 @@ namespace Vivid3D.Resonance
                         }
                         if (Environment.TickCount > NextKey)
                         {
-                            Active.KeyPress?.Invoke(key,shift);
+                            Active.KeyPress?.Invoke(key, shift);
                             NextKey = Environment.TickCount + 90;
                         }
                     }
@@ -155,7 +142,7 @@ namespace Vivid3D.Resonance
                             shift = true;
                         }
                         LastKey = key;
-                        Active.KeyPress?.Invoke(key,shift);
+                        Active.KeyPress?.Invoke(key, shift);
                         NextKey = Environment.TickCount + 250;
                     }
                 }
@@ -163,20 +150,18 @@ namespace Vivid3D.Resonance
 
             if (VInput.MB[0])
             {
-
                 if (TopForm != null)
                 {
                     if (Pressed[0] == null)
                     {
                         Console.WriteLine("Click:" + clicks);
-                        if(Environment.TickCount<lastClick+300)
+                        if (Environment.TickCount < lastClick + 300)
                         {
                             clicks++;
                             if (clicks == 2)
                             {
-
                                 TopForm.DoubleClick?.Invoke(0);
-                                Console.WriteLine("DoubleClicked:"+TopForm.Text+":"+TopForm.GetType().ToString());
+                                Console.WriteLine("DoubleClicked:" + TopForm.Text + ":" + TopForm.GetType().ToString());
                             }
                         }
                         else
@@ -196,13 +181,11 @@ namespace Vivid3D.Resonance
                         }
                         Active = TopForm;
                         TopForm.Activate?.Invoke();
-                        
+
                         if (sdrag)
                         {
                             sdx = MX;
                             sdy = MY;
-                    
-                        
                         }
                     }
                     else if (Pressed[0] == TopForm)
@@ -212,7 +195,6 @@ namespace Vivid3D.Resonance
                     else if (Pressed[0] != TopForm)
                     {
                         Pressed[0].MousePressed?.Invoke(0);
-
                     }
                 }
                 else
@@ -225,17 +207,15 @@ namespace Vivid3D.Resonance
 
                 if (Pressed[0] != null)
                 {
-
-                 //   Console.WriteLine("MX:" + MX + " MY:" + MY + " SDX:" + sdx + " SDY:" + sdy);
+                    //   Console.WriteLine("MX:" + MX + " MY:" + MY + " SDX:" + sdx + " SDY:" + sdy);
                     int mvx = MX - sdx;
                     int mvy = MY - sdy;
                     if (mvx != 0 || mvy != 0)
                     {
-                       
                         Pressed[0].Drag?.Invoke(mvx, mvy);
-                        Pressed[0].PostDrag?.Invoke(mvx,mvy);
+                        Pressed[0].PostDrag?.Invoke(mvx, mvy);
                     }
-                        sdx = MX;
+                    sdx = MX;
 
                     sdy = MY;
                     //Console.WriteLine(@)
@@ -244,7 +224,6 @@ namespace Vivid3D.Resonance
 
                     //sdy = MY-Pressed[0].GY;
                 }
-
             }
             else
             {
@@ -255,16 +234,14 @@ namespace Vivid3D.Resonance
                     {
                         Pressed[0].MouseLeave?.Invoke();
                     }
-        
+
                     Pressed[0].MouseUp?.Invoke(0);
                     Pressed[0] = null;
                     sdrag = true;
-
                 }
             }
-
-
         }
+
         public int NextKey = 0;
         public OpenTK.Input.Key LastKey = OpenTK.Input.Key.LastKey;
         public int clicks = 0;
@@ -272,25 +249,25 @@ namespace Vivid3D.Resonance
         private bool sdrag = true;
         private int sdx, sdy, ux, uy;
         public UIForm[] Pressed = new UIForm[32];
+
         private UIForm GetTopForm(int mx, int my)
         {
             foreach (var form in UpdateList)
             {
                 if (form.CheckBounds == true)
                 {
-
                     if (form.InBounds(mx, my))
                     {
                         //    Console.WriteLine("Form:" + form.Text);
                         return form;
-
                     }
                 }
-
             }
             return null;
         }
+
         private float TopB = 0.0f;
+
         public void Render()
         {
             if (Top != null)
@@ -311,7 +288,7 @@ namespace Vivid3D.Resonance
             if (Top != null)
             {
                 UpdateRenderList(Root);
-                foreach(var form in RenderList)
+                foreach (var form in RenderList)
                 {
                     form.Draw?.Invoke();
                 }
@@ -321,29 +298,22 @@ namespace Vivid3D.Resonance
                 OpenTK.Graphics.OpenGL4.GL.Clear(OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit);
                 Vivid3D.Draw.VPen.RectBlur2(0, 0, Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H, ntex, new OpenTK.Vector4(1, 1, 1, 1), TopB);
 
-
                 UpdateRenderList(Top);
 
                 foreach (var form in RenderList)
                 {
-                   
                     form.Draw?.Invoke();
                 }
-              
+
                 ntex.Delete();
             }
             else
             {
                 UpdateRenderList(Root);
 
-
                 foreach (var form in RenderList)
                 {
-
-                            
-                        form.Draw?.Invoke();
-                    
-
+                    form.Draw?.Invoke();
                 }
                 if (TopB > 0)
                 {
@@ -364,22 +334,16 @@ namespace Vivid3D.Resonance
             UpdateList.Clear();
 
             AddNodeBackward(UpdateList, begin);
-
-
-
         }
 
         private void UpdateRenderList(UIForm begin)
         {
-
             RenderList.Clear();
 
             AddNodeForward(RenderList, begin);
-            
-
         }
 
-        private void AddNodeBackward(List<UIForm> forms,UIForm form)
+        private void AddNodeBackward(List<UIForm> forms, UIForm form)
         {
             int fc = form.Forms.Count;
             if (fc > 0)
@@ -393,22 +357,15 @@ namespace Vivid3D.Resonance
                 }
             }
             forms.Add(form);
-
         }
 
-        private void AddNodeForward(List<UIForm> forms,UIForm form)
+        private void AddNodeForward(List<UIForm> forms, UIForm form)
         {
-
             RenderList.Add(form);
-            foreach(var nf in form.Forms)
+            foreach (var nf in form.Forms)
             {
                 AddNodeForward(forms, nf);
             }
-
         }
-            
-
     }
-
-
 }

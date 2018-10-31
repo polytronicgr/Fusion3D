@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
+
 namespace VividEdit.Forms
 {
     public class ContentBase
     {
-
         public string Name { get; set; }
         public Bitmap Icon { get; set; }
         public string Path { get; set; }
@@ -17,6 +12,7 @@ namespace VividEdit.Forms
         public int Y { get; set; }
         public string Type = "";
         public string BasePath = "";
+
         public void DetermineType()
         {
             string ext = new FileInfo(Path).Extension.ToLower();
@@ -30,6 +26,7 @@ namespace VividEdit.Forms
                 case ".x":
                     Type = "3D";
                     break;
+
                 case ".bmp":
                 case ".jpg":
                 case ".png":
@@ -39,6 +36,5 @@ namespace VividEdit.Forms
                     break;
             }
         }
-
     }
 }

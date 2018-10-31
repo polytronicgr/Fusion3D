@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vivid3D.Effect
+﻿namespace Vivid3D.Effect
 {
-
     public class ENoFX : Effect3D
     {
         public ENoFX() : base("", "Data/Shader/vsNoFX.glsl", "Data/Shader/fsNoFX.glsl")
         {
-
         }
+
         public override void SetPars()
         {
             SetMat("model", Effect.FXG.Local);
@@ -21,17 +14,18 @@ namespace Vivid3D.Effect
             SetTex("tC", 0);
         }
     }
+
     public class ELightMap : Effect3D
     {
         public static float LightMod = 1.0f;
         public static float MatMod = 1.0f;
+
         public ELightMap() : base("", "Data/Shader/vsLightMap.glsl", "Data/Shader/fsLightMap.glsl")
         {
-
         }
+
         public override void SetPars()
         {
-
             //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
             SetMat("model", Effect.FXG.Local);
             SetMat("view", FXG.Cam.CamWorld);
@@ -40,21 +34,20 @@ namespace Vivid3D.Effect
             SetTex("tC", 0);
 
             //SetTex("tSpec", 2);
-
-
         }
     }
+
     public class ETerrain : Effect3D
     {
         public static float LightMod = 1.0f;
         public static float MatMod = 1.0f;
+
         public ETerrain() : base("", "Data/Shader/vsTerrain.glsl", "Data/Shader/fsTerrain.glsl")
         {
-
         }
+
         public override void SetPars()
         {
-
             //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
             SetMat("model", Effect.FXG.Local);
             SetMat("view", FXG.Cam.CamWorld);
@@ -74,23 +67,23 @@ namespace Vivid3D.Effect
             SetTex("tC", 0);
             SetTex("tN", 1);
             //SetTex("tSpec", 2);
-
 
             SetTex("tS", 2);
             SetTex("tSpec", 3);
         }
     }
+
     public class EMultiPass3D : Effect3D
     {
         public static float LightMod = 1.0f;
         public static float MatMod = 1.0f;
+
         public EMultiPass3D() : base("", "Data/Shader/vsMP1.glsl", "Data/Shader/fsMP1.glsl")
         {
-
         }
+
         public override void SetPars()
         {
-
             //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
             SetMat("model", Effect.FXG.Local);
             SetMat("view", FXG.Cam.CamWorld);
@@ -110,7 +103,6 @@ namespace Vivid3D.Effect
             SetTex("tC", 0);
             SetTex("tN", 1);
             //SetTex("tSpec", 2);
-
 
             SetTex("tS", 2);
             SetTex("tSpec", 3);

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VividEdit.Forms.Inspectors.ValueTypes
@@ -13,6 +6,7 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
     public partial class InspectFloat : UserControl
     {
         public float Value = 0;
+
         public InspectFloat()
         {
             InitializeComponent();
@@ -23,11 +17,13 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             try
             {
                 Value = float.Parse(floatBox.Text);
-            } catch (Exception ex)
-            { 
+            }
+            catch (Exception ex)
+            {
                 Value = 0;
             }
         }
+
         public void AlignToValue()
         {
             floatBox.Text = Value.ToString();

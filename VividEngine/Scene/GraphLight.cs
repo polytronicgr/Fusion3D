@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Tex;
-using OpenTK;
+﻿using OpenTK;
 using System.IO;
+
 namespace Vivid3D.Scene
 {
     public class GraphLight : GraphNode
@@ -15,36 +10,43 @@ namespace Vivid3D.Scene
             get;
             set;
         }
+
         public Vector3 Specular
         {
             get;
             set;
         }
+
         public float Shiny
         {
             get;
             set;
         }
+
         public float Range
         {
             get;
             set;
         }
+
         public LightType Type
         {
             get;
             set;
         }
+
         public bool On
         {
             get;
             set;
         }
+
         public bool CastShadows
         {
             get;
             set;
         }
+
         public GraphLight()
         {
             Diffuse = new Vector3(0.5f, 0.5f, 0.5f);
@@ -55,6 +57,7 @@ namespace Vivid3D.Scene
             On = true;
             CastShadows = true;
         }
+
         public void Write(BinaryWriter w)
         {
             w.Write(X);
@@ -72,8 +75,8 @@ namespace Vivid3D.Scene
             w.Write(On);
             w.Write(CastShadows);
             w.Write((int)Type);
-
         }
+
         public void Read(BinaryReader r)
         {
             X = r.ReadSingle();
@@ -96,10 +99,10 @@ namespace Vivid3D.Scene
             CastShadows = r.ReadBoolean();
             Type = (LightType)r.ReadInt32();
         }
-        
     }
+
     public enum LightType
     {
-        Point,Directional,Ambient,Spot
+        Point, Directional, Ambient, Spot
     }
 }

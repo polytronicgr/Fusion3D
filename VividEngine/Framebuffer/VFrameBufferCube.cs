@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Texture;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using Vivid3D.App;
+using Vivid3D.Texture;
+
 namespace Vivid3D.FrameBuffer
 {
     public class VFrameBufferCube
@@ -14,7 +10,8 @@ namespace Vivid3D.FrameBuffer
         public int FBO, FBD;
         public VTexCube Cube;
         public int W, H;
-        public VFrameBufferCube(int w,int h)
+
+        public VFrameBufferCube(int w, int h)
         {
             W = w;
             H = h;
@@ -24,7 +21,7 @@ namespace Vivid3D.FrameBuffer
             FBD = GL.GenRenderbuffer();
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, FBD);
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.DepthComponent24, w, h);
-           // GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
+            // GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
             //G/             L.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, FBO);
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.TextureCubeMapPositiveX, Cube.ID, 0);
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, FBD);
@@ -33,7 +30,6 @@ namespace Vivid3D.FrameBuffer
             CheckFBO();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             Cube.Release(0);
-
         }
 
         private static void CheckFBO()
@@ -43,7 +39,6 @@ namespace Vivid3D.FrameBuffer
                 Console.WriteLine("Framebuffer failure.");
                 while (true)
                 {
-
                 }
             }
         }
@@ -57,8 +52,8 @@ namespace Vivid3D.FrameBuffer
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.TextureCubeMapPositiveX + face, Cube.ID, 0);
             CheckFBO();
             return TextureTarget.TextureCubeMapPositiveX + face;
-
         }
+
         public void Release()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);

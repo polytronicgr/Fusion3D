@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using System.Text;
 
 namespace DataCore.DataTypes
 {
     public class DataString : Data
     {
-
         public string String
         {
             get;
@@ -16,7 +12,6 @@ namespace DataCore.DataTypes
 
         public DataString()
         {
-
         }
 
         public DataString(string data)
@@ -34,6 +29,5 @@ namespace DataCore.DataTypes
         {
             String = Encoding.ASCII.GetString(_RawData);
         }
-
     }
 }

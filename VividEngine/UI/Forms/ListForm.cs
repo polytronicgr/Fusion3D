@@ -1,34 +1,26 @@
-﻿using System;
+﻿using OpenTK;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vivid3D.Texture;
-using Vivid3D.Draw;
-using OpenTK;
+
 namespace Vivid3D.Resonance.Forms
 {
     public class ListForm : UIForm
     {
         public ScrollBarV Scroller = null;
         public List<ItemForm> Items = new List<ItemForm>();
-        
+
         public ListForm()
         {
-
             PushArea = true;
             Col = new Vector4(0.8f, 0.8f, 0.8f, 0.5f);
 
             void DrawFunc()
             {
-
                 DrawFormSolid(Col);
-
             }
 
             void ChangedFunc()
             {
-
                 Scroller.X = W - 10;
                 Scroller.Y = 0;
                 Scroller.W = 10;
@@ -47,26 +39,21 @@ namespace Vivid3D.Resonance.Forms
                 if (dh < 0.03f)
                 {
                     //Scroller.Max = Scr
-                //    sm1 = (float)Scroller.H * 0.03f; 
-               
+                    //    sm1 = (float)Scroller.H * 0.03f;
                 }
 
                 Scroller.ScrollBut.H = (int)(dh * Scroller.H);
                 if (dh < 0.1f)
                 {
-
                     //Scroller.ScrollBut.H = 6;
-                    //Scroller.Max 
+                    //Scroller.Max
                     //Scroller.Max = Scroller.Max - 10;
-
                 }
 
                 Scroller.Max = Scroller.H;
                 float ly = Scroller.Cur / Scroller.Max;
-                float mh2 = ly * ((Items.Count+1) * 22);
+                float mh2 = ly * ((Items.Count + 1) * 22);
 
-
-               
                 if (Scroller.ScrollBut.H > H)
                 {
                     Scroller.ScrollBut.H = H;
@@ -80,7 +67,7 @@ namespace Vivid3D.Resonance.Forms
                     //var newi = new ItemForm().Set(5, (int)ly, W - 15, 20, item.Text) as ItemForm;
                     var newi = item;
                     //newi.Pic = item.Pic;
-                    if (ly > H-22 || ly<0)
+                    if (ly > H - 22 || ly < 0)
                     {
                         newi.Render = false;
                         newi.CheckBounds = false;
@@ -92,15 +79,11 @@ namespace Vivid3D.Resonance.Forms
                     }
                     newi.Y = (int)ly;
                     ly = ly + 22;
-                   
+
                     Add(newi);
-                    
                 }
 
                 if (Scroller.ScrollBut.H < 5) Scroller.ScrollBut.H = 5;
-
-                
-
             }
 
             Changed = ChangedFunc;
@@ -109,7 +92,7 @@ namespace Vivid3D.Resonance.Forms
 
             Scroller = new ScrollBarV();
 
-            void PostDragFunc(int x,int y)
+            void PostDragFunc(int x, int y)
             {
                 //Scroller.Cur = Scroller.ScrollBut.Y / Scroller.H;
                 //float my = Scroller.Max / Scroller.H;
@@ -117,17 +100,16 @@ namespace Vivid3D.Resonance.Forms
 
                 Scroller.Cur = Scroller.ScrollBut.Y;
                 Changed?.Invoke();
-                
             }
 
             Scroller.ScrollBut.PostDrag = PostDragFunc;
 
             Add(Scroller);
-
         }
+
         public void Clear()
         {
-            foreach(var i in Items)
+            foreach (var i in Items)
             {
                 Forms.Remove(i);
             }
@@ -141,17 +123,16 @@ namespace Vivid3D.Resonance.Forms
             //Changed?.Invoke();
         }
 
-        public ItemForm AddItem(string text,VTex2D pic)
+        public ItemForm AddItem(string text, VTex2D pic)
         {
             var nitem = new ItemForm();
             nitem.Text = text;
             nitem.Pic = pic;
-            nitem.W = W-20;
+            nitem.W = W - 20;
             nitem.H = 20;
             Items.Add(nitem);
             return nitem;
             //Changed?.Invoke();
         }
-
     }
 }

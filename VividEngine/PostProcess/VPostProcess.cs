@@ -1,16 +1,12 @@
-﻿using System;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vivid3D.Texture;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+
 namespace Vivid3D.PostProcess
 {
     public class VPostProcess
     {
-
         public List<VPostProcess> SubProcesses = new List<VPostProcess>();
 
         public VPostProcess()
@@ -19,47 +15,44 @@ namespace Vivid3D.PostProcess
             GenQuad();
         }
 
-
         public virtual void Init()
         {
-
         }
+
         public virtual void Bind(VTex2D bb)
         {
-
         }
+
         public virtual void PostBind(VTex2D bb)
         {
-
         }
+
         public virtual void Render(VTex2D bb)
         {
-
         }
+
         public virtual void PostRender(VTex2D bb)
         {
-
         }
+
         public virtual void RenderSub(VTex2D bb)
         {
-            foreach(var sp in SubProcesses)
+            foreach (var sp in SubProcesses)
             {
                 sp.Bind(bb);
                 sp.Render(bb);
                 sp.Release(bb);
             }
         }
+
         public virtual void Release(VTex2D bb)
         {
-
         }
+
         public int qva = 0, qvb = 0;
+
         public void DrawQuad()
         {
-           
-
-          
-
             GL.BindVertexArray(qva);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, qvb);
@@ -70,11 +63,10 @@ namespace Vivid3D.PostProcess
 
             GL.DisableVertexAttribArray(0);
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-      
         }
+
         public void GenQuad()
         {
-
             qva = GL.GenVertexArray();
 
             GL.BindVertexArray(qva);
@@ -90,14 +82,10 @@ namespace Vivid3D.PostProcess
             qd[12] = 1.0f; qd[13] = -1.0f; qd[14] = 0.0f;
             qd[15] = 1.0f; qd[16] = 1.0f; qd[17] = 0.0f;
 
-
-
-
             qvb = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, qvb);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(18 * 4), qd, BufferUsageHint.StaticDraw);
             //  GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-
         }
     }
 }

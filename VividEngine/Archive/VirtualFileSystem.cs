@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+
 namespace Vivid3D.Archive
 {
     public class VirtualFileSystem
@@ -13,6 +11,7 @@ namespace Vivid3D.Archive
             get;
             set;
         }
+
         public string Path
         {
             get;
@@ -32,12 +31,10 @@ namespace Vivid3D.Archive
                 }
                 return s;
             }
-
         }
 
         public VirtualEntry Find(string name, string path)
         {
-
             foreach (var entry in Enteries)
             {
                 if (entry.Name == name && entry.Path == path)
@@ -47,6 +44,7 @@ namespace Vivid3D.Archive
             }
             return null;
         }
+
         public void ReadToc(string path)
         {
             path = path.Replace(".toc", "");
@@ -61,27 +59,26 @@ namespace Vivid3D.Archive
             for (int i = 0; i < ec; i++)
             {
                 var ne = new VirtualEntry();
-                for(int i2 = 0; i2 < 16; i2++)
+                for (int i2 = 0; i2 < 16; i2++)
                 {
                     ne.Par[i2] = r.ReadInt32();
                 }
                 ne.Name = r.ReadString();
                 ne.Path = r.ReadString();
                 ne.Compressed = r.ReadBoolean();
-           //     Console.WriteLine("Name:" + ne.Name + " Path:" + ne.Path + " Compressed?" + ne.Compressed);
+                //     Console.WriteLine("Name:" + ne.Name + " Path:" + ne.Path + " Compressed?" + ne.Compressed);
                 //      ne.ImgW = r.ReadInt32();
                 //       ne.ImgH = r.ReadInt32();
                 ne.Start = r.ReadInt64();
                 ne.Size = r.ReadInt64();
                 Enteries.Add(ne);
             }
-
         }
+
         public VirtualEntry Load(VirtualEntry e)
         {
             //name = name.ToLower();
             //path = path.ToLower();
-
 
             if (e.Loaded == false)
             {
@@ -105,15 +102,13 @@ namespace Vivid3D.Archive
                 e.Loaded = true;
             }
             return e;
-
-
         }
-    
 
         public void Add(VirtualEntry entry)
         {
             Enteries.Add(entry);
         }
+
         public void AddMediaFromNode(Scene.GraphNode node)
         {
             if (node.ImgFrame != null)
@@ -127,7 +122,8 @@ namespace Vivid3D.Archive
                         break;
                     }
                 }
-                if (!found) {
+                if (!found)
+                {
                     var ve = new VirtualEntry();
                     ve.Name = node.ImgFrame.Name;
                     ve.Path = node.ImgFrame.Path;
@@ -143,14 +139,14 @@ namespace Vivid3D.Archive
                     Enteries.Add(ve);
                 }
             }
-            foreach(var n2 in node.Nodes)
+            foreach (var n2 in node.Nodes)
             {
                 AddMediaFromNode(n2);
             }
         }
+
         public void Add(Scene.SceneGraph graph)
         {
-
             AddMediaFromNode(graph.Root);
 
             var ge = new VirtualEntry();
@@ -174,15 +170,10 @@ namespace Vivid3D.Archive
             ge.Loaded = true;
             ge.Compressed = false;
             Enteries.Add(ge);
-
-
-
-
-
         }
+
         public void Add(string path)
         {
-          
             var fi = new FileInfo(path);
 
             var ext = fi.Extension.ToLower();
@@ -198,9 +189,9 @@ namespace Vivid3D.Archive
 
                     var rd = new byte[tb.Width * tb.Height * 4];
                     int bi = 0;
-                    for(int y = 0; y < tb.Height; y++)
+                    for (int y = 0; y < tb.Height; y++)
                     {
-                        for(int x = 0; x < tb.Width; x++)
+                        for (int x = 0; x < tb.Width; x++)
                         {
                             var pix = tb.GetPixel(x, y);
                             rd[bi++] = pix.R;
@@ -221,6 +212,7 @@ namespace Vivid3D.Archive
                     na.Path = path;
                     Enteries.Add(na);
                     break;
+
                 case ".cs":
 
                     var sb = File.ReadAllBytes(path);
@@ -232,6 +224,7 @@ namespace Vivid3D.Archive
                     ve.Path = path;
                     Enteries.Add(ve);
                     break;
+
                 case ".graph":
                     var gb = File.ReadAllBytes(path);
                     var e2 = new VirtualEntry();
@@ -241,76 +234,75 @@ namespace Vivid3D.Archive
                     e2.Path = path;
                     Enteries.Add(e2);
                     break;
-                              
             }
-
         }
+
         public void LinkGraphImg(Scene.GraphNode node)
         {
-            foreach(var img in Enteries)
+            foreach (var img in Enteries)
             {
-                if(img.Path == node.ImgLinkName)
+                if (img.Path == node.ImgLinkName)
                 {
-                    if(img.Loaded == false)
+                    if (img.Loaded == false)
                     {
                         Load(img);
                     }
                     node.ImgFrame = new Tex.Tex2D(img, true);
                 }
             }
-            foreach(var n in node.Nodes)
+            foreach (var n in node.Nodes)
             {
                 LinkGraphImg(n);
             }
         }
+
         public Scene.SceneGraph GetGraph(string name)
         {
             Console.WriteLine("Searching for graph:" + name);
-            foreach(var e in Enteries)
+            foreach (var e in Enteries)
             {
                 Console.WriteLine("E:" + e.Name + " Start:" + e.Start + " Size:" + e.Size + " P:" + e.Path);
-                if (e.Name == name) 
+                if (e.Name == name)
                 {
                     Console.WriteLine("Found Graph:" + name);
                     var ng = new Scene.SceneGraph();
                     Load(e);
                     var ms = new MemoryStream(e.RawData);
                     BinaryReader r = new BinaryReader(ms);
-                 //   Console.WriteLine("Reading Graph.");
+                    //   Console.WriteLine("Reading Graph.");
                     ng.ReadGraph(r);
-                  //  Console.WriteLine("Read.");
+                    //  Console.WriteLine("Read.");
                     ms.Close();
                     r = null;
                     ms = null;
 
                     LinkGraphImg(ng.Root);
                     return ng;
-
-
                 }
             }
             return null;
         }
-       public Tex.Tex2D GetTex(string name)
+
+        public Tex.Tex2D GetTex(string name)
         {
             var e = GetEntry(name);
             Load(e);
             return new Tex.Tex2D(e, true);
-
         }
 
         public VirtualEntry GetEntry(string name)
         {
             name = name.ToLower();
-            foreach(var e in Enteries)
+            foreach (var e in Enteries)
             {
-                if(e.Name.ToLower() == name)
+                if (e.Name.ToLower() == name)
                 {
                     return e;
                 }
             }
             return null;
         }
+
         public void Update(string path)
         {
             arcpath = path + "arc.vfs";
@@ -318,7 +310,6 @@ namespace Vivid3D.Archive
             if (new FileInfo(path + "arc.toc").Exists)
             {
                 ReadToc(path + "arc.toc");
-             
             }
             else
             {
@@ -327,9 +318,11 @@ namespace Vivid3D.Archive
                 SaveFS(path);
             }
         }
-        string arcpath = "";
-        string tocpath = "";
-        public void Save(string name,bool compressed)
+
+        private string arcpath = "";
+        private string tocpath = "";
+
+        public void Save(string name, bool compressed)
         {
             if (compressed)
             {
@@ -347,46 +340,37 @@ namespace Vivid3D.Archive
                         Console.WriteLine("E:" + v.Name + " Old:" + ol + " New:" + nl);
                     }
                 }
-
             }
             SaveTOC(name);
             SaveFS(name);
         }
+
         public void SaveFS(string path)
         {
-
-
-           
             FileStream fs = new FileStream(path + ".vfs", FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
 
-            foreach(var e in Enteries)
+            foreach (var e in Enteries)
             {
-
                 w.Write(e.RawData);
-                
             }
 
             fs.Flush();
             fs.Close();
             w = null;
             fs = null;
-
-
-
         }
+
         public void SaveTOC(string path)
         {
-
-            FileStream fs = new FileStream(path+".toc", FileMode.Create, FileAccess.Write);
+            FileStream fs = new FileStream(path + ".toc", FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
-
 
             long start = 0;
             w.Write(Enteries.Count);
-            foreach(var e in Enteries)
+            foreach (var e in Enteries)
             {
-                for(int i = 0; i < 16; i++)
+                for (int i = 0; i < 16; i++)
                 {
                     w.Write(e.Par[i]);
                 }
@@ -395,31 +379,27 @@ namespace Vivid3D.Archive
                 w.Write(e.Compressed);
                 w.Write(start);
                 w.Write(e.Size);
-                
+
                 start += e.Size;
             }
             fs.Flush();
             fs.Close();
             fs = null;
             w = null;
-
-
-
         }
+
         public void ScanFolder(string path)
         {
-
             var fl = new DirectoryInfo(path).GetFiles();
             var dl = new DirectoryInfo(path).GetDirectories();
-            foreach(var file in fl)
+            foreach (var file in fl)
             {
                 var fi = new FileInfo(file.FullName);
                 var fe = Find(fi.Name, path);
                 if (fe != null)
                 {
-                    if(fe.Size!=fi.Length)
+                    if (fe.Size != fi.Length)
                     {
-                        
                     }
                 }
                 else
@@ -433,24 +413,19 @@ namespace Vivid3D.Archive
                     int os = entry.RawData.Length;
                     ZLib.CompressData(entry.RawData, out od);
                     entry.RawData = od;
-                    
+
                     entry.Size = entry.RawData.Length;
                     Console.WriteLine("Adding:" + entry.Name);
                     Enteries.Add(entry);
                 }
-
-
-
             }
-            foreach(var dir in dl)
+            foreach (var dir in dl)
             {
                 ScanFolder(dir.FullName);
             }
-
-
         }
-
     }
+
     public class VirtualEntry
     {
         public EntryType Type
@@ -458,13 +433,15 @@ namespace Vivid3D.Archive
             get;
             set;
         }
+
         public int[] Par = new int[16];
+
         public string Name
         {
             get;
             set;
         }
-     
+
         public bool Compressed
         {
             get;
@@ -476,26 +453,31 @@ namespace Vivid3D.Archive
             get;
             set;
         }
+
         public byte[] RawData
         {
             get;
             set;
         }
+
         public long Start
         {
             get;
             set;
         }
+
         public long Size
         {
             get;
             set;
         }
+
         public bool Loaded
         {
             get;
             set;
         }
+
         public VirtualEntry()
         {
             Loaded = false;
@@ -508,17 +490,19 @@ namespace Vivid3D.Archive
             Compressed = false;
             Type = EntryType.Index;
         }
+
         public byte[] ToBytes()
         {
             return RawData;
         }
     }
+
     public class VirtualFile : VirtualEntry
     {
-        
     }
+
     public enum EntryType
     {
-        Index,Ref
+        Index, Ref
     }
 }

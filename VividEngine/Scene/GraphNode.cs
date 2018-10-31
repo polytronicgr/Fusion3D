@@ -1,33 +1,29 @@
-﻿using System;
+﻿using OpenTK;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Util;
-using OpenTK;
-using Vivid3D.Reflect;
 using System.ComponentModel;
 using System.IO;
+using Vivid3D.Reflect;
+using Vivid3D.Util;
+
 namespace Vivid3D.Scene
 {
-    
     [DefaultProperty("Name")]
     public class GraphNode
     {
-
         public ClassIO ClassCopy
         {
             get;
             set;
         }
-        
+
         public List<GraphNode> Nodes
         {
             get;
             set;
         }
 
-        [Description("The Visual Image of the Node"),Category("Visuals"),DefaultValue(null)]
+        [Description("The Visual Image of the Node"), Category("Visuals"), DefaultValue(null)]
         public Tex.Tex2D ImgFrame
         {
             get;
@@ -36,21 +32,17 @@ namespace Vivid3D.Scene
 
         public void CopyProps()
         {
-
             ClassCopy = new ClassIO(this);
             ClassCopy.Copy();
-
         }
 
         public void RestoreProps()
         {
-
             ClassCopy.Reset();
-
         }
 
-        [Description("The Visual Bitmap(Sets the image as well)"),Category("Visuals")]
-       public System.Drawing.Bitmap ImgBitmap
+        [Description("The Visual Bitmap(Sets the image as well)"), Category("Visuals")]
+        public System.Drawing.Bitmap ImgBitmap
         {
             get
             {
@@ -66,81 +58,79 @@ namespace Vivid3D.Scene
                 H = ImgFrame.Height;
             }
         }
+
         private System.Drawing.Bitmap _ImgBit;
 
-        
-
-        [Description("The textual name of the node"),Category("Names"),DefaultValue("NewNode0")]
+        [Description("The textual name of the node"), Category("Names"), DefaultValue("NewNode0")]
         public string Name
         {
             get;
             set;
         }
-        
-        [Description("The X position of the node"),Category("Locale")]
+
+        [Description("The X position of the node"), Category("Locale")]
         public float X
         {
             get;
             set;
         }
+
         [Description("The Y position of the node"), Category("Locale")]
         public float Y
         {
             get;
             set;
         }
+
         [Description("The Z position of the node"), Category("Locale")]
         public float Z
         {
             get;
             set;
         }
-        [Description("The rotation(In Degrees(0-359)) of the node"),Category("Locale")]
+
+        [Description("The rotation(In Degrees(0-359)) of the node"), Category("Locale")]
         public float Rot
         {
             get;
             set;
         }
 
-        [DefaultValue(typeof(float),"64.0f"), Description("The width(In pixels) of the node"),Category("Visuals")]
+        [DefaultValue(typeof(float), "64.0f"), Description("The width(In pixels) of the node"), Category("Visuals")]
         public float W
         {
             get;
             set;
         }
+
         //public float _W = 0;
 
-
-        [Description("The height(In pixels) of the node"),Category("Visuals"),DefaultValue(64.0f)]
+        [Description("The height(In pixels) of the node"), Category("Visuals"), DefaultValue(64.0f)]
         public float H
         {
             get;
             set;
         }
-        
+
         public GraphNode Root
         {
             get;
             set;
         }
 
-
         public float[] XC = new float[4];
         public float[] YC = new float[4];
         public Vector2[] DrawP = null;
 
-        public void EditMove(float x,float y)
+        public void EditMove(float x, float y)
         {
-
             var r = Util.Maths.Rotate(x, y, Graph.Rot, 1.0f);
             X = X + r.X;
             Y = Y + r.Y;
-
         }
 
         public void SyncCoords()
         {
-
             int sw = Vivid3D.App.VividApp.W;
             int sh = Vivid3D.App.VividApp.H;
 
@@ -157,14 +147,13 @@ namespace Vivid3D.Scene
             oy[2] = (H / 2);// * Graph.Z * Z;
             oy[3] = (H / 2);// * Graph.Z * Z;
 
-
-            Vector2[] p = Maths.RotateOC(ox, oy, Rot,Z,0,0);
+            Vector2[] p = Maths.RotateOC(ox, oy, Rot, Z, 0, 0);
 
             float mx, my;
 
-            p = Maths.Push(p, X-Graph.X, Y-Graph.Y);
-         
-            p = Maths.RotateOC(p, Graph.Rot, Graph.Z, 0,0);
+            p = Maths.Push(p, X - Graph.X, Y - Graph.Y);
+
+            p = Maths.RotateOC(p, Graph.Rot, Graph.Z, 0, 0);
 
             p = Maths.Push(p, sw / 2, sh / 2);
 
@@ -176,13 +165,7 @@ namespace Vivid3D.Scene
 
             //p = Maths.Push(p, X+sw/2, Y+sh/2, Graph.Z);
 
-
-
-           // Draw.Render.Image(p, ImgFrame);
-
-
-
-
+            // Draw.Render.Image(p, ImgFrame);
         }
 
         public SceneGraph Graph
@@ -201,32 +184,26 @@ namespace Vivid3D.Scene
 
         public void Translate(float x, float y, float z = 0.0f)
         {
-
             X = X + x;
             Y = Y + y;
             Z = Z + z;
-
         }
 
-        public void Move(float x,float y,float z=0.0f)
+        public void Move(float x, float y, float z = 0.0f)
         {
-            var r = Util.Maths.Rotate(x, y, 360-Rot, 1.0f);
+            var r = Util.Maths.Rotate(x, y, 360 - Rot, 1.0f);
             X = X + r.X;
             Y = Y - r.Y;
             Z = Z + z;
-
         }
 
-        public void Point(float x,float y)
+        public void Point(float x, float y)
         {
-
             var r = Math.Atan2(y, x);
             Rot = (float)r * (180.0f / (float)Math.PI);
-
-
         }
 
-        public void SetPos(float x,float y)
+        public void SetPos(float x, float y)
         {
             X = x;
             Y = y;
@@ -243,10 +220,12 @@ namespace Vivid3D.Scene
             if (Rot < 0) Rot = 360.0f + Rot;
             if (Rot > 360) Rot = Rot - 360.0f;
         }
+
         public void Scale(float z)
         {
             Z = Z + z;
         }
+
         public void SetRotate(float r)
         {
             Rot = r;
@@ -258,22 +237,20 @@ namespace Vivid3D.Scene
             set;
         }
 
-      
         public virtual void Init()
         {
-
         }
 
         public virtual void Update()
         {
-
         }
 
         public virtual void Draw()
         {
-
         }
+
         public string ImgLinkName = "";
+
         public void Read(BinaryReader r)
         {
             X = r.ReadSingle();
@@ -288,15 +265,13 @@ namespace Vivid3D.Scene
                 var tp = r.ReadString();
                 var tn = r.ReadString();
                 ImgLinkName = tp;
-            //    Console.WriteLine("TN:" + tn + " TP:" + tp);
+                //    Console.WriteLine("TN:" + tn + " TP:" + tp);
                 //    ImgFrame = new Tex.Tex2D(tp, alpha);
-             
-
             }
-       
+
             int nc = r.ReadInt32();
 
-            for(int i = 0; i < nc; i++)
+            for (int i = 0; i < nc; i++)
             {
                 var nn = new GraphNode();
                 //nn.Roo = this;
@@ -307,6 +282,7 @@ namespace Vivid3D.Scene
                 nn.Read(r);
             }
         }
+
         public void Write(BinaryWriter w)
         {
             w.Write(X);
@@ -325,14 +301,13 @@ namespace Vivid3D.Scene
             {
                 w.Write(false);
             }
-        
+
             w.Write(Nodes.Count);
-       
-            foreach(var n in Nodes)
+
+            foreach (var n in Nodes)
             {
                 n.Write(w);
             }
         }
-
     }
 }

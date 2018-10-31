@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Scene;
+﻿using OpenTK;
 using Vivid3D.Data;
-using OpenTK;
+using Vivid3D.Scene;
+
 namespace Vivid3D.Gen
 {
     public class GeoGen
     {
-
-        public static GraphEntity3D Quad(int w,int h)
+        public static GraphEntity3D Quad(int w, int h)
         {
             var r = new GraphEntity3D();
 
             var mesh = new VMesh(6, 4);
 
-            var v1 = new Vector3(-w, -h,0);
+            var v1 = new Vector3(-w, -h, 0);
             var v2 = new Vector3(w, -h, 0);
             var v3 = new Vector3(w, h, 0);
             var v4 = new Vector3(-w, h, 0);
 
             var z = new Vector3(0, 0, 0);
 
-            mesh.SetVertex(0, v1, z,z,z, new Vector2(0, 0));
+            mesh.SetVertex(0, v1, z, z, z, new Vector2(0, 0));
             mesh.SetVertex(1, v2, z, z, z, new Vector2(1, 0));
             mesh.SetVertex(2, v3, z, z, z, new Vector2(1, 1));
             mesh.SetVertex(3, v4, z, z, z, new Vector2(0, 1));
@@ -47,16 +42,13 @@ namespace Vivid3D.Gen
             return r;
         }
 
-        public static void Cube(int w,int h,int d)
+        public static void Cube(int w, int h, int d)
         {
-
             var ent = new GraphEntity3D();
 
             var mesh = new VMesh(36, 8);
 
             var mat = new Material.Material3D();
-
-
 
             var p1 = new Vector3(-w / 2, -h / 2, -d / 2);
             var p2 = new Vector3(w / 2, -h / 2, -d / 2);
@@ -70,8 +62,7 @@ namespace Vivid3D.Gen
 
             var z = new Vector3(0, 0, 0);
 
-//           mesh.SetVertex(0,p1,)
-
+            //           mesh.SetVertex(0,p1,)
         }
     }
 }

@@ -1,24 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+
 namespace Vivid3D.Logic
 {
     public delegate void Act();
+
     public delegate bool Until();
+
     public delegate void FlowInit();
+
     public delegate bool FlowLogic();
+
     public delegate bool When();
+
     public delegate bool Unless();
+
     public delegate bool If();
+
     public class Logics
     {
         public int inter;
         public bool Threaded = false;
         public Thread UpdateThread = null;
-        public Logics(int interval = 1000 / 60,bool threaded = false)
+
+        public Logics(int interval = 1000 / 60, bool threaded = false)
         {
             inter = interval;
             if (threaded)
@@ -26,9 +32,10 @@ namespace Vivid3D.Logic
                 Threaded = true;
                 UpdateThread = new Thread(new ThreadStart(Thread_Update));
                 UpdateThread.Priority = ThreadPriority.Normal;
-                 UpdateThread.Start();
+                UpdateThread.Start();
             }
         }
+
         public Mutex upmut = new Mutex();
 
         public void Thread_Update()
@@ -40,13 +47,11 @@ namespace Vivid3D.Logic
                 int ct = Environment.TickCount;
                 if (ct >= next)
                 {
-
                     InternalUpdate();
                     next = ct + inter;
                 }
                 Thread.Sleep(2);
             }
-
         }
 
         public virtual void In(Act Action, Until Until)
@@ -57,6 +62,7 @@ namespace Vivid3D.Logic
             ai.NoTime = true;
             Acts.Add(ai);
         }
+
         public virtual void In(int ms, Act Action, Until Until)
         {
             var ai = new ActInfo();
@@ -65,9 +71,9 @@ namespace Vivid3D.Logic
             ai.Until = Until;
             Acts.Add(ai);
         }
+
         public virtual void In(int ms, Act Action, bool once = true, int forms = 0)
         {
-
             var ai = new ActInfo();
             ai.Action = Action;
             ai.When = Environment.TickCount + ms;
@@ -75,6 +81,7 @@ namespace Vivid3D.Logic
             ai.Once = once;
             Acts.Add(ai);
         }
+
         public void Flow(FlowInit init, FlowLogic logic, Act endLogic = null)
         {
             var flow = new FlowInfo();
@@ -83,27 +90,26 @@ namespace Vivid3D.Logic
             flow.EndLogic = endLogic;
             Flows.Add(flow);
         }
+
         public void SmartUpdate()
         {
             if (Threaded)
             {
-
             }
             else
             {
                 InternalUpdate();
             }
         }
+
         public void InternalUpdate()
         {
-
             upmut.WaitOne();
             var iil = new List<IfInfo>();
-            foreach(var ci in Ifs)
+            foreach (var ci in Ifs)
             {
                 if (ci.If())
                 {
-                    
                     ci.Action();
                 }
                 else
@@ -121,7 +127,7 @@ namespace Vivid3D.Logic
                     }
                 }
             }
-            foreach(var ci in iil)
+            foreach (var ci in iil)
             {
                 Ifs.Remove(ci);
             }
@@ -139,7 +145,7 @@ namespace Vivid3D.Logic
                     }
                 }
             }
-            foreach(var dd in dt)
+            foreach (var dd in dt)
             {
                 dd.Then();
             }
@@ -157,7 +163,6 @@ namespace Vivid3D.Logic
                         if (w.Unless())
                         {
                             //rw.Add(w);
-
                         }
                         else
                         {
@@ -195,13 +200,11 @@ namespace Vivid3D.Logic
                     }
                     Flows.Remove(ff);
                 }
-
             }
             List<ActInfo> rem = new List<ActInfo>();
             int ms = Environment.TickCount;
             foreach (var a in Acts)
             {
-
                 if (a.NoTime)
                 {
                     a.Action();
@@ -222,7 +225,6 @@ namespace Vivid3D.Logic
                             continue;
                         }
                     }
-
                 }
                 if (a.Running)
                 {
@@ -248,7 +250,6 @@ namespace Vivid3D.Logic
                         }
                     }
                 }
-
             }
             foreach (var a in rem)
             {
@@ -256,15 +257,15 @@ namespace Vivid3D.Logic
             }
             upmut.ReleaseMutex();
         }
+
         public void When(When when, Act action, Unless unless = null)
         {
-            foreach(var cw in Whens)
+            foreach (var cw in Whens)
             {
-              if(cw.When == when && cw.Action == action && cw.Unless == unless)
+                if (cw.When == when && cw.Action == action && cw.Unless == unless)
                 {
                     return;
                 }
-
             }
             WhenInfo wi = new WhenInfo();
             wi.When = when;
@@ -272,14 +273,16 @@ namespace Vivid3D.Logic
             wi.Unless = unless;
             Whens.Add(wi);
         }
-        public void Do(Act action, Until until = null,Act then=null) {
-        
+
+        public void Do(Act action, Until until = null, Act then = null)
+        {
             var di = new DoInfo();
             di.Do = action;
             di.Until = until;
-                di.Then = then;
+            di.Then = then;
             Dos.Add(di);
         }
+
         public void If(If ifact, Act action, Act Else = null, Until until = null)
         {
             var ni = new IfInfo();
@@ -290,6 +293,7 @@ namespace Vivid3D.Logic
             ni.Until = until;
             Ifs.Add(ni);
         }
+
         public List<IfInfo> Ifs = new List<IfInfo>();
         public List<DoInfo> Dos = new List<DoInfo>();
         public List<FlowInfo> Flows = new List<FlowInfo>();
@@ -304,6 +308,7 @@ namespace Vivid3D.Logic
         public Act Action = null;
         public Until Until = null;
     }
+
     public class FlowInfo
     {
         public FlowInit Init;
@@ -311,12 +316,14 @@ namespace Vivid3D.Logic
         public Act EndLogic = null;
         public bool Begun = false;
     }
+
     public class DoInfo
     {
         public Act Do = null;
         public Until Until = null;
         public Act Then = null;
     }
+
     public class ActInfo
     {
         public Act Action;
@@ -328,6 +335,7 @@ namespace Vivid3D.Logic
         public Until Until = null;
         public bool NoTime = false;
     }
+
     public class WhenInfo
     {
         public When When = null;

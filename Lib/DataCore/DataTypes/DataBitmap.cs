@@ -1,49 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
+
 namespace DataCore.DataTypes
 {
     public class DataBitmap : Data
     {
-
         public Bitmap Map { get; set; }
 
         public DataBitmap()
         {
-
         }
 
         public DataBitmap(Bitmap map)
         {
-
             Map = map;
-
         }
 
         public override void GenerateBytes()
         {
-
             _RawData = new byte[Map.Width * Map.Height * 4];
             _Bytes = _RawData.Length;
 
             int dl = 0;
 
-            for(int y = 0; y < Map.Height; y++)
+            for (int y = 0; y < Map.Height; y++)
             {
-                for(int x = 0; x < Map.Width; x++)
+                for (int x = 0; x < Map.Width; x++)
                 {
-
                     Color col = Map.GetPixel(x, y);
                     _RawData[dl++] = col.R;
                     _RawData[dl++] = col.G;
                     _RawData[dl++] = col.B;
                     _RawData[dl++] = col.A;
-
-
                 }
             }
 
@@ -54,13 +42,10 @@ namespace DataCore.DataTypes
             bw.Write(_RawData);
             _RawData = ns.ToArray();
             Bytes = _RawData.Length;
-
-
         }
 
         public override void Reconstruct()
         {
-
             MemoryStream ns = new MemoryStream(_RawData);
             BinaryReader br = new BinaryReader(ns);
 
@@ -75,11 +60,10 @@ namespace DataCore.DataTypes
 
             int dl = 0;
 
-            for(int y = 0; y < mh; y++)
+            for (int y = 0; y < mh; y++)
             {
-                for(int x = 0; x < mw; x++)
+                for (int x = 0; x < mw; x++)
                 {
-
                     int r = rgb[dl++];
                     int g = rgb[dl++];
                     int b = rgb[dl++];
@@ -88,11 +72,8 @@ namespace DataCore.DataTypes
                     Color col = Color.FromArgb(a, r, g, b);
 
                     Map.SetPixel(x, y, col);
-
                 }
             }
-
         }
-
     }
 }

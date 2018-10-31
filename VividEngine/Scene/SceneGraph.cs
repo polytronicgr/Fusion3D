@@ -1,18 +1,16 @@
-﻿using System;
+﻿using OpenTK;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vivid3D.Draw;
 using Vivid3D.FXS;
 using Vivid3D.Reflect;
-using OpenTK;
-using System.IO;
+
 namespace Vivid3D.Scene
 {
     public class SceneGraph
     {
-
         public ClassIO ClassCopy
         {
             get;
@@ -36,16 +34,19 @@ namespace Vivid3D.Scene
             get;
             set;
         }
+
         public float Y
         {
             get;
             set;
         }
+
         public float Z
         {
             get;
             set;
         }
+
         public float Rot
         {
             get;
@@ -74,12 +75,10 @@ namespace Vivid3D.Scene
             Root = new GraphNode();
             Lights = new List<GraphLight>();
             LitImage = new FXLitImage();
-
         }
 
         public void Copy()
         {
-
             ClassCopy = new Reflect.ClassIO(this);
             ClassCopy.Copy();
             CopyNode(Root);
@@ -87,13 +86,11 @@ namespace Vivid3D.Scene
 
         public void CopyNode(GraphNode node)
         {
-
             node.CopyProps();
-            foreach(var nn in node.Nodes)
+            foreach (var nn in node.Nodes)
             {
                 CopyNode(nn);
             }
-
         }
 
         public void Restore()
@@ -105,7 +102,7 @@ namespace Vivid3D.Scene
         public void RestoreNode(GraphNode node)
         {
             node.RestoreProps();
-            foreach(var nn in node.Nodes)
+            foreach (var nn in node.Nodes)
             {
                 RestoreNode(nn);
             }
@@ -120,18 +117,13 @@ namespace Vivid3D.Scene
 
         public void Add(params GraphNode[] nodes)
         {
-
-            foreach(var node in nodes)
+            foreach (var node in nodes)
             {
-
                 node.Graph = this;
                 Root.Nodes.Add(node);
                 node.Root = Root;
-
             }
-
         }
-
 
         public void Add(GraphLight node, bool toGraph = false)
         {
@@ -141,76 +133,63 @@ namespace Vivid3D.Scene
             }
             node.Graph = this;
             Lights.Add(node);
-            
         }
 
         public void Add(params GraphLight[] lights)
         {
-            foreach(var light in lights)
+            foreach (var light in lights)
             {
                 light.Graph = this;
                 Lights.Add(light);
             }
         }
 
-        public void Translate(float x,float y)
+        public void Translate(float x, float y)
         {
-
             X = X + x;
             Y = Y + y;
-
         }
 
-        public void Move(float x,float y)
+        public void Move(float x, float y)
         {
-
-            var r = Util.Maths.Rotate(-x, -y, (180.0f-Rot), 1.0f);
+            var r = Util.Maths.Rotate(-x, -y, (180.0f - Rot), 1.0f);
 
             X = X + r.X;
             Y = Y + r.Y;
-
-
         }
 
         public void Update()
         {
-
             if (Running)
             {
                 UpdateNode(Root);
             }
             else
             {
-
             }
-
         }
 
         public void UpdateNode(GraphNode node)
         {
-
             node.Update();
 
-            foreach(var sub in node.Nodes)
+            foreach (var sub in node.Nodes)
             {
                 UpdateNode(sub);
             }
-
         }
-        
+
         public void DrawNode(GraphNode node)
         {
-            //if(node.ImgFrame == null) 
+            //if(node.ImgFrame == null)
 
             if (node.ImgFrame != null)
             {
-
-                if(node.ImgFrame.Width < 2)
+                if (node.ImgFrame.Width < 2)
                 {
                     Console.WriteLine("Illegal Image ID:" + node.ImgFrame.ID);
                     while (true)
                     {
-
                     }
                 }
 
@@ -234,7 +213,6 @@ namespace Vivid3D.Scene
 
                     LitImage.Bind();
 
-
                     float[] xc;
                     float[] yc;
 
@@ -245,31 +223,28 @@ namespace Vivid3D.Scene
 
                     Render.Image(node.DrawP, node.ImgFrame);
 
-
-
                     //Render.Image(xc, yc, node.ImgFrame);
 
-
-
                     LitImage.Release();
-
                 }
             }
-            foreach(var snode in node.Nodes)
+            foreach (var snode in node.Nodes)
             {
                 DrawNode(snode);
             }
         }
+
         public void Draw()
         {
             DrawNode(Root);
         }
-        float sign(Vector2 p1, Vector2 p2, Vector2 p3)
+
+        private float sign(Vector2 p1, Vector2 p2, Vector2 p3)
         {
             return (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
         }
 
-        bool PointInTriangle(Vector2 pt, Vector2 v1, Vector2 v2, Vector2 v3)
+        private bool PointInTriangle(Vector2 pt, Vector2 v1, Vector2 v2, Vector2 v3)
         {
             bool b1, b2, b3;
 
@@ -279,11 +254,12 @@ namespace Vivid3D.Scene
 
             return ((b1 == b2) && (b2 == b3));
         }
-        public GraphNode PickNode(GraphNode node,int x,int y)
+
+        public GraphNode PickNode(GraphNode node, int x, int y)
         {
             foreach (var n in node.Nodes)
             {
-                var p = PickNode(n,x,y);
+                var p = PickNode(n, x, y);
                 if (p != null) return p;
             }
             if (node.DrawP != null)
@@ -298,14 +274,14 @@ namespace Vivid3D.Scene
                 }
             }
             return null;
-
         }
-        public GraphNode Pick(int x,int y)
+
+        public GraphNode Pick(int x, int y)
         {
-            return PickNode(Root,x,y);
+            return PickNode(Root, x, y);
         }
 
-        public Vector2 GetPoint(float x,float y)
+        public Vector2 GetPoint(float x, float y)
         {
             int w, h;
             w = App.VividApp.W;
@@ -317,9 +293,9 @@ namespace Vivid3D.Scene
             r.Y = r.Y + Y;
             return r;
         }
+
         public void Load(string path)
         {
-
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             BinaryReader r = new BinaryReader(fs);
             ReadGraph(r);
@@ -357,8 +333,8 @@ namespace Vivid3D.Scene
             w = null;
             fs = null;
         }
-       
-        public  void WriteGraph(BinaryWriter w)
+
+        public void WriteGraph(BinaryWriter w)
         {
             w.Write(X);
             w.Write(Y);

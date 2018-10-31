@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-namespace DataCore
+﻿namespace DataCore
 {
     public class Data
     {
@@ -25,6 +21,7 @@ namespace DataCore
                 _Bytes = value;
             }
         }
+
         protected int _Bytes = 0;
 
         public byte[] RawData
@@ -38,17 +35,15 @@ namespace DataCore
                 _RawData = value;
             }
         }
+
         protected byte[] _RawData = new byte[0];
 
         public virtual void GenerateBytes()
         {
-         
         }
-        
+
         public virtual void Reconstruct()
         {
-
         }
-
     }
 }

@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using zlib;
-using System.IO;
 
 namespace Vivid3D.Archive
 {
     public class ZLib
     {
-
         public byte[] Compress(byte[] data)
         {
-
             byte[] od = null;
             CompressData(data, out od);
             return od;

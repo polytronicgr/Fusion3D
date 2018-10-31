@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenTK;
+using System;
 using System.Windows.Forms;
-using OpenTK;
+
 namespace VividEdit.Forms.Inspectors.ValueTypes
 {
     public partial class InspectVec3 : UserControl
     {
-
         public Vector3 Value;
 
         public InspectVec3()
@@ -29,12 +22,10 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
 
         private void label3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void InspectVec3_Load(object sender, EventArgs e)
         {
-
         }
 
         private void xBox_TextChanged(object sender, EventArgs e)
@@ -55,7 +46,8 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             try
             {
                 Value.X = float.Parse(xBox.Text);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Value.X = 0;
             }
@@ -76,11 +68,11 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
                     return;
                 }
             }
-            try {
+            try
+            {
                 Value.Y = float.Parse(yBox.Text);
-                
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 Value.Y = 0;
             }
@@ -104,10 +96,11 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             try
             {
                 Value.Z = float.Parse(zBox.Text);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Value.Z = 0;
             }
-         }
+        }
     }
 }

@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using Vivid3D.App;
+
 namespace VividControls
 {
     public partial class VividGL : OpenTK.GLControl
@@ -21,8 +12,9 @@ namespace VividControls
         public OnMousedown EvMouseDown = null;
         public OnMouseUp EvMouseUp = null;
         public OnKeyDown EvKeyDown = null;
-        public OnKeyUp  EvKeyUp = null;
-        public VividGL(OnLoad load) : base(new OpenTK.Graphics.GraphicsMode(32,24,0,8))
+        public OnKeyUp EvKeyUp = null;
+
+        public VividGL(OnLoad load) : base(new OpenTK.Graphics.GraphicsMode(32, 24, 0, 8))
         {
             EvLoad = load;
             InitializeComponent();
@@ -36,7 +28,6 @@ namespace VividControls
         private void VividGL_Load(object sender, EventArgs e)
         {
             EvLoad?.Invoke();
-          
         }
 
         private void VividGL_Resize(object sender, EventArgs e)
@@ -44,7 +35,7 @@ namespace VividControls
             EvResize?.Invoke();
         }
 
-        int lX = -1, lY = -1;
+        private int lX = -1, lY = -1;
 
         private void VividGL_MouseDown(object sender, MouseEventArgs e)
         {
@@ -78,15 +69,22 @@ namespace VividControls
             EvMouseMoved?.Invoke(e.X, e.Y, dx, dy);
             lX = e.X;
             lY = e.Y;
-
         }
     }
+
     public delegate void OnLoad();
+
     public delegate void OnPaint();
+
     public delegate void OnResize();
+
     public delegate void OnMouseMove(int x, int y, int dx, int dy);
+
     public delegate void OnMousedown(MouseButtons b);
+
     public delegate void OnMouseUp(MouseButtons b);
+
     public delegate void OnKeyDown(Keys k);
+
     public delegate void OnKeyUp(Keys k);
 }

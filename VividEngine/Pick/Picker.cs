@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
+
 namespace Vivid3D.Pick
 {
     public struct Ray
     {
         public Vector3 pos;
         public Vector3 dir;
-        public Ray(Vector3 p1,Vector3 p2)
+
+        public Ray(Vector3 p1, Vector3 p2)
         {
             pos = p1;
             dir = (p2 - p1).Normalized();
         }
     }
+
     public class Picker
     {
-
         private static Vector2 Convert(
   Vector3 pos,
   Matrix4 viewMatrix,
@@ -26,7 +23,6 @@ namespace Vivid3D.Pick
   int screenWidth,
   int screenHeight)
         {
-           
             pos = Vector3.TransformPerspective(pos, viewMatrix);
             pos = Vector3.TransformPerspective(pos, projectionMatrix);
             pos.X /= pos.Z;
@@ -34,14 +30,12 @@ namespace Vivid3D.Pick
             pos.X = (pos.X + 1) * screenWidth / 2;
             pos.Y = (pos.Y + 1) * screenHeight / 2;
 
-            return new Vector2(pos.X,screenHeight- pos.Y);
+            return new Vector2(pos.X, screenHeight - pos.Y);
         }
 
-        public static Vector2 CamTo2D(Vivid3D.Scene.GraphCam3D cam,Vector3 pos)
+        public static Vector2 CamTo2D(Vivid3D.Scene.GraphCam3D cam, Vector3 pos)
         {
-
             return Convert(pos, cam.CamWorld, cam.ProjMat, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
-
         }
 
         private const double Epsilon = 0.000001d;
@@ -134,24 +128,23 @@ namespace Vivid3D.Pick
 
             return new Vector3(vec.X, vec.Y, vec.Z);
         }
+
         public static Ray MouseRay(
           Matrix4 projection,
           Matrix4 view,
           System.Drawing.Size viewport,
           Vector2 mouse)
         {
-            // these mouse.Z values are NOT scientific. 
+            // these mouse.Z values are NOT scientific.
             // Near plane needs to be < -1.5f or we have trouble selecting objects right in front of the camera. (why?)
             Vector3 pos1 = UnProject(ref projection, view, viewport, new Vector3(mouse.X, mouse.Y, -1.5f)); // near
             Vector3 pos2 = UnProject(ref projection, view, viewport, new Vector3(mouse.X, mouse.Y, 1.0f));  // far
             return new Ray(pos1, pos2);
         }
-        public static Ray CamRay(Vivid3D.Scene.GraphCam3D cam,int x,int y)
+
+        public static Ray CamRay(Vivid3D.Scene.GraphCam3D cam, int x, int y)
         {
-
             return MouseRay(cam.ProjMat, cam.CamWorld, new System.Drawing.Size(Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H), new Vector2(x, y));
-
         }
-
     }
 }

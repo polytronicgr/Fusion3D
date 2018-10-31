@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vivid3D.VFX
 {
     public class VFXParticleSystem : VFXBase
     {
-
         public List<ParticleBase> Particles
         {
             get;
@@ -92,7 +88,7 @@ namespace Vivid3D.VFX
             get;
             set;
         }
-        
+
         public float ZBig
         {
             get;
@@ -104,16 +100,19 @@ namespace Vivid3D.VFX
             get;
             set;
         }
+
         public float YIJit
         {
             get;
             set;
         }
+
         public float ZIJit
         {
             get;
             set;
         }
+
         public float RJit
         {
             get;
@@ -144,10 +143,8 @@ namespace Vivid3D.VFX
             set;
         }
 
-
         public VFXParticleSystem()
         {
-
             Particles = new List<ParticleBase>();
             Bases = new List<ParticleBase>();
             Removes = new List<ParticleBase>();
@@ -168,22 +165,20 @@ namespace Vivid3D.VFX
             H = 32;
         }
 
-        public void Spawn(int number,float x,float y,float z,float xi,float yi,float zi)
+        public void Spawn(int number, float x, float y, float z, float xi, float yi, float zi)
         {
-
             Random rnd = new Random(Environment.TickCount);
 
-            for(int i = 0; i < number; i++)
+            for (int i = 0; i < number; i++)
             {
-                foreach(var pbase in Bases)
+                foreach (var pbase in Bases)
                 {
-
                     var np = pbase.Clone();
 
                     np.W = W + rnd.Next(-(int)WJit / 2, (int)WJit / 2);
                     np.H = H + rnd.Next(-(int)HJit / 2, (int)HJit / 2);
 
-                    np.X = x+rnd.Next((int)-XSmall, (int)XBig);
+                    np.X = x + rnd.Next((int)-XSmall, (int)XBig);
                     np.Y = y + rnd.Next((int)-YSmall, (int)YBig);
 
                     float zd = ZBig - ZSmall;
@@ -198,7 +193,7 @@ namespace Vivid3D.VFX
                     float yj = YIJit * (float)rnd.NextDouble();
                     float zj = ZIJit * (float)rnd.NextDouble();
 
-                    if(rnd.Next(0,5)>2)
+                    if (rnd.Next(0, 5) > 2)
                     {
                         xj = -xj;
                     }
@@ -211,13 +206,13 @@ namespace Vivid3D.VFX
                         zj = -zj;
                     }
 
-                    float pw = (PowerBig-PowerSmall) * (float)rnd.NextDouble();
+                    float pw = (PowerBig - PowerSmall) * (float)rnd.NextDouble();
 
                     pw = PowerSmall + pw;
 
-                    np.XI = (xi + xj)*pw;
-                    np.YI = (yi + yj)*pw;
-                    np.ZI = (zi + zj)*pw;
+                    np.XI = (xi + xj) * pw;
+                    np.YI = (yi + yj) * pw;
+                    np.ZI = (zi + zj) * pw;
 
                     np.RI = rnd.Next((int)-RJit, (int)RJit);
 
@@ -227,38 +222,31 @@ namespace Vivid3D.VFX
                     np.Sys = this;
 
                     Particles.Add(np);
-
                 }
             }
-
         }
 
         public void Remove(ParticleBase particle)
         {
-
             Removes.Add(particle);
-
         }
 
         public void AddBase(ParticleBase pbase)
         {
-
             Bases.Add(pbase);
-
         }
 
         public override void Init()
         {
-
         }
 
         public override void Update()
         {
-            foreach(var particle in Particles)
+            foreach (var particle in Particles)
             {
                 particle.Update();
             }
-            foreach(var particle in Removes)
+            foreach (var particle in Removes)
             {
                 Particles.Remove(particle);
             }
@@ -267,7 +255,7 @@ namespace Vivid3D.VFX
 
         public override void Render()
         {
-            foreach(var particle in Particles)
+            foreach (var particle in Particles)
             {
                 particle.Render();
             }
@@ -275,8 +263,6 @@ namespace Vivid3D.VFX
 
         public override void Stop()
         {
-            
         }
-
     }
 }

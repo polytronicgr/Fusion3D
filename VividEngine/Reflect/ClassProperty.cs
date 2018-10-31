@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using System.Reflection;
+
 namespace Vivid3D.Reflect
 {
     public class ClassProperty
@@ -20,13 +16,10 @@ namespace Vivid3D.Reflect
             set;
         }
 
-        public ClassProperty(object val,PropertyInfo info)
+        public ClassProperty(object val, PropertyInfo info)
         {
-
             Val = val;
             Prop = info;
-
         }
-
     }
 }

@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Texture;
-using Vivid3D.Draw;
-using OpenTK;
 using System.IO;
 using Vivid3D.App;
+using Vivid3D.Texture;
+
 namespace Vivid3D.Resonance.Forms
 {
     public delegate void SelectFile(string pth);
-    public class RequestFileForm : WindowForm 
-    {
 
+    public class RequestFileForm : WindowForm
+    {
         public SelectFile Selected = null;
         public ListForm Files;
         public VTex2D FolderPic = new VTex2D("Data\\UI\\folder1.png", LoadMethod.Single, true);
         public VTex2D FilePic = new VTex2D("Data\\UI\\file1.png", LoadMethod.Single, true);
         public ButtonForm BackFolder;
         public TextBoxForm DirBox, FileBox;
-        public RequestFileForm(string title="",string defdir="")
+
+        public RequestFileForm(string title = "", string defdir = "")
         {
             LockedSize = true;
             DirBox = new TextBoxForm().Set(55, 35, 300, 20) as TextBoxForm;
@@ -33,9 +30,7 @@ namespace Vivid3D.Resonance.Forms
 
             void SelectFunc(int b)
             {
-
                 Selected?.Invoke(DirBox.Text + "/" + FileBox.Text);
-
             }
 
             ok.Click = SelectFunc;
@@ -45,7 +40,7 @@ namespace Vivid3D.Resonance.Forms
 
             if (defdir == "")
             {
-                defdir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);              
+                defdir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
 
             if (title == "") title = "Select file";
@@ -58,12 +53,11 @@ namespace Vivid3D.Resonance.Forms
 
             void BackFunc(int b)
             {
-
                 if (new DirectoryInfo(CurPath).Parent == null) return;
                 string curPath = new DirectoryInfo(CurPath).Parent.FullName;
                 Forms.Remove(Files);
                 Files = new ListForm().Set(10, 60, 370, 350, "") as ListForm;
-               
+
                 Add(Files);
 
                 Scan(curPath);
@@ -71,11 +65,11 @@ namespace Vivid3D.Resonance.Forms
 
             BackFolder.Click = BackFunc;
             Add(BackFolder);
-
-
         }
+
         public List<string> LastPath = new List<string>();
         public string CurPath = "";
+
         public void Scan(string folder)
         {
             if (new DirectoryInfo(folder).Exists == false) return;
@@ -83,9 +77,9 @@ namespace Vivid3D.Resonance.Forms
             // LastPath.Add(folder);
             CurPath = folder;
             var di = new DirectoryInfo(folder);
-            foreach(var fold in di.GetDirectories())
+            foreach (var fold in di.GetDirectories())
             {
-                var ni=Files.AddItem(fold.Name, FolderPic);
+                var ni = Files.AddItem(fold.Name, FolderPic);
                 void DoubleClickFunc(int b)
                 {
                     Console.WriteLine("Scanning:" + fold.FullName);
@@ -93,12 +87,11 @@ namespace Vivid3D.Resonance.Forms
                     Files = new ListForm().Set(10, 60, 370, 350, "") as ListForm;
                     Add(Files);
                     Scan(fold.FullName);
-                 //   Files.Changed?.Invoke();
+                    //   Files.Changed?.Invoke();
                 }
                 ni.DoubleClick = DoubleClickFunc;
-
             }
-            foreach(var file in di.GetFiles())
+            foreach (var file in di.GetFiles())
             {
                 var newi = Files.AddItem(file.Name, FilePic);
                 void ClickFunc(int b)
@@ -114,6 +107,5 @@ namespace Vivid3D.Resonance.Forms
             }
             Files.Changed?.Invoke();
         }
-
     }
 }

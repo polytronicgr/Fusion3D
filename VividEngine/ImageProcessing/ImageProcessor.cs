@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
+
 namespace Vivid3D.ImageProcessing
 {
     public static class ImageProcessor
@@ -13,6 +9,7 @@ namespace Vivid3D.ImageProcessing
         public static Vivid3D.FrameBuffer.VFrameBuffer FB;
         public static int IW, IH;
         public static Vivid3D.PostProcess.VEQuadR QFX = null;
+
         public static void InitIP()
         {
             FXBlur = new PostProcess.Processes.VEBlur();
@@ -20,11 +17,9 @@ namespace Vivid3D.ImageProcessing
             QFX = new Vivid3D.PostProcess.VEQuadR();
             GenQuad();
         }
-        public static Vivid3D.Texture.VTex2D BlurImage(Vivid3D.Texture.VTex2D img,float blur)
+
+        public static Vivid3D.Texture.VTex2D BlurImage(Vivid3D.Texture.VTex2D img, float blur)
         {
-
-            
-
             FXBlur.Blur = blur;
 
             FB.Bind();
@@ -32,10 +27,10 @@ namespace Vivid3D.ImageProcessing
             FXBlur.Bind();
 
             //var rt = new Vivid3D.Texture.VTex2D(img.W, img.H, false);
-            
+
             img.Bind(0);
 
-             FXBlur.Bind();
+            FXBlur.Bind();
 
             DrawQuad();
 
@@ -43,20 +38,18 @@ namespace Vivid3D.ImageProcessing
 
             img.Release(0);
 
-          
-
             FB.Release();
 
             return FB.BB;
-
         }
 
         public static int qva = 0, qvb = 0;
+
         public static void DrawQuad()
         {
-           // FB.BB.Bind(0);
+            // FB.BB.Bind(0);
 
-        //    QFX.Bind();
+            //    QFX.Bind();
 
             GL.BindVertexArray(qva);
 
@@ -68,13 +61,13 @@ namespace Vivid3D.ImageProcessing
 
             GL.DisableVertexAttribArray(0);
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-          //  QFX.Release();
+            //  QFX.Release();
 
             //FB.BB.Release(0);
         }
+
         public static void GenQuad()
         {
-
             qva = GL.GenVertexArray();
 
             GL.BindVertexArray(qva);
@@ -90,14 +83,10 @@ namespace Vivid3D.ImageProcessing
             qd[12] = 1.0f; qd[13] = -1.0f; qd[14] = 0.0f;
             qd[15] = 1.0f; qd[16] = 1.0f; qd[17] = 0.0f;
 
-
-
-
             qvb = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, qvb);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(18 * 4), qd, BufferUsageHint.StaticDraw);
             //  GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-
         }
     }
 }

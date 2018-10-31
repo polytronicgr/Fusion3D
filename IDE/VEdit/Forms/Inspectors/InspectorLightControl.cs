@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace VividEdit.Forms.Inspectors
 {
@@ -18,6 +11,7 @@ namespace VividEdit.Forms.Inspectors
         public Inspectors.ValueTypes.InspectVec3 ISpec;
         public Inspectors.ValueTypes.InspectFloat IRange;
         public Inspectors.ValueTypes.InspectBool IShadows;
+
         public InspectorLightControl()
         {
             InitializeComponent();
@@ -46,16 +40,13 @@ namespace VividEdit.Forms.Inspectors
             this.Controls.Add(IShadows);
             IShadows.Location = new Point(6, 180);
             IShadows.Show();
-
-
-
-
-
         }
+
         public override void AlignV()
         {
             Align();
         }
+
         public void Align()
         {
             IPos.Value = Light.LocalPos;
@@ -70,12 +61,11 @@ namespace VividEdit.Forms.Inspectors
             IShadows.AlignToValue();
         }
 
-
         private void updateInspector_Tick(object sender, EventArgs e)
         {
             if (Inspecting == false) return;
             Console.WriteLine("Ipos:" + IDiff.Value);
-          //  if (Light.Inspecting == false) return;
+            //  if (Light.Inspecting == false) return;
             Light.LocalPos = IPos.Value;
             Light.Diff = IDiff.Value;
             Light.Spec = ISpec.Value;

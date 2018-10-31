@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.FX;
+﻿using Vivid3D.FX;
 using Vivid3D.Scene;
 using Vivid3D.Util;
+
 namespace Vivid3D.FXS
 {
     public class FXLitImage : VEffect
     {
-
         public GraphLight Light
         {
             get;
@@ -23,10 +18,10 @@ namespace Vivid3D.FXS
             set;
         }
 
-        public FXLitImage() : base("","Data/Shader/LitImageVS.glsl","Data/Shader/LitImageFS.glsl")
+        public FXLitImage() : base("", "Data/Shader/LitImageVS.glsl", "Data/Shader/LitImageFS.glsl")
         {
-
         }
+
         public override void SetPars()
         {
             float sw, sh;
@@ -48,20 +43,15 @@ namespace Vivid3D.FXS
             var res = Maths.Rotate(px, py, Graph.Rot, 1.0f);
 
             res = Maths.Push(res, sw / 2, sh / 2);
-                
-
-
-
 
             SetTex("tDiffuse", 0);
-            SetVec3("lPos", new OpenTK.Vector3(res.X,res.Y,0));
+            SetVec3("lPos", new OpenTK.Vector3(res.X, res.Y, 0));
             SetVec3("lDif", Light.Diffuse);
             SetVec3("lSpec", Light.Specular);
             SetFloat("lShiny", Light.Shiny);
             SetFloat("lRange", Light.Range * Graph.Z);
             SetFloat("sWidth", Vivid3D.App.VividApp.W);
             SetFloat("sHeight", Vivid3D.App.VividApp.H);
-
         }
     }
 }

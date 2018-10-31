@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Texture;
-using Vivid3D.Draw;
-using OpenTK;
+﻿using OpenTK;
+using System;
 
 namespace Vivid3D.Resonance.Forms
 {
@@ -17,11 +11,10 @@ namespace Vivid3D.Resonance.Forms
         public bool ShowClaret = false;
         public int NextClaret;
         public int ClaretE = 0;
-       
+
         public TextBoxForm()
         {
-
-            void KeyPressFunc(OpenTK.Input.Key key,bool shift)
+            void KeyPressFunc(OpenTK.Input.Key key, bool shift)
             {
                 string k = "";
                 switch (key)
@@ -55,8 +48,9 @@ namespace Vivid3D.Resonance.Forms
                         }
                         return;
                         break;
+
                     case OpenTK.Input.Key.Left:
-                    
+
                         if (ClaretI == StartI)
                         {
                             if (StartI > 0)
@@ -80,9 +74,10 @@ namespace Vivid3D.Resonance.Forms
                         }
                         return;
                         break;
+
                     case OpenTK.Input.Key.BackSpace:
 
-                        if(Text.Length == 1)
+                        if (Text.Length == 1)
                         {
                             ClaretI = 0;
                             Text = "";
@@ -90,8 +85,7 @@ namespace Vivid3D.Resonance.Forms
                         }
                         if (Text.Length > 1)
                         {
-
-                            if(ClaretI == Text.Length)
+                            if (ClaretI == Text.Length)
                             {
                                 Text = Text.Substring(0, Text.Length - 1);
                                 ClaretI--;
@@ -101,13 +95,12 @@ namespace Vivid3D.Resonance.Forms
                             Text = os;
                             ClaretI--;
                             return;
-
-
                         }
 
                         break;
+
                     case OpenTK.Input.Key.Delete:
-                        if(Text.Length==1 && ClaretI == 0)
+                        if (Text.Length == 1 && ClaretI == 0)
                         {
                             Text = "";
                             ClaretI = 0;
@@ -117,7 +110,7 @@ namespace Vivid3D.Resonance.Forms
                         {
                             if ((Text.Length - ClaretI) > 1)
                             {
-                                Text = Text.Substring(0, ClaretI)+Text.Substring(ClaretI+1);
+                                Text = Text.Substring(0, ClaretI) + Text.Substring(ClaretI + 1);
                             }
                             else
                             {
@@ -127,10 +120,12 @@ namespace Vivid3D.Resonance.Forms
                         }
                         return;
                         break;
+
                     case OpenTK.Input.Key.Space:
 
                         k = " ";
                         break;
+
                     default:
                         k = shift ? key.ToString().ToUpper() : key.ToString().ToLower();
                         break;
@@ -142,7 +137,7 @@ namespace Vivid3D.Resonance.Forms
                 }
                 else
                 {
-                    if(ClaretI == Text.Length)
+                    if (ClaretI == Text.Length)
                     {
                         Text = Text + k;
                         ClaretI++;
@@ -173,11 +168,10 @@ namespace Vivid3D.Resonance.Forms
                     if (Environment.TickCount > NextClaret)
                     {
                         ShowClaret = ShowClaret ? false : true;
-                        NextClaret =Environment.TickCount + 450;
+                        NextClaret = Environment.TickCount + 450;
                         Console.WriteLine("Claret:" + ShowClaret.ToString());
                     }
                 }
-               
             }
 
             Update = UpdateFunc;
@@ -197,7 +191,6 @@ namespace Vivid3D.Resonance.Forms
 
             void DrawFunc()
             {
-
                 DrawFormSolid(Col);
                 int tw = 0;
                 int ii = 0;
@@ -213,30 +206,29 @@ namespace Vivid3D.Resonance.Forms
                 */
                 //vc = ClaretI - StartI;
 
-                string dis=Text.Substring(StartI);
+                string dis = Text.Substring(StartI);
 
                 int cc = 0;
                 int t2 = 0;
                 string rtxt = "";
-                for(int i = 0; i < dis.Length; i++)
+                for (int i = 0; i < dis.Length; i++)
                 {
                     rtxt = rtxt + dis.Substring(i, 1);
                     var cr = dis.Substring(i, 1);
                     t2 += UI.Font.Width(cr);
-                    if (t2 > W-30)
+                    if (t2 > W - 30)
                     {
                         break;
                     }
                     cc++;
                 }
                 ClaretE = cc;
-                
+
                 DrawText(rtxt, 5, 0, new Vector4(0.2f, 0.2f, 0.2f, 0.9f));
 
                 if (Text.Length == 0) ClaretI = 0;
 
-                
-                if(ShowClaret)
+                if (ShowClaret)
                 {
                     // Console.WriteLine("Claret!");
                     int cx = 0;
@@ -245,21 +237,17 @@ namespace Vivid3D.Resonance.Forms
                         int cv = 0;
                         for (int i = StartI; i < ClaretI; i++)
                         {
-
                             int cw = UI.Font.Width(Text.Substring(i, 1));
                             cx = cx + (cw);
                             cv++;
                             if (cv > cc) break;
                         }
                     }
-                    DrawFormSolid(new Vector4(0.2f, 0.2f, 0.2f, 0.8f),cx+(Text.Length>0 ? 5 : 0),0,5, 20);
+                    DrawFormSolid(new Vector4(0.2f, 0.2f, 0.2f, 0.8f), cx + (Text.Length > 0 ? 5 : 0), 0, 5, 20);
                 }
-
             }
 
             Draw = DrawFunc;
-
         }
-
     }
 }

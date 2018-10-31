@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Data;
+﻿using Vivid3D.Data;
 using Vivid3D.Effect;
+
 namespace Vivid3D.Visuals
 {
     public class VRLMultiPassAnim : VRenderLayer
     {
         public EMultiPass3D fx = null;
+
         public override void Init()
         {
             fx = new EMultiPass3D();
         }
+
         public override void Render(VMesh m, VVisualizer v)
         {
-
             m.Mat.Bind();
             if (Lighting.GraphLight3D.Active != null)
             {
@@ -52,16 +49,18 @@ namespace Vivid3D.Visuals
             m.Mat.Release();
         }
     }
+
     public class VRLMultiPass : VRenderLayer
     {
         public EMultiPass3D fx = null;
+
         public override void Init()
         {
             fx = new EMultiPass3D();
         }
+
         public override void Render(VMesh m, VVisualizer v)
         {
-          
             m.Mat.Bind();
             if (Lighting.GraphLight3D.Active != null)
             {
@@ -94,16 +93,18 @@ namespace Vivid3D.Visuals
             m.Mat.Release();
         }
     }
+
     public class VRLTerrain : VRenderLayer
     {
         public ETerrain fx = null;
+
         public override void Init()
         {
             fx = new ETerrain();
         }
+
         public override void Render(VMesh m, VVisualizer v)
         {
-
             m.Mat.Bind();
             if (Lighting.GraphLight3D.Active != null)
             {
@@ -136,16 +137,18 @@ namespace Vivid3D.Visuals
             m.Mat.Release();
         }
     }
+
     public class VRLLightMap : VRenderLayer
     {
         public ELightMap FX;
+
         public override void Init()
         {
             FX = new ELightMap();
         }
+
         public override void Render(VMesh m, VVisualizer v)
         {
-
             m.Mat.BindLightmap();
             /* if (Lighting.GraphLight3D.Active != null)
              {
@@ -181,22 +184,24 @@ namespace Vivid3D.Visuals
             m.Mat.ReleaseLightmap();
         }
     }
+
     public class VRLNoFX : VRenderLayer
     {
         public ENoFX FX;
+
         public override void Init()
         {
             FX = new ENoFX();
         }
+
         public override void Render(VMesh m, VVisualizer v)
         {
-
             m.Mat.Bind();
-           /* if (Lighting.GraphLight3D.Active != null)
-            {
-                Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
-            }
-            */
+            /* if (Lighting.GraphLight3D.Active != null)
+             {
+                 Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
+             }
+             */
             if (FXG.FXOverride != null)
             {
                 FXG.FXOverride.Bind();

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
 using Vivid3D.Util;
+
 namespace Vivid3D.VFX
 {
     public class SoftParticle : ParticleBase
     {
-
         public SoftParticle(Tex.Tex2D img)
         {
             Img = img;
@@ -17,8 +12,6 @@ namespace Vivid3D.VFX
 
         public override void Render()
         {
-
-            
             var g = VFX.VisualFX.Graph;
 
             int sw = Vivid3D.App.VividApp.W;
@@ -37,7 +30,6 @@ namespace Vivid3D.VFX
             oy[2] = (H / 2);// * Graph.Z * Z;
             oy[3] = (H / 2);// * Graph.Z * Z;
 
-
             Vector2[] p = Maths.RotateOC(ox, oy, Rot, Z, 0, 0);
 
             float mx, my;
@@ -54,7 +46,6 @@ namespace Vivid3D.VFX
 
             Draw.Render.Image(p, Img);
 
-
             /*
             p = Maths.Rotate(p, Rot, 1.0f);
 
@@ -68,7 +59,6 @@ namespace Vivid3D.VFX
             */
             //Console.WriteLine("X:" + X + " Y:" + Y + " Z:" + Z);
             //   Console.WriteLine("W" + W + " H:" + H);
-
         }
 
         public override ParticleBase Clone()
@@ -80,8 +70,5 @@ namespace Vivid3D.VFX
             np.RDrag = RDrag;
             return np;
         }
-
-        
-
     }
 }

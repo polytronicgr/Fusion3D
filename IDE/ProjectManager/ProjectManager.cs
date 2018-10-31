@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+
 namespace ProjectManager
 {
     public partial class ProjectManager : Form
     {
-
         public static ProjectManager Main = null;
         public NewProjectForm NewProject;
         public Dictionary<TreeNode, string> ProjMap = new Dictionary<TreeNode, string>();
@@ -25,28 +19,24 @@ namespace ProjectManager
             Main = this;
 
             ScanForProjects();
-
         }
 
         public void ScanForProjects()
         {
-
             ProjMap.Clear();
             projTree.Nodes[0].Nodes.Clear();
             var pd = new DirectoryInfo(ProjectCore.Project.ProjectPath);
-            foreach(var dir in pd.GetDirectories())
+            foreach (var dir in pd.GetDirectories())
             {
                 var name = dir.Name;
                 var node = new TreeNode(name);
                 projTree.Nodes[0].Nodes.Add(node);
                 ProjMap.Add(node, name);
 
-            //    P
+                //    P
             }
             projTree.Nodes[0].Expand();
         }
-
-
 
         private void NewProject_Click(object sender, EventArgs e)
         {
@@ -56,7 +46,6 @@ namespace ProjectManager
 
         private void projTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-           
             var node = e.Node;
 
             if (node == null) return;
@@ -72,13 +61,11 @@ namespace ProjectManager
             ActiveProject = np;
             iconImg.Image = np.Icon;
             iconImg.Invalidate();
-
-
         }
 
         private void LoadProject_Click(object sender, EventArgs e)
         {
-            if(ActiveProject == null)
+            if (ActiveProject == null)
             {
                 MessageBox.Show("No project selected.", "Vivid3D");
                 return;
@@ -90,7 +77,7 @@ namespace ProjectManager
         {
             var proc = new Process();
             Console.WriteLine("Starting:" + proj.IDEPath);
-       
+
             proc.StartInfo = new ProcessStartInfo("VividEdit.exe", proj.IDEPath);
             proc.Start();
             Environment.Exit(2);

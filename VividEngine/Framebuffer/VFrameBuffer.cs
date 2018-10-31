@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using Vivid3D.Texture;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using Vivid3D.App;
+using Vivid3D.Texture;
+
 namespace Vivid3D.FrameBuffer
 {
     public class VFrameBuffer
@@ -17,7 +13,7 @@ namespace Vivid3D.FrameBuffer
         public int IW, IH;
         public int DRB = 0;
 
-        public VFrameBuffer(int w,int h)
+        public VFrameBuffer(int w, int h)
         {
             IW = w;
             IH = h;
@@ -35,16 +31,15 @@ namespace Vivid3D.FrameBuffer
             if (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer) != FramebufferErrorCode.FramebufferComplete)
             {
                 Console.WriteLine("Framebuffer failure.");
-                while(true)
+                while (true)
                 {
-                   
                 }
             }
             Console.WriteLine("Framebuffer success.");
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
-
         }
+
         public void Bind()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, FBO);
@@ -53,10 +48,8 @@ namespace Vivid3D.FrameBuffer
             AppInfo.RH = IH;
             GL.ClearColor(0, 0, 0, 0);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-
-
         }
+
         public void Release()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);

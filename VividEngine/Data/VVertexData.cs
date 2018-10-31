@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vivid3D.Data
+﻿namespace Vivid3D.Data
 {
     public class VVertexData<T>
     {
@@ -15,7 +9,8 @@ namespace Vivid3D.Data
         public int Indices = 0;
         public T[] Data = null;
         public int[] Index = null;
-        public virtual void Init(int vertexCount,int components,int strideSize,int componentSize,int indexCount)
+
+        public virtual void Init(int vertexCount, int components, int strideSize, int componentSize, int indexCount)
         {
             Data = new T[vertexCount * components];
             StrideSize = strideSize;
@@ -25,6 +20,5 @@ namespace Vivid3D.Data
             Indices = indexCount;
             Index = new int[indexCount];
         }
-        
     }
 }

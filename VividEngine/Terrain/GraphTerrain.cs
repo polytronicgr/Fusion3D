@@ -1,34 +1,29 @@
-﻿using System;
+﻿using OpenTK;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vivid3D.Data;
 using Vivid3D.Scene;
-using Vivid3D.Texture;
-using OpenTK;
+
 namespace Vivid3D.Terrain
 {
     public class GraphTerrain : GraphEntity3D
     {
+        private VMesh TMesh = null;
 
-        VMesh TMesh = null;
+        private Vector3[,] tp = null;
+        private Vector3[,] tuv = null;
+        private Vector3[,] tnorm = null;
+        private Vector3[,] tbi = null;
+        private Vector3[,] tan = null;
+        private int[] indices = null;
 
-        Vector3[,] tp = null;
-        Vector3[,] tuv = null;
-        Vector3[,] tnorm = null;
-        Vector3[,] tbi = null;
-        Vector3[,] tan = null;
-        int[] indices = null;
-
-        public GraphTerrain(float w,float h,float y,int xsegs=32,int ysegs=32)
+        public GraphTerrain(float w, float h, float y, int xsegs = 32, int ysegs = 32)
         {
             GenFlat(w, h, y, xsegs, ysegs);
-
         }
-        public GraphTerrain(float w,float h,float y,int xsegs,int ysegs,Texture.VTex2D tex)
+
+        public GraphTerrain(float w, float h, float y, int xsegs, int ysegs, Texture.VTex2D tex)
         {
-            float xr =  (float)tex.W / w;
+            float xr = (float)tex.W / w;
             float yr = (float)tex.H / h;
 
             byte[] data = tex.RawData;
@@ -60,17 +55,13 @@ namespace Vivid3D.Terrain
             vu = 0.0f;
             vv = 0.0f;
 
-
-
-
             for (int sy = 0; sy < ysegs; sy++)
             {
                 for (int sx = 0; sx < xsegs; sx++)
                 {
-
                     float ny = 0.0f;
 
-                    float ax = w/2 +vx;
+                    float ax = w / 2 + vx;
                     float ay = h / 2 + vz;
 
                     float tx = ax * xr;
@@ -78,15 +69,14 @@ namespace Vivid3D.Terrain
 
                     // int loc = (int)((float)ty * (float)tex.W * 3)+ (tx * 3);
 
-                    int loc = (int)ty * (tex.W *3);
+                    int loc = (int)ty * (tex.W * 3);
                     loc += (int)tx * 3;
 
                     ny = data[loc];
 
                     ny = ny * 3;
 
-
-                    tp[sx, sy] = new Vector3(vx, vy+ny, vz);
+                    tp[sx, sy] = new Vector3(vx, vy + ny, vz);
                     tuv[sx, sy] = new Vector3(vu, vv, 0);
                     tnorm[sx, sy] = new Vector3(0, 1, 0);
 
@@ -94,8 +84,6 @@ namespace Vivid3D.Terrain
                     //vv += vi;
 
                     vx += xi;
-
-
                 }
                 vu = 0;
                 vv += vi;
@@ -103,12 +91,10 @@ namespace Vivid3D.Terrain
                 vz += zi;
             }
 
-
             for (int sy = 0; sy < ysegs - 1; sy++)
             {
                 for (int sx = 0; sx < xsegs - 1; sx++)
                 {
-
                     indices.Add(GetI(sx, sy, xsegs, ysegs));
                     indices.Add(GetI(sx + 1, sy + 1, xsegs, ysegs));
                     indices.Add(GetI(sx + 1, sy, xsegs, ysegs));
@@ -116,7 +102,6 @@ namespace Vivid3D.Terrain
                     indices.Add(GetI(sx + 1, sy + 1, xsegs, ysegs));
                     indices.Add(GetI(sx, sy, xsegs, ysegs));
                     indices.Add(GetI(sx, sy + 1, xsegs, ysegs));
-
                 }
             }
 
@@ -124,12 +109,10 @@ namespace Vivid3D.Terrain
 
             int vid = 0;
 
-
             for (int sy = 0; sy < ysegs; sy++)
             {
                 for (int sx = 0; sx < xsegs; sx++)
                 {
-
                     TMesh.SetVertex(vid, tp[sx, sy], tan[sx, sy], tbi[sx, sy], tnorm[sx, sy], new Vector2(tuv[sx, sy].X, tuv[sx, sy].Y));
                     vid++;
                 }
@@ -155,14 +138,13 @@ namespace Vivid3D.Terrain
 
             TMesh.Final();
 
-
             Meshes.Add(TMesh);
             this.Renderer = new Visuals.VRTerrain();
             Name = "Terrain";
         }
-        public void GenMapped(float w,float h,float y,int xsegs,int ysegs,Texture.VTex2D tex)
-        {
 
+        public void GenMapped(float w, float h, float y, int xsegs, int ysegs, Texture.VTex2D tex)
+        {
         }
 
         private void GenFlat(float w, float h, float y, int xsegs, int ysegs)
@@ -194,14 +176,10 @@ namespace Vivid3D.Terrain
             vu = 0.0f;
             vv = 0.0f;
 
-
-
-
             for (int sy = 0; sy < ysegs; sy++)
             {
                 for (int sx = 0; sx < xsegs; sx++)
                 {
-
                     tp[sx, sy] = new Vector3(vx, vy, vz);
                     tuv[sx, sy] = new Vector3(vu, vv, 0);
                     tnorm[sx, sy] = new Vector3(0, 1, 0);
@@ -210,8 +188,6 @@ namespace Vivid3D.Terrain
                     //vv += vi;
 
                     vx += xi;
-
-
                 }
                 vu = 0;
                 vv += vi;
@@ -219,12 +195,10 @@ namespace Vivid3D.Terrain
                 vz += zi;
             }
 
-
             for (int sy = 0; sy < ysegs - 1; sy++)
             {
                 for (int sx = 0; sx < xsegs - 1; sx++)
                 {
-
                     indices.Add(GetI(sx, sy, xsegs, ysegs));
                     indices.Add(GetI(sx + 1, sy + 1, xsegs, ysegs));
                     indices.Add(GetI(sx + 1, sy, xsegs, ysegs));
@@ -232,7 +206,6 @@ namespace Vivid3D.Terrain
                     indices.Add(GetI(sx + 1, sy + 1, xsegs, ysegs));
                     indices.Add(GetI(sx, sy, xsegs, ysegs));
                     indices.Add(GetI(sx, sy + 1, xsegs, ysegs));
-
                 }
             }
 
@@ -244,7 +217,6 @@ namespace Vivid3D.Terrain
             {
                 for (int sx = 0; sx < xsegs; sx++)
                 {
-
                     TMesh.SetVertex(vid, tp[sx, sy], tan[sx, sy], tbi[sx, sy], tnorm[sx, sy], new Vector2(tuv[sx, sy].X, tuv[sx, sy].Y));
                     vid++;
                 }
@@ -270,17 +242,14 @@ namespace Vivid3D.Terrain
 
             TMesh.Final();
 
-
             Meshes.Add(TMesh);
             this.Renderer = new Visuals.VRTerrain();
             Name = "Terrain";
         }
 
-        public int GetI(int x,int y,int xs,int ys)
+        public int GetI(int x, int y, int xs, int ys)
         {
             return y * xs + x;
         }
-
-
     }
 }

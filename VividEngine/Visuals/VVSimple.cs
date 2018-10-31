@@ -1,35 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Data;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+﻿using Vivid3D.Data;
+
 namespace Vivid3D.Visuals
 {
     public class VVSimple : VVisualizer
     {
-     
-        public VVSimple(int vc,int ic) : base(vc,ic)
+        public VVSimple(int vc, int ic) : base(vc, ic)
         {
-
         }
+
         public override void SetData(VVertexData<float> d)
         {
             dat = d;
         }
+
         public override void SetMesh(VMesh m)
         {
             md = m;
         }
+
         public override void Visualize()
         {
             /*
             md.Mat.Bind();
             GL.Begin(BeginMode.Triangles);
             var v = md.GetVerts();
-          
+
             for(int i = 0; i < md.NumIndices; i += 3)
             {
                 uint i1, i2, i3;
@@ -46,7 +41,7 @@ namespace Vivid3D.Visuals
 
             GL.End();
             md.Mat.Release();
-        */    
-    }
+        */
+        }
     }
 }

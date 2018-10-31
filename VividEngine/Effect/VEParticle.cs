@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vivid3D.Effect
+﻿namespace Vivid3D.Effect
 {
     public class EParticle : Effect3D
     {
-
         public EParticle() : base("", "Data\\Shader\\vsParticle.glsl", "Data\\Shader\\fsParticle.glsl")
         {
-
         }
 
         public override void SetPars()
         {
-
             //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
             SetMat("model", Effect.FXG.Local);
             SetMat("view", FXG.Cam.CamWorld);
@@ -34,8 +25,6 @@ namespace Vivid3D.Effect
             SetTex("tC", 0);
             //SetTex("tN", 1);
             //SetTex("tS", 2);
-
         }
-
     }
 }

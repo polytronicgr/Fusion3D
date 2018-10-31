@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vivid3D.Scene;
-using Vivid3D.Tex;
-using Vivid3D.Util;
+﻿using Vivid3D.Tex;
 
 namespace Vivid3D.VFX
 {
     public class ParticleBase
     {
-
         public float X
         {
             get;
@@ -119,7 +111,7 @@ namespace Vivid3D.VFX
             get;
             set;
         }
-       
+
         public Tex2D Img
         {
             get;
@@ -168,7 +160,6 @@ namespace Vivid3D.VFX
 
         public virtual void Init()
         {
-
         }
 
         public virtual void Update()
@@ -186,26 +177,20 @@ namespace Vivid3D.VFX
             Life = Life - LifeRate * LifeDrag;
 
             Alpha *= AI;
-          //  Console.WriteLine("Life:" + Life);
+            //  Console.WriteLine("Life:" + Life);
             if (Life <= 0.0f)
             {
-             //   Console.WriteLine("Removed");
+                //   Console.WriteLine("Removed");
                 Sys.Remove(this);
             }
-
-
         }
-
 
         public virtual void Render()
         {
-
         }
 
         public virtual void Stop()
         {
-
         }
-
     }
 }

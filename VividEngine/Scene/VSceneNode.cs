@@ -21,15 +21,18 @@ namespace Vivid3D.Scene
         public bool FaceCamera = false;
         public VInfoMap<string, object> Links = new VInfoMap<string, object>();
         public bool Lit = true;
-        public string Name = "";
+
+        public EventHandler NameChanged = null;
         public bool On = true;
         public Matrix4 PrevWorld;
         public NodeSelected Selected = null;
         public List<GraphNode3D> Sub = new List<GraphNode3D>();
         public GraphNode3D Top = null;
         private static int nn = 0;
-        private Vector3 _LocalPos = Vector3.Zero;
         private readonly EventHandler PosChanged = null;
+        private Vector3 _LocalPos = Vector3.Zero;
+        private string _Name="";
+        private List<ScriptBase> scripts = new List<ScriptBase> ( );
 
         public GraphNode3D ( )
         {
@@ -78,7 +81,45 @@ namespace Vivid3D.Scene
             set;
         }
 
+        public string Name
+        {
+            get => _Name;
+            set
+            {
+                _Name = value;
+                NameChanged?.Invoke ( this , null );
+            }
+        }
+
         public ScriptBase Script { get; set; }
+
+        public List<ScriptBase> Scripts { get => scripts; set => scripts = value; }
+
+        public void Begin ( )
+        {
+            foreach ( ScriptBase script in Scripts )
+            {
+                script.Begin ( );
+            }
+
+            foreach ( GraphNode3D ent in Sub )
+            {
+                ent.Begin ( );
+            }
+        }
+
+        public void End ( )
+        {
+            foreach ( ScriptBase script in Scripts )
+            {
+                script.End ( );
+            }
+
+            foreach ( GraphNode3D ent in Sub )
+            {
+                ent.End ( );
+            }
+        }
 
         public List<GraphNode3D> TopList
         {

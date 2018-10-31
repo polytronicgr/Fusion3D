@@ -56,7 +56,49 @@ namespace VividEdit.Forms
                     Size = new Size ( 250 , 25 )
                 };
 
-                if ( prop.PropertyType == typeof ( float ) )
+                if ( prop.PropertyType == typeof ( string ) )
+                {
+                    Label val = new Label
+                    {
+                        Text = prop.Name,
+                        Location = new Point(5,propy+25),
+                        Size = new Size(50,25)
+                    };
+
+                    TextBox boxv = new TextBox
+                    {
+                        Location = new Point( 60,propy+22),
+                        Size = new Size( 120,25 )
+                    };
+
+                    string sv = (string)prop.GetAccessors()[0].Invoke(cls,null);
+                    System.Reflection.MethodInfo sm = prop.GetSetMethod ( );
+                    object[] pp = new object[1];
+
+                    boxv.Text = sv;
+
+                    void c_val ( object o , EventArgs e )
+                    {
+                        try
+                        {
+                            sv = boxv.Text;
+                        }
+                        catch
+                        {
+                            sv = "";
+                        }
+
+                        if ( sm != null )
+                        {
+                            pp [ 0 ] = sv;
+                            sm.Invoke ( cls , pp );
+                        }
+                    }
+                    boxv.TextChanged += c_val;
+                    Controls.Add ( val );
+                    Controls.Add ( boxv );
+                }
+                else if ( prop.PropertyType == typeof ( float ) )
                 {
                     Label val = new Label
                     {

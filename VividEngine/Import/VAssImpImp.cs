@@ -636,6 +636,8 @@ namespace Vivid3D.Import
 
                 m2.Indices = nd;
                 //m2.Scale(AssImpImport.ScaleX, AssImpImport.ScaleY, AssImpImport.ScaleZ);
+                //m2.GenerateTangents ( );
+
                 m2.Final ( );
             }
 

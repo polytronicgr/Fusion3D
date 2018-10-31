@@ -2,12 +2,49 @@
 
 namespace Vivid3D.Script
 {
-    public class ScriptBase
+    public class ScriptBase : GraphNode3D
     {
-        public GraphNode3D Node { get; set; }
-        public GraphEntity3D Entity { get; set; }
+        public GraphNode3D Node
+        {
+            get => Top;
+            set
+            {
+                if ( Top != null )
+                {
+                    Top.Sub.Remove ( this );
+                }
+                Top = value;
+                Top.Sub.Add ( this );
+            }
+        }
 
-        public virtual void Init ( )
+        public GraphEntity3D Entity
+        {
+            get => Top as GraphEntity3D;
+            set
+            {
+                if ( Top != null )
+                {
+                    Top.Sub.Remove ( this );
+                }
+                Top = value;
+                Top.Sub.Add ( this );
+            }
+        }
+
+        public virtual void Begin ( )
+        {
+        }
+
+        public virtual void End ( )
+        {
+        }
+
+        public virtual void Pause ( )
+        {
+        }
+
+        public virtual void Resume ( )
         {
         }
 

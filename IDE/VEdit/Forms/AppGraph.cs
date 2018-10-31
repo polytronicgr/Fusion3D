@@ -88,11 +88,16 @@ namespace VividEdit.Forms
             }
         }
 
+        private void ON_NameChange ( object o , EventArgs e )
+        {
+            Rebuild ( );
+        }
+
         private void AddNode ( Vivid3D.Scene.GraphNode3D n , TreeNode t )
         {
             AllNodes.Add ( n );
-            TreeNode nn = new TreeNode(n.Name + ":Pos:" + n.LocalPos + ":Scale:" + n.LocalScale);
-
+            TreeNode nn = new TreeNode(n.Name);
+            n.NameChanged = ON_NameChange;
             nodeMap.Add ( n , nn );
 
             t.Nodes.Add ( nn );

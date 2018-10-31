@@ -20,10 +20,32 @@ namespace Vivid3D.Scene
         public ScriptBase Script { get; set; }
 
 
-        public Vector3 LocalPos = Vector3.Zero;
-        public Vector3 LocalScale = Vector3.One;
-        public Matrix4 LocalTurn = Matrix4.Identity;
-        public bool AlwaysAlpha = false;
+        public Vector3 LocalPos
+        {
+            get;
+            set;
+        }
+        public Vector3 LocalScale
+        {
+            get;
+            set;
+        }
+        public Matrix4 LocalTurn
+        {
+            get;
+            set;
+        }
+        public Vector3 LocalEular
+        {
+            get;
+            set;
+        }
+        public bool AlwaysAlpha
+        {
+            get
+                  ;
+            set;
+        }
         public GraphNode3D TopTop
         {
             get
@@ -156,6 +178,10 @@ namespace Vivid3D.Scene
             Rot(new Vector3(0, 0, 0), Space.Local);
             Name = "Node:" + nn;
             nn++;
+            LocalPos = new Vector3(0, 0, 0);
+            LocalEular = new Vector3(0, 0, 0);
+            LocalScale = new Vector3(1, 1, 1);
+            LocalTurn = Matrix4.Identity;
         }
         public virtual void Init()
         {

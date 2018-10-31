@@ -304,7 +304,7 @@ namespace Vivid3D.Scene
         }
         public Vivid3D.Pick.PickResult CamPick(int x,int y)
         {
-            return null;
+      
             var res = new Pick.PickResult();
 
             var nl = GetList(true);
@@ -327,15 +327,15 @@ namespace Vivid3D.Scene
                 {
 
                     
-                    for (int i = 0; i < msh.NumIndices; i += 3)
+                    for (int i = 0; i < msh.TriData.Length; i ++)
                     {
-                        int v0 = (int)msh.Indices[i];
-                        int v1 = (int)msh.Indices[i + 1];
-                        int v2 = (int)msh.Indices[i + 2];
+                        int v0 = (int)msh.TriData[i].V0;
+                        int v1 = (int)msh.TriData[i].V1;
+                        int v2 = (int)msh.TriData[i].v2;
                         Vector3 r0, r1, r2;
-                        r0 = Rot(new Vector3(msh.Vertices[v0 * 3], msh.Vertices[(v0 * 3) + 1], msh.Vertices[(v0 * 3) + 2]),n);
-                        r1 = Rot(new Vector3(msh.Vertices[v1 * 3], msh.Vertices[(v1 * 3) + 1], msh.Vertices[(v1 * 3) + 2]),n);
-                        r2 = Rot(new Vector3(msh.Vertices[v2 * 3], msh.Vertices[(v2 * 3) + 1], msh.Vertices[(v2 * 3) + 2]),n);
+                        r0 = Rot(msh.VertexData[v0].Pos,n);
+                        r1 = Rot(msh.VertexData[v1].Pos,n);
+                        r2 = Rot(msh.VertexData[v2].Pos,n);
                         Vector3? pr = Pick.Picker.GetTimeAndUvCoord(mr.pos, mr.dir, r0, r1, r2);
                         if (pr == null)
                         {

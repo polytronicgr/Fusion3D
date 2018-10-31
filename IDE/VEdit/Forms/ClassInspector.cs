@@ -23,6 +23,8 @@ namespace VividEdit.Forms
         public void Inspect(object cls)
         {
 
+
+            Controls.Clear();
             Label header = new Label();
             header.Text = "Inspecting:" + cls.GetType().Name;
             header.Location = new Point(5, 5);
@@ -66,7 +68,75 @@ namespace VividEdit.Forms
                     laby.Text = "Y";
                     labz.Text = "Z";
 
+                    var v3 = (OpenTK.Vector3)prop.GetAccessors()[0].Invoke(cls, null);
+                    var sm = prop.GetSetMethod();
+
+
+                    object[] pp = new object[1];
+                    
+
                     Controls.Add(labx);Controls.Add(laby);Controls.Add(labz);
+
+                    void v3_cx(object s,EventArgs a)
+                    {
+
+                        try
+                        {
+                            v3.X = float.Parse(boxx.Text);
+                        }
+                        catch
+                        {
+                            v3.X = 0;
+                        }
+                        if (sm != null)
+                        {
+                            pp[0] = v3;
+                            sm.Invoke(cls, pp);
+                        }
+                        //prop.GetAccessors()[1].Invoke(cls, pp);
+                    }
+
+                    void v3_cy(object s,EventArgs e)
+                    {
+
+                        try
+                        {
+                            v3.Y = float.Parse(boxy.Text);
+                        }
+                        catch
+                        {
+                            v3.Y = 0;
+                        }
+                        if (sm != null)
+                        {
+                            pp[0] = v3;
+                            sm.Invoke(cls, pp);
+                        }
+                    }
+
+                    void v3_cz(object s,EventArgs e)
+                    {
+
+
+                        try
+                        {
+                            v3.Z = float.Parse(boxz.Text);
+                        }
+                        catch
+                        {
+                            v3.Z = 0;
+                        }
+                        if (sm != null)
+                        {
+                            pp[0] = v3;
+                            sm.Invoke(cls, pp);
+                        }
+
+                    }
+
+                    boxx.TextChanged += v3_cx;
+                    boxy.TextChanged += v3_cy;
+                    boxz.TextChanged += v3_cz;
 
                     boxx.Location = new Point(20, propy + 22);
                     boxy.Location = new Point(135, propy + 22);
@@ -78,8 +148,7 @@ namespace VividEdit.Forms
 
                     Controls.Add(boxx);Controls.Add(boxy);Controls.Add(boxz);
 
-                    var v3 = (OpenTK.Vector3)prop.GetAccessors()[0].Invoke(cls, null);
-
+           
 
                     boxx.Text = v3.X.ToString();boxy.Text = v3.Y.ToString();boxz.Text = v3.Z.ToString();
 
@@ -153,6 +222,11 @@ namespace VividEdit.Forms
 
             }
             IC.SetUI();
+        }
+
+        private void Boxx_TextChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void BeginInspect()

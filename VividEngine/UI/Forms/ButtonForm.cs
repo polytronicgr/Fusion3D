@@ -12,53 +12,53 @@ namespace Vivid3D.Resonance.Forms
         private Vector4 OverCol = new Vector4(0.8f, 0.8f, 0.8f, 0.9f);
         private Vector4 PressCol = new Vector4(1, 1, 1, 1);
 
-        public ButtonForm()
+        public ButtonForm ( )
         {
-            SetImage(new VTex2D("Data\\UI\\Skin\\but_normal.png", LoadMethod.Single, true));
+            SetImage ( new VTex2D ( "Data\\UI\\Skin\\but_normal.png" , LoadMethod.Single , true ) );
             Col = NormCol;
-            void DrawFunc()
+            void DrawFunc ( )
             {
                 VPen.BlendMod = VBlend.Alpha;
 
-                DrawForm(CoreTex);
-                DrawText(Text, W / 2 - UI.Font.Width(Text) / 2, H / 2 - UI.Font.Height() / 2);
+                DrawForm ( CoreTex );
+                DrawText ( Text , W / 2 - UI.Font.Width ( Text ) / 2 , H / 2 - UI.Font.Height ( ) / 2 );
             }
 
-            void MouseEnterFunc()
+            void MouseEnterFunc ( )
             {
-                if (Pressed == false)
+                if ( Pressed == false )
                 {
                     Col = OverCol;
                 }
                 Over = true;
             }
 
-            void MouseLeaveFunc()
+            void MouseLeaveFunc ( )
             {
-                if (Pressed == false)
+                if ( Pressed == false )
                 {
                     Col = NormCol;
                 }
                 Over = false;
             }
 
-            void MouseMoveFunc(int x, int y, int dx, int dy)
+            void MouseMoveFunc ( int x , int y , int dx , int dy )
             {
-                if (Pressed)
+                if ( Pressed )
                 {
                     // Drag?.Invoke(dx, dy);
                 }
             }
 
-            void MouseDownFunc(int b)
+            void MouseDownFunc ( int b )
             {
                 Col = PressCol;
                 Pressed = true;
             }
 
-            void MouseUpFunc(int b)
+            void MouseUpFunc ( int b )
             {
-                if (Over)
+                if ( Over )
                 {
                     Col = OverCol;
                 }
@@ -67,12 +67,12 @@ namespace Vivid3D.Resonance.Forms
                     Col = NormCol;
                 }
                 Pressed = false;
-                Console.WriteLine("CLicked!");
-                if (Click != null)
+                Console.WriteLine ( "CLicked!" );
+                if ( Click != null )
                 {
-                    Console.WriteLine("Has click");
+                    Console.WriteLine ( "Has click" );
                 }
-                Click?.Invoke(b);
+                Click?.Invoke ( b );
             }
 
             Draw = DrawFunc;

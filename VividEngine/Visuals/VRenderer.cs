@@ -8,34 +8,34 @@ namespace Vivid3D.Visuals
         public List<VRenderLayer> Layers = new List<VRenderLayer>();
         public VRLDepth RLD = null;
 
-        public VRenderer()
+        public VRenderer ( )
         {
-            Init();
-            RLD = new VRLDepth();
+            Init ( );
+            RLD = new VRLDepth ( );
         }
 
-        public virtual void Init()
-        {
-        }
-
-        public virtual void Bind(VMesh m)
+        public virtual void Init ( )
         {
         }
 
-        public virtual void Render(VMesh m)
+        public virtual void Bind ( VMesh m )
         {
-            foreach (VRenderLayer rl in Layers)
+        }
+
+        public virtual void Render ( VMesh m )
+        {
+            foreach ( VRenderLayer rl in Layers )
             {
-                rl.Render(m, m.Viz);
+                rl.Render ( m , m.Viz );
             }
         }
 
-        public virtual void RenderDepth(VMesh m)
+        public virtual void RenderDepth ( VMesh m )
         {
-            RLD.Render(m, m.Viz);
+            RLD.Render ( m , m.Viz );
         }
 
-        public virtual void Release(VMesh m)
+        public virtual void Release ( VMesh m )
         {
         }
     }

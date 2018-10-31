@@ -6,13 +6,13 @@ namespace Vivid3D.Resonance.Forms
     {
         public VTex2D Tex = null;
 
-        public PanelForm()
+        public PanelForm ( )
         {
-            Tex = new VTex2D("Data\\UI\\panel.png", LoadMethod.Single, false);
+            Tex = new VTex2D ( "Data\\UI\\panel.png" , LoadMethod.Single , false );
 
-            void DrawFunc()
+            void DrawFunc ( )
             {
-                this.DrawForm(Tex);
+                DrawForm ( Tex );
             }
 
             Draw = DrawFunc;

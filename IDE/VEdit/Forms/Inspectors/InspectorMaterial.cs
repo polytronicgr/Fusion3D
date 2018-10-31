@@ -12,64 +12,64 @@ namespace VividEdit.Forms.Inspectors
         public ValueTypes.InspectFloat Shine;
         public ValueTypes.InspectTexture ColTex;
 
-        public InspectorMaterial()
+        public InspectorMaterial ( )
         {
-            InitializeComponent();
-            Diff = new ValueTypes.InspectVec3();
+            InitializeComponent ( );
+            Diff = new ValueTypes.InspectVec3 ( );
             Diff.ValueName.Text = "Diffuse";
-            this.Controls.Add(Diff);
-            Diff.Location = new Point(6, 6);
-            Diff.Show();
+            Controls.Add ( Diff );
+            Diff.Location = new Point ( 6 , 6 );
+            Diff.Show ( );
 
-            Spec = new ValueTypes.InspectVec3();
+            Spec = new ValueTypes.InspectVec3 ( );
             Spec.ValueName.Text = "Spec";
-            this.Controls.Add(Spec);
-            Spec.Location = new Point(6, 45);
-            Spec.Show();
+            Controls.Add ( Spec );
+            Spec.Location = new Point ( 6 , 45 );
+            Spec.Show ( );
 
-            Shine = new ValueTypes.InspectFloat();
+            Shine = new ValueTypes.InspectFloat ( );
             Shine.ValueName.Text = "Shine";
-            this.Controls.Add(Shine);
-            Shine.Location = new Point(6, 106);
-            Shine.Show();
+            Controls.Add ( Shine );
+            Shine.Location = new Point ( 6 , 106 );
+            Shine.Show ( );
 
-            ColTex = new ValueTypes.InspectTexture();
+            ColTex = new ValueTypes.InspectTexture ( );
             ColTex.ValueName.Text = "Diffuse Texture";
-            this.Controls.Add(ColTex);
-            ColTex.Location = new Point(6, 170);
-            ColTex.Show();
-            Size = new Size(1000, 1000);
+            Controls.Add ( ColTex );
+            ColTex.Location = new Point ( 6 , 170 );
+            ColTex.Show ( );
+            Size = new Size ( 1000 , 1000 );
         }
 
         private Timer nt = new Timer();
 
-        public void StartTick()
+        public void StartTick ( )
         {
             nt.Interval = 40;
             nt.Tick += Nt_Tick;
             nt.Enabled = true;
         }
 
-        public override void AlignV()
+        public override void AlignV ( )
         {
-            Align();
+            Align ( );
         }
 
-        public void Align()
+        public void Align ( )
         {
             Diff.Value = Mat.Diff;
             Spec.Value = Mat.Spec;
             Shine.Value = Mat.Shine;
             ColTex.Value = Mat.TCol;
-            Diff.AlignToValue();
-            Spec.AlignToValue();
-            Shine.AlignToValue();
-            ColTex.AlignToValue();
+            Diff.AlignToValue ( );
+            Spec.AlignToValue ( );
+            Shine.AlignToValue ( );
+            ColTex.AlignToValue ( );
         }
 
-        private void Nt_Tick(object sender, EventArgs e)
+        private void Nt_Tick ( object sender , EventArgs e )
         {
-            if (Inspecting)
+            if ( Inspecting )
             {
                 Mat.Diff = Diff.Value;
                 Mat.Spec = Spec.Value;

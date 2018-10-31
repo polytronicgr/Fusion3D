@@ -16,230 +16,228 @@ namespace Vivid3D.Scene
         public GraphNode3D Root = new GraphEntity3D();
         public SceneGraph3D SubGraph = null;
 
-        public void BeginRun()
+        public void BeginRun ( )
         {
         }
 
-        public void PauseRun()
+        public void PauseRun ( )
         {
         }
 
-        public void EndRun()
+        public void EndRun ( )
         {
         }
 
-        public void SaveGraph(string file)
+        public void SaveGraph ( string file )
         {
             FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(fs);
 
             Help.IOHelp.w = bw;
 
-            bw.Write(Cams.Count);
-            foreach (var c in Cams)
+            bw.Write ( Cams.Count );
+            foreach ( GraphCam3D c in Cams )
             {
-                c.Write();
+                c.Write ( );
             }
-            bw.Write(Lights.Count);
-            foreach (var c in Lights)
+            bw.Write ( Lights.Count );
+            foreach ( GraphLight3D c in Lights )
             {
-                c.Write();
+                c.Write ( );
             }
-            var r = Root as GraphEntity3D;
-            if (Root != null)
+            GraphEntity3D r = Root as GraphEntity3D;
+            if ( Root != null )
             {
-                r.Write();
+                r.Write ( );
             }
 
-            fs.Flush();
-            fs.Close();
+            fs.Flush ( );
+            fs.Close ( );
         }
 
-        public void LoadGraph(string file)
+        public void LoadGraph ( string file )
         {
             FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
             BinaryReader r = new BinaryReader(fs);
             Help.IOHelp.r = r;
             int cc = r.ReadInt32();
-            for (int i = 0; i < cc; i++)
+            for ( int i = 0 ; i < cc ; i++ )
             {
-                var nc = new GraphCam3D();
-                nc.Read();
-                Cams.Add(nc);
+                GraphCam3D nc = new GraphCam3D();
+                nc.Read ( );
+                Cams.Add ( nc );
             }
             int lc = r.ReadInt32();
-            for (int i = 0; i < lc; i++)
+            for ( int i = 0 ; i < lc ; i++ )
             {
-                var nl = new Vivid3D.Lighting.GraphLight3D();
-                nl.Read();
-                Lights.Add(nl);
+                GraphLight3D nl = new Vivid3D.Lighting.GraphLight3D();
+                nl.Read ( );
+                Lights.Add ( nl );
             }
-            var re = new GraphEntity3D();
+            GraphEntity3D re = new GraphEntity3D();
             Root = re;
-            re.Read();
-            fs.Close();
+            re.Read ( );
+            fs.Close ( );
         }
 
-        public void BeginFrame()
+        public void BeginFrame ( )
 
         {
-            BeginFrameNode(Root);
-            foreach (var c in Cams)
+            BeginFrameNode ( Root );
+            foreach ( GraphCam3D c in Cams )
             {
-                c.StartFrame();
+                c.StartFrame ( );
             }
         }
 
-        public void BeginFrameNode(GraphNode3D node)
+        public void BeginFrameNode ( GraphNode3D node )
         {
-            node.StartFrame();
-            foreach (var snode in node.Sub)
+            node.StartFrame ( );
+            foreach ( GraphNode3D snode in node.Sub )
             {
-                BeginFrameNode(snode);
+                BeginFrameNode ( snode );
             }
         }
 
-        public virtual void Add(GraphCam3D c)
+        public virtual void Add ( GraphCam3D c )
         {
-            Cams.Add(c);
+            Cams.Add ( c );
         }
 
-        public virtual void Add(GraphLight3D l)
+        public virtual void Add ( GraphLight3D l )
         {
-            Lights.Add(l);
+            Lights.Add ( l );
         }
 
-        public virtual void Add(GraphNode3D n)
+        public virtual void Add ( GraphNode3D n )
         {
-            Root.Add(n);
+            Root.Add ( n );
             n.Top = Root;
         }
 
-        public virtual void Clean()
+        public virtual void Clean ( )
         {
         }
 
-        public virtual void Bind()
+        public virtual void Bind ( )
         {
         }
 
-        public virtual void Release()
+        public virtual void Release ( )
         {
         }
 
-        public virtual void RenderDepth()
+        public virtual void RenderDepth ( )
         {
-            GL.ClearColor(new OpenTK.Graphics.Color4(1.0f, 1.0f, 1.0f, 1.0f));
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            if (CamOverride != null)
+            GL.ClearColor ( new OpenTK.Graphics.Color4 ( 1.0f , 1.0f , 1.0f , 1.0f ) );
+            GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
+            if ( CamOverride != null )
             {
                 //foreach (var n in Nodes)
                 //{
-                RenderNodeDepth(Root, CamOverride);
+                RenderNodeDepth ( Root , CamOverride );
 
                 //}
             }
             else
 
             {
-                RenderNodeDepth(Root, Cams[0]);
+                RenderNodeDepth ( Root , Cams [ 0 ] );
             }
             //foreach (var c in Cams)
         }
 
-        public virtual void RenderShadows()
+        public virtual void RenderShadows ( )
         {
             int ls = 0;
-            GL.Disable(EnableCap.Blend);
-            foreach (var l in Lights)
+            GL.Disable ( EnableCap.Blend );
+            foreach ( GraphLight3D l in Lights )
             {
                 ls++;
-                l.DrawShadowMap(this);
+                l.DrawShadowMap ( this );
                 //    Console.WriteLine("LightShadows:" + ls);
             }
         }
 
-        public virtual void Update()
+        public virtual void Update ( )
         {
-            UpdateNode(Root);
+            UpdateNode ( Root );
         }
 
-        public virtual void UpdateNode(GraphNode3D node)
+        public virtual void UpdateNode ( GraphNode3D node )
         {
-            node.Update();
-            foreach (var snode in node.Sub)
+            node.Update ( );
+            foreach ( GraphNode3D snode in node.Sub )
             {
-                UpdateNode(snode);
+                UpdateNode ( snode );
             }
         }
 
-        public virtual void RenderNodeDepth(GraphNode3D node, GraphCam3D c)
+        public virtual void RenderNodeDepth ( GraphNode3D node , GraphCam3D c )
         {
-            if (node.CastDepth)
+            if ( node.CastDepth )
             {
-                node.PresentDepth(c);
+                node.PresentDepth ( c );
             }
-            foreach (var snode in node.Sub)
+            foreach ( GraphNode3D snode in node.Sub )
             {
-                RenderNodeDepth(snode, c);
+                RenderNodeDepth ( snode , c );
             }
         }
 
-        public virtual void RenderNode(GraphNode3D node)
+        public virtual void RenderNode ( GraphNode3D node )
         {
             // Console.WriteLine("RenderNode:" + node.Name);
-            if (node.Name == "Terrain")
+            if ( node.Name == "Terrain" )
             {
-                int g = 2;
             }
-            if (CamOverride != null)
+            if ( CamOverride != null )
             {
-                foreach (var l in Lights)
+                foreach ( GraphLight3D l in Lights )
                 {
                     GraphLight3D.Active = l;
 
-                    node.Present(CamOverride);
+                    node.Present ( CamOverride );
                 }
             }
             else
             {
-                foreach (var c in Cams)
+                foreach ( GraphCam3D c in Cams )
                 {
-                    if (node.AlwaysAlpha)
+                    if ( node.AlwaysAlpha )
                     {
-                        var ge = node as GraphEntity3D;
-                        if (ge.Renderer is Visuals.VRMultiPass)
+                        GraphEntity3D ge = node as GraphEntity3D;
+                        if ( ge.Renderer is Visuals.VRMultiPass )
                         {
-                            ge.Renderer = new Visuals.VRNoFx();
+                            ge.Renderer = new Visuals.VRNoFx ( );
                         }
-                        GL.Enable(EnableCap.Blend);
-                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-                        node.Present(c);
+                        GL.Enable ( EnableCap.Blend );
+                        GL.BlendFunc ( BlendingFactor.SrcAlpha , BlendingFactor.OneMinusSrcAlpha );
+                        node.Present ( c );
                         continue;
                     }
-                    if (node.Lit)
+                    if ( node.Lit )
                     {
                         bool first = true;
-                        foreach (var l in Lights)
+                        foreach ( GraphLight3D l in Lights )
                         {
                             GraphLight3D.Active = l;
 
-                            if (first)
+                            if ( first )
                             {
                                 first = false;
-                                GL.Disable(EnableCap.Blend);
+                                GL.Disable ( EnableCap.Blend );
                             }
                             else
                             {
-                                GL.Enable(EnableCap.Blend);
-                                GL.BlendFunc(BlendingFactor.One, BlendingFactor.One);
+                                GL.Enable ( EnableCap.Blend );
+                                GL.BlendFunc ( BlendingFactor.One , BlendingFactor.One );
                             }
                             // Console.WriteLine("Presenting:" + node.Name);
-                            if (node.Name.Contains("Merged"))
+                            if ( node.Name.Contains ( "Merged" ) )
                             {
-                                int v = 2;
                             }
-                            node.Present(c);
+                            node.Present ( c );
 
                             //                        foreach (var n in Nodes)
                             //                      {
@@ -249,92 +247,92 @@ namespace Vivid3D.Scene
                     }
                     else
                     {
-                        if (node.FaceCamera)
+                        if ( node.FaceCamera )
                         {
-                            node.LookAt(c.LocalPos, new Vector3(0, 1, 0));
+                            node.LookAt ( c.LocalPos , new Vector3 ( 0 , 1 , 0 ) );
                         }
-                        GL.Enable(EnableCap.Blend);
-                        GL.BlendFunc(BlendingFactor.Src1Alpha, BlendingFactor.OneMinusSrcAlpha);
-                        GL.DepthMask(false);
-                        node.Present(c);
-                        GL.DepthMask(true);
+                        GL.Enable ( EnableCap.Blend );
+                        GL.BlendFunc ( BlendingFactor.Src1Alpha , BlendingFactor.OneMinusSrcAlpha );
+                        GL.DepthMask ( false );
+                        node.Present ( c );
+                        GL.DepthMask ( true );
                     }
                 }
             }
-            foreach (var snode in node.Sub)
+            foreach ( GraphNode3D snode in node.Sub )
             {
                 //   Console.WriteLine("Rendering Node:" + snode.Name);
-                RenderNode(snode);
+                RenderNode ( snode );
             }
         }
 
-        private void NodeToList(GraphNode3D node, bool meshes, List<GraphNode3D> list)
+        private void NodeToList ( GraphNode3D node , bool meshes , List<GraphNode3D> list )
         {
-            if (meshes)
+            if ( meshes )
             {
-                if (node is GraphEntity3D)
+                if ( node is GraphEntity3D )
                 {
-                    list.Add(node);
+                    list.Add ( node );
                 }
             }
             else
             {
-                list.Add(node);
+                list.Add ( node );
             }
-            foreach (var n2 in node.Sub)
+            foreach ( GraphNode3D n2 in node.Sub )
             {
-                NodeToList(n2, meshes, list);
+                NodeToList ( n2 , meshes , list );
             }
         }
 
-        public List<GraphNode3D> GetList(bool meshesOnly)
+        public List<GraphNode3D> GetList ( bool meshesOnly )
         {
             List<GraphNode3D> list = new List<GraphNode3D>();
-            NodeToList(Root, meshesOnly, list);
+            NodeToList ( Root , meshesOnly , list );
             return list;
         }
 
-        public Vector3 Rot(Vector3 p, GraphNode3D n)
+        public Vector3 Rot ( Vector3 p , GraphNode3D n )
         {
-            return Vector3.TransformPosition(p, n.World);
+            return Vector3.TransformPosition ( p , n.World );
         }
 
-        public Vivid3D.Pick.PickResult CamPick(int x, int y)
+        public Vivid3D.Pick.PickResult CamPick ( int x , int y )
         {
-            var res = new Pick.PickResult();
+            Pick.PickResult res = new Pick.PickResult ( );
 
-            var nl = GetList(true);
+            List<GraphNode3D> nl = GetList ( true );
 
-            var mr = Pick.Picker.CamRay(Cams[0], x, y);
+            Pick.Ray mr = Pick.Picker.CamRay ( Cams [ 0 ] , x , y );
 
             float cd = 0;
             bool firstHit = true;
             float cu = 0, cv = 0;
             GraphNode3D cn = null;
 
-            foreach (var n in nl)
+            foreach ( GraphNode3D n in nl )
             {
-                var e = n as GraphEntity3D;
+                GraphEntity3D e = n as GraphEntity3D;
 
-                foreach (var msh in e.Meshes)
+                foreach ( Data.VMesh msh in e.Meshes )
                 {
-                    for (int i = 0; i < msh.TriData.Length; i++)
+                    for ( int i = 0 ; i < msh.TriData.Length ; i++ )
                     {
-                        int v0 = (int)msh.TriData[i].V0;
-                        int v1 = (int)msh.TriData[i].V1;
-                        int v2 = (int)msh.TriData[i].v2;
+                        int v0 = msh.TriData[i].V0;
+                        int v1 = msh.TriData[i].V1;
+                        int v2 = msh.TriData[i].v2;
                         Vector3 r0, r1, r2;
-                        r0 = Rot(msh.VertexData[v0].Pos, n);
-                        r1 = Rot(msh.VertexData[v1].Pos, n);
-                        r2 = Rot(msh.VertexData[v2].Pos, n);
+                        r0 = Rot ( msh.VertexData [ v0 ].Pos , n );
+                        r1 = Rot ( msh.VertexData [ v1 ].Pos , n );
+                        r2 = Rot ( msh.VertexData [ v2 ].Pos , n );
                         Vector3? pr = Pick.Picker.GetTimeAndUvCoord(mr.pos, mr.dir, r0, r1, r2);
-                        if (pr == null)
+                        if ( pr == null )
                         {
                         }
                         else
                         {
                             Vector3 cr = (Vector3)pr;
-                            if (cr.X < cd || firstHit)
+                            if ( cr.X < cd || firstHit )
                             {
                                 firstHit = false;
                                 cd = cr.X;
@@ -347,35 +345,39 @@ namespace Vivid3D.Scene
                 }
             }
 
-            if (firstHit) return null;
+            if ( firstHit )
+            {
+                return null;
+            }
+
             res.Dist = cd;
             res.Node = cn;
-            res.Pos = Pick.Picker.GetTrilinearCoordinateOfTheHit(cd, mr.pos, mr.dir);
+            res.Pos = Pick.Picker.GetTrilinearCoordinateOfTheHit ( cd , mr.pos , mr.dir );
             res.Ray = mr;
-            res.UV = new Vector3(cu, cv, 0);
+            res.UV = new Vector3 ( cu , cv , 0 );
 
             return res;
         }
 
-        public virtual void RenderNodeNoLights(GraphNode3D node)
+        public virtual void RenderNodeNoLights ( GraphNode3D node )
         {
-            if (CamOverride != null)
+            if ( CamOverride != null )
             {
-                foreach (var l in Lights)
+                foreach ( GraphLight3D l in Lights )
                 {
                     GraphLight3D.Active = l;
 
-                    node.Present(CamOverride);
+                    node.Present ( CamOverride );
                 }
             }
             else
             {
-                foreach (var c in Cams)
+                foreach ( GraphCam3D c in Cams )
                 {
-                    GL.Disable(EnableCap.Blend);
+                    GL.Disable ( EnableCap.Blend );
 
                     // Console.WriteLine("Presenting:" + node.Name);
-                    node.Present(c);
+                    node.Present ( c );
 
                     //                        foreach (var n in Nodes)
                     //                      {
@@ -383,23 +385,23 @@ namespace Vivid3D.Scene
                     //                  }
                 }
             }
-            foreach (var snode in node.Sub)
+            foreach ( GraphNode3D snode in node.Sub )
             {
                 //   Console.WriteLine("Rendering Node:" + snode.Name);
-                RenderNodeNoLights(snode);
+                RenderNodeNoLights ( snode );
             }
         }
 
-        public virtual void RenderNoLights()
+        public virtual void RenderNoLights ( )
         {
             Lighting.GraphLight3D.Active = null;
-            RenderNodeNoLights(Root);
+            RenderNodeNoLights ( Root );
         }
 
-        public virtual void Render()
+        public virtual void Render ( )
         {
-            SubGraph?.Render();
-            RenderNode(Root);
+            SubGraph?.Render ( );
+            RenderNode ( Root );
         }
     }
 }

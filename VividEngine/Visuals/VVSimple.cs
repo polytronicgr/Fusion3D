@@ -4,21 +4,21 @@ namespace Vivid3D.Visuals
 {
     public class VVSimple : VVisualizer
     {
-        public VVSimple(int vc, int ic) : base(vc, ic)
+        public VVSimple ( int vc , int ic ) : base ( vc , ic )
         {
         }
 
-        public override void SetData(VVertexData<float> d)
+        public override void SetData ( VVertexData<float> d )
         {
             dat = d;
         }
 
-        public override void SetMesh(VMesh m)
+        public override void SetMesh ( VMesh m )
         {
             md = m;
         }
 
-        public override void Visualize()
+        public override void Visualize ( )
         {
             /*
             md.Mat.Bind();

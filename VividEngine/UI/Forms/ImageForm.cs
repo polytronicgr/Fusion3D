@@ -2,25 +2,25 @@
 {
     public class ImageForm : UIForm
     {
-        public ImageForm()
+        public ImageForm ( )
         {
-            Col = new OpenTK.Vector4(1, 1, 1, 1);
-            void DrawFunc()
+            Col = new OpenTK.Vector4 ( 1 , 1 , 1 , 1 );
+            void DrawFunc ( )
             {
-                if (Peak)
+                if ( Peak )
                 {
-                    if (Refract)
+                    if ( Refract )
                     {
-                        DrawFormBlurRefract(CoreTex, NormTex, Blur, Col, RefractV);
+                        DrawFormBlurRefract ( CoreTex , NormTex , Blur , Col , RefractV );
                     }
                     else
                     {
-                        DrawFormBlur(CoreTex, Blur, Col);
+                        DrawFormBlur ( CoreTex , Blur , Col );
                     }
                 }
                 else
                 {
-                    DrawForm(CoreTex);
+                    DrawForm ( CoreTex );
                 }
             }
 

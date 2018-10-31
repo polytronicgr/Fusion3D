@@ -7,15 +7,15 @@ namespace Vivid3D.Script
         public GraphNode3D Node { get; set; }
         public GraphEntity3D Entity { get; set; }
 
-        public virtual void Init()
+        public virtual void Init ( )
         {
         }
 
-        public virtual void Update()
+        public virtual void Update ( )
         {
         }
 
-        public virtual void Draw()
+        public virtual void Draw ( )
         {
         }
     }

@@ -16,118 +16,120 @@ namespace DataCore
         public FileStream DataFile;
         public BinaryReader DataR;
 
-        public DataIO(string path)
+        public DataIO ( string path )
         {
             DataPath = path;
-            Data = new List<DataEntry>();
+            Data = new List<DataEntry> ( );
 
-            if (File.Exists(path))
+            if ( File.Exists ( path ) )
             {
-                LoadIndex();
+                LoadIndex ( );
             }
         }
 
-        public void LoadIndex()
+        public void LoadIndex ( )
         {
-            var index = File.Open(DataPath + ".index", FileMode.Open);
+            FileStream index = File.Open(DataPath + ".index", FileMode.Open);
 
             BinaryReader ir = new BinaryReader(index);
 
             int ic = ir.ReadInt32();
 
-            Data.Clear();
+            Data.Clear ( );
 
-            for (int i = 0; i < ic; i++)
+            for ( int i = 0 ; i < ic ; i++ )
             {
-                var entry = new DataEntry();
-                entry.Begin = ir.ReadInt32();
-                entry.Size = ir.ReadInt32();
-                entry.Compressed = ir.ReadBoolean();
-                entry.Type = ir.ReadString();
-                entry.Name = ir.ReadString();
-                Data.Add(entry);
+                DataEntry entry = new DataEntry
+                {
+                    Begin = ir.ReadInt32 ( ) ,
+                    Size = ir.ReadInt32 ( ) ,
+                    Compressed = ir.ReadBoolean ( ) ,
+                    Type = ir.ReadString ( ) ,
+                    Name = ir.ReadString ( )
+                };
+                Data.Add ( entry );
             }
 
-            index.Close();
+            index.Close ( );
         }
 
-        public void OpenData()
+        public void OpenData ( )
         {
-            DataFile = File.Open(DataPath, FileMode.Open);
-            DataR = new BinaryReader(DataFile);
+            DataFile = File.Open ( DataPath , FileMode.Open );
+            DataR = new BinaryReader ( DataFile );
         }
 
-        public void CloseData()
+        public void CloseData ( )
         {
-            DataFile.Flush();
-            DataFile.Close();
+            DataFile.Flush ( );
+            DataFile.Close ( );
             DataFile = null;
             DataR = null;
         }
 
-        public void Save()
+        public void Save ( )
         {
-            SaveIndex();
+            SaveIndex ( );
 
-            var data = File.Create(DataPath);
+            FileStream data = File.Create(DataPath);
 
             BinaryWriter dw = new BinaryWriter(data);
 
-            foreach (var entry in Data)
+            foreach ( DataEntry entry in Data )
             {
-                if (entry.Data.Generated == false)
+                if ( entry.Data.Generated == false )
                 {
-                    entry.Data.GenerateBytes();
+                    entry.Data.GenerateBytes ( );
                 }
 
-                dw.Write(entry.Data.RawData);
+                dw.Write ( entry.Data.RawData );
             }
 
-            data.Flush();
-            data.Close();
+            data.Flush ( );
+            data.Close ( );
         }
 
-        public void SaveIndex()
+        public void SaveIndex ( )
         {
-            var index = File.Create(DataPath + ".index");
+            FileStream index = File.Create(DataPath + ".index");
 
             BinaryWriter iw = new BinaryWriter(index);
 
-            iw.Write(Data.Count);
+            iw.Write ( Data.Count );
 
-            foreach (var entry in Data)
+            foreach ( DataEntry entry in Data )
             {
-                iw.Write(entry.Begin);
-                iw.Write(entry.Size);
-                iw.Write(entry.Compressed);
-                iw.Write(entry.Type);
-                iw.Write(entry.Name);
+                iw.Write ( entry.Begin );
+                iw.Write ( entry.Size );
+                iw.Write ( entry.Compressed );
+                iw.Write ( entry.Type );
+                iw.Write ( entry.Name );
             }
 
-            index.Flush();
+            index.Flush ( );
 
-            index.Close();
+            index.Close ( );
         }
 
-        public Data GetData(string name)
+        public Data GetData ( string name )
         {
-            foreach (var entry in Data)
+            foreach ( DataEntry entry in Data )
             {
-                if (entry.Name == name)
+                if ( entry.Name == name )
                 {
-                    if (entry.Loaded == false)
+                    if ( entry.Loaded == false )
                     {
-                        OpenData();
+                        OpenData ( );
 
-                        DataFile.Seek(entry.Begin, SeekOrigin.Begin);
-                        var dat = DataR.ReadBytes(entry.Size);
+                        DataFile.Seek ( entry.Begin , SeekOrigin.Begin );
+                        byte [ ] dat = DataR.ReadBytes(entry.Size);
 
-                        CloseData();
+                        CloseData ( );
 
                         entry.Loaded = true;
-                        entry.Data = Activator.CreateInstance(Type.GetType("DataCore.DataTypes." + entry.Type)) as Data;
+                        entry.Data = Activator.CreateInstance ( Type.GetType ( "DataCore.DataTypes." + entry.Type ) ) as Data;
                         entry.Data.RawData = dat;
-                        entry.Data.Reconstruct();
+                        entry.Data.Reconstruct ( );
                         return entry.Data;
                     }
                     else
@@ -140,28 +142,31 @@ namespace DataCore
             return null;
         }
 
-        public void AddData(Data data, string name)
+        public void AddData ( Data data , string name )
         {
-            var entry = new DataEntry();
-            if (data.Generated == false) data.GenerateBytes();
+            DataEntry entry = new DataEntry();
+            if ( data.Generated == false )
+            {
+                data.GenerateBytes ( );
+            }
 
             entry.Name = name;
             entry.Size = data.Bytes;
             entry.Loaded = true;
             entry.Compressed = false;
-            entry.Type = data.GetType().Name;
-            Console.WriteLine("Type:" + entry.Type);
+            entry.Type = data.GetType ( ).Name;
+            Console.WriteLine ( "Type:" + entry.Type );
             entry.Data = data;
 
-            Data.Add(entry);
-            RebuildStarts();
+            Data.Add ( entry );
+            RebuildStarts ( );
         }
 
-        public void RebuildStarts()
+        public void RebuildStarts ( )
         {
             int pos = 0;
 
-            foreach (var entry in Data)
+            foreach ( DataEntry entry in Data )
             {
                 entry.Begin = pos;
                 pos += entry.Size;

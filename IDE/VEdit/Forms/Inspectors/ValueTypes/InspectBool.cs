@@ -7,17 +7,17 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
     {
         public bool Value = false;
 
-        public InspectBool()
+        public InspectBool ( )
         {
-            InitializeComponent();
+            InitializeComponent ( );
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged ( object sender , EventArgs e )
         {
             Value = checkBox1.Checked;
         }
 
-        public void AlignToValue()
+        public void AlignToValue ( )
         {
             checkBox1.Checked = Value;
         }

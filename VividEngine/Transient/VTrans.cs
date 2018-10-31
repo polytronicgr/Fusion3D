@@ -2,7 +2,7 @@
 
 namespace Vivid3D.Transient
 {
-    public delegate void Process();
+    public delegate void Process ( );
 
     public class VTransient
     {
@@ -12,36 +12,36 @@ namespace Vivid3D.Transient
         public Process After = null;
         public bool Complete = false;
 
-        public VTransient()
+        public VTransient ( )
         {
         }
 
-        public VTransient(Process act, Process before = null, Process after = null)
+        public VTransient ( Process act , Process before = null , Process after = null )
         {
             Action = act;
             Before = before;
             After = after;
         }
 
-        public void Do()
+        public void Do ( )
         {
-            if (Before != null)
+            if ( Before != null )
             {
-                Before();
+                Before ( );
             }
-            LT = new Thread(new ThreadStart(DO_Thread));
-            LT.Start();
-            if (After != null)
+            LT = new Thread ( new ThreadStart ( DO_Thread ) );
+            LT.Start ( );
+            if ( After != null )
             {
-                After();
+                After ( );
             }
         }
 
-        public void DO_Thread()
+        public void DO_Thread ( )
         {
-            if (Action != null)
+            if ( Action != null )
             {
-                Action();
+                Action ( );
             }
             Complete = true;
         }

@@ -20,46 +20,46 @@ namespace Vivid3D.State
             set;
         }
 
-        public void InitUI()
+        public void InitUI ( )
         {
-            SUI = new Resonance.UI();
+            SUI = new Resonance.UI ( );
         }
 
-        public VividState(string name = "")
+        public VividState ( string name = "" )
         {
             Name = name;
             Running = false;
             //  SUI = new Resonance.UI();
         }
 
-        public virtual void InitState()
+        public virtual void InitState ( )
         {
         }
 
-        public virtual void StartState()
+        public virtual void StartState ( )
         {
         }
 
-        public virtual void UpdateState()
+        public virtual void UpdateState ( )
         {
         }
 
-        public virtual void DrawState()
+        public virtual void DrawState ( )
         {
         }
 
-        public virtual void StopState()
+        public virtual void StopState ( )
         {
         }
 
-        public virtual void ResumeState()
+        public virtual void ResumeState ( )
         {
         }
 
-        public void InternalUpdate()
+        public void InternalUpdate ( )
         {
-            Logics.SmartUpdate();
-            Graphics.SmartUpdate();
+            Logics.SmartUpdate ( );
+            Graphics.SmartUpdate ( );
         }
     }
 }

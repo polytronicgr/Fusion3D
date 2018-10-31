@@ -8,27 +8,27 @@ namespace Vivid3D.PostProcess.Processes
         public VEBlur BFX = null;
         public float Blur = 0.7f;
 
-        public override void Init()
+        public override void Init ( )
         {
-            BFX = new VEBlur();
+            BFX = new VEBlur ( );
         }
 
-        public override void Bind(VTex2D bb)
+        public override void Bind ( VTex2D bb )
         {
             BFX.Blur = Blur;
-            bb.Bind(0);
-            BFX.Bind();
+            bb.Bind ( 0 );
+            BFX.Bind ( );
         }
 
-        public override void Render(VTex2D bb)
+        public override void Render ( VTex2D bb )
         {
-            DrawQuad();
+            DrawQuad ( );
         }
 
-        public override void Release(VTex2D bb)
+        public override void Release ( VTex2D bb )
         {
-            BFX.Release();
-            bb.Release(0);
+            BFX.Release ( );
+            bb.Release ( 0 );
         }
     }
 
@@ -36,14 +36,14 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float Blur = 0.5f;
 
-        public VEBlur() : base("", "Data\\Shader\\blurVS.txt", "Data\\Shader\\blurFS.txt")
+        public VEBlur ( ) : base ( "" , "Data\\Shader\\blurVS.txt" , "Data\\Shader\\blurFS.txt" )
         {
         }
 
-        public override void SetPars()
+        public override void SetPars ( )
         {
-            SetTex("tR", 0);
-            SetFloat("blur", Blur);
+            SetTex ( "tR" , 0 );
+            SetFloat ( "blur" , Blur );
         }
     }
 }

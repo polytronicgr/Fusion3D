@@ -26,11 +26,11 @@
             set;
         }
 
-        public virtual void Bind(int texunit)
+        public virtual void Bind ( int texunit )
         {
         }
 
-        public virtual void Unbind(int texunit)
+        public virtual void Unbind ( int texunit )
         {
         }
     }

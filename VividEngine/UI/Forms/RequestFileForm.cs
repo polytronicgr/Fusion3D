@@ -6,7 +6,7 @@ using Vivid3D.Texture;
 
 namespace Vivid3D.Resonance.Forms
 {
-    public delegate void SelectFile(string pth);
+    public delegate void SelectFile ( string pth );
 
     public class RequestFileForm : WindowForm
     {
@@ -17,95 +17,107 @@ namespace Vivid3D.Resonance.Forms
         public ButtonForm BackFolder;
         public TextBoxForm DirBox, FileBox;
 
-        public RequestFileForm(string title = "", string defdir = "")
+        public RequestFileForm ( string title = "" , string defdir = "" )
         {
             LockedSize = true;
-            DirBox = new TextBoxForm().Set(55, 35, 300, 20) as TextBoxForm;
-            FileBox = new TextBoxForm().Set(10, 415, 300, 20) as TextBoxForm;
-            Add(DirBox);
-            Add(FileBox);
+            DirBox = new TextBoxForm ( ).Set ( 55 , 35 , 300 , 20 ) as TextBoxForm;
+            FileBox = new TextBoxForm ( ).Set ( 10 , 415 , 300 , 20 ) as TextBoxForm;
+            Add ( DirBox );
+            Add ( FileBox );
 
-            var cancel = new ButtonForm().Set(10, 450, 120, 20, "Cancel");
-            var ok = new ButtonForm().Set(180, 450, 120, 20, "Select");
+            UIForm cancel = new ButtonForm().Set(10, 450, 120, 20, "Cancel");
+            UIForm ok = new ButtonForm().Set(180, 450, 120, 20, "Select");
 
-            void SelectFunc(int b)
+            void SelectFunc ( int b )
             {
-                Selected?.Invoke(DirBox.Text + "/" + FileBox.Text);
+                Selected?.Invoke ( DirBox.Text + "/" + FileBox.Text );
             }
 
             ok.Click = SelectFunc;
 
-            Add(cancel);
-            Add(ok);
+            Add ( cancel );
+            Add ( ok );
 
-            if (defdir == "")
+            if ( defdir == "" )
             {
-                defdir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                defdir = System.Environment.GetFolderPath ( Environment.SpecialFolder.MyDocuments );
             }
 
-            if (title == "") title = "Select file";
-            Set(VividApp.W / 2 - 200, VividApp.H / 2 - 250, 400, 500, title);
-
-            Files = new ListForm().Set(10, 60, 370, 350, "") as ListForm;
-            Add(Files);
-            Scan(defdir);
-            BackFolder = new ButtonForm().Set(0, 25, 64, 32, "").SetImage(new VTex2D("Data\\UI\\backfolder1.png", LoadMethod.Single, true)) as ButtonForm;
-
-            void BackFunc(int b)
+            if ( title == "" )
             {
-                if (new DirectoryInfo(CurPath).Parent == null) return;
+                title = "Select file";
+            }
+
+            Set ( VividApp.W / 2 - 200 , VividApp.H / 2 - 250 , 400 , 500 , title );
+
+            Files = new ListForm ( ).Set ( 10 , 60 , 370 , 350 , "" ) as ListForm;
+            Add ( Files );
+            Scan ( defdir );
+            BackFolder = new ButtonForm ( ).Set ( 0 , 25 , 64 , 32 , "" ).SetImage ( new VTex2D ( "Data\\UI\\backfolder1.png" , LoadMethod.Single , true ) ) as ButtonForm;
+
+            void BackFunc ( int b )
+            {
+                if ( new DirectoryInfo ( CurPath ).Parent == null )
+                {
+                    return;
+                }
+
                 string curPath = new DirectoryInfo(CurPath).Parent.FullName;
-                Forms.Remove(Files);
-                Files = new ListForm().Set(10, 60, 370, 350, "") as ListForm;
+                Forms.Remove ( Files );
+                Files = new ListForm ( ).Set ( 10 , 60 , 370 , 350 , "" ) as ListForm;
 
-                Add(Files);
+                Add ( Files );
 
-                Scan(curPath);
+                Scan ( curPath );
             }
 
             BackFolder.Click = BackFunc;
-            Add(BackFolder);
+            Add ( BackFolder );
         }
 
         public List<string> LastPath = new List<string>();
         public string CurPath = "";
 
-        public void Scan(string folder)
+        public void Scan ( string folder )
         {
-            if (new DirectoryInfo(folder).Exists == false) return;
-            DirBox.Text = new DirectoryInfo(folder).FullName;
+            if ( new DirectoryInfo ( folder ).Exists == false )
+            {
+                return;
+            }
+
+            DirBox.Text = new DirectoryInfo ( folder ).FullName;
             // LastPath.Add(folder);
             CurPath = folder;
-            var di = new DirectoryInfo(folder);
-            foreach (var fold in di.GetDirectories())
+            DirectoryInfo di = new DirectoryInfo(folder);
+            foreach ( DirectoryInfo fold in di.GetDirectories ( ) )
             {
-                var ni = Files.AddItem(fold.Name, FolderPic);
-                void DoubleClickFunc(int b)
+                ItemForm ni = Files.AddItem(fold.Name, FolderPic);
+                void DoubleClickFunc ( int b )
                 {
-                    Console.WriteLine("Scanning:" + fold.FullName);
-                    Forms.Remove(Files);
-                    Files = new ListForm().Set(10, 60, 370, 350, "") as ListForm;
-                    Add(Files);
-                    Scan(fold.FullName);
+                    Console.WriteLine ( "Scanning:" + fold.FullName );
+                    Forms.Remove ( Files );
+                    Files = new ListForm ( ).Set ( 10 , 60 , 370 , 350 , "" ) as ListForm;
+                    Add ( Files );
+                    Scan ( fold.FullName );
                     //   Files.Changed?.Invoke();
                 }
                 ni.DoubleClick = DoubleClickFunc;
             }
-            foreach (var file in di.GetFiles())
+            foreach ( FileInfo file in di.GetFiles ( ) )
             {
-                var newi = Files.AddItem(file.Name, FilePic);
-                void ClickFunc(int b)
+                ItemForm newi = Files.AddItem(file.Name, FilePic);
+                void ClickFunc ( int b )
                 {
                     FileBox.Text = file.Name;
                 }
-                void DoubleClickFunc(int b)
+                void DoubleClickFunc ( int b )
                 {
-                    Selected?.Invoke(DirBox.Text + "/" + newi.Text);
+                    Selected?.Invoke ( DirBox.Text + "/" + newi.Text );
                 }
                 newi.DoubleClick = DoubleClickFunc;
                 newi.Click = ClickFunc;
             }
-            Files.Changed?.Invoke();
+            Files.Changed?.Invoke ( );
         }
     }
 }

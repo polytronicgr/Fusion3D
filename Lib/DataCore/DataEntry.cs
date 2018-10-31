@@ -10,7 +10,7 @@
         public bool Loaded { get; set; }
         public bool Compressed { get; set; }
 
-        public DataEntry()
+        public DataEntry ( )
         {
             Loaded = false;
             Compressed = false;

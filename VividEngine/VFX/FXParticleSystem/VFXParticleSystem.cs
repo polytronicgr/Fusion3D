@@ -143,11 +143,11 @@ namespace Vivid3D.VFX
             set;
         }
 
-        public VFXParticleSystem()
+        public VFXParticleSystem ( )
         {
-            Particles = new List<ParticleBase>();
-            Bases = new List<ParticleBase>();
-            Removes = new List<ParticleBase>();
+            Particles = new List<ParticleBase> ( );
+            Bases = new List<ParticleBase> ( );
+            Removes = new List<ParticleBase> ( );
             SpawnRot1 = 0;
             SpawnRot2 = 359;
             SpawnZSmall = -0.25f;
@@ -165,43 +165,43 @@ namespace Vivid3D.VFX
             H = 32;
         }
 
-        public void Spawn(int number, float x, float y, float z, float xi, float yi, float zi)
+        public void Spawn ( int number , float x , float y , float z , float xi , float yi , float zi )
         {
             Random rnd = new Random(Environment.TickCount);
 
-            for (int i = 0; i < number; i++)
+            for ( int i = 0 ; i < number ; i++ )
             {
-                foreach (var pbase in Bases)
+                foreach ( ParticleBase pbase in Bases )
                 {
-                    var np = pbase.Clone();
+                    ParticleBase np = pbase.Clone();
 
-                    np.W = W + rnd.Next(-(int)WJit / 2, (int)WJit / 2);
-                    np.H = H + rnd.Next(-(int)HJit / 2, (int)HJit / 2);
+                    np.W = W + rnd.Next ( -( int ) WJit / 2 , ( int ) WJit / 2 );
+                    np.H = H + rnd.Next ( -( int ) HJit / 2 , ( int ) HJit / 2 );
 
-                    np.X = x + rnd.Next((int)-XSmall, (int)XBig);
-                    np.Y = y + rnd.Next((int)-YSmall, (int)YBig);
+                    np.X = x + rnd.Next ( ( int ) -XSmall , ( int ) XBig );
+                    np.Y = y + rnd.Next ( ( int ) -YSmall , ( int ) YBig );
 
                     float zd = ZBig - ZSmall;
 
-                    zd = zd * (float)rnd.NextDouble();
+                    zd = zd * ( float ) rnd.NextDouble ( );
 
                     np.Z = z + zd;
 
-                    np.Rot = rnd.Next((int)SpawnRot1, (int)SpawnRot2);
+                    np.Rot = rnd.Next ( ( int ) SpawnRot1 , ( int ) SpawnRot2 );
 
                     float xj = XIJit * (float)rnd.NextDouble();
                     float yj = YIJit * (float)rnd.NextDouble();
                     float zj = ZIJit * (float)rnd.NextDouble();
 
-                    if (rnd.Next(0, 5) > 2)
+                    if ( rnd.Next ( 0 , 5 ) > 2 )
                     {
                         xj = -xj;
                     }
-                    if (rnd.Next(0, 5) > 2)
+                    if ( rnd.Next ( 0 , 5 ) > 2 )
                     {
                         yj = -yj;
                     }
-                    if (rnd.Next(0, 5) > 2)
+                    if ( rnd.Next ( 0 , 5 ) > 2 )
                     {
                         zj = -zj;
                     }
@@ -210,58 +210,58 @@ namespace Vivid3D.VFX
 
                     pw = PowerSmall + pw;
 
-                    np.XI = (xi + xj) * pw;
-                    np.YI = (yi + yj) * pw;
-                    np.ZI = (zi + zj) * pw;
+                    np.XI = ( xi + xj ) * pw;
+                    np.YI = ( yi + yj ) * pw;
+                    np.ZI = ( zi + zj ) * pw;
 
-                    np.RI = rnd.Next((int)-RJit, (int)RJit);
+                    np.RI = rnd.Next ( ( int ) -RJit , ( int ) RJit );
 
                     //np.Life = 100.0f;
                     np.LifeRate = 0.03f;
                     np.LifeDrag = 0.98f;
                     np.Sys = this;
 
-                    Particles.Add(np);
+                    Particles.Add ( np );
                 }
             }
         }
 
-        public void Remove(ParticleBase particle)
+        public void Remove ( ParticleBase particle )
         {
-            Removes.Add(particle);
+            Removes.Add ( particle );
         }
 
-        public void AddBase(ParticleBase pbase)
+        public void AddBase ( ParticleBase pbase )
         {
-            Bases.Add(pbase);
+            Bases.Add ( pbase );
         }
 
-        public override void Init()
+        public override void Init ( )
         {
         }
 
-        public override void Update()
+        public override void Update ( )
         {
-            foreach (var particle in Particles)
+            foreach ( ParticleBase particle in Particles )
             {
-                particle.Update();
+                particle.Update ( );
             }
-            foreach (var particle in Removes)
+            foreach ( ParticleBase particle in Removes )
             {
-                Particles.Remove(particle);
+                Particles.Remove ( particle );
             }
-            Removes.Clear();
+            Removes.Clear ( );
         }
 
-        public override void Render()
+        public override void Render ( )
         {
-            foreach (var particle in Particles)
+            foreach ( ParticleBase particle in Particles )
             {
-                particle.Render();
+                particle.Render ( );
             }
         }
 
-        public override void Stop()
+        public override void Stop ( )
         {
         }
     }

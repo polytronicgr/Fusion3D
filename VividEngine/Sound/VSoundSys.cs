@@ -7,34 +7,34 @@ namespace Vivid3D.Sound
     {
         private static ISoundEngine SE;
 
-        public static void Init()
+        public static void Init ( )
         {
-            SE = new ISoundEngine();
+            SE = new ISoundEngine ( );
         }
 
-        public static VSound Play2DFile(string file, bool loop = false)
+        public static VSound Play2DFile ( string file , bool loop = false )
         {
-            return new VSound(SE.Play2D(file, loop));
+            return new VSound ( SE.Play2D ( file , loop ) );
         }
 
-        public static VSound Play2D(ISoundSource src, bool loop = false)
+        public static VSound Play2D ( ISoundSource src , bool loop = false )
         {
-            return new VSound(SE.Play2D(src, loop, false, false));
+            return new VSound ( SE.Play2D ( src , loop , false , false ) );
         }
 
-        public static void Update()
+        public static void Update ( )
         {
-            SE.Update();
+            SE.Update ( );
         }
 
-        public static void StopAll()
+        public static void StopAll ( )
         {
-            SE.StopAllSounds();
+            SE.StopAllSounds ( );
         }
 
-        public static ISoundSource LoadSound(string p)
+        public static ISoundSource LoadSound ( string p )
         {
-            return SE.AddSoundSourceFromFile(p);
+            return SE.AddSoundSourceFromFile ( p );
         }
 
         public static List<VSoundSource> SSL = new List<VSoundSource>();
@@ -45,41 +45,29 @@ namespace Vivid3D.Sound
     {
         public ISound Src;
 
-        public VSound(ISound s)
+        public VSound ( ISound s )
         {
             Src = s;
-            StarSoundSys.SL.Add(this);
+            StarSoundSys.SL.Add ( this );
         }
 
-        ~VSound()
+        ~VSound ( )
         {
-            Src.Stop();
+            Src.Stop ( );
             Src = null;
         }
 
-        public bool Playing
-        {
-            get
-            {
-                return Src.Finished == false;
-            }
-        }
+        public bool Playing => Src.Finished == false;
 
-        public void Stop()
+        public void Stop ( )
         {
-            Src.Stop();
+            Src.Stop ( );
         }
 
         public bool Paused
         {
-            get
-            {
-                return Src.Paused;
-            }
-            set
-            {
-                Src.Paused = value;
-            }
+            get => Src.Paused;
+            set => Src.Paused = value;
         }
     }
 
@@ -87,15 +75,15 @@ namespace Vivid3D.Sound
     {
         public ISoundSource Src;
 
-        public VSoundSource(string p)
+        public VSoundSource ( string p )
         {
-            Src = StarSoundSys.LoadSound(p);
-            StarSoundSys.SSL.Add(this);
+            Src = StarSoundSys.LoadSound ( p );
+            StarSoundSys.SSL.Add ( this );
         }
 
-        public VSound Play2D(bool loop = false)
+        public VSound Play2D ( bool loop = false )
         {
-            return StarSoundSys.Play2D(Src, loop);
+            return StarSoundSys.Play2D ( Src , loop );
         }
     }
 }

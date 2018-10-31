@@ -6,17 +6,17 @@ namespace Vivid3D.Import
     {
         public string Ext = "";
 
-        public virtual GraphNode3D LoadNode(string path)
+        public virtual GraphNode3D LoadNode ( string path )
         {
             return null;
         }
 
-        public virtual GraphNode3D LoadAnimNode(string path)
+        public virtual GraphNode3D LoadAnimNode ( string path )
         {
             return null;
         }
 
-        public virtual SceneGraph3D LoadScene(string path)
+        public virtual SceneGraph3D LoadScene ( string path )
         {
             return null;
         }

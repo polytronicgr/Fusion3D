@@ -14,9 +14,9 @@ namespace Vivid3D.Draw
     {
         public static Vector4 Col = new Vector4(1, 1, 1, 1);
 
-        public static void To2D()
+        public static void To2D ( )
         {
-            var pm = Matrix4.CreateOrthographicOffCenter(0, Vivid3D.App.VividApp.RW, VividApp.RH, 0, 0, 1);
+            Matrix4 pm = Matrix4.CreateOrthographicOffCenter(0, Vivid3D.App.VividApp.RW, VividApp.RH, 0, 0, 1);
 
             //pm = Matrix4.CreateOrthographic(StarKnightsAPP.RW, StarKnightsAPP.RH, 0, 1);
 
@@ -28,47 +28,47 @@ namespace Vivid3D.Draw
             // GL.Ortho(0, StarKnightsAPP.RW, StarKnightsAPP.RH, 0, -200, 1);
         }
 
-        public static void SetBlend(BlendMode mode)
+        public static void SetBlend ( BlendMode mode )
         {
-            switch (mode)
+            switch ( mode )
             {
                 case BlendMode.None:
-                    GL.Disable(EnableCap.Blend);
+                    GL.Disable ( EnableCap.Blend );
 
                     break;
 
                 case BlendMode.Alpha:
-                    GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                    GL.Enable ( EnableCap.Blend );
+                    GL.BlendFunc ( BlendingFactor.SrcAlpha , BlendingFactor.OneMinusSrcAlpha );
                     break;
 
                 case BlendMode.Add:
-                    GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactor.One, BlendingFactor.One);
+                    GL.Enable ( EnableCap.Blend );
+                    GL.BlendFunc ( BlendingFactor.One , BlendingFactor.One );
                     break;
 
                 case BlendMode.SoftLight:
-                    GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
+                    GL.Enable ( EnableCap.Blend );
+                    GL.BlendFunc ( BlendingFactor.SrcAlpha , BlendingFactor.One );
                     break;
             }
         }
 
-        public static void Image(Vector2[] p, Tex2D img)
+        public static void Image ( Vector2 [ ] p , Tex2D img )
         {
             float[] x = new float[4];
             float[] y = new float[4];
-            for (int i = 0; i < 4; i++)
+            for ( int i = 0 ; i < 4 ; i++ )
             {
-                x[i] = p[i].X;
-                y[i] = p[i].Y;
+                x [ i ] = p [ i ].X;
+                y [ i ] = p [ i ].Y;
             }
-            Image(x, y, img);
+            Image ( x , y , img );
         }
 
-        public static void Image(float[] xc, float[] yc, Tex2D img)
+        public static void Image ( float [ ] xc , float [ ] yc , Tex2D img )
         {
-            img.Bind(0);
+            img.Bind ( 0 );
 
             //'  Col = new Vector4(1, 1, 1, 0.5f);
             /*
@@ -87,12 +87,12 @@ namespace Vivid3D.Draw
 
             GL.End();
             */
-            img.Unbind(0);
+            img.Unbind ( 0 );
         }
 
-        public static void Image(int x, int y, int w, int h, Tex2D tex)
+        public static void Image ( int x , int y , int w , int h , Tex2D tex )
         {
-            tex.Bind(0);
+            tex.Bind ( 0 );
 
             //'  Col = new Vector4(1, 1, 1, 0.5f);
             /*
@@ -112,10 +112,10 @@ namespace Vivid3D.Draw
               GL.End();
 
       */
-            tex.Unbind(0);
+            tex.Unbind ( 0 );
         }
 
-        public static void Rect(int x, int y, int w, int h)
+        public static void Rect ( int x , int y , int w , int h )
         {
             /*
             GL.Color4(Col);

@@ -65,210 +65,217 @@ namespace Vivid3D.Scene
             set;
         }
 
-        public SceneGraph()
+        public SceneGraph ( )
         {
             Running = false;
             X = 0;
             Y = 0;
             Z = 1;
             Rot = 0;
-            Root = new GraphNode();
-            Lights = new List<GraphLight>();
-            LitImage = new FXLitImage();
+            Root = new GraphNode ( );
+            Lights = new List<GraphLight> ( );
+            LitImage = new FXLitImage ( );
         }
 
-        public void Copy()
+        public void Copy ( )
         {
-            ClassCopy = new Reflect.ClassIO(this);
-            ClassCopy.Copy();
-            CopyNode(Root);
+            ClassCopy = new Reflect.ClassIO ( this );
+            ClassCopy.Copy ( );
+            CopyNode ( Root );
         }
 
-        public void CopyNode(GraphNode node)
+        public void CopyNode ( GraphNode node )
         {
-            node.CopyProps();
-            foreach (var nn in node.Nodes)
+            node.CopyProps ( );
+            foreach ( GraphNode nn in node.Nodes )
             {
-                CopyNode(nn);
+                CopyNode ( nn );
             }
         }
 
-        public void Restore()
+        public void Restore ( )
         {
-            ClassCopy.Reset();
-            RestoreNode(Root);
+            ClassCopy.Reset ( );
+            RestoreNode ( Root );
         }
 
-        public void RestoreNode(GraphNode node)
+        public void RestoreNode ( GraphNode node )
         {
-            node.RestoreProps();
-            foreach (var nn in node.Nodes)
+            node.RestoreProps ( );
+            foreach ( GraphNode nn in node.Nodes )
             {
-                RestoreNode(nn);
+                RestoreNode ( nn );
             }
         }
 
-        public void Add(GraphNode node)
+        public void Add ( GraphNode node )
         {
             node.Graph = this;
-            Root.Nodes.Add(node);
+            Root.Nodes.Add ( node );
             node.Root = Root;
         }
 
-        public void Add(params GraphNode[] nodes)
+        public void Add ( params GraphNode [ ] nodes )
         {
-            foreach (var node in nodes)
+            foreach ( GraphNode node in nodes )
             {
                 node.Graph = this;
-                Root.Nodes.Add(node);
+                Root.Nodes.Add ( node );
                 node.Root = Root;
             }
         }
 
-        public void Add(GraphLight node, bool toGraph = false)
+        public void Add ( GraphLight node , bool toGraph = false )
         {
-            if (toGraph)
+            if ( toGraph )
             {
-                Root.Nodes.Add(node);
+                Root.Nodes.Add ( node );
             }
             node.Graph = this;
-            Lights.Add(node);
+            Lights.Add ( node );
         }
 
-        public void Add(params GraphLight[] lights)
+        public void Add ( params GraphLight [ ] lights )
         {
-            foreach (var light in lights)
+            foreach ( GraphLight light in lights )
             {
                 light.Graph = this;
-                Lights.Add(light);
+                Lights.Add ( light );
             }
         }
 
-        public void Translate(float x, float y)
+        public void Translate ( float x , float y )
         {
             X = X + x;
             Y = Y + y;
         }
 
-        public void Move(float x, float y)
+        public void Move ( float x , float y )
         {
-            var r = Util.Maths.Rotate(-x, -y, (180.0f - Rot), 1.0f);
+            Vector2 r = Util.Maths.Rotate(-x, -y, (180.0f - Rot), 1.0f);
 
             X = X + r.X;
             Y = Y + r.Y;
         }
 
-        public void Update()
+        public void Update ( )
         {
-            if (Running)
+            if ( Running )
             {
-                UpdateNode(Root);
+                UpdateNode ( Root );
             }
             else
             {
             }
         }
 
-        public void UpdateNode(GraphNode node)
+        public void UpdateNode ( GraphNode node )
         {
-            node.Update();
+            node.Update ( );
 
-            foreach (var sub in node.Nodes)
+            foreach ( GraphNode sub in node.Nodes )
             {
-                UpdateNode(sub);
+                UpdateNode ( sub );
             }
         }
 
-        public void DrawNode(GraphNode node)
+        public void DrawNode ( GraphNode node )
         {
             //if(node.ImgFrame == null)
 
-            if (node.ImgFrame != null)
+            if ( node.ImgFrame != null )
             {
-                if (node.ImgFrame.Width < 2)
+                if ( node.ImgFrame.Width < 2 )
                 {
-                    Console.WriteLine("Illegal Image ID:" + node.ImgFrame.ID);
-                    while (true)
+                    Console.WriteLine ( "Illegal Image ID:" + node.ImgFrame.ID );
+                    while ( true )
                     {
                     }
                 }
 
                 bool first = true;
 
-                foreach (var light in Lights)
+                foreach ( GraphLight light in Lights )
                 {
-                    if (node.ImgFrame == null) continue;
+                    if ( node.ImgFrame == null )
+                    {
+                        continue;
+                    }
+
                     LitImage.Graph = this;
                     LitImage.Light = light;
 
-                    if (first)
+                    if ( first )
                     {
-                        Render.SetBlend(BlendMode.Alpha);
+                        Render.SetBlend ( BlendMode.Alpha );
                         first = false;
                     }
                     else
                     {
-                        Render.SetBlend(BlendMode.Add);
+                        Render.SetBlend ( BlendMode.Add );
                     }
 
-                    LitImage.Bind();
+                    LitImage.Bind ( );
 
                     float[] xc;
                     float[] yc;
 
-                    node.SyncCoords();
+                    node.SyncCoords ( );
 
                     xc = node.XC;
                     yc = node.YC;
 
-                    Render.Image(node.DrawP, node.ImgFrame);
+                    Render.Image ( node.DrawP , node.ImgFrame );
 
                     //Render.Image(xc, yc, node.ImgFrame);
 
-                    LitImage.Release();
+                    LitImage.Release ( );
                 }
             }
-            foreach (var snode in node.Nodes)
+            foreach ( GraphNode snode in node.Nodes )
             {
-                DrawNode(snode);
+                DrawNode ( snode );
             }
         }
 
-        public void Draw()
+        public void Draw ( )
         {
-            DrawNode(Root);
+            DrawNode ( Root );
         }
 
-        private float sign(Vector2 p1, Vector2 p2, Vector2 p3)
+        private float sign ( Vector2 p1 , Vector2 p2 , Vector2 p3 )
         {
-            return (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
+            return ( p1.X - p3.X ) * ( p2.Y - p3.Y ) - ( p2.X - p3.X ) * ( p1.Y - p3.Y );
         }
 
-        private bool PointInTriangle(Vector2 pt, Vector2 v1, Vector2 v2, Vector2 v3)
+        private bool PointInTriangle ( Vector2 pt , Vector2 v1 , Vector2 v2 , Vector2 v3 )
         {
             bool b1, b2, b3;
 
-            b1 = sign(pt, v1, v2) < 0.0f;
-            b2 = sign(pt, v2, v3) < 0.0f;
-            b3 = sign(pt, v3, v1) < 0.0f;
+            b1 = sign ( pt , v1 , v2 ) < 0.0f;
+            b2 = sign ( pt , v2 , v3 ) < 0.0f;
+            b3 = sign ( pt , v3 , v1 ) < 0.0f;
 
-            return ((b1 == b2) && (b2 == b3));
+            return ( ( b1 == b2 ) && ( b2 == b3 ) );
         }
 
-        public GraphNode PickNode(GraphNode node, int x, int y)
+        public GraphNode PickNode ( GraphNode node , int x , int y )
         {
-            foreach (var n in node.Nodes)
+            foreach ( GraphNode n in node.Nodes )
             {
-                var p = PickNode(n, x, y);
-                if (p != null) return p;
+                GraphNode p = PickNode(n, x, y);
+                if ( p != null )
+                {
+                    return p;
+                }
             }
-            if (node.DrawP != null)
+            if ( node.DrawP != null )
             {
-                if (PointInTriangle(new Vector2(x, y), node.DrawP[0], node.DrawP[1], node.DrawP[2]))
+                if ( PointInTriangle ( new Vector2 ( x , y ) , node.DrawP [ 0 ] , node.DrawP [ 1 ] , node.DrawP [ 2 ] ) )
                 {
                     return node;
                 }
-                else if (PointInTriangle(new Vector2(x, y), node.DrawP[2], node.DrawP[3], node.DrawP[0]))
+                else if ( PointInTriangle ( new Vector2 ( x , y ) , node.DrawP [ 2 ] , node.DrawP [ 3 ] , node.DrawP [ 0 ] ) )
                 {
                     return node;
                 }
@@ -276,77 +283,79 @@ namespace Vivid3D.Scene
             return null;
         }
 
-        public GraphNode Pick(int x, int y)
+        public GraphNode Pick ( int x , int y )
         {
-            return PickNode(Root, x, y);
+            return PickNode ( Root , x , y );
         }
 
-        public Vector2 GetPoint(float x, float y)
+        public Vector2 GetPoint ( float x , float y )
         {
             int w, h;
             w = App.VividApp.W;
             h = App.VividApp.H;
             Vector2 r = new Vector2(x, y);
-            r = Util.Maths.Push(r, -w / 2, -h / 2);
-            r = Util.Maths.Rotate(r.X, r.Y, Rot, 1);
+            r = Util.Maths.Push ( r , -w / 2 , -h / 2 );
+            r = Util.Maths.Rotate ( r.X , r.Y , Rot , 1 );
             r.X = r.X + X;
             r.Y = r.Y + Y;
             return r;
         }
 
-        public void Load(string path)
+        public void Load ( string path )
         {
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             BinaryReader r = new BinaryReader(fs);
-            ReadGraph(r);
-            Root.Read(r);
-            fs.Close();
+            ReadGraph ( r );
+            Root.Read ( r );
+            fs.Close ( );
             r = null;
             fs = null;
         }
 
-        public void ReadGraph(BinaryReader r)
+        public void ReadGraph ( BinaryReader r )
         {
-            X = r.ReadSingle();
-            Y = r.ReadSingle();
-            Z = r.ReadSingle();
-            Rot = r.ReadSingle();
+            X = r.ReadSingle ( );
+            Y = r.ReadSingle ( );
+            Z = r.ReadSingle ( );
+            Rot = r.ReadSingle ( );
             int lc = r.ReadInt32();
-            for (int i = 0; i < lc; i++)
+            for ( int i = 0 ; i < lc ; i++ )
             {
-                var nl = new GraphLight();
-                nl.Read(r);
-                Add(nl);
+                GraphLight nl = new GraphLight();
+                nl.Read ( r );
+                Add ( nl );
             }
-            Root = new GraphNode();
-            Root.Graph = this;
-            Root.Read(r);
+            Root = new GraphNode
+            {
+                Graph = this
+            };
+            Root.Read ( r );
         }
 
-        public void Save(string path)
+        public void Save ( string path )
         {
             FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
-            WriteGraph(w);
-            fs.Flush();
-            fs.Close();
+            WriteGraph ( w );
+            fs.Flush ( );
+            fs.Close ( );
             w = null;
             fs = null;
         }
 
-        public void WriteGraph(BinaryWriter w)
+        public void WriteGraph ( BinaryWriter w )
         {
-            w.Write(X);
-            w.Write(Y);
-            w.Write(Z);
-            w.Write(Rot);
-            w.Write(Lights.Count());
-            foreach (var l in Lights)
+            w.Write ( X );
+            w.Write ( Y );
+            w.Write ( Z );
+            w.Write ( Rot );
+            w.Write ( Lights.Count ( ) );
+            foreach ( GraphLight l in Lights )
             {
-                l.Write(w);
+                l.Write ( w );
             }
 
-            Root.Write(w);
+            Root.Write ( w );
         }
     }
 }

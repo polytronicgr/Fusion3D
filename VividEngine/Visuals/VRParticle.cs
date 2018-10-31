@@ -2,9 +2,9 @@
 {
     public class VRParticle : VRenderer
     {
-        public override void Init()
+        public override void Init ( )
         {
-            Layers.Add(new VRLParticle());
+            Layers.Add ( new VRLParticle ( ) );
         }
     }
 }

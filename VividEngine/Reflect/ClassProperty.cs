@@ -16,7 +16,7 @@ namespace Vivid3D.Reflect
             set;
         }
 
-        public ClassProperty(object val, PropertyInfo info)
+        public ClassProperty ( object val , PropertyInfo info )
         {
             Val = val;
             Prop = info;

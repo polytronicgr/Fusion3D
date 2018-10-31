@@ -2,13 +2,13 @@
 {
     public class VRendererSimple : VRenderer
     {
-        public VRendererSimple()
+        public VRendererSimple ( )
         {
         }
 
-        public override void Init()
+        public override void Init ( )
         {
-            Layers.Add(new VRLSimple());
+            Layers.Add ( new VRLSimple ( ) );
         }
     }
 }

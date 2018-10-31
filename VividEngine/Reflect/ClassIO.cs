@@ -17,39 +17,39 @@ namespace Vivid3D.Reflect
             set;
         }
 
-        public ClassIO(object cls)
+        public ClassIO ( object cls )
         {
-            Props = new List<ClassProperty>();
+            Props = new List<ClassProperty> ( );
             Class = cls;
         }
 
-        public void Copy()
+        public void Copy ( )
         {
-            var t = Class.GetType();
+            Type t = Class.GetType();
 
-            foreach (var p in t.GetProperties())
+            foreach ( System.Reflection.PropertyInfo p in t.GetProperties ( ) )
             {
-                if (p.CanRead == true && p.CanWrite)
+                if ( p.CanRead == true && p.CanWrite )
                 {
-                    var val = p.GetValue(Class);
+                    object val = p.GetValue(Class);
 
                     ClassProperty cp = new ClassProperty(val, p);
                     //Console.WriteLine(p.Name + ":" + val);
 
-                    Props.Add(cp);
+                    Props.Add ( cp );
                 }
             }
         }
 
-        public void Reset()
+        public void Reset ( )
         {
-            var t = Class.GetType();
+            Type t = Class.GetType();
 
-            foreach (var p in Props)
+            foreach ( ClassProperty p in Props )
             {
-                Console.WriteLine(p.Prop.Name + ":" + p.Val);
+                Console.WriteLine ( p.Prop.Name + ":" + p.Val );
 
-                p.Prop.SetValue(Class, p.Val);
+                p.Prop.SetValue ( Class , p.Val );
             }
         }
     }

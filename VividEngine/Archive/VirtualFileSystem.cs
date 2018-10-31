@@ -25,7 +25,7 @@ namespace Vivid3D.Archive
             get
             {
                 long s = 0;
-                foreach (var e in Enteries)
+                foreach ( VirtualEntry e in Enteries )
                 {
                     s += e.Size;
                 }
@@ -33,11 +33,11 @@ namespace Vivid3D.Archive
             }
         }
 
-        public VirtualEntry Find(string name, string path)
+        public VirtualEntry Find ( string name , string path )
         {
-            foreach (var entry in Enteries)
+            foreach ( VirtualEntry entry in Enteries )
             {
-                if (entry.Name == name && entry.Path == path)
+                if ( entry.Name == name && entry.Path == path )
                 {
                     return entry;
                 }
@@ -45,9 +45,9 @@ namespace Vivid3D.Archive
             return null;
         }
 
-        public void ReadToc(string path)
+        public void ReadToc ( string path )
         {
-            path = path.Replace(".toc", "");
+            path = path.Replace ( ".toc" , "" );
             arcpath = path + ".vfs";
             path = path + ".toc";
             //Console.WriteLine("Opening TOC:" + path);
@@ -55,44 +55,43 @@ namespace Vivid3D.Archive
             BinaryReader r = new BinaryReader(fs);
             //Console.WriteLine("Opened. Parsing table.");
             int ec = r.ReadInt32();
-            Console.WriteLine("Enteries:" + ec);
-            for (int i = 0; i < ec; i++)
+            Console.WriteLine ( "Enteries:" + ec );
+            for ( int i = 0 ; i < ec ; i++ )
             {
-                var ne = new VirtualEntry();
-                for (int i2 = 0; i2 < 16; i2++)
+                VirtualEntry ne = new VirtualEntry();
+                for ( int i2 = 0 ; i2 < 16 ; i2++ )
                 {
-                    ne.Par[i2] = r.ReadInt32();
+                    ne.Par [ i2 ] = r.ReadInt32 ( );
                 }
-                ne.Name = r.ReadString();
-                ne.Path = r.ReadString();
-                ne.Compressed = r.ReadBoolean();
+                ne.Name = r.ReadString ( );
+                ne.Path = r.ReadString ( );
+                ne.Compressed = r.ReadBoolean ( );
                 //     Console.WriteLine("Name:" + ne.Name + " Path:" + ne.Path + " Compressed?" + ne.Compressed);
                 //      ne.ImgW = r.ReadInt32();
                 //       ne.ImgH = r.ReadInt32();
-                ne.Start = r.ReadInt64();
-                ne.Size = r.ReadInt64();
-                Enteries.Add(ne);
+                ne.Start = r.ReadInt64 ( );
+                ne.Size = r.ReadInt64 ( );
+                Enteries.Add ( ne );
             }
         }
 
-        public VirtualEntry Load(VirtualEntry e)
+        public VirtualEntry Load ( VirtualEntry e )
         {
             //name = name.ToLower();
             //path = path.ToLower();
 
-            if (e.Loaded == false)
+            if ( e.Loaded == false )
             {
                 FileStream fs = new FileStream(arcpath, FileMode.Open, FileAccess.Read);
                 BinaryReader r = new BinaryReader(fs);
-                e.RawData = new byte[(int)e.Size];
-                fs.Seek(e.Start, SeekOrigin.Begin);
-                r.Read(e.RawData, 0, (int)e.Size);
-                if (e.Compressed)
+                e.RawData = new byte [ ( int ) e.Size ];
+                fs.Seek ( e.Start , SeekOrigin.Begin );
+                r.Read ( e.RawData , 0 , ( int ) e.Size );
+                if ( e.Compressed )
                 {
-                    byte[] od;
-                    ZLib.DecompressData(e.RawData, out od);
+                    ZLib.DecompressData ( e.RawData , out byte [ ] od );
                     e.RawData = od;
-                    fs.Close();
+                    fs.Close ( );
                     e.Size = od.Length;
                     e.Compressed = false;
                 }
@@ -104,198 +103,206 @@ namespace Vivid3D.Archive
             return e;
         }
 
-        public void Add(VirtualEntry entry)
+        public void Add ( VirtualEntry entry )
         {
-            Enteries.Add(entry);
+            Enteries.Add ( entry );
         }
 
-        public void AddMediaFromNode(Scene.GraphNode node)
+        public void AddMediaFromNode ( Scene.GraphNode node )
         {
-            if (node.ImgFrame != null)
+            if ( node.ImgFrame != null )
             {
                 bool found = false;
-                foreach (var e in Enteries)
+                foreach ( VirtualEntry e in Enteries )
                 {
-                    if (e.Name == node.ImgFrame.Name && e.Path == node.ImgFrame.Path)
+                    if ( e.Name == node.ImgFrame.Name && e.Path == node.ImgFrame.Path )
                     {
                         found = true;
                         break;
                     }
                 }
-                if (!found)
+                if ( !found )
                 {
-                    var ve = new VirtualEntry();
-                    ve.Name = node.ImgFrame.Name;
-                    ve.Path = node.ImgFrame.Path;
-                    ve.RawData = node.ImgFrame.RawData;
+                    VirtualEntry ve = new VirtualEntry
+                    {
+                        Name = node.ImgFrame.Name ,
+                        Path = node.ImgFrame.Path ,
+                        RawData = node.ImgFrame.RawData
+                    };
                     ve.Size = ve.RawData.Length;
                     ve.Type = EntryType.Index;
-                    ve.Par[0] = node.ImgFrame.Width;
-                    ve.Par[1] = node.ImgFrame.Height;
-                    ve.Par[2] = node.ImgFrame.Alpha ? 1 : 0;
-                    Console.WriteLine("N:" + node.ImgFrame.Width + " H:" + node.ImgFrame.Height + " Alpha:" + node.ImgFrame.Alpha);
+                    ve.Par [ 0 ] = node.ImgFrame.Width;
+                    ve.Par [ 1 ] = node.ImgFrame.Height;
+                    ve.Par [ 2 ] = node.ImgFrame.Alpha ? 1 : 0;
+                    Console.WriteLine ( "N:" + node.ImgFrame.Width + " H:" + node.ImgFrame.Height + " Alpha:" + node.ImgFrame.Alpha );
                     ve.Loaded = true;
                     ve.Compressed = false;
-                    Enteries.Add(ve);
+                    Enteries.Add ( ve );
                 }
             }
-            foreach (var n2 in node.Nodes)
+            foreach ( Scene.GraphNode n2 in node.Nodes )
             {
-                AddMediaFromNode(n2);
+                AddMediaFromNode ( n2 );
             }
         }
 
-        public void Add(Scene.SceneGraph graph)
+        public void Add ( Scene.SceneGraph graph )
         {
-            AddMediaFromNode(graph.Root);
+            AddMediaFromNode ( graph.Root );
 
-            var ge = new VirtualEntry();
-            ge.Path = "VirtualFile";
-            ge.Name = graph.Root.Name;
+            VirtualEntry ge = new VirtualEntry
+            {
+                Path = "VirtualFile" ,
+                Name = graph.Root.Name
+            };
 
-            var ms = new MemoryStream(1024 * 1024);
+            MemoryStream ms = new MemoryStream(1024 * 1024);
             BinaryWriter w = new BinaryWriter(ms);
 
-            graph.WriteGraph(w);
+            graph.WriteGraph ( w );
 
-            var wd = new byte[ms.Position];
-            ms.Seek(0, SeekOrigin.Begin);
-            ms.Read(wd, 0, wd.Length);
-            Console.WriteLine("GraphSize:" + wd.Length + " bytes.");
+            byte [ ] wd = new byte[ms.Position];
+            ms.Seek ( 0 , SeekOrigin.Begin );
+            ms.Read ( wd , 0 , wd.Length );
+            Console.WriteLine ( "GraphSize:" + wd.Length + " bytes." );
             ge.RawData = wd;
             ge.Size = wd.Length;
-            ms.Flush();
-            w.Flush();
-            ms.Dispose();
+            ms.Flush ( );
+            w.Flush ( );
+            ms.Dispose ( );
             ge.Loaded = true;
             ge.Compressed = false;
-            Enteries.Add(ge);
+            Enteries.Add ( ge );
         }
 
-        public void Add(string path)
+        public void Add ( string path )
         {
-            var fi = new FileInfo(path);
+            FileInfo fi = new FileInfo(path);
 
-            var ext = fi.Extension.ToLower();
-            var qn = fi.Name.Replace(ext, "").ToLower();
-            switch (ext)
+            string ext = fi.Extension.ToLower();
+            string qn = fi.Name.Replace(ext, "").ToLower();
+            switch ( ext )
             {
                 case ".bmp":
                 case ".jpg":
                 case ".png":
-                    var na = new VirtualEntry();
+                    VirtualEntry na = new VirtualEntry();
 
                     System.Drawing.Bitmap tb = new System.Drawing.Bitmap(path);
 
-                    var rd = new byte[tb.Width * tb.Height * 4];
+                    byte [ ] rd = new byte[tb.Width * tb.Height * 4];
                     int bi = 0;
-                    for (int y = 0; y < tb.Height; y++)
+                    for ( int y = 0 ; y < tb.Height ; y++ )
                     {
-                        for (int x = 0; x < tb.Width; x++)
+                        for ( int x = 0 ; x < tb.Width ; x++ )
                         {
-                            var pix = tb.GetPixel(x, y);
-                            rd[bi++] = pix.R;
-                            rd[bi++] = pix.G;
-                            rd[bi++] = pix.B;
-                            rd[bi++] = pix.A;
+                            System.Drawing.Color pix = tb.GetPixel ( x , y );
+                            rd [ bi++ ] = pix.R;
+                            rd [ bi++ ] = pix.G;
+                            rd [ bi++ ] = pix.B;
+                            rd [ bi++ ] = pix.A;
                         }
                     }
 
                     na.RawData = rd;
-                    na.Par[0] = tb.Width;
-                    na.Par[1] = tb.Height;
-                    na.Par[2] = 1;
-                    tb.Dispose();
+                    na.Par [ 0 ] = tb.Width;
+                    na.Par [ 1 ] = tb.Height;
+                    na.Par [ 2 ] = 1;
+                    tb.Dispose ( );
 
                     na.Size = na.RawData.Length;
                     na.Name = qn;
                     na.Path = path;
-                    Enteries.Add(na);
+                    Enteries.Add ( na );
                     break;
 
                 case ".cs":
 
-                    var sb = File.ReadAllBytes(path);
+                    byte [ ] sb = File.ReadAllBytes(path);
 
-                    var ve = new VirtualEntry();
-                    ve.RawData = sb;
-                    ve.Size = sb.Length;
-                    ve.Name = qn;
-                    ve.Path = path;
-                    Enteries.Add(ve);
+                    VirtualEntry ve = new VirtualEntry
+                    {
+                        RawData = sb ,
+                        Size = sb.Length ,
+                        Name = qn ,
+                        Path = path
+                    };
+                    Enteries.Add ( ve );
                     break;
 
                 case ".graph":
-                    var gb = File.ReadAllBytes(path);
-                    var e2 = new VirtualEntry();
-                    e2.RawData = gb;
-                    e2.Size = gb.Length;
-                    e2.Name = qn;
-                    e2.Path = path;
-                    Enteries.Add(e2);
+                    byte [ ] gb = File.ReadAllBytes(path);
+                    VirtualEntry e2 = new VirtualEntry
+                    {
+                        RawData = gb ,
+                        Size = gb.Length ,
+                        Name = qn ,
+                        Path = path
+                    };
+                    Enteries.Add ( e2 );
                     break;
             }
         }
 
-        public void LinkGraphImg(Scene.GraphNode node)
+        public void LinkGraphImg ( Scene.GraphNode node )
         {
-            foreach (var img in Enteries)
+            foreach ( VirtualEntry img in Enteries )
             {
-                if (img.Path == node.ImgLinkName)
+                if ( img.Path == node.ImgLinkName )
                 {
-                    if (img.Loaded == false)
+                    if ( img.Loaded == false )
                     {
-                        Load(img);
+                        Load ( img );
                     }
-                    node.ImgFrame = new Tex.Tex2D(img, true);
+                    node.ImgFrame = new Tex.Tex2D ( img , true );
                 }
             }
-            foreach (var n in node.Nodes)
+            foreach ( Scene.GraphNode n in node.Nodes )
             {
-                LinkGraphImg(n);
+                LinkGraphImg ( n );
             }
         }
 
-        public Scene.SceneGraph GetGraph(string name)
+        public Scene.SceneGraph GetGraph ( string name )
         {
-            Console.WriteLine("Searching for graph:" + name);
-            foreach (var e in Enteries)
+            Console.WriteLine ( "Searching for graph:" + name );
+            foreach ( VirtualEntry e in Enteries )
             {
-                Console.WriteLine("E:" + e.Name + " Start:" + e.Start + " Size:" + e.Size + " P:" + e.Path);
-                if (e.Name == name)
+                Console.WriteLine ( "E:" + e.Name + " Start:" + e.Start + " Size:" + e.Size + " P:" + e.Path );
+                if ( e.Name == name )
                 {
-                    Console.WriteLine("Found Graph:" + name);
-                    var ng = new Scene.SceneGraph();
-                    Load(e);
-                    var ms = new MemoryStream(e.RawData);
+                    Console.WriteLine ( "Found Graph:" + name );
+                    Scene.SceneGraph ng = new Scene.SceneGraph ( );
+                    Load ( e );
+                    MemoryStream ms = new MemoryStream(e.RawData);
                     BinaryReader r = new BinaryReader(ms);
                     //   Console.WriteLine("Reading Graph.");
-                    ng.ReadGraph(r);
+                    ng.ReadGraph ( r );
                     //  Console.WriteLine("Read.");
-                    ms.Close();
+                    ms.Close ( );
                     r = null;
                     ms = null;
 
-                    LinkGraphImg(ng.Root);
+                    LinkGraphImg ( ng.Root );
                     return ng;
                 }
             }
             return null;
         }
 
-        public Tex.Tex2D GetTex(string name)
+        public Tex.Tex2D GetTex ( string name )
         {
-            var e = GetEntry(name);
-            Load(e);
-            return new Tex.Tex2D(e, true);
+            VirtualEntry e = GetEntry(name);
+            Load ( e );
+            return new Tex.Tex2D ( e , true );
         }
 
-        public VirtualEntry GetEntry(string name)
+        public VirtualEntry GetEntry ( string name )
         {
-            name = name.ToLower();
-            foreach (var e in Enteries)
+            name = name.ToLower ( );
+            foreach ( VirtualEntry e in Enteries )
             {
-                if (e.Name.ToLower() == name)
+                if ( e.Name.ToLower ( ) == name )
                 {
                     return e;
                 }
@@ -303,125 +310,125 @@ namespace Vivid3D.Archive
             return null;
         }
 
-        public void Update(string path)
+        public void Update ( string path )
         {
             arcpath = path + "arc.vfs";
             tocpath = path + "arc.toc";
-            if (new FileInfo(path + "arc.toc").Exists)
+            if ( new FileInfo ( path + "arc.toc" ).Exists )
             {
-                ReadToc(path + "arc.toc");
+                ReadToc ( path + "arc.toc" );
             }
             else
             {
-                ScanFolder(path);
-                SaveTOC(path);
-                SaveFS(path);
+                ScanFolder ( path );
+                SaveTOC ( path );
+                SaveFS ( path );
             }
         }
 
         private string arcpath = "";
         private string tocpath = "";
 
-        public void Save(string name, bool compressed)
+        public void Save ( string name , bool compressed )
         {
-            if (compressed)
+            if ( compressed )
             {
-                foreach (var v in Enteries)
+                foreach ( VirtualEntry v in Enteries )
                 {
-                    if (v.Compressed == false)
+                    if ( v.Compressed == false )
                     {
                         int ol = v.RawData.Length;
-                        byte[] od = null;
-                        ZLib.CompressData(v.RawData, out od);
+                        ZLib.CompressData ( v.RawData , out byte [ ] od );
                         v.RawData = od;
                         v.Size = od.Length;
                         v.Compressed = true;
                         int nl = v.RawData.Length;
-                        Console.WriteLine("E:" + v.Name + " Old:" + ol + " New:" + nl);
+                        Console.WriteLine ( "E:" + v.Name + " Old:" + ol + " New:" + nl );
                     }
                 }
             }
-            SaveTOC(name);
-            SaveFS(name);
+            SaveTOC ( name );
+            SaveFS ( name );
         }
 
-        public void SaveFS(string path)
+        public void SaveFS ( string path )
         {
             FileStream fs = new FileStream(path + ".vfs", FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
 
-            foreach (var e in Enteries)
+            foreach ( VirtualEntry e in Enteries )
             {
-                w.Write(e.RawData);
+                w.Write ( e.RawData );
             }
 
-            fs.Flush();
-            fs.Close();
+            fs.Flush ( );
+            fs.Close ( );
             w = null;
             fs = null;
         }
 
-        public void SaveTOC(string path)
+        public void SaveTOC ( string path )
         {
             FileStream fs = new FileStream(path + ".toc", FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
 
             long start = 0;
-            w.Write(Enteries.Count);
-            foreach (var e in Enteries)
+            w.Write ( Enteries.Count );
+            foreach ( VirtualEntry e in Enteries )
             {
-                for (int i = 0; i < 16; i++)
+                for ( int i = 0 ; i < 16 ; i++ )
                 {
-                    w.Write(e.Par[i]);
+                    w.Write ( e.Par [ i ] );
                 }
-                w.Write(e.Name);
-                w.Write(e.Path);
-                w.Write(e.Compressed);
-                w.Write(start);
-                w.Write(e.Size);
+                w.Write ( e.Name );
+                w.Write ( e.Path );
+                w.Write ( e.Compressed );
+                w.Write ( start );
+                w.Write ( e.Size );
 
                 start += e.Size;
             }
-            fs.Flush();
-            fs.Close();
+            fs.Flush ( );
+            fs.Close ( );
             fs = null;
             w = null;
         }
 
-        public void ScanFolder(string path)
+        public void ScanFolder ( string path )
         {
-            var fl = new DirectoryInfo(path).GetFiles();
-            var dl = new DirectoryInfo(path).GetDirectories();
-            foreach (var file in fl)
+            FileInfo [ ] fl = new DirectoryInfo(path).GetFiles();
+            DirectoryInfo [ ] dl = new DirectoryInfo(path).GetDirectories();
+            foreach ( FileInfo file in fl )
             {
-                var fi = new FileInfo(file.FullName);
-                var fe = Find(fi.Name, path);
-                if (fe != null)
+                FileInfo fi = new FileInfo(file.FullName);
+                VirtualEntry fe = Find(fi.Name, path);
+                if ( fe != null )
                 {
-                    if (fe.Size != fi.Length)
+                    if ( fe.Size != fi.Length )
                     {
                     }
                 }
                 else
                 {
-                    var entry = new VirtualFile();
-                    entry.Name = fi.Name;
-                    entry.Path = path;
-                    entry.Size = fi.Length;
-                    entry.RawData = File.ReadAllBytes(fi.FullName);
-                    byte[] od = null;
+                    VirtualFile entry = new VirtualFile
+                    {
+                        Name = fi.Name ,
+                        Path = path ,
+                        Size = fi.Length ,
+                        RawData = File.ReadAllBytes ( fi.FullName )
+                    };
                     int os = entry.RawData.Length;
-                    ZLib.CompressData(entry.RawData, out od);
+                    ZLib.CompressData ( entry.RawData , out byte [ ] od );
                     entry.RawData = od;
 
                     entry.Size = entry.RawData.Length;
-                    Console.WriteLine("Adding:" + entry.Name);
-                    Enteries.Add(entry);
+                    Console.WriteLine ( "Adding:" + entry.Name );
+                    Enteries.Add ( entry );
                 }
             }
-            foreach (var dir in dl)
+            foreach ( DirectoryInfo dir in dl )
             {
-                ScanFolder(dir.FullName);
+                ScanFolder ( dir.FullName );
             }
         }
     }
@@ -454,7 +461,7 @@ namespace Vivid3D.Archive
             set;
         }
 
-        public byte[] RawData
+        public byte [ ] RawData
         {
             get;
             set;
@@ -478,20 +485,20 @@ namespace Vivid3D.Archive
             set;
         }
 
-        public VirtualEntry()
+        public VirtualEntry ( )
         {
             Loaded = false;
             Start = Size = 0;
             Size = 1;
-            RawData = new byte[1];
-            RawData[0] = 0;
+            RawData = new byte [ 1 ];
+            RawData [ 0 ] = 0;
             Name = "";
             Path = "";
             Compressed = false;
             Type = EntryType.Index;
         }
 
-        public byte[] ToBytes()
+        public byte [ ] ToBytes ( )
         {
             return RawData;
         }

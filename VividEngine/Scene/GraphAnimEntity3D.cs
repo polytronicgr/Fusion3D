@@ -13,41 +13,38 @@ namespace Vivid3D.Scene
 
         public string AnimName
         {
-            get
-            {
-                return _AnimName;
-            }
+            get => _AnimName;
             set
             {
-                _AnimName = Animator.Animations.Any(a => a.Name == value) ? value : "Still";
-                Animator.SetAnimation(_AnimName);
+                _AnimName = Animator.Animations.Any ( a => a.Name == value ) ? value : "Still";
+                Animator.SetAnimation ( _AnimName );
                 _timePos = 0;
             }
         }
 
         // these are the available animation clips
-        public IEnumerable<string> Clips { get { return Animator.Animations.Select(a => a.Name); } }
+        public IEnumerable<string> Clips => Animator.Animations.Select ( a => a.Name );
 
         private readonly Queue<string> _clipQueue = new Queue<string>();
         public bool LoopClips { get; set; }
 
         // the bone transforms for the mesh instance
-        private List<OpenTK.Matrix4> FinalTransforms { get { return Animator.GetTransforms((float)_timePos); } }
+        private List<OpenTK.Matrix4> FinalTransforms => Animator.GetTransforms ( ( float ) _timePos );
 
-        public void Update(float dt)
+        public void Update ( float dt )
         {
             _timePos += dt;
 
-            if (_timePos > Animator.Duration)
+            if ( _timePos > Animator.Duration )
             {
                 _timePos = 0.0;
                 return;
-                if (_clipQueue.Any())
+                if ( _clipQueue.Any ( ) )
                 {
-                    AnimName = _clipQueue.Dequeue();
-                    if (LoopClips)
+                    AnimName = _clipQueue.Dequeue ( );
+                    if ( LoopClips )
                     {
-                        _clipQueue.Enqueue(AnimName);
+                        _clipQueue.Enqueue ( AnimName );
                     }
                 }
                 else
@@ -55,10 +52,10 @@ namespace Vivid3D.Scene
                     AnimName = "Still";
                 }
             }
-            Console.WriteLine("____");
-            foreach (var m in Meshes)
+            Console.WriteLine ( "____" );
+            foreach ( Data.VMesh m in Meshes )
             {
-                Console.WriteLine("Mesh:" + m.Name);
+                Console.WriteLine ( "Mesh:" + m.Name );
             }
         }
 
@@ -67,16 +64,16 @@ namespace Vivid3D.Scene
         private string _AnimName = "";
 
         /// </summary>
-        public override void UpdateNode(float dt)
+        public override void UpdateNode ( float dt )
         {
             //  return;
-            if (Animator != null)
+            if ( Animator != null )
             {
-                Update(dt);
+                Update ( dt );
                 List<OpenTK.Matrix4> bones = Animator.GetTransforms((float)_timePos);
 
                 int vi = 0;
-                foreach (Data.Vertex v in Mesh.VertexData)
+                foreach ( Data.Vertex v in Mesh.VertexData )
                 {
                     float weight0 = v.Weight;
                     //float weight1 = 1.0f - v.weight0 ;
@@ -85,7 +82,7 @@ namespace Vivid3D.Scene
 
                     OpenTK.Vector3 p;// = OpenTK.Vector4.Transform(new OpenTK.Vector4(v.Pos, 1.0f), bones[v.BoneIndices[0]]);
 
-                    p = OpenTK.Vector3.TransformPosition(v.Pos, bones[v.BoneIndices[0]]);
+                    p = OpenTK.Vector3.TransformPosition ( v.Pos , bones [ v.BoneIndices [ 0 ] ] );
 
                     OpenTK.Vector3 n = OpenTK.Vector3.TransformNormal(v.Norm, bones[v.BoneIndices[0]]);
 
@@ -93,24 +90,24 @@ namespace Vivid3D.Scene
 
                     OpenTK.Vector3 b = OpenTK.Vector3.TransformNormal(v.BiNorm, bones[v.BoneIndices[0]]);
 
-                    Meshes[0].VertexData[vi].Pos = new OpenTK.Vector3(p);
-                    Meshes[0].VertexData[vi].Norm = new OpenTK.Vector3(n);
-                    Meshes[0].VertexData[vi].Tan = new OpenTK.Vector3(t);
-                    Meshes[0].VertexData[vi].BiNorm = new OpenTK.Vector3(b);
+                    Meshes [ 0 ].VertexData [ vi ].Pos = new OpenTK.Vector3 ( p );
+                    Meshes [ 0 ].VertexData [ vi ].Norm = new OpenTK.Vector3 ( n );
+                    Meshes [ 0 ].VertexData [ vi ].Tan = new OpenTK.Vector3 ( t );
+                    Meshes [ 0 ].VertexData [ vi ].BiNorm = new OpenTK.Vector3 ( b );
 
                     //p += weight1 *
 
                     vi++;
                 }
 
-                Meshes[0].Viz.Update();
+                Meshes [ 0 ].Viz.Update ( );
 
-                Console.WriteLine("Time:" + _timePos);
+                Console.WriteLine ( "Time:" + _timePos );
             }
 
-            foreach (var n in Sub)
+            foreach ( GraphNode3D n in Sub )
             {
-                n.UpdateNode(dt);
+                n.UpdateNode ( dt );
             }
         }
     }

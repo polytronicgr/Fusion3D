@@ -47,10 +47,10 @@ namespace Vivid3D.Scene
             set;
         }
 
-        public GraphLight()
+        public GraphLight ( )
         {
-            Diffuse = new Vector3(0.5f, 0.5f, 0.5f);
-            Specular = new Vector3(0, 0, 0);
+            Diffuse = new Vector3 ( 0.5f , 0.5f , 0.5f );
+            Specular = new Vector3 ( 0 , 0 , 0 );
             Shiny = 0.2f;
             Range = 500;
             Type = LightType.Point;
@@ -58,46 +58,50 @@ namespace Vivid3D.Scene
             CastShadows = true;
         }
 
-        public void Write(BinaryWriter w)
+        public void Write ( BinaryWriter w )
         {
-            w.Write(X);
-            w.Write(Y);
-            w.Write(Z);
-            w.Write(Rot);
-            w.Write(Diffuse.X);
-            w.Write(Diffuse.Y);
-            w.Write(Diffuse.Z);
-            w.Write(Specular.X);
-            w.Write(Specular.Y);
-            w.Write(Specular.Z);
-            w.Write(Shiny);
-            w.Write(Range);
-            w.Write(On);
-            w.Write(CastShadows);
-            w.Write((int)Type);
+            w.Write ( X );
+            w.Write ( Y );
+            w.Write ( Z );
+            w.Write ( Rot );
+            w.Write ( Diffuse.X );
+            w.Write ( Diffuse.Y );
+            w.Write ( Diffuse.Z );
+            w.Write ( Specular.X );
+            w.Write ( Specular.Y );
+            w.Write ( Specular.Z );
+            w.Write ( Shiny );
+            w.Write ( Range );
+            w.Write ( On );
+            w.Write ( CastShadows );
+            w.Write ( ( int ) Type );
         }
 
-        public void Read(BinaryReader r)
+        public void Read ( BinaryReader r )
         {
-            X = r.ReadSingle();
-            Y = r.ReadSingle();
-            Z = r.ReadSingle();
-            Rot = r.ReadSingle();
-            var d = new Vector3();
-            d.X = r.ReadSingle();
-            d.Y = r.ReadSingle();
-            d.Z = r.ReadSingle();
+            X = r.ReadSingle ( );
+            Y = r.ReadSingle ( );
+            Z = r.ReadSingle ( );
+            Rot = r.ReadSingle ( );
+            Vector3 d = new Vector3
+            {
+                X = r.ReadSingle ( ) ,
+                Y = r.ReadSingle ( ) ,
+                Z = r.ReadSingle ( )
+            };
             Diffuse = d;
-            var s = new Vector3();
-            s.X = r.ReadSingle();
-            s.Y = r.ReadSingle();
-            s.Z = r.ReadSingle();
+            Vector3 s = new Vector3
+            {
+                X = r.ReadSingle ( ) ,
+                Y = r.ReadSingle ( ) ,
+                Z = r.ReadSingle ( )
+            };
             Specular = s;
-            Shiny = r.ReadSingle();
-            Range = r.ReadSingle();
-            On = r.ReadBoolean();
-            CastShadows = r.ReadBoolean();
-            Type = (LightType)r.ReadInt32();
+            Shiny = r.ReadSingle ( );
+            Range = r.ReadSingle ( );
+            On = r.ReadBoolean ( );
+            CastShadows = r.ReadBoolean ( );
+            Type = ( LightType ) r.ReadInt32 ( );
         }
     }
 

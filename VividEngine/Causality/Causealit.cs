@@ -4,19 +4,19 @@ using System.Threading;
 
 namespace Vivid3D.Logic
 {
-    public delegate void Act();
+    public delegate void Act ( );
 
-    public delegate bool Until();
+    public delegate bool Until ( );
 
-    public delegate void FlowInit();
+    public delegate void FlowInit ( );
 
-    public delegate bool FlowLogic();
+    public delegate bool FlowLogic ( );
 
-    public delegate bool When();
+    public delegate bool When ( );
 
-    public delegate bool Unless();
+    public delegate bool Unless ( );
 
-    public delegate bool If();
+    public delegate bool If ( );
 
     public class Logics
     {
@@ -24,225 +24,239 @@ namespace Vivid3D.Logic
         public bool Threaded = false;
         public Thread UpdateThread = null;
 
-        public Logics(int interval = 1000 / 60, bool threaded = false)
+        public Logics ( int interval = 1000 / 60 , bool threaded = false )
         {
             inter = interval;
-            if (threaded)
+            if ( threaded )
             {
                 Threaded = true;
-                UpdateThread = new Thread(new ThreadStart(Thread_Update));
-                UpdateThread.Priority = ThreadPriority.Normal;
-                UpdateThread.Start();
+                UpdateThread = new Thread ( new ThreadStart ( Thread_Update ) )
+                {
+                    Priority = ThreadPriority.Normal
+                };
+                UpdateThread.Start ( );
             }
         }
 
         public Mutex upmut = new Mutex();
 
-        public void Thread_Update()
+        public void Thread_Update ( )
         {
             int last = Environment.TickCount;
             int next = last;
-            while (true)
+            while ( true )
             {
                 int ct = Environment.TickCount;
-                if (ct >= next)
+                if ( ct >= next )
                 {
-                    InternalUpdate();
+                    InternalUpdate ( );
                     next = ct + inter;
                 }
-                Thread.Sleep(2);
+                Thread.Sleep ( 2 );
             }
         }
 
-        public virtual void In(Act Action, Until Until)
+        public virtual void In ( Act Action , Until Until )
         {
-            var ai = new ActInfo();
-            ai.Action = Action;
-            ai.Until = Until;
-            ai.NoTime = true;
-            Acts.Add(ai);
+            ActInfo ai = new ActInfo
+            {
+                Action = Action ,
+                Until = Until ,
+                NoTime = true
+            };
+            Acts.Add ( ai );
         }
 
-        public virtual void In(int ms, Act Action, Until Until)
+        public virtual void In ( int ms , Act Action , Until Until )
         {
-            var ai = new ActInfo();
-            ai.Action = Action;
-            ai.When = Environment.TickCount + ms;
-            ai.Until = Until;
-            Acts.Add(ai);
+            ActInfo ai = new ActInfo
+            {
+                Action = Action ,
+                When = Environment.TickCount + ms ,
+                Until = Until
+            };
+            Acts.Add ( ai );
         }
 
-        public virtual void In(int ms, Act Action, bool once = true, int forms = 0)
+        public virtual void In ( int ms , Act Action , bool once = true , int forms = 0 )
         {
-            var ai = new ActInfo();
-            ai.Action = Action;
-            ai.When = Environment.TickCount + ms;
-            ai.For = forms;
-            ai.Once = once;
-            Acts.Add(ai);
+            ActInfo ai = new ActInfo
+            {
+                Action = Action ,
+                When = Environment.TickCount + ms ,
+                For = forms ,
+                Once = once
+            };
+            Acts.Add ( ai );
         }
 
-        public void Flow(FlowInit init, FlowLogic logic, Act endLogic = null)
+        public void Flow ( FlowInit init , FlowLogic logic , Act endLogic = null )
         {
-            var flow = new FlowInfo();
-            flow.Init = init;
-            flow.Logic = logic;
-            flow.EndLogic = endLogic;
-            Flows.Add(flow);
+            FlowInfo flow = new FlowInfo
+            {
+                Init = init ,
+                Logic = logic ,
+                EndLogic = endLogic
+            };
+            Flows.Add ( flow );
         }
 
-        public void SmartUpdate()
+        public void SmartUpdate ( )
         {
-            if (Threaded)
+            if ( Threaded )
             {
             }
             else
             {
-                InternalUpdate();
+                InternalUpdate ( );
             }
         }
 
-        public void InternalUpdate()
+        public void InternalUpdate ( )
         {
-            upmut.WaitOne();
-            var iil = new List<IfInfo>();
-            foreach (var ci in Ifs)
+            upmut.WaitOne ( );
+            List<IfInfo> iil = new List<IfInfo> ( );
+            foreach ( IfInfo ci in Ifs )
             {
-                if (ci.If())
+                if ( ci.If ( ) )
                 {
-                    ci.Action();
+                    ci.Action ( );
                 }
                 else
                 {
-                    if (ci.Else != null)
+                    if ( ci.Else != null )
                     {
-                        ci.Else();
+                        ci.Else ( );
                     }
                 }
-                if (ci.Until != null)
+                if ( ci.Until != null )
                 {
-                    if (ci.Until())
+                    if ( ci.Until ( ) )
                     {
-                        iil.Add(ci);
-                    }
-                }
-            }
-            foreach (var ci in iil)
-            {
-                Ifs.Remove(ci);
-            }
-            var rd = new List<DoInfo>();
-            var dt = new List<DoInfo>();
-            foreach (var Do in Dos)
-            {
-                Do.Do();
-                if (Do.Until != null)
-                {
-                    if (Do.Until())
-                    {
-                        if (Do.Then != null) dt.Add(Do);
-                        rd.Add(Do);
+                        iil.Add ( ci );
                     }
                 }
             }
-            foreach (var dd in dt)
+            foreach ( IfInfo ci in iil )
             {
-                dd.Then();
+                Ifs.Remove ( ci );
             }
-            foreach (var Do in rd)
+            List<DoInfo> rd = new List<DoInfo> ( );
+            List<DoInfo> dt = new List<DoInfo> ( );
+            foreach ( DoInfo Do in Dos )
             {
-                Dos.Remove(Do);
-            }
-            var rw = new List<WhenInfo>();
-            foreach (var w in Whens)
-            {
-                if (w.When())
+                Do.Do ( );
+                if ( Do.Until != null )
                 {
-                    if (w.Unless != null)
+                    if ( Do.Until ( ) )
                     {
-                        if (w.Unless())
+                        if ( Do.Then != null )
+                        {
+                            dt.Add ( Do );
+                        }
+
+                        rd.Add ( Do );
+                    }
+                }
+            }
+            foreach ( DoInfo dd in dt )
+            {
+                dd.Then ( );
+            }
+            foreach ( DoInfo Do in rd )
+            {
+                Dos.Remove ( Do );
+            }
+            List<WhenInfo> rw = new List<WhenInfo> ( );
+            foreach ( WhenInfo w in Whens )
+            {
+                if ( w.When ( ) )
+                {
+                    if ( w.Unless != null )
+                    {
+                        if ( w.Unless ( ) )
                         {
                             //rw.Add(w);
                         }
                         else
                         {
-                            w.Action();
-                            rw.Add(w);
+                            w.Action ( );
+                            rw.Add ( w );
                         }
                     }
                     else
                     {
-                        w.Action();
-                        rw.Add(w);
+                        w.Action ( );
+                        rw.Add ( w );
                     }
                 }
             }
-            foreach (var w in rw)
+            foreach ( WhenInfo w in rw )
             {
-                Whens.Remove(w);
+                Whens.Remove ( w );
             }
-            if (Flows.Count > 0)
+            if ( Flows.Count > 0 )
             {
-                var ff = Flows[0];
-                if (ff.Begun == false)
+                FlowInfo ff = Flows[0];
+                if ( ff.Begun == false )
                 {
-                    if (ff.Init != null)
+                    if ( ff.Init != null )
                     {
-                        ff.Init();
+                        ff.Init ( );
                     }
                     ff.Begun = true;
                 }
-                if (ff.Logic())
+                if ( ff.Logic ( ) )
                 {
-                    if (ff.EndLogic != null)
+                    if ( ff.EndLogic != null )
                     {
-                        ff.EndLogic();
+                        ff.EndLogic ( );
                     }
-                    Flows.Remove(ff);
+                    Flows.Remove ( ff );
                 }
             }
             List<ActInfo> rem = new List<ActInfo>();
             int ms = Environment.TickCount;
-            foreach (var a in Acts)
+            foreach ( ActInfo a in Acts )
             {
-                if (a.NoTime)
+                if ( a.NoTime )
                 {
-                    a.Action();
-                    if (a.Until())
+                    a.Action ( );
+                    if ( a.Until ( ) )
                     {
-                        rem.Add(a);
+                        rem.Add ( a );
                         continue;
                     }
                 }
-                if (a.Until != null)
+                if ( a.Until != null )
                 {
-                    if (ms > (a.When))
+                    if ( ms > ( a.When ) )
                     {
-                        a.Action();
-                        if (a.Until())
+                        a.Action ( );
+                        if ( a.Until ( ) )
                         {
-                            rem.Add(a);
+                            rem.Add ( a );
                             continue;
                         }
                     }
                 }
-                if (a.Running)
+                if ( a.Running )
                 {
-                    if (ms > (a.When + a.For))
+                    if ( ms > ( a.When + a.For ) )
                     {
-                        Console.WriteLine("Done");
-                        rem.Add(a);
+                        Console.WriteLine ( "Done" );
+                        rem.Add ( a );
                         continue;
                     }
                 }
                 else
                 {
-                    if (ms > a.When)
+                    if ( ms > a.When )
                     {
-                        a.Action();
-                        if (a.Once)
+                        a.Action ( );
+                        if ( a.Once )
                         {
-                            rem.Add(a);
+                            rem.Add ( a );
                         }
                         else
                         {
@@ -251,47 +265,52 @@ namespace Vivid3D.Logic
                     }
                 }
             }
-            foreach (var a in rem)
+            foreach ( ActInfo a in rem )
             {
-                Acts.Remove(a);
+                Acts.Remove ( a );
             }
-            upmut.ReleaseMutex();
+            upmut.ReleaseMutex ( );
         }
 
-        public void When(When when, Act action, Unless unless = null)
+        public void When ( When when , Act action , Unless unless = null )
         {
-            foreach (var cw in Whens)
+            foreach ( WhenInfo cw in Whens )
             {
-                if (cw.When == when && cw.Action == action && cw.Unless == unless)
+                if ( cw.When == when && cw.Action == action && cw.Unless == unless )
                 {
                     return;
                 }
             }
-            WhenInfo wi = new WhenInfo();
-            wi.When = when;
-            wi.Action = action;
-            wi.Unless = unless;
-            Whens.Add(wi);
+            WhenInfo wi = new WhenInfo
+            {
+                When = when ,
+                Action = action ,
+                Unless = unless
+            };
+            Whens.Add ( wi );
         }
 
-        public void Do(Act action, Until until = null, Act then = null)
+        public void Do ( Act action , Until until = null , Act then = null )
         {
-            var di = new DoInfo();
-            di.Do = action;
-            di.Until = until;
-            di.Then = then;
-            Dos.Add(di);
+            DoInfo di = new DoInfo
+            {
+                Do = action ,
+                Until = until ,
+                Then = then
+            };
+            Dos.Add ( di );
         }
 
-        public void If(If ifact, Act action, Act Else = null, Until until = null)
+        public void If ( If ifact , Act action , Act Else = null , Until until = null )
         {
-            var ni = new IfInfo();
-            ni.If = ifact;
-
-            ni.Else = Else;
-            ni.Action = action;
-            ni.Until = until;
-            Ifs.Add(ni);
+            IfInfo ni = new IfInfo
+            {
+                If = ifact ,
+                Else = Else ,
+                Action = action ,
+                Until = until
+            };
+            Ifs.Add ( ni );
         }
 
         public List<IfInfo> Ifs = new List<IfInfo>();

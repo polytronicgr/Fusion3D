@@ -7,26 +7,26 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
     {
         public float Value = 0;
 
-        public InspectFloat()
+        public InspectFloat ( )
         {
-            InitializeComponent();
+            InitializeComponent ( );
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void textBox1_TextChanged ( object sender , EventArgs e )
         {
             try
             {
-                Value = float.Parse(floatBox.Text);
+                Value = float.Parse ( floatBox.Text );
             }
-            catch (Exception ex)
+            catch ( Exception )
             {
                 Value = 0;
             }
         }
 
-        public void AlignToValue()
+        public void AlignToValue ( )
         {
-            floatBox.Text = Value.ToString();
+            floatBox.Text = Value.ToString ( );
         }
     }
 }

@@ -12,21 +12,21 @@ namespace Vivid3D.Resonance.Forms
         public VTex2D But;
         public ButtonForm ScrollBut;
 
-        public ScrollBarV()
+        public ScrollBarV ( )
         {
-            But = new VTex2D("Data\\UI\\Skin\\but_normal.png", LoadMethod.Single, true);
-            ScrollBut = new ButtonForm().Set(0, 0, W, 10) as ButtonForm;
+            But = new VTex2D ( "Data\\UI\\Skin\\but_normal.png" , LoadMethod.Single , true );
+            ScrollBut = new ButtonForm ( ).Set ( 0 , 0 , W , 10 ) as ButtonForm;
 
-            void DrawFunc()
+            void DrawFunc ( )
             {
                 float DY = (GY + Y);
 
                 float AY = Cur / Max;
 
-                DrawFormSolid(new Vector4(0.3f, 0.3f, 0.3f, 0.8f));
+                DrawFormSolid ( new Vector4 ( 0.3f , 0.3f , 0.3f , 0.8f ) );
             }
 
-            void ChangedFunc()
+            void ChangedFunc ( )
             {
                 ScrollBut.X = 0;
                 //ScrollBut.Y = 0;
@@ -38,16 +38,24 @@ namespace Vivid3D.Resonance.Forms
             Changed = ChangedFunc;
 
             Draw = DrawFunc;
-            Add(ScrollBut);
+            Add ( ScrollBut );
 
-            void DragFunc(int x, int y)
+            void DragFunc ( int x , int y )
             {
                 ScrollBut.Y += y;
-                Console.WriteLine("Y:" + y + " SY:" + ScrollBut.Y);
+                Console.WriteLine ( "Y:" + y + " SY:" + ScrollBut.Y );
 
-                if (ScrollBut.Y < 0) ScrollBut.Y = 0;
-                if (ScrollBut.Y > H - ScrollBut.H) ScrollBut.Y = H - ScrollBut.H;
-                Cur = (ScrollBut.Y / Max);
+                if ( ScrollBut.Y < 0 )
+                {
+                    ScrollBut.Y = 0;
+                }
+
+                if ( ScrollBut.Y > H - ScrollBut.H )
+                {
+                    ScrollBut.Y = H - ScrollBut.H;
+                }
+
+                Cur = ( ScrollBut.Y / Max );
             }
 
             ScrollBut.Drag = DragFunc;

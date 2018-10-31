@@ -16,39 +16,39 @@ namespace Vivid3D.VFX
             set;
         }
 
-        public static void Init()
+        public static void Init ( )
         {
-            FX = new List<VFXBase>();
+            FX = new List<VFXBase> ( );
         }
 
-        public static void Add(VFXBase fx)
+        public static void Add ( VFXBase fx )
         {
-            FX.Add(fx);
-            fx.Init();
+            FX.Add ( fx );
+            fx.Init ( );
         }
 
-        public static void Clear()
+        public static void Clear ( )
         {
-            foreach (var fx in FX)
+            foreach ( VFXBase fx in FX )
             {
-                fx.Stop();
+                fx.Stop ( );
             }
-            FX.Clear();
+            FX.Clear ( );
         }
 
-        public static void Update()
+        public static void Update ( )
         {
-            foreach (var fx in FX)
+            foreach ( VFXBase fx in FX )
             {
-                fx.Update();
+                fx.Update ( );
             }
         }
 
-        public static void Render()
+        public static void Render ( )
         {
-            foreach (var fx in FX)
+            foreach ( VFXBase fx in FX )
             {
-                fx.Render();
+                fx.Render ( );
             }
         }
     }

@@ -16,19 +16,19 @@ namespace Vivid3D.ParticleSystem
         public VTex2D Tex = null;
         public int W, H;
 
-        public override void Init()
+        public override void Init ( )
         {
-            Renderer = new Visuals.VRParticle();
+            Renderer = new Visuals.VRParticle ( );
             Lit = false;
             FaceCamera = true;
             CastShadows = false;
             CastDepth = false;
         }
 
-        public Particle(Particle bp)
+        public Particle ( Particle bp )
         {
             Name = "ParticleNode";
-            Meshes.Add(bp.Meshes[0]);
+            Meshes.Add ( bp.Meshes [ 0 ] );
             W = bp.W;
             H = bp.H;
             Alpha = bp.Alpha;
@@ -36,62 +36,62 @@ namespace Vivid3D.ParticleSystem
             Tex = bp.Tex;
         }
 
-        public Particle(int w, int h)
+        public Particle ( int w , int h )
         {
             W = w;
             H = h;
-            var mesh = new VMesh(12, 4);
+            VMesh mesh = new VMesh(12, 4);
 
-            var p1 = new Vector3(-w / 2, -h / 2, 0);
-            var p2 = new Vector3(w / 2, -h / 2, 0);
-            var p3 = new Vector3(w / 2, h / 2, 0);
-            var p4 = new Vector3(-w / 2, h / 2, 0);
+            Vector3 p1 = new Vector3(-w / 2, -h / 2, 0);
+            Vector3 p2 = new Vector3(w / 2, -h / 2, 0);
+            Vector3 p3 = new Vector3(w / 2, h / 2, 0);
+            Vector3 p4 = new Vector3(-w / 2, h / 2, 0);
 
-            var uv1 = new Vector2(0, 0);
-            var uv2 = new Vector2(1, 0);
-            var uv3 = new Vector2(1, 1);
-            var uv4 = new Vector2(0, 1);
+            Vector2 uv1 = new Vector2(0, 0);
+            Vector2 uv2 = new Vector2(1, 0);
+            Vector2 uv3 = new Vector2(1, 1);
+            Vector2 uv4 = new Vector2(0, 1);
 
-            var z = Vector3.Zero;
+            Vector3 z = Vector3.Zero;
 
-            mesh.SetVertex(0, p1, z, z, z, uv1);
-            mesh.SetVertex(1, p2, z, z, z, uv2);
-            mesh.SetVertex(2, p3, z, z, z, uv3);
-            mesh.SetVertex(3, p4, z, z, z, uv4);
+            mesh.SetVertex ( 0 , p1 , z , z , z , uv1 );
+            mesh.SetVertex ( 1 , p2 , z , z , z , uv2 );
+            mesh.SetVertex ( 2 , p3 , z , z , z , uv3 );
+            mesh.SetVertex ( 3 , p4 , z , z , z , uv4 );
 
-            mesh.SetIndex(0, 0);
-            mesh.SetIndex(1, 1);
-            mesh.SetIndex(2, 2);
-            mesh.SetIndex(3, 2);
-            mesh.SetIndex(4, 3);
-            mesh.SetIndex(5, 0);
+            mesh.SetIndex ( 0 , 0 );
+            mesh.SetIndex ( 1 , 1 );
+            mesh.SetIndex ( 2 , 2 );
+            mesh.SetIndex ( 3 , 2 );
+            mesh.SetIndex ( 4 , 3 );
+            mesh.SetIndex ( 5 , 0 );
 
-            mesh.SetIndex(6, 2);
-            mesh.SetIndex(7, 1);
-            mesh.SetIndex(8, 0);
-            mesh.SetIndex(9, 0);
-            mesh.SetIndex(10, 3);
-            mesh.SetIndex(11, 2);
+            mesh.SetIndex ( 6 , 2 );
+            mesh.SetIndex ( 7 , 1 );
+            mesh.SetIndex ( 8 , 0 );
+            mesh.SetIndex ( 9 , 0 );
+            mesh.SetIndex ( 10 , 3 );
+            mesh.SetIndex ( 11 , 2 );
 
-            mesh.Final();
+            mesh.Final ( );
 
-            Meshes.Add(mesh);
+            Meshes.Add ( mesh );
         }
 
-        public override void Update()
+        public override void Update ( )
         {
             LocalPos = LocalPos + Inertia;
             LocalPos = LocalPos * Drag;
         }
 
-        public override void Present(GraphCam3D c)
+        public override void Present ( GraphCam3D c )
         {
-            SetMats(c);
-            Bind();
-            PreRender();
-            Render();
-            PostRender();
-            Release();
+            SetMats ( c );
+            Bind ( );
+            PreRender ( );
+            Render ( );
+            PostRender ( );
+            Release ( );
 
             //    Console.WriteLine("Rendering Particle.");
         }

@@ -13,10 +13,10 @@ namespace VividEdit.Forms
         public string Type = "";
         public string BasePath = "";
 
-        public void DetermineType()
+        public void DetermineType ( )
         {
             string ext = new FileInfo(Path).Extension.ToLower();
-            switch (ext)
+            switch ( ext )
             {
                 case ".3ds":
                 case ".obj":

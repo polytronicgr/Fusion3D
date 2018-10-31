@@ -10,24 +10,24 @@ namespace DataCore.DataTypes
             set;
         }
 
-        public DataString()
+        public DataString ( )
         {
         }
 
-        public DataString(string data)
+        public DataString ( string data )
         {
             String = data;
         }
 
-        public override void GenerateBytes()
+        public override void GenerateBytes ( )
         {
-            _RawData = Encoding.ASCII.GetBytes(String);
+            _RawData = Encoding.ASCII.GetBytes ( String );
             _Bytes = _RawData.Length;
         }
 
-        public override void Reconstruct()
+        public override void Reconstruct ( )
         {
-            String = Encoding.ASCII.GetString(_RawData);
+            String = Encoding.ASCII.GetString ( _RawData );
         }
     }
 }

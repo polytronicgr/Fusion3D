@@ -4,27 +4,25 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace VividEdit.Forms
 {
-    public delegate void OpenFile(ContentFile file);
+    public delegate void OpenFile ( ContentFile file );
 
     public partial class ContentExplorer : DockContent
     {
+        public static OpenFile FileOpen;
+        public static ContentExplorer Main = null;
+        public List<ContentBase> Content = new List<ContentBase>();
         public Bitmap IconFile;
         public Bitmap IconFolder;
-        public List<ContentBase> Content = new List<ContentBase>();
 
-        public static ContentExplorer Main = null;
-
-        public static OpenFile FileOpen;
-
-        public ContentExplorer()
+        public ContentExplorer ( )
         {
-            InitializeComponent();
+            InitializeComponent ( );
             Main = this;
         }
 
-        public void SetFolder(string path)
+        public void SetFolder ( string path )
         {
-            contentPane.SetFolder(path);
+            contentPane.SetFolder ( path );
         }
     }
 }

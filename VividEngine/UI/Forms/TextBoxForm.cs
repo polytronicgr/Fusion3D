@@ -12,36 +12,36 @@ namespace Vivid3D.Resonance.Forms
         public int NextClaret;
         public int ClaretE = 0;
 
-        public TextBoxForm()
+        public TextBoxForm ( )
         {
-            void KeyPressFunc(OpenTK.Input.Key key, bool shift)
+            void KeyPressFunc ( OpenTK.Input.Key key , bool shift )
             {
                 string k = "";
-                switch (key)
+                switch ( key )
                 {
                     case OpenTK.Input.Key.Right:
-                        if (Text.Length == 1)
+                        if ( Text.Length == 1 )
                         {
-                            if (ClaretI == 0)
+                            if ( ClaretI == 0 )
                             {
                                 ClaretI = 1;
                                 return;
                             }
                         }
-                        if (Text.Length == 0)
+                        if ( Text.Length == 0 )
                         {
                             return;
                         }
-                        if (Text.Length > 1)
+                        if ( Text.Length > 1 )
                         {
-                            if (ClaretI < Text.Length)
+                            if ( ClaretI < Text.Length )
                             {
                                 ClaretI++;
                             }
                         }
-                        if (ClaretI > ClaretE)
+                        if ( ClaretI > ClaretE )
                         {
-                            if (StartI < Text.Length)
+                            if ( StartI < Text.Length )
                             {
                                 StartI++;
                             }
@@ -51,22 +51,26 @@ namespace Vivid3D.Resonance.Forms
 
                     case OpenTK.Input.Key.Left:
 
-                        if (ClaretI == StartI)
+                        if ( ClaretI == StartI )
                         {
-                            if (StartI > 0)
+                            if ( StartI > 0 )
                             {
                                 StartI--;
                             }
                         }
-                        if (Text.Length == 1)
+                        if ( Text.Length == 1 )
                         {
                             ClaretI = 0;
                             return;
                         }
-                        if (Text.Length == 0) return;
-                        if (Text.Length > 1)
+                        if ( Text.Length == 0 )
                         {
-                            if (ClaretI > 0)
+                            return;
+                        }
+
+                        if ( Text.Length > 1 )
+                        {
+                            if ( ClaretI > 0 )
                             {
                                 ClaretI--;
                                 return;
@@ -77,21 +81,21 @@ namespace Vivid3D.Resonance.Forms
 
                     case OpenTK.Input.Key.BackSpace:
 
-                        if (Text.Length == 1)
+                        if ( Text.Length == 1 )
                         {
                             ClaretI = 0;
                             Text = "";
                             return;
                         }
-                        if (Text.Length > 1)
+                        if ( Text.Length > 1 )
                         {
-                            if (ClaretI == Text.Length)
+                            if ( ClaretI == Text.Length )
                             {
-                                Text = Text.Substring(0, Text.Length - 1);
+                                Text = Text.Substring ( 0 , Text.Length - 1 );
                                 ClaretI--;
                                 return;
                             }
-                            var os = Text.Substring(0, ClaretI - 1) + Text.Substring(ClaretI);
+                            string os = Text.Substring(0, ClaretI - 1) + Text.Substring(ClaretI);
                             Text = os;
                             ClaretI--;
                             return;
@@ -100,21 +104,21 @@ namespace Vivid3D.Resonance.Forms
                         break;
 
                     case OpenTK.Input.Key.Delete:
-                        if (Text.Length == 1 && ClaretI == 0)
+                        if ( Text.Length == 1 && ClaretI == 0 )
                         {
                             Text = "";
                             ClaretI = 0;
                             return;
                         }
-                        if (Text.Length > 1 && ClaretI < Text.Length)
+                        if ( Text.Length > 1 && ClaretI < Text.Length )
                         {
-                            if ((Text.Length - ClaretI) > 1)
+                            if ( ( Text.Length - ClaretI ) > 1 )
                             {
-                                Text = Text.Substring(0, ClaretI) + Text.Substring(ClaretI + 1);
+                                Text = Text.Substring ( 0 , ClaretI ) + Text.Substring ( ClaretI + 1 );
                             }
                             else
                             {
-                                Text = Text.Substring(0, Text.Length - 1);
+                                Text = Text.Substring ( 0 , Text.Length - 1 );
                             }
                             return;
                         }
@@ -127,33 +131,33 @@ namespace Vivid3D.Resonance.Forms
                         break;
 
                     default:
-                        k = shift ? key.ToString().ToUpper() : key.ToString().ToLower();
+                        k = shift ? key.ToString ( ).ToUpper ( ) : key.ToString ( ).ToLower ( );
                         break;
                 }
-                if (Text.Length == 0)
+                if ( Text.Length == 0 )
                 {
                     Text = k;
                     ClaretI = 1;
                 }
                 else
                 {
-                    if (ClaretI == Text.Length)
+                    if ( ClaretI == Text.Length )
                     {
                         Text = Text + k;
                         ClaretI++;
 
                         int iv = StartI;
-                        var sw = Text.Substring(iv);
-                        if (UI.Font.Width(sw) > W)
+                        string sw = Text.Substring(iv);
+                        if ( UI.Font.Width ( sw ) > W )
                         {
                             StartI++;
                         }
                         return;
                     }
-                    var os = Text.Substring(0, ClaretI) + k;
-                    if (Text.Length > ClaretI)
+                    string os = Text.Substring(0, ClaretI) + k;
+                    if ( Text.Length > ClaretI )
                     {
-                        os = os + Text.Substring(ClaretI);
+                        os = os + Text.Substring ( ClaretI );
                     }
                     Text = os;
                     ClaretI++;
@@ -161,27 +165,27 @@ namespace Vivid3D.Resonance.Forms
             }
             KeyPress = KeyPressFunc;
 
-            void UpdateFunc()
+            void UpdateFunc ( )
             {
-                if (Active)
+                if ( Active )
                 {
-                    if (Environment.TickCount > NextClaret)
+                    if ( Environment.TickCount > NextClaret )
                     {
                         ShowClaret = ShowClaret ? false : true;
                         NextClaret = Environment.TickCount + 450;
-                        Console.WriteLine("Claret:" + ShowClaret.ToString());
+                        Console.WriteLine ( "Claret:" + ShowClaret.ToString ( ) );
                     }
                 }
             }
 
             Update = UpdateFunc;
 
-            void ActiveFunc()
+            void ActiveFunc ( )
             {
                 Active = true;
             }
 
-            void DeactiveFunc()
+            void DeactiveFunc ( )
             {
                 Active = false;
             }
@@ -189,12 +193,9 @@ namespace Vivid3D.Resonance.Forms
             Deactivate = DeactiveFunc;
             Activate = ActiveFunc;
 
-            void DrawFunc()
+            void DrawFunc ( )
             {
-                DrawFormSolid(Col);
-                int tw = 0;
-                int ii = 0;
-                int vc = 0;
+                DrawFormSolid ( Col );
 
                 /*
                 for (int i = StartI; i < Text.Substring(StartI).Length; i++)
@@ -211,12 +212,12 @@ namespace Vivid3D.Resonance.Forms
                 int cc = 0;
                 int t2 = 0;
                 string rtxt = "";
-                for (int i = 0; i < dis.Length; i++)
+                for ( int i = 0 ; i < dis.Length ; i++ )
                 {
-                    rtxt = rtxt + dis.Substring(i, 1);
-                    var cr = dis.Substring(i, 1);
-                    t2 += UI.Font.Width(cr);
-                    if (t2 > W - 30)
+                    rtxt = rtxt + dis.Substring ( i , 1 );
+                    string cr = dis.Substring(i, 1);
+                    t2 += UI.Font.Width ( cr );
+                    if ( t2 > W - 30 )
                     {
                         break;
                     }
@@ -224,26 +225,32 @@ namespace Vivid3D.Resonance.Forms
                 }
                 ClaretE = cc;
 
-                DrawText(rtxt, 5, 0, new Vector4(0.2f, 0.2f, 0.2f, 0.9f));
+                DrawText ( rtxt , 5 , 0 , new Vector4 ( 0.2f , 0.2f , 0.2f , 0.9f ) );
 
-                if (Text.Length == 0) ClaretI = 0;
+                if ( Text.Length == 0 )
+                {
+                    ClaretI = 0;
+                }
 
-                if (ShowClaret)
+                if ( ShowClaret )
                 {
                     // Console.WriteLine("Claret!");
                     int cx = 0;
-                    if (Text.Length > 0)
+                    if ( Text.Length > 0 )
                     {
                         int cv = 0;
-                        for (int i = StartI; i < ClaretI; i++)
+                        for ( int i = StartI ; i < ClaretI ; i++ )
                         {
                             int cw = UI.Font.Width(Text.Substring(i, 1));
-                            cx = cx + (cw);
+                            cx = cx + ( cw );
                             cv++;
-                            if (cv > cc) break;
+                            if ( cv > cc )
+                            {
+                                break;
+                            }
                         }
                     }
-                    DrawFormSolid(new Vector4(0.2f, 0.2f, 0.2f, 0.8f), cx + (Text.Length > 0 ? 5 : 0), 0, 5, 20);
+                    DrawFormSolid ( new Vector4 ( 0.2f , 0.2f , 0.2f , 0.8f ) , cx + ( Text.Length > 0 ? 5 : 0 ) , 0 , 5 , 20 );
                 }
             }
 

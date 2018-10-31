@@ -7,40 +7,42 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
     {
         public Vivid3D.Texture.VTex2D Value = null;
 
-        public InspectTexture()
+        public InspectTexture ( )
         {
-            InitializeComponent();
+            InitializeComponent ( );
         }
 
-        public void AlignToValue()
+        public void AlignToValue ( )
         {
-            var bm = new Bitmap(Value.W, Value.H);
+            Bitmap bm = new Bitmap(Value.W, Value.H);
             byte[] bs = Value.RawData;
-            int i = 0;
-            var nbm = new Bitmap(texView.Width, texView.Height);
+            Bitmap nbm = new Bitmap(texView.Width, texView.Height);
 
-            float xr = (float)Value.W / (float)texView.Width;
-            float yr = (float)Value.H / (float)texView.Height;
+            float xr = Value.W / (float)texView.Width;
+            float yr = Value.H / (float)texView.Height;
 
             int bsiz = 3;
-            if (Value.Alpha) bsiz = 4;
-
-            for (int y = 0; y < texView.Height; y++)
+            if ( Value.Alpha )
             {
-                for (int x = 0; x < texView.Width; x++)
-                {
-                    int nx = (int)((float)x * xr);
-                    int ny = (int)((float)y * yr);
+                bsiz = 4;
+            }
 
-                    int loc = (int)((nx * bsiz) + (ny * Value.W * bsiz));
+            for ( int y = 0 ; y < texView.Height ; y++ )
+            {
+                for ( int x = 0 ; x < texView.Width ; x++ )
+                {
+                    int nx = (int)(x * xr);
+                    int ny = (int)(y * yr);
+
+                    int loc = (nx * bsiz) + (ny * Value.W * bsiz);
 
                     Color p = Color.FromArgb(255, bs[loc], bs[loc + 1], bs[loc + 2]);
-                    nbm.SetPixel(x, y, p);
+                    nbm.SetPixel ( x , y , p );
                 }
             }
 
             texView.Image = nbm;
-            texView.Invalidate();
+            texView.Invalidate ( );
         }
     }
 }

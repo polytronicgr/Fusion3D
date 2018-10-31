@@ -136,7 +136,7 @@ namespace Vivid3D.VFX
             set;
         }
 
-        public ParticleBase()
+        public ParticleBase ( )
         {
             X = Y = Z = Rot = 0;
             XDrag = YDrag = ZDrag = RDrag = 0.0f;
@@ -153,16 +153,16 @@ namespace Vivid3D.VFX
             AI = 0.91f;
         }
 
-        public virtual ParticleBase Clone()
+        public virtual ParticleBase Clone ( )
         {
             return null;
         }
 
-        public virtual void Init()
+        public virtual void Init ( )
         {
         }
 
-        public virtual void Update()
+        public virtual void Update ( )
         {
             X += XI;
             Y += YI;
@@ -178,18 +178,18 @@ namespace Vivid3D.VFX
 
             Alpha *= AI;
             //  Console.WriteLine("Life:" + Life);
-            if (Life <= 0.0f)
+            if ( Life <= 0.0f )
             {
                 //   Console.WriteLine("Removed");
-                Sys.Remove(this);
+                Sys.Remove ( this );
             }
         }
 
-        public virtual void Render()
+        public virtual void Render ( )
         {
         }
 
-        public virtual void Stop()
+        public virtual void Stop ( )
         {
         }
     }

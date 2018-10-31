@@ -8,36 +8,36 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
     {
         public Vector3 Value;
 
-        public InspectVec3()
+        public InspectVec3 ( )
         {
-            InitializeComponent();
+            InitializeComponent ( );
         }
 
-        public void AlignToValue()
+        public void AlignToValue ( )
         {
-            xBox.Text = Value.X.ToString();
-            yBox.Text = Value.Y.ToString();
-            zBox.Text = Value.Z.ToString();
+            xBox.Text = Value.X.ToString ( );
+            yBox.Text = Value.Y.ToString ( );
+            zBox.Text = Value.Z.ToString ( );
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void InspectVec3_Load(object sender, EventArgs e)
+        private void label3_Click ( object sender , EventArgs e )
         {
         }
 
-        private void xBox_TextChanged(object sender, EventArgs e)
+        private void InspectVec3_Load ( object sender , EventArgs e )
         {
-            if (xBox.Text.Length == 0)
+        }
+
+        private void xBox_TextChanged ( object sender , EventArgs e )
+        {
+            if ( xBox.Text.Length == 0 )
             {
                 Value.X = 0;
                 return;
             }
-            if (xBox.Text.Length == 1)
+            if ( xBox.Text.Length == 1 )
             {
-                if (xBox.Text == "-")
+                if ( xBox.Text == "-" )
                 {
                     Value.X = 0;
                     return;
@@ -45,24 +45,24 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             }
             try
             {
-                Value.X = float.Parse(xBox.Text);
+                Value.X = float.Parse ( xBox.Text );
             }
-            catch (Exception ex)
+            catch ( Exception )
             {
                 Value.X = 0;
             }
         }
 
-        private void yBox_TextChanged(object sender, EventArgs e)
+        private void yBox_TextChanged ( object sender , EventArgs e )
         {
-            if (yBox.Text.Length == 0)
+            if ( yBox.Text.Length == 0 )
             {
                 Value.Y = 0;
                 return;
             }
-            if (yBox.Text.Length == 1)
+            if ( yBox.Text.Length == 1 )
             {
-                if (yBox.Text == "-")
+                if ( yBox.Text == "-" )
                 {
                     Value.Y = 0;
                     return;
@@ -70,24 +70,24 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             }
             try
             {
-                Value.Y = float.Parse(yBox.Text);
+                Value.Y = float.Parse ( yBox.Text );
             }
-            catch (Exception exp)
+            catch ( Exception )
             {
                 Value.Y = 0;
             }
         }
 
-        private void zBox_TextChanged(object sender, EventArgs e)
+        private void zBox_TextChanged ( object sender , EventArgs e )
         {
-            if (zBox.Text.Length == 0)
+            if ( zBox.Text.Length == 0 )
             {
                 Value.Z = 0;
                 return;
             }
-            if (zBox.Text.Length == 1)
+            if ( zBox.Text.Length == 1 )
             {
-                if (zBox.Text == "-")
+                if ( zBox.Text == "-" )
                 {
                     Value.Z = 0;
                     return;
@@ -95,9 +95,9 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             }
             try
             {
-                Value.Z = float.Parse(zBox.Text);
+                Value.Z = float.Parse ( zBox.Text );
             }
-            catch (Exception ex)
+            catch ( Exception )
             {
                 Value.Z = 0;
             }

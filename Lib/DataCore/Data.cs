@@ -2,7 +2,7 @@
 {
     public class Data
     {
-        public Data()
+        public Data ( )
         {
             Generated = false;
         }
@@ -11,38 +11,26 @@
 
         public int Bytes
         {
-            get
-            {
-                return _Bytes;
-            }
+            get => _Bytes;
 
-            set
-            {
-                _Bytes = value;
-            }
+            set => _Bytes = value;
         }
 
         protected int _Bytes = 0;
 
-        public byte[] RawData
+        public byte [ ] RawData
         {
-            get
-            {
-                return _RawData;
-            }
-            set
-            {
-                _RawData = value;
-            }
+            get => _RawData;
+            set => _RawData = value;
         }
 
         protected byte[] _RawData = new byte[0];
 
-        public virtual void GenerateBytes()
+        public virtual void GenerateBytes ( )
         {
         }
 
-        public virtual void Reconstruct()
+        public virtual void Reconstruct ( )
         {
         }
     }

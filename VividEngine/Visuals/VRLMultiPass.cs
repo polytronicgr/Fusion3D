@@ -7,46 +7,46 @@ namespace Vivid3D.Visuals
     {
         public EMultiPass3D fx = null;
 
-        public override void Init()
+        public override void Init ( )
         {
-            fx = new EMultiPass3D();
+            fx = new EMultiPass3D ( );
         }
 
-        public override void Render(VMesh m, VVisualizer v)
+        public override void Render ( VMesh m , VVisualizer v )
         {
-            m.Mat.Bind();
-            if (Lighting.GraphLight3D.Active != null)
+            m.Mat.Bind ( );
+            if ( Lighting.GraphLight3D.Active != null )
             {
-                Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
+                Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind ( 2 );
             }
-            if (FXG.FXOverride != null)
+            if ( FXG.FXOverride != null )
             {
-                FXG.FXOverride.Bind();
-            }
-            else
-            {
-                fx.Bind();
-            }
-            v.SetMesh(m);
-            v.Bind();
-            for (int i = 0; i < m.Subs.Count; i++)
-            {
-                v.Visualize(i);
-            }
-            v.Release();
-            if (FXG.FXOverride != null)
-            {
-                FXG.FXOverride.Release();
+                FXG.FXOverride.Bind ( );
             }
             else
             {
-                fx.Release();
+                fx.Bind ( );
             }
-            if (Lighting.GraphLight3D.Active != null)
+            v.SetMesh ( m );
+            v.Bind ( );
+            for ( int i = 0 ; i < m.Subs.Count ; i++ )
             {
-                Lighting.GraphLight3D.Active.ShadowFB.Cube.Release(2);
+                v.Visualize ( i );
             }
-            m.Mat.Release();
+            v.Release ( );
+            if ( FXG.FXOverride != null )
+            {
+                FXG.FXOverride.Release ( );
+            }
+            else
+            {
+                fx.Release ( );
+            }
+            if ( Lighting.GraphLight3D.Active != null )
+            {
+                Lighting.GraphLight3D.Active.ShadowFB.Cube.Release ( 2 );
+            }
+            m.Mat.Release ( );
         }
     }
 
@@ -54,43 +54,43 @@ namespace Vivid3D.Visuals
     {
         public EMultiPass3D fx = null;
 
-        public override void Init()
+        public override void Init ( )
         {
-            fx = new EMultiPass3D();
+            fx = new EMultiPass3D ( );
         }
 
-        public override void Render(VMesh m, VVisualizer v)
+        public override void Render ( VMesh m , VVisualizer v )
         {
-            m.Mat.Bind();
-            if (Lighting.GraphLight3D.Active != null)
+            m.Mat.Bind ( );
+            if ( Lighting.GraphLight3D.Active != null )
             {
-                Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
+                Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind ( 2 );
             }
-            if (FXG.FXOverride != null)
+            if ( FXG.FXOverride != null )
             {
-                FXG.FXOverride.Bind();
-            }
-            else
-            {
-                fx.Bind();
-            }
-            v.SetMesh(m);
-            v.Bind();
-            v.Visualize();
-            v.Release();
-            if (FXG.FXOverride != null)
-            {
-                FXG.FXOverride.Release();
+                FXG.FXOverride.Bind ( );
             }
             else
             {
-                fx.Release();
+                fx.Bind ( );
             }
-            if (Lighting.GraphLight3D.Active != null)
+            v.SetMesh ( m );
+            v.Bind ( );
+            v.Visualize ( );
+            v.Release ( );
+            if ( FXG.FXOverride != null )
             {
-                Lighting.GraphLight3D.Active.ShadowFB.Cube.Release(2);
+                FXG.FXOverride.Release ( );
             }
-            m.Mat.Release();
+            else
+            {
+                fx.Release ( );
+            }
+            if ( Lighting.GraphLight3D.Active != null )
+            {
+                Lighting.GraphLight3D.Active.ShadowFB.Cube.Release ( 2 );
+            }
+            m.Mat.Release ( );
         }
     }
 
@@ -98,43 +98,43 @@ namespace Vivid3D.Visuals
     {
         public ETerrain fx = null;
 
-        public override void Init()
+        public override void Init ( )
         {
-            fx = new ETerrain();
+            fx = new ETerrain ( );
         }
 
-        public override void Render(VMesh m, VVisualizer v)
+        public override void Render ( VMesh m , VVisualizer v )
         {
-            m.Mat.Bind();
-            if (Lighting.GraphLight3D.Active != null)
+            m.Mat.Bind ( );
+            if ( Lighting.GraphLight3D.Active != null )
             {
-                Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
+                Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind ( 2 );
             }
-            if (FXG.FXOverride != null)
+            if ( FXG.FXOverride != null )
             {
-                FXG.FXOverride.Bind();
-            }
-            else
-            {
-                fx.Bind();
-            }
-            v.SetMesh(m);
-            v.Bind();
-            v.Visualize();
-            v.Release();
-            if (FXG.FXOverride != null)
-            {
-                FXG.FXOverride.Release();
+                FXG.FXOverride.Bind ( );
             }
             else
             {
-                fx.Release();
+                fx.Bind ( );
             }
-            if (Lighting.GraphLight3D.Active != null)
+            v.SetMesh ( m );
+            v.Bind ( );
+            v.Visualize ( );
+            v.Release ( );
+            if ( FXG.FXOverride != null )
             {
-                Lighting.GraphLight3D.Active.ShadowFB.Cube.Release(2);
+                FXG.FXOverride.Release ( );
             }
-            m.Mat.Release();
+            else
+            {
+                fx.Release ( );
+            }
+            if ( Lighting.GraphLight3D.Active != null )
+            {
+                Lighting.GraphLight3D.Active.ShadowFB.Cube.Release ( 2 );
+            }
+            m.Mat.Release ( );
         }
     }
 
@@ -142,38 +142,38 @@ namespace Vivid3D.Visuals
     {
         public ELightMap FX;
 
-        public override void Init()
+        public override void Init ( )
         {
-            FX = new ELightMap();
+            FX = new ELightMap ( );
         }
 
-        public override void Render(VMesh m, VVisualizer v)
+        public override void Render ( VMesh m , VVisualizer v )
         {
-            m.Mat.BindLightmap();
+            m.Mat.BindLightmap ( );
             /* if (Lighting.GraphLight3D.Active != null)
              {
                  Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
              }
              */
-            if (FXG.FXOverride != null)
+            if ( FXG.FXOverride != null )
             {
-                FXG.FXOverride.Bind();
+                FXG.FXOverride.Bind ( );
             }
             else
             {
-                FX.Bind();
+                FX.Bind ( );
             }
-            v.SetMesh(m);
-            v.Bind();
-            v.Visualize();
-            v.Release();
-            if (FXG.FXOverride != null)
+            v.SetMesh ( m );
+            v.Bind ( );
+            v.Visualize ( );
+            v.Release ( );
+            if ( FXG.FXOverride != null )
             {
-                FXG.FXOverride.Release();
+                FXG.FXOverride.Release ( );
             }
             else
             {
-                FX.Release();
+                FX.Release ( );
             }
             /*
             if (Lighting.GraphLight3D.Active != null)
@@ -181,7 +181,7 @@ namespace Vivid3D.Visuals
                 Lighting.GraphLight3D.Active.ShadowFB.Cube.Release(2);
             }
             */
-            m.Mat.ReleaseLightmap();
+            m.Mat.ReleaseLightmap ( );
         }
     }
 
@@ -189,38 +189,38 @@ namespace Vivid3D.Visuals
     {
         public ENoFX FX;
 
-        public override void Init()
+        public override void Init ( )
         {
-            FX = new ENoFX();
+            FX = new ENoFX ( );
         }
 
-        public override void Render(VMesh m, VVisualizer v)
+        public override void Render ( VMesh m , VVisualizer v )
         {
-            m.Mat.Bind();
+            m.Mat.Bind ( );
             /* if (Lighting.GraphLight3D.Active != null)
              {
                  Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
              }
              */
-            if (FXG.FXOverride != null)
+            if ( FXG.FXOverride != null )
             {
-                FXG.FXOverride.Bind();
+                FXG.FXOverride.Bind ( );
             }
             else
             {
-                FX.Bind();
+                FX.Bind ( );
             }
-            v.SetMesh(m);
-            v.Bind();
-            v.Visualize();
-            v.Release();
-            if (FXG.FXOverride != null)
+            v.SetMesh ( m );
+            v.Bind ( );
+            v.Visualize ( );
+            v.Release ( );
+            if ( FXG.FXOverride != null )
             {
-                FXG.FXOverride.Release();
+                FXG.FXOverride.Release ( );
             }
             else
             {
-                FX.Release();
+                FX.Release ( );
             }
             /*
             if (Lighting.GraphLight3D.Active != null)
@@ -228,7 +228,7 @@ namespace Vivid3D.Visuals
                 Lighting.GraphLight3D.Active.ShadowFB.Cube.Release(2);
             }
             */
-            m.Mat.Release();
+            m.Mat.Release ( );
         }
     }
 }

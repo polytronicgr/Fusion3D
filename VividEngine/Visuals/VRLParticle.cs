@@ -7,23 +7,23 @@ namespace Vivid3D.Visuals
     {
         public EParticle fx = null;
 
-        public override void Init()
+        public override void Init ( )
         {
-            fx = new EParticle();
+            fx = new EParticle ( );
         }
 
-        public override void Render(VMesh m, VVisualizer v)
+        public override void Render ( VMesh m , VVisualizer v )
         {
-            m.Mat.Bind();
+            m.Mat.Bind ( );
             // Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);
-            fx.Bind();
-            v.SetMesh(m);
-            v.Bind();
-            v.Visualize();
-            v.Release();
-            fx.Release();
+            fx.Bind ( );
+            v.SetMesh ( m );
+            v.Bind ( );
+            v.Visualize ( );
+            v.Release ( );
+            fx.Release ( );
             //Lighting.GraphLight3D.Active.ShadowFB.Cube.Release(2);
-            m.Mat.Release();
+            m.Mat.Release ( );
         }
     }
 }

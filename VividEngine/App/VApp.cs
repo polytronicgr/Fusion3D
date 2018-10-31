@@ -19,77 +19,77 @@ namespace Vivid3D.App
 
     public class VForm : VividApp
     {
-        public static void SetSize(int w, int h)
+        public static void SetSize ( int w , int h )
         {
             AppInfo.W = w;
             AppInfo.H = h;
             AppInfo.RW = w;
             AppInfo.RH = h;
-            GL.Viewport(0, 0, w, h);
-            GL.Scissor(0, 0, w, h);
-            VPen.SetProj(0, 0, w, h);
+            GL.Viewport ( 0 , 0 , w , h );
+            GL.Scissor ( 0 , 0 , w , h );
+            VPen.SetProj ( 0 , 0 , w , h );
         }
 
         private static bool done = false;
 
-        public static void Set(int w, int h)
+        public static void Set ( int w , int h )
         {
-            GL.ClearColor(System.Drawing.Color.AliceBlue);
-            GL.Enable(EnableCap.DepthTest);
+            GL.ClearColor ( System.Drawing.Color.AliceBlue );
+            GL.Enable ( EnableCap.DepthTest );
             AppInfo.W = w;
             AppInfo.H = h;
             AppInfo.RW = w;
             AppInfo.RH = h;
             AppInfo.Full = false;
             AppInfo.App = "GLApp";
-            if (!done)
+            if ( !done )
             {
-                Import.Import.RegDefaults();
+                Import.Import.RegDefaults ( );
             }
-            GL.Viewport(0, 0, w, h);
-            GL.Scissor(0, 0, w, h);
-            GL.Disable(EnableCap.Blend);
-            GL.Disable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.CullFace);
-            GL.CullFace(CullFaceMode.Back);
-            GL.Disable(EnableCap.StencilTest);
-            GL.Disable(EnableCap.ScissorTest);
-            GL.Enable(EnableCap.DepthTest);
-            GL.DepthRange(0, 1);
+            GL.Viewport ( 0 , 0 , w , h );
+            GL.Scissor ( 0 , 0 , w , h );
+            GL.Disable ( EnableCap.Blend );
+            GL.Disable ( EnableCap.Texture2D );
+            GL.Enable ( EnableCap.CullFace );
+            GL.CullFace ( CullFaceMode.Back );
+            GL.Disable ( EnableCap.StencilTest );
+            GL.Disable ( EnableCap.ScissorTest );
+            GL.Enable ( EnableCap.DepthTest );
+            GL.DepthRange ( 0 , 1 );
 
-            GL.ClearDepth(1.0f);
-            GL.DepthFunc(DepthFunction.Less);
+            GL.ClearDepth ( 1.0f );
+            GL.DepthFunc ( DepthFunction.Less );
             // UI.UISys.ActiveUI.OnResize(Width, Height);
-            VPen.SetProj(0, 0, w, h);
-            if (!done)
+            VPen.SetProj ( 0 , 0 , w , h );
+            if ( !done )
             {
-                VPen.InitDraw();
-                Vivid3D.Sound.StarSoundSys.Init();
+                VPen.InitDraw ( );
+                Vivid3D.Sound.StarSoundSys.Init ( );
             }
             AppInfo.W = w;
             AppInfo.H = h;
             AppInfo.RW = w;
             AppInfo.RH = h;
 
-            GL.Viewport(0, 0, w, h);
-            GL.Scissor(0, 0, w, h);
-            GL.Disable(EnableCap.Blend);
-            GL.Disable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.CullFace);
-            GL.CullFace(CullFaceMode.Back);
-            GL.Disable(EnableCap.StencilTest);
-            GL.Disable(EnableCap.ScissorTest);
+            GL.Viewport ( 0 , 0 , w , h );
+            GL.Scissor ( 0 , 0 , w , h );
+            GL.Disable ( EnableCap.Blend );
+            GL.Disable ( EnableCap.Texture2D );
+            GL.Enable ( EnableCap.CullFace );
+            GL.CullFace ( CullFaceMode.Back );
+            GL.Disable ( EnableCap.StencilTest );
+            GL.Disable ( EnableCap.ScissorTest );
             //  GL.Disable(EnableCap.Lighting);
 
             //GL.DepthFunc(DepthFunction.Greater);
 
-            GL.Enable(EnableCap.DepthTest);
-            GL.DepthRange(0, 1);
+            GL.Enable ( EnableCap.DepthTest );
+            GL.DepthRange ( 0 , 1 );
 
-            GL.ClearDepth(1.0f);
-            GL.DepthFunc(DepthFunction.Lequal);
+            GL.ClearDepth ( 1.0f );
+            GL.DepthFunc ( DepthFunction.Lequal );
 
-            VPen.SetProj(0, 0, w, h);
+            VPen.SetProj ( 0 , 0 , w , h );
 
             done = true;
         }
@@ -111,58 +111,62 @@ namespace Vivid3D.App
         {
             get
             {
-                if (States.Count == 0) return null;
-                return States.Peek();
+                if ( States.Count == 0 )
+                {
+                    return null;
+                }
+
+                return States.Peek ( );
             }
         }
 
-        public VividApp()
+        public VividApp ( )
         {
         }
 
-        public static void PushState(VividState state, bool start = true)
+        public static void PushState ( VividState state , bool start = true )
         {
-            States.Push(state);
-            state.InitState();
+            States.Push ( state );
+            state.InitState ( );
             state.Running = true;
-            state.StartState();
+            state.StartState ( );
         }
 
-        public static void PopState()
+        public static void PopState ( )
         {
-            var ls = States.Pop();
-            ls.StopState();
+            VividState ls = States.Pop();
+            ls.StopState ( );
             ls.Running = false;
         }
 
         public OpenTK.Graphics.Color4 BgCol
         {
-            get { return _BgCol; }
-            set { _BgCol = value; }
+            get => _BgCol;
+            set => _BgCol = value;
         }
 
         public string AppName
         {
-            get { return _Title; }
+            get => _Title;
             set { _Title = value; Title = value; }
         }
 
-        public void MakeFixed()
+        public void MakeFixed ( )
         {
             WindowBorder = WindowBorder.Fixed;
         }
 
-        public void MakeWindowless()
+        public void MakeWindowless ( )
         {
-            this.WindowBorder = WindowBorder.Hidden;
+            WindowBorder = WindowBorder.Hidden;
         }
 
-        public void MakeFullscreen()
+        public void MakeFullscreen ( )
         {
-            this.WindowState = WindowState.Fullscreen;
+            WindowState = WindowState.Fullscreen;
         }
 
-        public VividApp(string app, int width, int height, bool full) : base(width, height, OpenTK.Graphics.GraphicsMode.Default, app, full ? GameWindowFlags.Fullscreen : GameWindowFlags.Default, DisplayDevice.Default, 4, 5, OpenTK.Graphics.GraphicsContextFlags.ForwardCompatible)
+        public VividApp ( string app , int width , int height , bool full ) : base ( width , height , OpenTK.Graphics.GraphicsMode.Default , app , full ? GameWindowFlags.Fullscreen : GameWindowFlags.Default , DisplayDevice.Default , 4 , 5 , OpenTK.Graphics.GraphicsContextFlags.ForwardCompatible )
 
         {
             Link = this;
@@ -177,22 +181,22 @@ namespace Vivid3D.App
             H = height;
             RW = width;
             RH = height;
-            Import.Import.RegDefaults();
-            VPen.InitDraw();
-            Vivid3D.Sound.StarSoundSys.Init();
+            Import.Import.RegDefaults ( );
+            VPen.InitDraw ( );
+            Vivid3D.Sound.StarSoundSys.Init ( );
         }
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        protected override void OnMouseDown ( MouseButtonEventArgs e )
         {
             int bid = 0;
-            bid = GetBID(e);
-            VInput.MB[bid] = true;
+            bid = GetBID ( e );
+            VInput.MB [ bid ] = true;
         }
 
-        private static int GetBID(MouseButtonEventArgs e)
+        private static int GetBID ( MouseButtonEventArgs e )
         {
             int bid = 0;
-            switch (e.Button)
+            switch ( e.Button )
             {
                 case MouseButton.Left:
                     bid = 0;
@@ -210,102 +214,102 @@ namespace Vivid3D.App
             return bid;
         }
 
-        protected override void OnMouseUp(MouseButtonEventArgs e)
+        protected override void OnMouseUp ( MouseButtonEventArgs e )
         {
             int bid = GetBID(e);
-            VInput.MB[bid] = false;
+            VInput.MB [ bid ] = false;
         }
 
-        protected override void OnMouseMove(MouseMoveEventArgs e)
+        protected override void OnMouseMove ( MouseMoveEventArgs e )
         {
             VInput.MX = e.Position.X;
             VInput.MY = e.Position.Y;
         }
 
-        private bool fs = true;
+        private readonly bool fs = true;
         private MouseState lm;
 
-        protected override void OnKeyDown(KeyboardKeyEventArgs e)
+        protected override void OnKeyDown ( KeyboardKeyEventArgs e )
         {
-            VInput.SetKey(e.Key, true);
+            VInput.SetKey ( e.Key , true );
         }
 
-        protected override void OnKeyUp(KeyboardKeyEventArgs e)
+        protected override void OnKeyUp ( KeyboardKeyEventArgs e )
         {
-            VInput.SetKey(e.Key, false);
+            VInput.SetKey ( e.Key , false );
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override void OnResize ( EventArgs e )
         {
-            SetGL();
+            SetGL ( );
         }
 
-        private void SetGL()
+        private void SetGL ( )
         {
             AppInfo.W = Width;
             AppInfo.H = Height;
             AppInfo.RW = Width;
             AppInfo.RH = Height;
-            GL.Viewport(0, 0, Width, Height);
-            GL.Scissor(0, 0, Width, Height);
-            GL.Disable(EnableCap.Blend);
-            GL.Disable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.CullFace);
-            GL.CullFace(CullFaceMode.Back);
-            GL.Disable(EnableCap.StencilTest);
-            GL.Disable(EnableCap.ScissorTest);
+            GL.Viewport ( 0 , 0 , Width , Height );
+            GL.Scissor ( 0 , 0 , Width , Height );
+            GL.Disable ( EnableCap.Blend );
+            GL.Disable ( EnableCap.Texture2D );
+            GL.Enable ( EnableCap.CullFace );
+            GL.CullFace ( CullFaceMode.Back );
+            GL.Disable ( EnableCap.StencilTest );
+            GL.Disable ( EnableCap.ScissorTest );
             //  GL.Disable(EnableCap.Lighting);
 
             //GL.DepthFunc(DepthFunction.Greater);
 
-            GL.Enable(EnableCap.DepthTest);
-            GL.DepthRange(0, 1);
+            GL.Enable ( EnableCap.DepthTest );
+            GL.DepthRange ( 0 , 1 );
 
-            GL.ClearDepth(1.0f);
-            GL.DepthFunc(DepthFunction.Lequal);
+            GL.ClearDepth ( 1.0f );
+            GL.DepthFunc ( DepthFunction.Lequal );
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnLoad ( EventArgs e )
         {
             CursorVisible = true;
-            VPen.SetProj(0, 0, Width, Height);
-            SetGL();
-            InitApp();
+            VPen.SetProj ( 0 , 0 , Width , Height );
+            SetGL ( );
+            InitApp ( );
         }
 
-        public virtual void InitApp()
+        public virtual void InitApp ( )
         {
         }
 
-        public virtual void UpdateApp()
+        public virtual void UpdateApp ( )
         {
         }
 
-        public virtual void DrawApp()
+        public virtual void DrawApp ( )
         {
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs e)
+        protected override void OnUpdateFrame ( FrameEventArgs e )
         {
-            if (InitState != null)
+            if ( InitState != null )
             {
-                PushState(InitState);
+                PushState ( InitState );
                 InitState = null;
             }
-            UpdateApp();
-            if (States.Count > 0)
+            UpdateApp ( );
+            if ( States.Count > 0 )
             {
-                var us = States.Peek();
-                us.UpdateState();
-                us.InternalUpdate();
+                VividState us = States.Peek();
+                us.UpdateState ( );
+                us.InternalUpdate ( );
             }
         }
 
         public int fpsL = 0, fps = 0, frames = 0;
 
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void OnRenderFrame ( FrameEventArgs e )
         {
-            if (Environment.TickCount > fpsL + 1000)
+            if ( Environment.TickCount > fpsL + 1000 )
             {
                 fpsL = Environment.TickCount + 1000;
                 fps = frames;
@@ -315,20 +319,20 @@ namespace Vivid3D.App
             Title = AppName;
             Title += $"(Vsync: {VSync}) FPS: {1f / e.Time:0}";
 
-            GL.ClearColor(_BgCol);
+            GL.ClearColor ( _BgCol );
 
             // GL.DepthMask(true);
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
 
-            DrawApp();
-            if (States.Count > 0)
+            DrawApp ( );
+            if ( States.Count > 0 )
             {
-                var rs = States.Peek();
-                rs.DrawState();
+                VividState rs = States.Peek();
+                rs.DrawState ( );
             }
 
-            SwapBuffers();
+            SwapBuffers ( );
         }
     }
 }

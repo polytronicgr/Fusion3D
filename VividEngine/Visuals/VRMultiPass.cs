@@ -2,61 +2,61 @@
 {
     public class VRMultiPass : VRenderer
     {
-        public VRMultiPass()
+        public VRMultiPass ( )
         {
         }
 
-        public override void Init()
+        public override void Init ( )
         {
-            Layers.Add(new VRLMultiPass());
+            Layers.Add ( new VRLMultiPass ( ) );
         }
     }
 
     public class VRNoFx : VRenderer
     {
-        public VRNoFx()
+        public VRNoFx ( )
         {
         }
 
-        public override void Init()
+        public override void Init ( )
         {
-            Layers.Add(new VRLNoFX());
+            Layers.Add ( new VRLNoFX ( ) );
         }
     }
 
     public class VRTerrain : VRenderer
     {
-        public VRTerrain()
+        public VRTerrain ( )
         {
         }
 
-        public override void Init()
+        public override void Init ( )
         {
-            Layers.Add(new VRLTerrain());
+            Layers.Add ( new VRLTerrain ( ) );
         }
     }
 
     public class VRLightMap : VRenderer
     {
-        public VRLightMap()
+        public VRLightMap ( )
         {
         }
 
-        public override void Init()
+        public override void Init ( )
         {
-            Layers.Add(new VRLLightMap());
+            Layers.Add ( new VRLLightMap ( ) );
         }
     }
 
     public class VRMultiPassAnim : VRenderer
     {
-        public VRMultiPassAnim()
+        public VRMultiPassAnim ( )
         {
         }
 
-        public override void Init()
+        public override void Init ( )
         {
-            Layers.Add(new VRLMultiPassAnim());
+            Layers.Add ( new VRLMultiPassAnim ( ) );
         }
     }
 }

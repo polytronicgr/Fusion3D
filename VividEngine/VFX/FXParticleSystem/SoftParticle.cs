@@ -5,14 +5,14 @@ namespace Vivid3D.VFX
 {
     public class SoftParticle : ParticleBase
     {
-        public SoftParticle(Tex.Tex2D img)
+        public SoftParticle ( Tex.Tex2D img )
         {
             Img = img;
         }
 
-        public override void Render()
+        public override void Render ( )
         {
-            var g = VFX.VisualFX.Graph;
+            Scene.SceneGraph g = VFX.VisualFX.Graph;
 
             int sw = Vivid3D.App.VividApp.W;
             int sh = Vivid3D.App.VividApp.H;
@@ -20,31 +20,29 @@ namespace Vivid3D.VFX
             float[] ox = new float[4];
             float[] oy = new float[4];
 
-            ox[0] = (-W / 2);// * Graph.Z * Z;
-            ox[1] = (W / 2);// * Graph.Z * Z;
-            ox[2] = (W / 2);// * Graph.Z* Z ;
-            ox[3] = (-W / 2);// *Graph.Z*Z;
+            ox [ 0 ] = ( -W / 2 );// * Graph.Z * Z;
+            ox [ 1 ] = ( W / 2 );// * Graph.Z * Z;
+            ox [ 2 ] = ( W / 2 );// * Graph.Z* Z ;
+            ox [ 3 ] = ( -W / 2 );// *Graph.Z*Z;
 
-            oy[0] = (-H / 2);// * Graph.Z*Z;
-            oy[1] = (-H / 2);// *Graph.Z*Z;
-            oy[2] = (H / 2);// * Graph.Z * Z;
-            oy[3] = (H / 2);// * Graph.Z * Z;
+            oy [ 0 ] = ( -H / 2 );// * Graph.Z*Z;
+            oy [ 1 ] = ( -H / 2 );// *Graph.Z*Z;
+            oy [ 2 ] = ( H / 2 );// * Graph.Z * Z;
+            oy [ 3 ] = ( H / 2 );// * Graph.Z * Z;
 
             Vector2[] p = Maths.RotateOC(ox, oy, Rot, Z, 0, 0);
 
-            float mx, my;
+            p = Maths.Push ( p , X - g.X , Y - g.Y );
 
-            p = Maths.Push(p, X - g.X, Y - g.Y);
+            p = Maths.RotateOC ( p , g.Rot , g.Z , 0 , 0 );
 
-            p = Maths.RotateOC(p, g.Rot, g.Z, 0, 0);
+            p = Maths.Push ( p , sw / 2 , sh / 2 );
 
-            p = Maths.Push(p, sw / 2, sh / 2);
+            Draw.Render.SetBlend ( Draw.BlendMode.SoftLight );
 
-            Draw.Render.SetBlend(Draw.BlendMode.SoftLight);
+            Draw.Render.Col = new Vector4 ( 1 , 1 , 1 , Alpha );
 
-            Draw.Render.Col = new Vector4(1, 1, 1, Alpha);
-
-            Draw.Render.Image(p, Img);
+            Draw.Render.Image ( p , Img );
 
             /*
             p = Maths.Rotate(p, Rot, 1.0f);
@@ -61,13 +59,15 @@ namespace Vivid3D.VFX
             //   Console.WriteLine("W" + W + " H:" + H);
         }
 
-        public override ParticleBase Clone()
+        public override ParticleBase Clone ( )
         {
-            var np = new SoftParticle(Img);
-            np.XDrag = XDrag;
-            np.YDrag = YDrag;
-            np.ZDrag = ZDrag;
-            np.RDrag = RDrag;
+            SoftParticle np = new SoftParticle ( Img )
+            {
+                XDrag = XDrag ,
+                YDrag = YDrag ,
+                ZDrag = ZDrag ,
+                RDrag = RDrag
+            };
             return np;
         }
     }

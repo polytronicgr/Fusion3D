@@ -7,95 +7,95 @@ namespace Vivid3D.Help
         public static BinaryWriter w;
         public static BinaryReader r;
 
-        public static void WriteMatrix(OpenTK.Matrix4 m)
+        public static void WriteMatrix ( OpenTK.Matrix4 m )
         {
-            WriteVec(m.Row0);
-            WriteVec(m.Row1);
-            WriteVec(m.Row2);
-            WriteVec(m.Row3);
+            WriteVec ( m.Row0 );
+            WriteVec ( m.Row1 );
+            WriteVec ( m.Row2 );
+            WriteVec ( m.Row3 );
         }
 
-        public static void WriteVec(OpenTK.Vector4 v)
+        public static void WriteVec ( OpenTK.Vector4 v )
         {
-            w.Write(v.X);
-            w.Write(v.Y);
-            w.Write(v.Z);
-            w.Write(v.W);
+            w.Write ( v.X );
+            w.Write ( v.Y );
+            w.Write ( v.Z );
+            w.Write ( v.W );
         }
 
-        public static void WriteVec(OpenTK.Vector3 v)
+        public static void WriteVec ( OpenTK.Vector3 v )
         {
-            w.Write(v.X);
-            w.Write(v.Y);
-            w.Write(v.Z);
+            w.Write ( v.X );
+            w.Write ( v.Y );
+            w.Write ( v.Z );
         }
 
-        public static void WriteFloat(float v)
+        public static void WriteFloat ( float v )
         {
-            w.Write(v);
+            w.Write ( v );
         }
 
-        public static void WriteBool(bool v)
+        public static void WriteBool ( bool v )
         {
-            w.Write(v);
+            w.Write ( v );
         }
 
-        public static void WriteString(string s)
+        public static void WriteString ( string s )
         {
-            w.Write(s);
+            w.Write ( s );
         }
 
-        public static void WriteInt(int v)
+        public static void WriteInt ( int v )
         {
-            w.Write(v);
+            w.Write ( v );
         }
 
-        public static int ReadInt()
+        public static int ReadInt ( )
         {
-            return r.ReadInt32();
+            return r.ReadInt32 ( );
         }
 
-        public static void WriteBytes(byte[] b)
+        public static void WriteBytes ( byte [ ] b )
         {
-            w.Write(b.Length);
-            w.Write(b);
+            w.Write ( b.Length );
+            w.Write ( b );
         }
 
-        public static byte[] ReadBytes()
+        public static byte [ ] ReadBytes ( )
         {
             int bc = r.ReadInt32();
-            return r.ReadBytes(bc);
+            return r.ReadBytes ( bc );
         }
 
-        public static string ReadString()
+        public static string ReadString ( )
         {
-            return r.ReadString();
+            return r.ReadString ( );
         }
 
-        public static OpenTK.Matrix4 ReadMatrix()
+        public static OpenTK.Matrix4 ReadMatrix ( )
         {
-            var m = new OpenTK.Matrix4(ReadVec4(), ReadVec4(), ReadVec4(), ReadVec4());
+            OpenTK.Matrix4 m = new OpenTK.Matrix4 ( ReadVec4 ( ) , ReadVec4 ( ) , ReadVec4 ( ) , ReadVec4 ( ) );
             return m;
         }
 
-        public static OpenTK.Vector4 ReadVec4()
+        public static OpenTK.Vector4 ReadVec4 ( )
         {
-            return new OpenTK.Vector4(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
+            return new OpenTK.Vector4 ( r.ReadSingle ( ) , r.ReadSingle ( ) , r.ReadSingle ( ) , r.ReadSingle ( ) );
         }
 
-        public static OpenTK.Vector3 ReadVec3()
+        public static OpenTK.Vector3 ReadVec3 ( )
         {
-            return new OpenTK.Vector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
+            return new OpenTK.Vector3 ( r.ReadSingle ( ) , r.ReadSingle ( ) , r.ReadSingle ( ) );
         }
 
-        public static float ReadFloat()
+        public static float ReadFloat ( )
         {
-            return r.ReadSingle();
+            return r.ReadSingle ( );
         }
 
-        public static bool ReadBool()
+        public static bool ReadBool ( )
         {
-            return r.ReadBoolean();
+            return r.ReadBoolean ( );
         }
     }
 }

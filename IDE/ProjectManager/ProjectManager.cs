@@ -13,74 +13,82 @@ namespace ProjectManager
         public Dictionary<TreeNode, string> ProjMap = new Dictionary<TreeNode, string>();
         public ProjectCore.Project ActiveProject;
 
-        public ProjectManager()
+        public ProjectManager ( )
         {
-            InitializeComponent();
+            InitializeComponent ( );
             Main = this;
 
-            ScanForProjects();
+            ScanForProjects ( );
         }
 
-        public void ScanForProjects()
+        public void ScanForProjects ( )
         {
-            ProjMap.Clear();
-            projTree.Nodes[0].Nodes.Clear();
-            var pd = new DirectoryInfo(ProjectCore.Project.ProjectPath);
-            foreach (var dir in pd.GetDirectories())
+            ProjMap.Clear ( );
+            projTree.Nodes [ 0 ].Nodes.Clear ( );
+            DirectoryInfo pd = new DirectoryInfo(ProjectCore.Project.ProjectPath);
+            foreach ( DirectoryInfo dir in pd.GetDirectories ( ) )
             {
-                var name = dir.Name;
-                var node = new TreeNode(name);
-                projTree.Nodes[0].Nodes.Add(node);
-                ProjMap.Add(node, name);
+                string name = dir.Name;
+                TreeNode node = new TreeNode(name);
+                projTree.Nodes [ 0 ].Nodes.Add ( node );
+                ProjMap.Add ( node , name );
 
                 //    P
             }
-            projTree.Nodes[0].Expand();
+            projTree.Nodes [ 0 ].Expand ( );
         }
 
-        private void NewProject_Click(object sender, EventArgs e)
+        private void NewProject_Click ( object sender , EventArgs e )
         {
-            NewProject = new NewProjectForm();
-            NewProject.Show();
+            NewProject = new NewProjectForm ( );
+            NewProject.Show ( );
         }
 
-        private void projTree_AfterSelect(object sender, TreeViewEventArgs e)
+        private void projTree_AfterSelect ( object sender , TreeViewEventArgs e )
         {
-            var node = e.Node;
+            TreeNode node = e.Node;
 
-            if (node == null) return;
-            if (ProjMap.ContainsKey(node) == false) return;
-            var path = ProjMap[node];
+            if ( node == null )
+            {
+                return;
+            }
 
-            var np = new ProjectCore.Project(path);
+            if ( ProjMap.ContainsKey ( node ) == false )
+            {
+                return;
+            }
 
-            var txt = "Project:" + np.Name + "\n";
+            string path = ProjMap[node];
+
+            ProjectCore.Project np = new ProjectCore.Project ( path );
+
+            string txt = "Project:" + np.Name + "\n";
             txt = txt + "Author:" + np.Author + "\n";
             txt = txt + "Info:" + np.Info;
             projInfo.Text = txt;
             ActiveProject = np;
             iconImg.Image = np.Icon;
-            iconImg.Invalidate();
+            iconImg.Invalidate ( );
         }
 
-        private void LoadProject_Click(object sender, EventArgs e)
+        private void LoadProject_Click ( object sender , EventArgs e )
         {
-            if (ActiveProject == null)
+            if ( ActiveProject == null )
             {
-                MessageBox.Show("No project selected.", "Vivid3D");
+                MessageBox.Show ( "No project selected." , "Vivid3D" );
                 return;
             }
-            RunProject(ActiveProject);
+            RunProject ( ActiveProject );
         }
 
-        public void RunProject(ProjectCore.Project proj)
+        public void RunProject ( ProjectCore.Project proj )
         {
-            var proc = new Process();
-            Console.WriteLine("Starting:" + proj.IDEPath);
+            Process proc = new Process();
+            Console.WriteLine ( "Starting:" + proj.IDEPath );
 
-            proc.StartInfo = new ProcessStartInfo("VividEdit.exe", proj.IDEPath);
-            proc.Start();
-            Environment.Exit(2);
+            proc.StartInfo = new ProcessStartInfo ( "VividEdit.exe" , proj.IDEPath );
+            proc.Start ( );
+            Environment.Exit ( 2 );
         }
     }
 }

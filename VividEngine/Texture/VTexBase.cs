@@ -12,11 +12,11 @@
         public int W, H, D;
         public Format Form = Format.RGBA;
 
-        public virtual void Bind(int texu)
+        public virtual void Bind ( int texu )
         {
         }
 
-        public virtual void Release(int texu)
+        public virtual void Release ( int texu )
         {
         }
     }

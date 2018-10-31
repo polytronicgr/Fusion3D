@@ -52,7 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="irrKlang.NET4">
-      <HintPath>..\Dll\irrKlang.NET4.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\v2\Vivid3D\Dll\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

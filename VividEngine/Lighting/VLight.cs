@@ -17,24 +17,54 @@ namespace Vivid3D.Lighting
     }
     public class GraphLight3D : GraphNode3D
     {
+        public GraphLight3D()
+        {
+            Diff = new Vector3(0.6f, 0.6f, 0.6f);
+            Spec = new Vector3(0.2f, 0.2f, 0.2f);
+            Amb = new Vector3(0.1f, 0.1f, 0.1f);
+            Atten = 0.1f;
+            CreateShadowFBO();
+            LightNum++;
+            Range = 800;
+
+        }
+
         public static GraphLight3D Active = null;
         public bool CastShadows = true;
         public LightType Type = LightType.Point;
-        public Vector3 Diff = new Vector3(0.5f, 0.5f, 0.5f);
-        public Vector3 Spec = new Vector3(0.4f, 0.4f, 0.4f);
+        public Vector3 Diff
+        {
+            get;
+            set;
+        }
+
+          
+        public Vector3 Spec
+        {
+            get;
+            set;
+        }
+        public Vector3 Amb
+        {
+            get;
+            set;
+        }
         public static int LightNum = 0;
-        public Vector3 Amb = new Vector3(0,0,0);
-        public float Atten = 0.002f;
+  
+        public float Atten
+        {
+            get;
+            set;
+        }
      //   public Vector3 AmbCE = 0.3f;
         public Texture.VTexCube ShadowMap = null;
         public VFrameBufferCube ShadowFB = null;
-        public float Range = 100.0f;
-        public GraphLight3D()
+        public float Range
         {
-            //    ShadowMap = new Texture.VTexCube(Quality.ShadowMapWidth, Quality.ShadowMapHeight);
-            CreateShadowFBO();
-            LightNum++;
+            get;
+            set;
         }
+       
         public void Write()
         {
             Help.IOHelp.WriteMatrix(LocalTurn);

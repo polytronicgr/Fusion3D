@@ -247,6 +247,8 @@ namespace Vivid3D.Data
         }
         public Vector3 GetNorm(int id)
         {
+            return VertexData[TriData[id].V0].Norm;
+
             id = (int)Indices[id];
             return new Vector3(Norm[id * 3], Norm[id * 3 + 1], Norm[id * 3 + 2]);
         }
@@ -270,21 +272,63 @@ namespace Vivid3D.Data
         }
         public void SetNorm(int id, Vector3 n, Vector3 bi, Vector3 tan)
         {
-            id = (int)Indices[id];
-            Norm[id * 3] = n.X;
-            Norm[id * 3 + 1] = n.Y;
-            Norm[id * 3 + 2] = n.Z;
 
-            Bi[id * 3] = bi.X;
-            Bi[id * 3 + 1] = bi.Y;
-            Bi[id * 3 + 2] = bi.Z;
+            Vertex n1 = VertexData[TriData[id].V0];
+            Vertex n2 = VertexData[TriData[id].V1];
+            Vertex n3 = VertexData[TriData[id].v2];
 
-            Tan[id * 3] = tan.X;
-            Tan[id * 3 + 1] = tan.Y;
-            Tan[id * 3 + 2] = tan.Z;
+            n1.Norm = n;
+            n2.Norm = n;
+            n3.Norm = n;
+
+            n1.BiNorm = bi;
+            n2.BiNorm = bi;
+            n3.BiNorm = bi;
+
+            n1.Tan = tan;
+            n2.Tan = tan;
+            n3.Tan = tan;
+
+            VertexData[TriData[id].V0] = n1;
+            VertexData[TriData[id].V1] = n2;
+            VertexData[TriData[id].v2] = n3;
+           
         }
         public void GenerateTangents()
         {
+      
+            for(int t = 0; t < TriData.Length; t++)
+            {
+                Vector3 v1, v2, v3;
+                v1 = VertexData[TriData[t].V0].Pos;
+                v2 = VertexData[TriData[t].V1].Pos;
+
+                v3 = VertexData[TriData[t].v2].Pos;
+
+                Vector3 t1, t2, t3;
+
+                t1 = new Vector3(VertexData[TriData[t].V0].UV);
+                t2 = new Vector3(VertexData[TriData[t].V1].UV);
+                t3 = new Vector3(VertexData[TriData[t].v2].UV);
+
+                Vector3 v2v1 = v2 - v1;
+                Vector3 v3v1 = v3 - v1;
+
+                float c1 = t2.X - t1.X;
+                float c2 = t2.Y - t1.Y;
+
+                float c3 = t3.X - t1.X;
+                float c4 = t3.Y - t1.Y;
+
+                Vector3 n = GetNorm(t);
+
+                Vector3 tan = new Vector3(c3 * v2v1.X - c2 * v3v1.X, c3 * v2v1.Y - c2 * v3v1.Y, c3 * v2v1.Z - c2 * v3v1.Z);
+                Vector3 bi = Vector3.Cross(n, tan).Normalized();
+                Vector3 st = Vector3.Cross(bi, n).Normalized();
+
+                SetNorm(t, n, bi, tan);
+
+            }
             return;
             // Vector3 v1, v2, v3;
             // Vector3 u1, u2, u3;

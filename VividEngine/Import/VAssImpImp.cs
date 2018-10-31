@@ -536,6 +536,10 @@ namespace Vivid3D.Import
             {
 
                 s = e.ImportFile(file, PostProcessSteps.OptimizeMeshes | PostProcessSteps.OptimizeGraph | PostProcessSteps.FindInvalidData | PostProcessSteps.FindDegenerates | PostProcessSteps.Triangulate | PostProcessSteps.ValidateDataStructure | PostProcessSteps.CalculateTangentSpace);
+                if (s.HasAnimations)
+                {
+                    return LoadAnimNode(path);
+                }
             }
             catch(AssimpException ae)
             {

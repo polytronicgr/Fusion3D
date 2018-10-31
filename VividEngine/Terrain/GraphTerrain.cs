@@ -124,6 +124,7 @@ namespace Vivid3D.Terrain
 
             int vid = 0;
 
+
             for (int sy = 0; sy < ysegs; sy++)
             {
                 for (int sx = 0; sx < xsegs; sx++)
@@ -139,6 +140,11 @@ namespace Vivid3D.Terrain
             for (int i = 0; i < indices.Count; i++)
             {
                 mi[i] = (uint)indices[i];
+            }
+
+            for (int i = 0; i < indices.Count / 3; i++)
+            {
+                TMesh.SetTri(i, indices[i * 3], indices[i * 3 + 1], indices[i * 3 + 2]);
             }
 
             TMesh.Indices = mi;
@@ -249,6 +255,11 @@ namespace Vivid3D.Terrain
             for (int i = 0; i < indices.Count; i++)
             {
                 mi[i] = (uint)indices[i];
+            }
+
+            for (int i = 0; i < indices.Count / 3; i++)
+            {
+                TMesh.SetTri(i, indices[i * 3], indices[i * 3 + 1], indices[i * 3 + 2]);
             }
 
             TMesh.Indices = mi;

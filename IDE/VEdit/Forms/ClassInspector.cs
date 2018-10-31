@@ -22,6 +22,79 @@ namespace VividEdit.Forms
         public Inspectors.InspectorBase IC = null;
         public void Inspect(object cls)
         {
+
+            Label header = new Label();
+            header.Text = "Inspecting:" + cls.GetType().Name;
+            header.Location = new Point(5, 5);
+            header.Size = new Size(120, 25);
+            Controls.Add(header);
+
+            var type = cls.GetType();
+
+            int propy = 30;
+
+            foreach(var prop in type.GetProperties())
+            {
+
+                Label prop_header = new Label();
+                prop_header.Text = prop.Name;
+                prop_header.Location = new Point(5, propy);
+                prop_header.Size = new Size(250, 25);
+
+                if (prop.PropertyType == typeof(OpenTK.Vector3))
+                {
+
+                    Label labx, laby, labz;
+                    labx = new Label();
+                    laby = new Label();
+                    labz = new Label();
+
+                    TextBox boxx, boxy, boxz;
+
+                    boxx = new TextBox();
+                    boxy = new TextBox();
+                    boxz = new TextBox();
+
+                    labx.Location = new Point(5, propy + 25);
+                    laby.Location = new Point(120, propy + 25);
+                    labz.Location = new Point(235, propy + 25);
+
+                    labx.Size = new Size(15, 25);
+                    laby.Size = new Size(15, 25);
+                    labz.Size = new Size(15, 25);
+                    labx.Text = "X";
+                    laby.Text = "Y";
+                    labz.Text = "Z";
+
+                    Controls.Add(labx);Controls.Add(laby);Controls.Add(labz);
+
+                    boxx.Location = new Point(20, propy + 22);
+                    boxy.Location = new Point(135, propy + 22);
+                    boxz.Location = new Point(250, propy + 22);
+
+                    boxx.Size = new Size(80, 25);
+                    boxy.Size = new Size(80, 25);
+                    boxz.Size = new Size(80, 25);
+
+                    Controls.Add(boxx);Controls.Add(boxy);Controls.Add(boxz);
+
+                    var v3 = (OpenTK.Vector3)prop.GetAccessors()[0].Invoke(cls, null);
+
+
+                    boxx.Text = v3.X.ToString();boxy.Text = v3.Y.ToString();boxz.Text = v3.Z.ToString();
+
+
+
+
+                }
+
+                propy += 50;
+                this.Controls.Add(prop_header);
+
+            }
+
+
+            return;
             if(cls is Vivid3D.Material.Material3D)
             {
                 var cls3 = cls as Vivid3D.Material.Material3D;
@@ -101,6 +174,7 @@ namespace VividEdit.Forms
         {
             
             //
+            /*
             if (inspectBox.Checked)
             {
                 Console.WriteLine("Changed True");
@@ -111,6 +185,7 @@ namespace VividEdit.Forms
             {
                 VividEdit.VividED.Main.EndInspect();
             }
+            */
         }
 
         private void inspectBox_CheckStateChanged(object sender, EventArgs e)

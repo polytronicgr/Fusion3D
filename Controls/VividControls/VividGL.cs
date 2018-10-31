@@ -22,7 +22,7 @@ namespace VividControls
         public OnMouseUp EvMouseUp = null;
         public OnKeyDown EvKeyDown = null;
         public OnKeyUp  EvKeyUp = null;
-        public VividGL(OnLoad load) : base(new OpenTK.Graphics.GraphicsMode(32,24,0,16))
+        public VividGL(OnLoad load) : base(new OpenTK.Graphics.GraphicsMode(32,24,0,8))
         {
             EvLoad = load;
             InitializeComponent();

@@ -1,5 +1,4 @@
-﻿using System;
-using Vivid3D.Texture;
+﻿using Vivid3D.Texture;
 
 namespace Vivid3D.Material
 {
@@ -47,7 +46,7 @@ namespace Vivid3D.Material
 
         public void Read ( )
         {
-            Console.WriteLine ( "Thread:" + System.Threading.Thread.CurrentThread.Name + System.Threading.Thread.CurrentThread );
+            //   Console.WriteLine ( "Thread:" + System.Threading.Thread.CurrentThread.Name + System.Threading.Thread.CurrentThread );
             Diff = Help.IOHelp.ReadVec3 ( );
             Spec = Help.IOHelp.ReadVec3 ( );
             Shine = Help.IOHelp.ReadFloat ( );

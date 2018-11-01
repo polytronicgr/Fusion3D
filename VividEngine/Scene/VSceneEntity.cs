@@ -8,8 +8,14 @@ namespace Vivid3D.Scene
 {
     public class GraphEntity3D : GraphNode3D
     {
-        public VRenderer Renderer = null;
+        public Matrix4 GlobalInverse;
         public List<VMesh> Meshes = new List<VMesh>();
+        public Physics.PyObject PO = null;
+        public Physics.PyType PyType;
+        public VRenderer Renderer = null;
+        private float bw, bh, bd;
+
+        private float sw, sh, sd;
 
         public Bounds Bounds
         {
@@ -34,10 +40,45 @@ namespace Vivid3D.Scene
             }
         }
 
-        private float sw, sh, sd;
-        private float bw, bh, bd;
+        public List<Vector3> GetAllVerts
+        {
+            get
+            {
+                List<Vector3> verts = new List<Vector3>();
+                GetVerts ( verts , this );
+                return verts;
+            }
+        }
 
-        public Matrix4 GlobalInverse;
+        public void AddMesh ( VMesh mesh )
+        {
+            Meshes.Add ( mesh );
+        }
+
+        public virtual void Bind ( )
+        {
+        }
+
+        public void Clean ( )
+        {
+            Meshes = new List<VMesh> ( );
+            Renderer = null;
+        }
+
+        public void EnablePy ( Physics.PyType type )
+        {
+            PyType = type;
+            switch ( PyType )
+            {
+                case Physics.PyType.Box:
+                    PO = new Physics.PyDynamic ( type , this );
+                    break;
+
+                case Physics.PyType.Mesh:
+                    PO = new Physics.PyStatic ( this );
+                    break;
+            }
+        }
 
         public void GetBounds ( GraphEntity3D node )
         {
@@ -81,100 +122,6 @@ namespace Vivid3D.Scene
             }
         }
 
-        public Physics.PyType PyType;
-        public Physics.PyObject PO = null;
-
-        public void EnablePy ( Physics.PyType type )
-        {
-            PyType = type;
-            switch ( PyType )
-            {
-                case Physics.PyType.Box:
-                    PO = new Physics.PyDynamic ( type , this );
-                    break;
-
-                case Physics.PyType.Mesh:
-                    PO = new Physics.PyStatic ( this );
-                    break;
-            }
-        }
-
-        public List<Vector3> GetAllVerts
-        {
-            get
-            {
-                List<Vector3> verts = new List<Vector3>();
-                GetVerts ( verts , this );
-                return verts;
-            }
-        }
-
-        public void ScaleMeshes ( float x , float y , float z )
-        {
-            DScale ( x , y , z , this );
-        }
-
-        private void DScale ( float x , float y , float z , GraphEntity3D node )
-        {
-            foreach ( VMesh m in node.Meshes )
-            {
-                m.Scale ( x , y , z );
-            }
-            foreach ( GraphNode3D snode in node.Sub )
-            {
-                DScale ( x , y , z , snode as GraphEntity3D );
-            }
-        }
-
-        public void Write ( )
-        {
-            Help.IOHelp.WriteMatrix ( LocalTurn );
-            Help.IOHelp.WriteVec ( LocalPos );
-            Help.IOHelp.WriteVec ( LocalScale );
-            Help.IOHelp.WriteString ( Name );
-            Help.IOHelp.WriteBool ( AlwaysAlpha );
-            Help.IOHelp.WriteBool ( On );
-            Help.IOHelp.WriteInt ( Sub.Count );
-
-            int mc = Meshes.Count;
-            Help.IOHelp.WriteInt ( mc );
-            foreach ( VMesh msh in Meshes )
-            {
-                msh.Write ( );
-            }
-            foreach ( GraphNode3D sn in Sub )
-            {
-                GraphEntity3D e = sn as GraphEntity3D;
-                e.Write ( );
-            }
-        }
-
-        public void Read ( )
-        {
-            LocalTurn = Help.IOHelp.ReadMatrix ( );
-            LocalPos = Help.IOHelp.ReadVec3 ( );
-            LocalScale = Help.IOHelp.ReadVec3 ( );
-            Name = Help.IOHelp.ReadString ( );
-            AlwaysAlpha = Help.IOHelp.ReadBool ( );
-            On = Help.IOHelp.ReadBool ( );
-            int ns = Help.IOHelp.ReadInt();
-            int mc = Help.IOHelp.ReadInt();
-            for ( int m = 0 ; m < mc ; m++ )
-            {
-                VMesh msh = new VMesh();
-                msh.Read ( );
-                Meshes.Add ( msh );
-            }
-            for ( int i = 0 ; i < ns ; i++ )
-            {
-                GraphEntity3D gn = new GraphEntity3D();
-                Sub.Add ( gn );
-                gn.Top = this;
-                gn.Read ( );
-            }
-            SetMultiPass ( );
-        }
-
         public void GetVerts ( List<Vector3> verts , GraphEntity3D node )
         {
             foreach ( VMesh m in node.Meshes )
@@ -201,15 +148,109 @@ namespace Vivid3D.Scene
             //     Renderer = new VRMultiPass();
         }
 
-        public void AddMesh ( VMesh mesh )
+        public virtual void PostRender ( )
         {
-            Meshes.Add ( mesh );
         }
 
-        public void Clean ( )
+        /// <summary>
+        /// To be called AFTER data asscoiation.
+        public virtual void PreRender ( )
         {
-            Meshes = new List<VMesh> ( );
-            Renderer = null;
+        }
+
+        public override void Present ( GraphCam3D c )
+        {
+            //  GL.MatrixMode(MatrixMode.Projection);
+            // GL.LoadMatrix(ref c.ProjMat);
+            SetMats ( c );
+            Bind ( );
+            PreRender ( );
+            Render ( );
+            PostRender ( );
+            Release ( );
+            //      foreach (var s in Sub)
+            //    {
+            //      s.Present(c);
+            // }
+        }
+
+        public override void PresentDepth ( GraphCam3D c )
+        {
+            SetMats ( c );
+            Bind ( );
+            PreRender ( );
+            RenderDepth ( );
+            PostRender ( );
+            Release ( );
+            foreach ( GraphNode3D s in Sub )
+            {
+                s.PresentDepth ( c );
+            }
+        }
+
+        public void Read ( )
+        {
+            int ns1 = Help.IOHelp.ReadInt();
+            for ( int i = 0 ; i < ns1 ; i++ )
+            {
+                Script.ScriptBase sb = new Script.ScriptBase
+                {
+                    Name = Help.IOHelp.ReadString ( ) ,
+                    FilePath = Help.IOHelp.ReadString ( )
+                };
+                Scripts.Add ( sb );
+            }
+            LocalTurn = Help.IOHelp.ReadMatrix ( );
+            LocalPos = Help.IOHelp.ReadVec3 ( );
+            LocalScale = Help.IOHelp.ReadVec3 ( );
+            Name = Help.IOHelp.ReadString ( );
+            AlwaysAlpha = Help.IOHelp.ReadBool ( );
+            On = Help.IOHelp.ReadBool ( );
+            int ns = Help.IOHelp.ReadInt();
+            int mc = Help.IOHelp.ReadInt();
+            for ( int m = 0 ; m < mc ; m++ )
+            {
+                VMesh msh = new VMesh();
+                msh.Read ( );
+                Meshes.Add ( msh );
+            }
+            for ( int i = 0 ; i < ns ; i++ )
+            {
+                GraphEntity3D gn = new GraphEntity3D();
+                Sub.Add ( gn );
+                gn.Top = this;
+                gn.Read ( );
+            }
+            SetMultiPass ( );
+        }
+
+        public virtual void Release ( )
+        {
+        }
+
+        public virtual void Render ( )
+        {
+            Effect.FXG.Ent = this;
+            foreach ( VMesh m in Meshes )
+            {
+                Effect.FXG.Mesh = m;
+                Renderer.Render ( m );
+            }
+        }
+
+        public virtual void RenderDepth ( )
+        {
+            Effect.FXG.Ent = this;
+            foreach ( VMesh m in Meshes )
+            {
+                Effect.FXG.Mesh = m;
+                Renderer.RenderDepth ( m );
+            }
+        }
+
+        public void ScaleMeshes ( float x , float y , float z )
+        {
+            DScale ( x , y , z , this );
         }
 
         public void SetMat ( Material3D mat )
@@ -232,36 +273,6 @@ namespace Vivid3D.Scene
             }
         }
 
-        public override void PresentDepth ( GraphCam3D c )
-        {
-            SetMats ( c );
-            Bind ( );
-            PreRender ( );
-            RenderDepth ( );
-            PostRender ( );
-            Release ( );
-            foreach ( GraphNode3D s in Sub )
-            {
-                s.PresentDepth ( c );
-            }
-        }
-
-        public override void Present ( GraphCam3D c )
-        {
-            //  GL.MatrixMode(MatrixMode.Projection);
-            // GL.LoadMatrix(ref c.ProjMat);
-            SetMats ( c );
-            Bind ( );
-            PreRender ( );
-            Render ( );
-            PostRender ( );
-            Release ( );
-            //      foreach (var s in Sub)
-            //    {
-            //      s.Present(c);
-            // }
-        }
-
         public void SetMats ( GraphCam3D c )
         {
             Effect.FXG.Proj = c.ProjMat;
@@ -279,43 +290,45 @@ namespace Vivid3D.Scene
             Effect.FXG.PrevLocal = PrevWorld;
         }
 
-        /// <summary>
-        /// To be called AFTER data asscoiation.
-
-        public virtual void Bind ( )
+        public void Write ( )
         {
-        }
-
-        public virtual void PreRender ( )
-        {
-        }
-
-        public virtual void RenderDepth ( )
-        {
-            Effect.FXG.Ent = this;
-            foreach ( VMesh m in Meshes )
+            Help.IOHelp.WriteInt ( Scripts.Count );
+            foreach ( Script.ScriptBase s in Scripts )
             {
-                Effect.FXG.Mesh = m;
-                Renderer.RenderDepth ( m );
+                Help.IOHelp.WriteString ( s.Name );
+                Help.IOHelp.WriteString ( s.FilePath );
+            }
+            Help.IOHelp.WriteMatrix ( LocalTurn );
+            Help.IOHelp.WriteVec ( LocalPos );
+            Help.IOHelp.WriteVec ( LocalScale );
+            Help.IOHelp.WriteString ( Name );
+            Help.IOHelp.WriteBool ( AlwaysAlpha );
+            Help.IOHelp.WriteBool ( On );
+            Help.IOHelp.WriteInt ( Sub.Count );
+
+            int mc = Meshes.Count;
+            Help.IOHelp.WriteInt ( mc );
+            foreach ( VMesh msh in Meshes )
+            {
+                msh.Write ( );
+            }
+            foreach ( GraphNode3D sn in Sub )
+            {
+                GraphEntity3D e = sn as GraphEntity3D;
+                e.Write ( );
             }
         }
 
-        public virtual void Render ( )
+        private void DScale ( float x , float y , float z , GraphEntity3D node )
         {
-            Effect.FXG.Ent = this;
-            foreach ( VMesh m in Meshes )
+            foreach ( VMesh m in node.Meshes )
             {
-                Effect.FXG.Mesh = m;
-                Renderer.Render ( m );
+                m.Scale ( x , y , z );
             }
-        }
-
-        public virtual void PostRender ( )
-        {
-        }
-
-        public virtual void Release ( )
-        {
+            foreach ( GraphNode3D snode in node.Sub )
+            {
+                DScale ( x , y , z , snode as GraphEntity3D );
+            }
         }
     }
 }

@@ -56,7 +56,95 @@ namespace VividEdit.Forms
                     Size = new Size ( 250 , 25 )
                 };
 
-                if ( prop.PropertyType == typeof ( string ) )
+                if ( prop.PropertyType == typeof ( System.Collections.Generic.List<Vivid3D.Script.ScriptBase> ) )
+                {
+                    Label val = new Label
+                    {
+                        Text = prop.Name,
+                        Location = new Point(5,propy+25),
+                        Size = new Size(50,25)
+                    };
+
+                    Button news = new Button
+                    {
+                        Text = "New" ,
+                        Location = new Point ( 60 , propy + 25 ) ,
+                        Size = new Size ( 60 , 25 )
+                    };
+                    System.Collections.Generic.List<Vivid3D.Script.ScriptBase> sv = (System.Collections.Generic.List<Vivid3D.Script.ScriptBase>)prop.GetAccessors()[0].Invoke(cls,null);
+                    System.Reflection.MethodInfo sm = prop.GetSetMethod ( );
+                    object[] pp = new object[1];
+
+                    void on_new ( object o , EventArgs e )
+                    {
+                        Vivid3D.Script.ScriptBase sb = new Vivid3D.Script.ScriptBase ( );
+                        sv.Add ( sb );
+
+                        sb.Name = "NewScript.cs";
+                        sb.FilePath = VividEdit.VividED.CurProject.ContentPath + "\\Script\\NewScript.cs";
+
+                        System.IO.File.Create ( VividEdit.VividED.CurProject.ContentPath + "\\Script\\NewScript.cs" ).Close ( );
+
+                        pp [ 0 ] = sv;
+
+                        sm?.Invoke ( cls , pp );
+
+                        Inspect ( cls );
+                    }
+
+                    propy += 25;
+
+                    news.Click += on_new;
+
+                    propy += 10;
+
+                    foreach ( Vivid3D.Script.ScriptBase s in sv )
+                    {
+                        TextBox namebox = new TextBox
+                        {
+                            Location = new Point ( 5 , propy + 25 ) ,
+                            Size = new Size ( 90 , 25 ) ,
+                            Text = s.Name
+                        };
+
+                        void on_tc ( object o , EventArgs e )
+                        {
+                            if ( namebox.Text == "" || namebox.Text == " " || namebox.Text == "    " )
+                            {
+                                return;
+                            }
+                            s.Name = namebox.Text;
+
+                            System.IO.File.Move ( s.FilePath , VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + namebox.Text );
+                            s.FilePath = VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + s.Name;
+                        }
+                        namebox.TextChanged += on_tc;
+
+                        Controls.Add ( namebox );
+                        Button del = new Button
+                        {
+                            Location = new Point ( 105 , propy + 25 ) ,
+                            Size = new Size ( 60 , 25 ),
+                            Text = "Delete"
+                        };
+                        Controls.Add ( del );
+
+                        void del_s ( object o , EventArgs e )
+                        {
+                            System.IO.File.Delete ( s.FilePath );
+                            sv.Remove ( s );
+                            Inspect ( cls );
+                        }
+
+                        del.Click += del_s;
+
+                        propy += 25;
+                    }
+
+                    Controls.Add ( val );
+                    Controls.Add ( news );
+                }
+                else if ( prop.PropertyType == typeof ( string ) )
                 {
                     Label val = new Label
                     {

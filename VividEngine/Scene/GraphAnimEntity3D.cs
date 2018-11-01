@@ -6,10 +6,22 @@ namespace Vivid3D.Scene
 {
     public class GraphAnimEntity3D : GraphEntity3D
     {
+        public Animation.AnimEvaluator _Anim;
+        public double _timePos = 0;
+        public Animation.Animator Animator = null;
         public Vivid3D.Data.VMesh Mesh = null;
         public List<Vivid3D.Data.VMesh.Subset> Subsets = new List<Data.VMesh.Subset>();
 
-        public Animation.Animator Animator = null;// new Animation.Animator();
+        // new Animation.Animator();
+
+        private readonly Queue<string> _clipQueue = new Queue<string>();
+
+        private string _AnimName = "";
+
+        public GraphAnimEntity3D ( )
+        {
+            Console.WriteLine ( "AnimEntity created." );
+        }
 
         public string AnimName
         {
@@ -25,7 +37,6 @@ namespace Vivid3D.Scene
         // these are the available animation clips
         public IEnumerable<string> Clips => Animator.Animations.Select ( a => a.Name );
 
-        private readonly Queue<string> _clipQueue = new Queue<string>();
         public bool LoopClips { get; set; }
 
         // the bone transforms for the mesh instance
@@ -58,10 +69,6 @@ namespace Vivid3D.Scene
                 Console.WriteLine ( "Mesh:" + m.Name );
             }
         }
-
-        public double _timePos = 0;
-        public Animation.AnimEvaluator _Anim;
-        private string _AnimName = "";
 
         /// </summary>
         public override void UpdateNode ( float dt )

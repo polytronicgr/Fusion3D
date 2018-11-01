@@ -32,6 +32,12 @@ namespace Vivid3D.Script
             }
         }
 
+        public string FilePath
+        {
+            get;
+            set;
+        }
+
         public virtual void Begin ( )
         {
         }

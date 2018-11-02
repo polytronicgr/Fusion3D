@@ -105,6 +105,7 @@ namespace VividEdit.Forms
 
             Cam.Turn ( new Vector3 ( -EditPad.RightY, -EditPad.RightX, 0 ), Space.Local );
             Cam.Move ( new Vector3 ( EditPad.LeftX * 2, 0, -EditPad.LeftY * 2 ), Space.Local );
+            EditPad.SetFB ( EditPad.LeftTrigger, EditPad.RightTrigger );
 
             //throw new NotImplementedException ( );
         }

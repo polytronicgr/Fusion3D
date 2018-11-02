@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using System;
 using System.IO;
 
 namespace Vivid3D.Effect
@@ -86,8 +87,8 @@ namespace Vivid3D.Effect
                 GL.ShaderSource ( _Vert, File.ReadAllText ( @_VShader ) );
                 GL.CompileShader ( _Vert );
             }
-            //Console.WriteLine(_VShader);
-            //           Console.WriteLine(GL.GetShaderInfoLog(_Vert));
+            Console.WriteLine ( _VShader );
+            Console.WriteLine ( GL.GetShaderInfoLog ( _Vert ) );
 
             if ( _FShader != "" )
             {
@@ -95,8 +96,8 @@ namespace Vivid3D.Effect
                 GL.ShaderSource ( _Frag, File.ReadAllText ( @_FShader ) );
                 GL.CompileShader ( _Frag );
             }
-            //Console.WriteLine(_FShader);
-            //Console.WriteLine(GL.GetShaderInfoLog(_Frag));
+            Console.WriteLine ( _FShader );
+            Console.WriteLine ( GL.GetShaderInfoLog ( _Frag ) );
             _Program = GL.CreateProgram ( );
 
             GL.AttachShader ( _Program, _Vert );

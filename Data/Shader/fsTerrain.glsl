@@ -40,17 +40,6 @@ uniform sampler2D tSpec;
 
 void main(){
  
-    float dis = abs(length(fragPos-lightPos));
-
-    float dv = dis/lightRange;
-
-    if(dv>1.0) dv = 1.0;
-    dv = 1.0-dv;
-
-
-
-
-
     vec3 normal = texture2D(tN,texCoords).rgb;
     normal = normalize(normal * 2.0 - 1.0);
 
@@ -100,13 +89,7 @@ void main(){
     }
     shadow /= float(samples);
     shadow = 1.0 - shadow;
-
-    color = color * dv;
-    diffuse = diffuse * dv;
-    specular * specular * dv;
-
-    colorout = ((color * diffuse) * vec3(shadow,shadow,shadow) + ((specular * texture2D(tSpec,texCoords).rgb))*dv) * vec3(shadow,shadow,shadow);
-
+    colorout = (color * diffuse) * vec3(shadow,shadow,shadow) + (specular * texture2D(tSpec,texCoords).rgb);
 
     /*
     vec3 ld = (fragPos-lightPos);

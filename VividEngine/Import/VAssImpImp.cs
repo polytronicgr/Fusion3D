@@ -470,7 +470,7 @@ namespace Vivid3D.Import
             Assimp.Scene s = null;
             try
             {
-                s = e.ImportFile ( file, PostProcessSteps.OptimizeMeshes | PostProcessSteps.OptimizeGraph | PostProcessSteps.FindInvalidData | PostProcessSteps.FindDegenerates | PostProcessSteps.Triangulate | PostProcessSteps.ValidateDataStructure | PostProcessSteps.CalculateTangentSpace );
+                s = e.ImportFile ( file, PostProcessSteps.OptimizeMeshes | PostProcessSteps.OptimizeGraph | PostProcessSteps.FindInvalidData | PostProcessSteps.FindDegenerates | PostProcessSteps.Triangulate | PostProcessSteps.ValidateDataStructure | PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateNormals );
                 if ( s.HasAnimations )
                 {
                     return LoadAnimNode ( path );
@@ -530,11 +530,12 @@ namespace Vivid3D.Import
                 Console.WriteLine ( "SC:" + sc );
                 if ( mat.HasColorDiffuse )
                 {
-                    vm.Diff = CTV ( mat.ColorDiffuse );
+                    // vm.Diff = CTV ( mat.ColorDiffuse );
+                    Console.WriteLine ( "Diff:" + vm.Diff );
                 }
                 if ( mat.HasColorSpecular )
                 {
-                    vm.Spec = CTV ( mat.ColorSpecular );
+                    // vm.Spec = CTV ( mat.ColorSpecular );
                     Console.WriteLine ( "Spec:" + vm.Spec );
                 }
                 if ( mat.HasShininess )
@@ -566,30 +567,12 @@ namespace Vivid3D.Import
 
                     if ( t1.FilePath != null )
                     {
-                        try
+                        //Console.WriteLine ( "Tex:" + t1.FilePath );
+                        // Console.Write("t1:" + t1.FilePath);
+                        vm.TCol = new Texture.VTex2D ( IPath + "\\" + t1.FilePath.Replace ( ".dds", ".png" ), Texture.LoadMethod.Single, false );
+                        if ( File.Exists ( IPath + "\\" + "norm_" + t1.FilePath ) )
                         {
-                            // Console.Write("t1:" + t1.FilePath);
-                            vm.TCol = new Texture.VTex2D ( IPath + "\\" + t1.FilePath.Replace ( ".dds", ".png" ), Texture.LoadMethod.Single, false );
-                            if ( File.Exists ( IPath + "norm" + t1.FilePath ) )
-                            {
-                                // vm.TNorm = new Texture.VTex2D(IPath + "norm" +
-                                // t1.FilePath,Texture.LoadMethod.Single, false);
-
-                                // Console.WriteLine("TexLoaded");
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    if ( true )
-                    {
-                        if ( new FileInfo ( t1.FilePath ).Exists == true )
-                        {
-                            //  var tex = App.AppSal.CreateTex2D();
-                            //  tex.Path = t1.FilePath;
-                            // tex.Load();
-                            //m2.DiffuseMap = tex;
+                            vm.TNorm = new Texture.VTex2D ( IPath + "\\" + "norm_" + t1.FilePath, Texture.LoadMethod.Single, false );
                         }
                     }
                 }

@@ -8,7 +8,7 @@ namespace Vivid3D.Scene
     {
         public Vector3 LR = new Vector3(0, 0, 0);
 
-        public Matrix4 ProjMat => Matrix4.CreatePerspectiveFieldOfView ( MathHelper.DegreesToRadians ( FOV ) , AppInfo.RW / AppInfo.RH , MinZ , MaxZ );
+        public Matrix4 ProjMat => Matrix4.CreatePerspectiveFieldOfView ( MathHelper.DegreesToRadians ( FOV ), AppInfo.RW / AppInfo.RH, MinZ, MaxZ );
 
         public void Write ( )
         {
@@ -26,13 +26,13 @@ namespace Vivid3D.Scene
             MaxZ = IOHelp.ReadFloat ( );
         }
 
-        public override void Rot ( Vector3 r , Space s )
+        public override void Rot ( Vector3 r, Space s )
         {
             LR = r;
             CalcMat ( );
         }
 
-        public override void Turn ( Vector3 t , Space s )
+        public override void Turn ( Vector3 t, Space s )
         {
             LR = LR + t;
             //LR.Z = 0;
@@ -75,7 +75,7 @@ namespace Vivid3D.Scene
 
         public GraphCam3D ( )
         {
-            Rot ( new Vector3 ( 0 , 0 , 0 ) , Space.Local );
+            Rot ( new Vector3 ( 0, 0, 0 ), Space.Local );
         }
 
         public Matrix4 CamWorld

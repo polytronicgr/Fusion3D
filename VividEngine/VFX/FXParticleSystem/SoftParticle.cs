@@ -32,17 +32,17 @@ namespace Vivid3D.VFX
 
             Vector2[] p = Maths.RotateOC(ox, oy, Rot, Z, 0, 0);
 
-            p = Maths.Push ( p , X - g.X , Y - g.Y );
+            p = Maths.Push ( p, X - g.X, Y - g.Y );
 
-            p = Maths.RotateOC ( p , g.Rot , g.Z , 0 , 0 );
+            p = Maths.RotateOC ( p, g.Rot, g.Z, 0, 0 );
 
-            p = Maths.Push ( p , sw / 2 , sh / 2 );
+            p = Maths.Push ( p, sw / 2, sh / 2 );
 
             Draw.Render.SetBlend ( Draw.BlendMode.SoftLight );
 
-            Draw.Render.Col = new Vector4 ( 1 , 1 , 1 , Alpha );
+            Draw.Render.Col = new Vector4 ( 1, 1, 1, Alpha );
 
-            Draw.Render.Image ( p , Img );
+            Draw.Render.Image ( p, Img );
 
             /*
             p = Maths.Rotate(p, Rot, 1.0f);

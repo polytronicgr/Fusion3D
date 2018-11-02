@@ -165,21 +165,21 @@ namespace Vivid3D.VFX
             H = 32;
         }
 
-        public void Spawn ( int number , float x , float y , float z , float xi , float yi , float zi )
+        public void Spawn ( int number, float x, float y, float z, float xi, float yi, float zi )
         {
             Random rnd = new Random(Environment.TickCount);
 
-            for ( int i = 0 ; i < number ; i++ )
+            for ( int i = 0; i < number; i++ )
             {
                 foreach ( ParticleBase pbase in Bases )
                 {
                     ParticleBase np = pbase.Clone();
 
-                    np.W = W + rnd.Next ( -( int ) WJit / 2 , ( int ) WJit / 2 );
-                    np.H = H + rnd.Next ( -( int ) HJit / 2 , ( int ) HJit / 2 );
+                    np.W = W + rnd.Next ( -( int ) WJit / 2, ( int ) WJit / 2 );
+                    np.H = H + rnd.Next ( -( int ) HJit / 2, ( int ) HJit / 2 );
 
-                    np.X = x + rnd.Next ( ( int ) -XSmall , ( int ) XBig );
-                    np.Y = y + rnd.Next ( ( int ) -YSmall , ( int ) YBig );
+                    np.X = x + rnd.Next ( ( int ) -XSmall, ( int ) XBig );
+                    np.Y = y + rnd.Next ( ( int ) -YSmall, ( int ) YBig );
 
                     float zd = ZBig - ZSmall;
 
@@ -187,21 +187,21 @@ namespace Vivid3D.VFX
 
                     np.Z = z + zd;
 
-                    np.Rot = rnd.Next ( ( int ) SpawnRot1 , ( int ) SpawnRot2 );
+                    np.Rot = rnd.Next ( ( int ) SpawnRot1, ( int ) SpawnRot2 );
 
                     float xj = XIJit * (float)rnd.NextDouble();
                     float yj = YIJit * (float)rnd.NextDouble();
                     float zj = ZIJit * (float)rnd.NextDouble();
 
-                    if ( rnd.Next ( 0 , 5 ) > 2 )
+                    if ( rnd.Next ( 0, 5 ) > 2 )
                     {
                         xj = -xj;
                     }
-                    if ( rnd.Next ( 0 , 5 ) > 2 )
+                    if ( rnd.Next ( 0, 5 ) > 2 )
                     {
                         yj = -yj;
                     }
-                    if ( rnd.Next ( 0 , 5 ) > 2 )
+                    if ( rnd.Next ( 0, 5 ) > 2 )
                     {
                         zj = -zj;
                     }
@@ -214,7 +214,7 @@ namespace Vivid3D.VFX
                     np.YI = ( yi + yj ) * pw;
                     np.ZI = ( zi + zj ) * pw;
 
-                    np.RI = rnd.Next ( ( int ) -RJit , ( int ) RJit );
+                    np.RI = rnd.Next ( ( int ) -RJit, ( int ) RJit );
 
                     //np.Life = 100.0f;
                     np.LifeRate = 0.03f;

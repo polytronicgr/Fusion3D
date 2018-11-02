@@ -7,7 +7,7 @@ namespace Vivid3D.Input
     {
         public static void InitInput ( )
         {
-            for ( int i = 0 ; i < 32 ; i++ )
+            for ( int i = 0; i < 32; i++ )
             {
                 MB [ i ] = false;
             }
@@ -19,7 +19,7 @@ namespace Vivid3D.Input
         public static bool[] MB = new bool[32];
         public static Dictionary<Key, bool> Keys = new Dictionary<OpenTK.Input.Key, bool>();
 
-        public static void SetKey ( Key key , bool i )
+        public static void SetKey ( Key key, bool i )
         {
             if ( i )
             {
@@ -28,7 +28,7 @@ namespace Vivid3D.Input
                 }
                 else
                 {
-                    Keys.Add ( key , true );
+                    Keys.Add ( key, true );
                 }
             }
             else
@@ -53,7 +53,7 @@ namespace Vivid3D.Input
         public static List<Key> KeysIn ( )
         {
             List<Key> ki = new List<Key>();
-            foreach ( KeyValuePair<Key , bool> k in Keys )
+            foreach ( KeyValuePair<Key, bool> k in Keys )
             {
                 ki.Add ( k.Key );
             }
@@ -99,7 +99,7 @@ namespace Vivid3D.Input
 
             if ( Keys.Count > 1 )
             {
-                foreach ( KeyValuePair<Key , bool> k in Keys )
+                foreach ( KeyValuePair<Key, bool> k in Keys )
                 {
                     if ( k.Key == Key.ShiftLeft || k.Key == Key.ShiftRight || k.Key == Key.LShift || k.Key == Key.RShift )
                     {
@@ -112,7 +112,7 @@ namespace Vivid3D.Input
             }
             else
             {
-                foreach ( KeyValuePair<Key , bool> k in Keys )
+                foreach ( KeyValuePair<Key, bool> k in Keys )
                 {
                     if ( k.Key == Key.ShiftLeft || k.Key == Key.ShiftRight || k.Key == Key.LShift || k.Key == Key.RShift )
                     {

@@ -27,9 +27,9 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
                 bsiz = 4;
             }
 
-            for ( int y = 0 ; y < texView.Height ; y++ )
+            for ( int y = 0; y < texView.Height; y++ )
             {
-                for ( int x = 0 ; x < texView.Width ; x++ )
+                for ( int x = 0; x < texView.Width; x++ )
                 {
                     int nx = (int)(x * xr);
                     int ny = (int)(y * yr);
@@ -37,7 +37,7 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
                     int loc = (nx * bsiz) + (ny * Value.W * bsiz);
 
                     Color p = Color.FromArgb(255, bs[loc], bs[loc + 1], bs[loc + 2]);
-                    nbm.SetPixel ( x , y , p );
+                    nbm.SetPixel ( x, y, p );
                 }
             }
 

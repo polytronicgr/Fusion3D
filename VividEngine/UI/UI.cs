@@ -21,7 +21,7 @@ namespace Vivid3D.Resonance
         public UI ( )
         {
             InitUI ( );
-            for ( int i = 0 ; i < 32 ; i++ )
+            for ( int i = 0; i < 32; i++ )
             {
                 Pressed [ i ] = null;
             }
@@ -31,7 +31,7 @@ namespace Vivid3D.Resonance
 
         public void InitUI ( )
         {
-            Black = new Texture.VTex2D ( "data\\ui\\black.png" , Texture.LoadMethod.Single , false );
+            Black = new Texture.VTex2D ( "data\\ui\\black.png", Texture.LoadMethod.Single, false );
             Font = new VFont ( "data/font/times.ttf.vf" );
         }
 
@@ -87,7 +87,7 @@ namespace Vivid3D.Resonance
             {
                 if ( top == TopForm )
                 {
-                    top.MouseMove?.Invoke ( MX - top.GX , MY - top.GY , MXD , MYD );
+                    top.MouseMove?.Invoke ( MX - top.GX, MY - top.GY, MXD, MYD );
                 }
             }
             if ( top == null )
@@ -125,7 +125,7 @@ namespace Vivid3D.Resonance
                         }
                         if ( Environment.TickCount > NextKey )
                         {
-                            Active.KeyPress?.Invoke ( key , shift );
+                            Active.KeyPress?.Invoke ( key, shift );
                             NextKey = Environment.TickCount + 90;
                         }
                     }
@@ -141,7 +141,7 @@ namespace Vivid3D.Resonance
                             shift = true;
                         }
                         LastKey = key;
-                        Active.KeyPress?.Invoke ( key , shift );
+                        Active.KeyPress?.Invoke ( key, shift );
                         NextKey = Environment.TickCount + 250;
                     }
                 }
@@ -206,13 +206,13 @@ namespace Vivid3D.Resonance
 
                 if ( Pressed [ 0 ] != null )
                 {
-                    //   Console.WriteLine("MX:" + MX + " MY:" + MY + " SDX:" + sdx + " SDY:" + sdy);
+                    // Console.WriteLine("MX:" + MX + " MY:" + MY + " SDX:" + sdx + " SDY:" + sdy);
                     int mvx = MX - sdx;
                     int mvy = MY - sdy;
                     if ( mvx != 0 || mvy != 0 )
                     {
-                        Pressed [ 0 ].Drag?.Invoke ( mvx , mvy );
-                        Pressed [ 0 ].PostDrag?.Invoke ( mvx , mvy );
+                        Pressed [ 0 ].Drag?.Invoke ( mvx, mvy );
+                        Pressed [ 0 ].PostDrag?.Invoke ( mvx, mvy );
                     }
                     sdx = MX;
 
@@ -229,7 +229,7 @@ namespace Vivid3D.Resonance
                 //Console.WriteLine("Wop");
                 if ( Pressed [ 0 ] != null )
                 {
-                    if ( Pressed [ 0 ].InBounds ( MX , MY ) == false )
+                    if ( Pressed [ 0 ].InBounds ( MX, MY ) == false )
                     {
                         Pressed [ 0 ].MouseLeave?.Invoke ( );
                     }
@@ -252,15 +252,15 @@ namespace Vivid3D.Resonance
         private readonly int uy;
         public UIForm[] Pressed = new UIForm[32];
 
-        private UIForm GetTopForm ( int mx , int my )
+        private UIForm GetTopForm ( int mx, int my )
         {
             foreach ( UIForm form in UpdateList )
             {
                 if ( form.CheckBounds == true )
                 {
-                    if ( form.InBounds ( mx , my ) )
+                    if ( form.InBounds ( mx, my ) )
                     {
-                        //    Console.WriteLine("Form:" + form.Text);
+                        // Console.WriteLine("Form:" + form.Text);
                         return form;
                     }
                 }
@@ -299,9 +299,9 @@ namespace Vivid3D.Resonance
                 }
                 Texture.VTex2D ntex = new Texture.VTex2D ( Vivid3D.App.VividApp.W , Vivid3D.App.VividApp.H );
 
-                ntex.CopyTex ( 0 , 0 );
+                ntex.CopyTex ( 0, 0 );
                 OpenTK.Graphics.OpenGL4.GL.Clear ( OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit );
-                Vivid3D.Draw.VPen.RectBlur2 ( 0 , 0 , Vivid3D.App.VividApp.W , Vivid3D.App.VividApp.H , ntex , new OpenTK.Vector4 ( 1 , 1 , 1 , 1 ) , TopB );
+                Vivid3D.Draw.VPen.RectBlur2 ( 0, 0, Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H, ntex, new OpenTK.Vector4 ( 1, 1, 1, 1 ), TopB );
 
                 UpdateRenderList ( Top );
 
@@ -323,9 +323,9 @@ namespace Vivid3D.Resonance
                 if ( TopB > 0 )
                 {
                     Texture.VTex2D ntex = new Texture.VTex2D(Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H);
-                    ntex.CopyTex ( 0 , 0 );
+                    ntex.CopyTex ( 0, 0 );
                     OpenTK.Graphics.OpenGL4.GL.Clear ( OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit );
-                    Vivid3D.Draw.VPen.RectBlur2 ( 0 , 0 , Vivid3D.App.VividApp.W , Vivid3D.App.VividApp.H , ntex , new OpenTK.Vector4 ( 1 , 1 , 1 , 1 ) , TopB );
+                    Vivid3D.Draw.VPen.RectBlur2 ( 0, 0, Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H, ntex, new OpenTK.Vector4 ( 1, 1, 1, 1 ), TopB );
                     ntex.Delete ( );
                 }
             }
@@ -338,17 +338,17 @@ namespace Vivid3D.Resonance
         {
             UpdateList.Clear ( );
 
-            AddNodeBackward ( UpdateList , begin );
+            AddNodeBackward ( UpdateList, begin );
         }
 
         private void UpdateRenderList ( UIForm begin )
         {
             RenderList.Clear ( );
 
-            AddNodeForward ( RenderList , begin );
+            AddNodeForward ( RenderList, begin );
         }
 
-        private void AddNodeBackward ( List<UIForm> forms , UIForm form )
+        private void AddNodeBackward ( List<UIForm> forms, UIForm form )
         {
             int fc = form.Forms.Count;
             if ( fc > 0 )
@@ -357,7 +357,7 @@ namespace Vivid3D.Resonance
                 {
                     fc--;
                     UIForm af = form.Forms[fc];
-                    AddNodeBackward ( forms , af );
+                    AddNodeBackward ( forms, af );
                     if ( fc == 0 )
                     {
                         break;
@@ -367,12 +367,12 @@ namespace Vivid3D.Resonance
             forms.Add ( form );
         }
 
-        private void AddNodeForward ( List<UIForm> forms , UIForm form )
+        private void AddNodeForward ( List<UIForm> forms, UIForm form )
         {
             RenderList.Add ( form );
             foreach ( UIForm nf in form.Forms )
             {
-                AddNodeForward ( forms , nf );
+                AddNodeForward ( forms, nf );
             }
         }
     }

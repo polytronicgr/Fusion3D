@@ -28,10 +28,10 @@ namespace VividEdit.Forms
         public void AddLight ( Vivid3D.Lighting.GraphLight3D l )
         {
             TreeNode ltn = new TreeNode("Light:" + Vivid3D.Lighting.GraphLight3D.LightNum);
-            TreeLightMap.Add ( ltn , l );
-            LightTreeMap.Add ( l , ltn );
+            TreeLightMap.Add ( ltn, l );
+            LightTreeMap.Add ( l, ltn );
             lights.Add ( l );
-            nodeMap.Add ( l , ltn );
+            nodeMap.Add ( l, ltn );
             RebuildGraph ( );
         }
 
@@ -44,12 +44,12 @@ namespace VividEdit.Forms
             TreeNode nb = appTree.Nodes[0];
 
             RebuildGraph ( );
-            AddNode ( Graph.Root , nb );
+            AddNode ( Graph.Root, nb );
             foreach ( Vivid3D.Lighting.GraphLight3D l in lights )
             {
                 if ( !LightTreeMap.ContainsKey ( l ) )
                 {
-                    LightTreeMap.Add ( l , new TreeNode ( "Light" ) );
+                    LightTreeMap.Add ( l, new TreeNode ( "Light" ) );
                 }
                 TreeNode tn = LightTreeMap[l];
                 nodeMap [ l ] = tn;
@@ -88,17 +88,17 @@ namespace VividEdit.Forms
             }
         }
 
-        private void ON_NameChange ( object o , EventArgs e )
+        private void ON_NameChange ( object o, EventArgs e )
         {
             Rebuild ( );
         }
 
-        private void AddNode ( Vivid3D.Scene.GraphNode3D n , TreeNode t )
+        private void AddNode ( Vivid3D.Scene.GraphNode3D n, TreeNode t )
         {
             AllNodes.Add ( n );
             TreeNode nn = new TreeNode(n.Name);
             n.NameChanged = ON_NameChange;
-            nodeMap.Add ( n , nn );
+            nodeMap.Add ( n, nn );
 
             t.Nodes.Add ( nn );
 
@@ -106,23 +106,23 @@ namespace VividEdit.Forms
 
             foreach ( Vivid3D.Data.VMesh n4 in gen.Meshes )
             {
-                //   TreeNode g = new TreeNode(n4.Mat.TCol.W + " H:" + n4.Mat.TCol.H);
-                //    t.Nodes.Add(g);
+                // TreeNode g = new TreeNode(n4.Mat.TCol.W + " H:" + n4.Mat.TCol.H); t.Nodes.Add(g);
 
-                for ( int i = 0 ; i < n4.NumVertices * 3 ; i += 3 )
+                for ( int i = 0; i < n4.NumVertices * 3; i += 3 )
                 {
-                    //                    TreeNode vn = new TreeNode("(" + n4.Vertices[i] + "," + n4.Vertices[i + 1] + "," + n4.Vertices[i + 2]);
+                    // TreeNode vn = new TreeNode("(" + n4.Vertices[i] + "," + n4.Vertices[i + 1] +
+                    // "," + n4.Vertices[i + 2]);
 
-                    //                  t.Nodes[t.Nodes.Count - 1].Nodes.Add(vn);
+                    // t.Nodes[t.Nodes.Count - 1].Nodes.Add(vn);
                 }
             }
             foreach ( Vivid3D.Scene.GraphNode3D n2 in n.Sub )
             {
-                AddNode ( n2 , nn );
+                AddNode ( n2, nn );
             }
         }
 
-        private void alignToCameraToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void alignToCameraToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             if ( SelectedNode != null )
             {
@@ -132,7 +132,7 @@ namespace VividEdit.Forms
             }
         }
 
-        private void appTree_AfterSelect ( object sender , TreeViewEventArgs e )
+        private void appTree_AfterSelect ( object sender, TreeViewEventArgs e )
         {
             TreeNode an = e.Node;
             foreach ( Vivid3D.Scene.GraphNode3D key in nodeMap.Keys )
@@ -145,7 +145,7 @@ namespace VividEdit.Forms
             }
         }
 
-        private void appTree_MouseClick ( object sender , MouseEventArgs e )
+        private void appTree_MouseClick ( object sender, MouseEventArgs e )
         {
             if ( e.Button == MouseButtons.Right )
             {
@@ -153,19 +153,19 @@ namespace VividEdit.Forms
             }
         }
 
-        private void fromHeightMapToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void fromHeightMapToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             Vivid3D.Terrain.GraphTerrain nt = new Vivid3D.Terrain.GraphTerrain ( 1000 , 1000 , -1 , 64 , 64 , new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Maps\\testMap1.png" , Vivid3D.Texture.LoadMethod.Single , false ) );
             Vivid3D.Material.Material3D tmat = nt.Meshes [ 0 ].Mat;
 
-            tmat.TCol = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockCol2.png" , Vivid3D.Texture.LoadMethod.Single , false );
-            tmat.TNorm = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockNorm2.png" , Vivid3D.Texture.LoadMethod.Single , false );
-            tmat.TSpec = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\specnone.png" , Vivid3D.Texture.LoadMethod.Single );
+            tmat.TCol = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockCol2.png", Vivid3D.Texture.LoadMethod.Single, false );
+            tmat.TNorm = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockNorm2.png", Vivid3D.Texture.LoadMethod.Single, false );
+            tmat.TSpec = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\specnone.png", Vivid3D.Texture.LoadMethod.Single );
 
             VividEdit.VividED.Main.AddEnt ( nt );
         }
 
-        private void loadRootGraphToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void loadRootGraphToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             openFileDialog1.Filter = "VividGraph|*.vg";
             openFileDialog1.ShowDialog ( );
@@ -186,19 +186,19 @@ namespace VividEdit.Forms
             Rebuild ( );
         }
 
-        private void newFlatToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void newFlatToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             Vivid3D.Terrain.GraphTerrain nt = new Vivid3D.Terrain.GraphTerrain ( 1000 , 1000 , -1 , 64 , 64 );
             Vivid3D.Material.Material3D tmat = nt.Meshes [ 0 ].Mat;
 
-            tmat.TCol = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockCol2.png" , Vivid3D.Texture.LoadMethod.Single , false );
-            tmat.TNorm = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockNorm2.png" , Vivid3D.Texture.LoadMethod.Single , false );
-            tmat.TSpec = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\specnone.png" , Vivid3D.Texture.LoadMethod.Single );
+            tmat.TCol = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockCol2.png", Vivid3D.Texture.LoadMethod.Single, false );
+            tmat.TNorm = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\rockNorm2.png", Vivid3D.Texture.LoadMethod.Single, false );
+            tmat.TSpec = new Vivid3D.Texture.VTex2D ( VividEdit.VividED.CurProject.ContentPath + "Texture\\Terrain\\specnone.png", Vivid3D.Texture.LoadMethod.Single );
 
             VividEdit.VividED.Main.AddEnt ( nt );
         }
 
-        private void placeInFrontOfCameraToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void placeInFrontOfCameraToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             if ( SelectedNode != null )
             {
@@ -207,7 +207,7 @@ namespace VividEdit.Forms
             }
         }
 
-        private void pointLightToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void pointLightToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             OpenTK.Vector3 p = VividEdit.VividED.Main.DockEdit3D.Cam.Transform ( new OpenTK.Vector3 ( 0 , 0 , -150 ) );
             Vivid3D.Lighting.GraphLight3D nl = new Vivid3D.Lighting.GraphLight3D
@@ -218,10 +218,10 @@ namespace VividEdit.Forms
                 CastShadows = true
             };
             VividEdit.VividED.Main.AddLight ( nl );
-            VividEdit.Forms.ConsoleView.Log ( "Added point light at (" + p + ")" , "Editor" );
+            VividEdit.Forms.ConsoleView.Log ( "Added point light at (" + p + ")", "Editor" );
         }
 
-        private void saveGraphToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void saveGraphToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             saveFileDialog1.Filter = "VividGraph|*.vg";
             saveFileDialog1.ShowDialog ( );

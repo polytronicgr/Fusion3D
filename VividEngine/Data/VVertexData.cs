@@ -10,7 +10,7 @@
         public T[] Data = null;
         public int[] Index = null;
 
-        public virtual void Init ( int vertexCount , int components , int strideSize , int componentSize , int indexCount )
+        public virtual void Init ( int vertexCount, int components, int strideSize, int componentSize, int indexCount )
         {
             Data = new T [ vertexCount * components ];
             StrideSize = strideSize;

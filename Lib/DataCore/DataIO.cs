@@ -37,7 +37,7 @@ namespace DataCore
 
             Data.Clear ( );
 
-            for ( int i = 0 ; i < ic ; i++ )
+            for ( int i = 0; i < ic; i++ )
             {
                 DataEntry entry = new DataEntry
                 {
@@ -55,7 +55,7 @@ namespace DataCore
 
         public void OpenData ( )
         {
-            DataFile = File.Open ( DataPath , FileMode.Open );
+            DataFile = File.Open ( DataPath, FileMode.Open );
             DataR = new BinaryReader ( DataFile );
         }
 
@@ -121,7 +121,7 @@ namespace DataCore
                     {
                         OpenData ( );
 
-                        DataFile.Seek ( entry.Begin , SeekOrigin.Begin );
+                        DataFile.Seek ( entry.Begin, SeekOrigin.Begin );
                         byte [ ] dat = DataR.ReadBytes(entry.Size);
 
                         CloseData ( );
@@ -142,7 +142,7 @@ namespace DataCore
             return null;
         }
 
-        public void AddData ( Data data , string name )
+        public void AddData ( Data data, string name )
         {
             DataEntry entry = new DataEntry();
             if ( data.Generated == false )

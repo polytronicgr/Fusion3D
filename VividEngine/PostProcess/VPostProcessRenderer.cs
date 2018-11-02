@@ -18,13 +18,13 @@ namespace Vivid3D.PostProcess
         public int IW, IH;
         public VEQuadR QFX = null;
 
-        public PostProcessRender ( int w , int h )
+        public PostProcessRender ( int w, int h )
         {
             IW = w;
             IH = h;
-            RBuf = new VFrameBuffer ( w , h );
-            FB = new VFrameBuffer ( w , h );
-            FB2 = new VFrameBuffer ( w , h );
+            RBuf = new VFrameBuffer ( w, h );
+            FB = new VFrameBuffer ( w, h );
+            FB2 = new VFrameBuffer ( w, h );
             QFX = new VEQuadR ( );
             GenQuad ( );
         }
@@ -45,7 +45,7 @@ namespace Vivid3D.PostProcess
             Active = this;
 
             RBuf.Bind ( );
-            GL.ClearColor ( 0 , 0 , 0 , 1 );
+            GL.ClearColor ( 0, 0, 0, 1 );
             GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
             Scene.Render ( );
             RBuf.Release ( );
@@ -53,7 +53,7 @@ namespace Vivid3D.PostProcess
             GL.Disable ( EnableCap.Blend );
 
             FB.Bind ( );
-            GL.ClearColor ( 0 , 0 , 0 , 1 );
+            GL.ClearColor ( 0, 0, 0, 1 );
             GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
             Scene.Render ( );
             FB.Release ( );
@@ -80,9 +80,9 @@ namespace Vivid3D.PostProcess
                 FB = FB2;
                 FB2 = ob;
             }
-            //  GL.Viewport(0, 0, 1024, 768);
+            // GL.Viewport(0, 0, 1024, 768);
             GL.Disable ( EnableCap.Blend );
-            GL.ClearColor ( 1.0f , 0.8f , 0.8f , 0.8f );
+            GL.ClearColor ( 1.0f, 0.8f, 0.8f, 0.8f );
             GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
             DrawQuad ( );
         }
@@ -97,11 +97,11 @@ namespace Vivid3D.PostProcess
 
             GL.BindVertexArray ( qva );
 
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.EnableVertexAttribArray ( 0 );
-            GL.VertexAttribPointer ( 0 , 3 , VertexAttribPointerType.Float , false , 0 , 0 );
+            GL.VertexAttribPointer ( 0, 3, VertexAttribPointerType.Float, false, 0, 0 );
 
-            GL.DrawArrays ( PrimitiveType.Triangles , 0 , 6 );
+            GL.DrawArrays ( PrimitiveType.Triangles, 0, 6 );
 
             GL.DisableVertexAttribArray ( 0 );
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -128,21 +128,21 @@ namespace Vivid3D.PostProcess
             qd [ 15 ] = 1.0f; qd [ 16 ] = 1.0f; qd [ 17 ] = 0.0f;
 
             qvb = GL.GenBuffer ( );
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
-            GL.BufferData ( BufferTarget.ArrayBuffer , new IntPtr ( 18 * 4 ) , qd , BufferUsageHint.StaticDraw );
-            //  GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
+            GL.BufferData ( BufferTarget.ArrayBuffer, new IntPtr ( 18 * 4 ), qd, BufferUsageHint.StaticDraw );
+            // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
     }
 
     public class VEQuadR : Effect3D
     {
-        public VEQuadR ( ) : base ( "" , "Data/Shader/passVS.txt" , "Data/Shader/passFS.txt" )
+        public VEQuadR ( ) : base ( "", "Data/Shader/passVS.txt", "Data/Shader/passFS.txt" )
         {
         }
 
         public override void SetPars ( )
         {
-            SetTex ( "tR" , 0 );
+            SetTex ( "tR", 0 );
         }
     }
 }

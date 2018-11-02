@@ -8,7 +8,7 @@ namespace Vivid3D.Visuals
         {
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             v.SetMesh ( m );
             v.Visualize ( );

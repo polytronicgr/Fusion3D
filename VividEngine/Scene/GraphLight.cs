@@ -49,8 +49,8 @@ namespace Vivid3D.Scene
 
         public GraphLight ( )
         {
-            Diffuse = new Vector3 ( 0.5f , 0.5f , 0.5f );
-            Specular = new Vector3 ( 0 , 0 , 0 );
+            Diffuse = new Vector3 ( 0.5f, 0.5f, 0.5f );
+            Specular = new Vector3 ( 0, 0, 0 );
             Shiny = 0.2f;
             Range = 500;
             Type = LightType.Point;

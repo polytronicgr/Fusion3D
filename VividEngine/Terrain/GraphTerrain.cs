@@ -16,23 +16,23 @@ namespace Vivid3D.Terrain
         private Vector3[,] tan = null;
         private readonly int [ ] indices = null;
 
-        public GraphTerrain ( float w , float h , float y , int xsegs = 32 , int ysegs = 32 )
+        public GraphTerrain ( float w, float h, float y, int xsegs = 32, int ysegs = 32 )
         {
-            GenFlat ( w , h , y , xsegs , ysegs );
+            GenFlat ( w, h, y, xsegs, ysegs );
         }
 
-        public GraphTerrain ( float w , float h , float y , int xsegs , int ysegs , Texture.VTex2D tex )
+        public GraphTerrain ( float w, float h, float y, int xsegs, int ysegs, Texture.VTex2D tex )
         {
             float xr = tex.W / w;
             float yr = tex.H / h;
 
             byte[] data = tex.RawData;
 
-            tp = new Vector3 [ xsegs , ysegs ];
-            tuv = new Vector3 [ xsegs , ysegs ];
-            tnorm = new Vector3 [ xsegs , ysegs ];
-            tbi = new Vector3 [ xsegs , ysegs ];
-            tan = new Vector3 [ xsegs , ysegs ];
+            tp = new Vector3 [ xsegs, ysegs ];
+            tuv = new Vector3 [ xsegs, ysegs ];
+            tnorm = new Vector3 [ xsegs, ysegs ];
+            tbi = new Vector3 [ xsegs, ysegs ];
+            tan = new Vector3 [ xsegs, ysegs ];
 
             List<int> indices = new List<int>();
 
@@ -53,9 +53,9 @@ namespace Vivid3D.Terrain
             vu = 0.0f;
             vv = 0.0f;
 
-            for ( int sy = 0 ; sy < ysegs ; sy++ )
+            for ( int sy = 0; sy < ysegs; sy++ )
             {
-                for ( int sx = 0 ; sx < xsegs ; sx++ )
+                for ( int sx = 0; sx < xsegs; sx++ )
                 {
                     float ny = 0.0f;
 
@@ -74,9 +74,9 @@ namespace Vivid3D.Terrain
 
                     ny = ny * 3;
 
-                    tp [ sx , sy ] = new Vector3 ( vx , vy + ny , vz );
-                    tuv [ sx , sy ] = new Vector3 ( vu , vv , 0 );
-                    tnorm [ sx , sy ] = new Vector3 ( 0 , 1 , 0 );
+                    tp [ sx, sy ] = new Vector3 ( vx, vy + ny, vz );
+                    tuv [ sx, sy ] = new Vector3 ( vu, vv, 0 );
+                    tnorm [ sx, sy ] = new Vector3 ( 0, 1, 0 );
 
                     vu += ui;
                     //vv += vi;
@@ -89,43 +89,43 @@ namespace Vivid3D.Terrain
                 vz += zi;
             }
 
-            for ( int sy = 0 ; sy < ysegs - 1 ; sy++ )
+            for ( int sy = 0; sy < ysegs - 1; sy++ )
             {
-                for ( int sx = 0 ; sx < xsegs - 1 ; sx++ )
+                for ( int sx = 0; sx < xsegs - 1; sx++ )
                 {
-                    indices.Add ( GetI ( sx , sy , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx + 1 , sy + 1 , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx + 1 , sy , xsegs , ysegs ) );
+                    indices.Add ( GetI ( sx, sy, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx + 1, sy + 1, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx + 1, sy, xsegs, ysegs ) );
 
-                    indices.Add ( GetI ( sx + 1 , sy + 1 , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx , sy , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx , sy + 1 , xsegs , ysegs ) );
+                    indices.Add ( GetI ( sx + 1, sy + 1, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx, sy, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx, sy + 1, xsegs, ysegs ) );
                 }
             }
 
-            TMesh = new VMesh ( indices.Count , xsegs * ysegs );
+            TMesh = new VMesh ( indices.Count, xsegs * ysegs );
 
             int vid = 0;
 
-            for ( int sy = 0 ; sy < ysegs ; sy++ )
+            for ( int sy = 0; sy < ysegs; sy++ )
             {
-                for ( int sx = 0 ; sx < xsegs ; sx++ )
+                for ( int sx = 0; sx < xsegs; sx++ )
                 {
-                    TMesh.SetVertex ( vid , tp [ sx , sy ] , tan [ sx , sy ] , tbi [ sx , sy ] , tnorm [ sx , sy ] , new Vector2 ( tuv [ sx , sy ].X , tuv [ sx , sy ].Y ) );
+                    TMesh.SetVertex ( vid, tp [ sx, sy ], tan [ sx, sy ], tbi [ sx, sy ], tnorm [ sx, sy ], new Vector2 ( tuv [ sx, sy ].X, tuv [ sx, sy ].Y ) );
                     vid++;
                 }
             }
 
             uint[] mi = new uint[indices.Count];
 
-            for ( int i = 0 ; i < indices.Count ; i++ )
+            for ( int i = 0; i < indices.Count; i++ )
             {
                 mi [ i ] = ( uint ) indices [ i ];
             }
 
-            for ( int i = 0 ; i < indices.Count / 3 ; i++ )
+            for ( int i = 0; i < indices.Count / 3; i++ )
             {
-                TMesh.SetTri ( i , indices [ i * 3 ] , indices [ i * 3 + 1 ] , indices [ i * 3 + 2 ] );
+                TMesh.SetTri ( i, indices [ i * 3 ], indices [ i * 3 + 1 ], indices [ i * 3 + 2 ] );
             }
 
             TMesh.Indices = mi;
@@ -141,17 +141,17 @@ namespace Vivid3D.Terrain
             Name = "Terrain";
         }
 
-        public void GenMapped ( float w , float h , float y , int xsegs , int ysegs , Texture.VTex2D tex )
+        public void GenMapped ( float w, float h, float y, int xsegs, int ysegs, Texture.VTex2D tex )
         {
         }
 
-        private void GenFlat ( float w , float h , float y , int xsegs , int ysegs )
+        private void GenFlat ( float w, float h, float y, int xsegs, int ysegs )
         {
-            tp = new Vector3 [ xsegs , ysegs ];
-            tuv = new Vector3 [ xsegs , ysegs ];
-            tnorm = new Vector3 [ xsegs , ysegs ];
-            tbi = new Vector3 [ xsegs , ysegs ];
-            tan = new Vector3 [ xsegs , ysegs ];
+            tp = new Vector3 [ xsegs, ysegs ];
+            tuv = new Vector3 [ xsegs, ysegs ];
+            tnorm = new Vector3 [ xsegs, ysegs ];
+            tbi = new Vector3 [ xsegs, ysegs ];
+            tan = new Vector3 [ xsegs, ysegs ];
 
             List<int> indices = new List<int>();
 
@@ -172,13 +172,13 @@ namespace Vivid3D.Terrain
             vu = 0.0f;
             vv = 0.0f;
 
-            for ( int sy = 0 ; sy < ysegs ; sy++ )
+            for ( int sy = 0; sy < ysegs; sy++ )
             {
-                for ( int sx = 0 ; sx < xsegs ; sx++ )
+                for ( int sx = 0; sx < xsegs; sx++ )
                 {
-                    tp [ sx , sy ] = new Vector3 ( vx , vy , vz );
-                    tuv [ sx , sy ] = new Vector3 ( vu , vv , 0 );
-                    tnorm [ sx , sy ] = new Vector3 ( 0 , 1 , 0 );
+                    tp [ sx, sy ] = new Vector3 ( vx, vy, vz );
+                    tuv [ sx, sy ] = new Vector3 ( vu, vv, 0 );
+                    tnorm [ sx, sy ] = new Vector3 ( 0, 1, 0 );
 
                     vu += ui;
                     //vv += vi;
@@ -191,43 +191,43 @@ namespace Vivid3D.Terrain
                 vz += zi;
             }
 
-            for ( int sy = 0 ; sy < ysegs - 1 ; sy++ )
+            for ( int sy = 0; sy < ysegs - 1; sy++ )
             {
-                for ( int sx = 0 ; sx < xsegs - 1 ; sx++ )
+                for ( int sx = 0; sx < xsegs - 1; sx++ )
                 {
-                    indices.Add ( GetI ( sx , sy , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx + 1 , sy + 1 , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx + 1 , sy , xsegs , ysegs ) );
+                    indices.Add ( GetI ( sx, sy, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx + 1, sy + 1, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx + 1, sy, xsegs, ysegs ) );
 
-                    indices.Add ( GetI ( sx + 1 , sy + 1 , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx , sy , xsegs , ysegs ) );
-                    indices.Add ( GetI ( sx , sy + 1 , xsegs , ysegs ) );
+                    indices.Add ( GetI ( sx + 1, sy + 1, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx, sy, xsegs, ysegs ) );
+                    indices.Add ( GetI ( sx, sy + 1, xsegs, ysegs ) );
                 }
             }
 
-            TMesh = new VMesh ( indices.Count , xsegs * ysegs );
+            TMesh = new VMesh ( indices.Count, xsegs * ysegs );
 
             int vid = 0;
 
-            for ( int sy = 0 ; sy < ysegs ; sy++ )
+            for ( int sy = 0; sy < ysegs; sy++ )
             {
-                for ( int sx = 0 ; sx < xsegs ; sx++ )
+                for ( int sx = 0; sx < xsegs; sx++ )
                 {
-                    TMesh.SetVertex ( vid , tp [ sx , sy ] , tan [ sx , sy ] , tbi [ sx , sy ] , tnorm [ sx , sy ] , new Vector2 ( tuv [ sx , sy ].X , tuv [ sx , sy ].Y ) );
+                    TMesh.SetVertex ( vid, tp [ sx, sy ], tan [ sx, sy ], tbi [ sx, sy ], tnorm [ sx, sy ], new Vector2 ( tuv [ sx, sy ].X, tuv [ sx, sy ].Y ) );
                     vid++;
                 }
             }
 
             uint[] mi = new uint[indices.Count];
 
-            for ( int i = 0 ; i < indices.Count ; i++ )
+            for ( int i = 0; i < indices.Count; i++ )
             {
                 mi [ i ] = ( uint ) indices [ i ];
             }
 
-            for ( int i = 0 ; i < indices.Count / 3 ; i++ )
+            for ( int i = 0; i < indices.Count / 3; i++ )
             {
-                TMesh.SetTri ( i , indices [ i * 3 ] , indices [ i * 3 + 1 ] , indices [ i * 3 + 2 ] );
+                TMesh.SetTri ( i, indices [ i * 3 ], indices [ i * 3 + 1 ], indices [ i * 3 + 2 ] );
             }
 
             TMesh.Indices = mi;
@@ -243,7 +243,7 @@ namespace Vivid3D.Terrain
             Name = "Terrain";
         }
 
-        public int GetI ( int x , int y , int xs , int ys )
+        public int GetI ( int x, int y, int xs, int ys )
         {
             return y * xs + x;
         }

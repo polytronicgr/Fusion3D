@@ -39,34 +39,34 @@ namespace Vivid3D.Draw
 
                 case BlendMode.Alpha:
                     GL.Enable ( EnableCap.Blend );
-                    GL.BlendFunc ( BlendingFactor.SrcAlpha , BlendingFactor.OneMinusSrcAlpha );
+                    GL.BlendFunc ( BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha );
                     break;
 
                 case BlendMode.Add:
                     GL.Enable ( EnableCap.Blend );
-                    GL.BlendFunc ( BlendingFactor.One , BlendingFactor.One );
+                    GL.BlendFunc ( BlendingFactor.One, BlendingFactor.One );
                     break;
 
                 case BlendMode.SoftLight:
                     GL.Enable ( EnableCap.Blend );
-                    GL.BlendFunc ( BlendingFactor.SrcAlpha , BlendingFactor.One );
+                    GL.BlendFunc ( BlendingFactor.SrcAlpha, BlendingFactor.One );
                     break;
             }
         }
 
-        public static void Image ( Vector2 [ ] p , Tex2D img )
+        public static void Image ( Vector2 [ ] p, Tex2D img )
         {
             float[] x = new float[4];
             float[] y = new float[4];
-            for ( int i = 0 ; i < 4 ; i++ )
+            for ( int i = 0; i < 4; i++ )
             {
                 x [ i ] = p [ i ].X;
                 y [ i ] = p [ i ].Y;
             }
-            Image ( x , y , img );
+            Image ( x, y, img );
         }
 
-        public static void Image ( float [ ] xc , float [ ] yc , Tex2D img )
+        public static void Image ( float [ ] xc, float [ ] yc, Tex2D img )
         {
             img.Bind ( 0 );
 
@@ -90,7 +90,7 @@ namespace Vivid3D.Draw
             img.Unbind ( 0 );
         }
 
-        public static void Image ( int x , int y , int w , int h , Tex2D tex )
+        public static void Image ( int x, int y, int w, int h, Tex2D tex )
         {
             tex.Bind ( 0 );
 
@@ -115,7 +115,7 @@ namespace Vivid3D.Draw
             tex.Unbind ( 0 );
         }
 
-        public static void Rect ( int x , int y , int w , int h )
+        public static void Rect ( int x, int y, int w, int h )
         {
             /*
             GL.Color4(Col);

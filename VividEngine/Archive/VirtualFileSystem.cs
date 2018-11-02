@@ -33,7 +33,7 @@ namespace Vivid3D.Archive
             }
         }
 
-        public VirtualEntry Find ( string name , string path )
+        public VirtualEntry Find ( string name, string path )
         {
             foreach ( VirtualEntry entry in Enteries )
             {
@@ -47,7 +47,7 @@ namespace Vivid3D.Archive
 
         public void ReadToc ( string path )
         {
-            path = path.Replace ( ".toc" , "" );
+            path = path.Replace ( ".toc", "" );
             arcpath = path + ".vfs";
             path = path + ".toc";
             //Console.WriteLine("Opening TOC:" + path);
@@ -56,19 +56,18 @@ namespace Vivid3D.Archive
             //Console.WriteLine("Opened. Parsing table.");
             int ec = r.ReadInt32();
             Console.WriteLine ( "Enteries:" + ec );
-            for ( int i = 0 ; i < ec ; i++ )
+            for ( int i = 0; i < ec; i++ )
             {
                 VirtualEntry ne = new VirtualEntry();
-                for ( int i2 = 0 ; i2 < 16 ; i2++ )
+                for ( int i2 = 0; i2 < 16; i2++ )
                 {
                     ne.Par [ i2 ] = r.ReadInt32 ( );
                 }
                 ne.Name = r.ReadString ( );
                 ne.Path = r.ReadString ( );
                 ne.Compressed = r.ReadBoolean ( );
-                //     Console.WriteLine("Name:" + ne.Name + " Path:" + ne.Path + " Compressed?" + ne.Compressed);
-                //      ne.ImgW = r.ReadInt32();
-                //       ne.ImgH = r.ReadInt32();
+                // Console.WriteLine("Name:" + ne.Name + " Path:" + ne.Path + " Compressed?" +
+                // ne.Compressed); ne.ImgW = r.ReadInt32(); ne.ImgH = r.ReadInt32();
                 ne.Start = r.ReadInt64 ( );
                 ne.Size = r.ReadInt64 ( );
                 Enteries.Add ( ne );
@@ -85,11 +84,11 @@ namespace Vivid3D.Archive
                 FileStream fs = new FileStream(arcpath, FileMode.Open, FileAccess.Read);
                 BinaryReader r = new BinaryReader(fs);
                 e.RawData = new byte [ ( int ) e.Size ];
-                fs.Seek ( e.Start , SeekOrigin.Begin );
-                r.Read ( e.RawData , 0 , ( int ) e.Size );
+                fs.Seek ( e.Start, SeekOrigin.Begin );
+                r.Read ( e.RawData, 0, ( int ) e.Size );
                 if ( e.Compressed )
                 {
-                    ZLib.DecompressData ( e.RawData , out byte [ ] od );
+                    ZLib.DecompressData ( e.RawData, out byte [ ] od );
                     e.RawData = od;
                     fs.Close ( );
                     e.Size = od.Length;
@@ -162,8 +161,8 @@ namespace Vivid3D.Archive
             graph.WriteGraph ( w );
 
             byte [ ] wd = new byte[ms.Position];
-            ms.Seek ( 0 , SeekOrigin.Begin );
-            ms.Read ( wd , 0 , wd.Length );
+            ms.Seek ( 0, SeekOrigin.Begin );
+            ms.Read ( wd, 0, wd.Length );
             Console.WriteLine ( "GraphSize:" + wd.Length + " bytes." );
             ge.RawData = wd;
             ge.Size = wd.Length;
@@ -192,9 +191,9 @@ namespace Vivid3D.Archive
 
                     byte [ ] rd = new byte[tb.Width * tb.Height * 4];
                     int bi = 0;
-                    for ( int y = 0 ; y < tb.Height ; y++ )
+                    for ( int y = 0; y < tb.Height; y++ )
                     {
-                        for ( int x = 0 ; x < tb.Width ; x++ )
+                        for ( int x = 0; x < tb.Width; x++ )
                         {
                             System.Drawing.Color pix = tb.GetPixel ( x , y );
                             rd [ bi++ ] = pix.R;
@@ -254,7 +253,7 @@ namespace Vivid3D.Archive
                     {
                         Load ( img );
                     }
-                    node.ImgFrame = new Tex.Tex2D ( img , true );
+                    node.ImgFrame = new Tex.Tex2D ( img, true );
                 }
             }
             foreach ( Scene.GraphNode n in node.Nodes )
@@ -276,9 +275,9 @@ namespace Vivid3D.Archive
                     Load ( e );
                     MemoryStream ms = new MemoryStream(e.RawData);
                     BinaryReader r = new BinaryReader(ms);
-                    //   Console.WriteLine("Reading Graph.");
+                    // Console.WriteLine("Reading Graph.");
                     ng.ReadGraph ( r );
-                    //  Console.WriteLine("Read.");
+                    // Console.WriteLine("Read.");
                     ms.Close ( );
                     r = null;
                     ms = null;
@@ -294,7 +293,7 @@ namespace Vivid3D.Archive
         {
             VirtualEntry e = GetEntry(name);
             Load ( e );
-            return new Tex.Tex2D ( e , true );
+            return new Tex.Tex2D ( e, true );
         }
 
         public VirtualEntry GetEntry ( string name )
@@ -329,7 +328,7 @@ namespace Vivid3D.Archive
         private string arcpath = "";
         private string tocpath = "";
 
-        public void Save ( string name , bool compressed )
+        public void Save ( string name, bool compressed )
         {
             if ( compressed )
             {
@@ -338,7 +337,7 @@ namespace Vivid3D.Archive
                     if ( v.Compressed == false )
                     {
                         int ol = v.RawData.Length;
-                        ZLib.CompressData ( v.RawData , out byte [ ] od );
+                        ZLib.CompressData ( v.RawData, out byte [ ] od );
                         v.RawData = od;
                         v.Size = od.Length;
                         v.Compressed = true;
@@ -376,7 +375,7 @@ namespace Vivid3D.Archive
             w.Write ( Enteries.Count );
             foreach ( VirtualEntry e in Enteries )
             {
-                for ( int i = 0 ; i < 16 ; i++ )
+                for ( int i = 0; i < 16; i++ )
                 {
                     w.Write ( e.Par [ i ] );
                 }
@@ -418,7 +417,7 @@ namespace Vivid3D.Archive
                         RawData = File.ReadAllBytes ( fi.FullName )
                     };
                     int os = entry.RawData.Length;
-                    ZLib.CompressData ( entry.RawData , out byte [ ] od );
+                    ZLib.CompressData ( entry.RawData, out byte [ ] od );
                     entry.RawData = od;
 
                     entry.Size = entry.RawData.Length;

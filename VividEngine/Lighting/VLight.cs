@@ -21,16 +21,16 @@ namespace Vivid3D.Lighting
 
         public VFrameBufferCube ShadowFB = null;
 
-        //   public Vector3 AmbCE = 0.3f;
+        // public Vector3 AmbCE = 0.3f;
         public Texture.VTexCube ShadowMap = null;
 
         public LightType Type = LightType.Point;
 
         public GraphLight3D ( )
         {
-            Diff = new Vector3 ( 0.6f , 0.6f , 0.6f );
-            Spec = new Vector3 ( 0.2f , 0.2f , 0.2f );
-            Amb = new Vector3 ( 0.1f , 0.1f , 0.1f );
+            Diff = new Vector3 ( 0.6f, 0.6f, 0.6f );
+            Spec = new Vector3 ( 0.2f, 0.2f, 0.2f );
+            Amb = new Vector3 ( 0.1f, 0.1f, 0.1f );
             Atten = 0.1f;
             CreateShadowFBO ( );
             LightNum++;
@@ -69,7 +69,7 @@ namespace Vivid3D.Lighting
 
         public void CreateShadowFBO ( )
         {
-            ShadowFB = new VFrameBufferCube ( Quality.ShadowMapWidth , Quality.ShadowMapHeight );
+            ShadowFB = new VFrameBufferCube ( Quality.ShadowMapWidth, Quality.ShadowMapHeight );
         }
 
         public void DrawShadowMap ( SceneGraph3D graph )
@@ -85,31 +85,30 @@ namespace Vivid3D.Lighting
             graph.CamOverride = cam;
             cam.LocalPos = LocalPos;
             cam.MaxZ = Quality.ShadowDepth;
-            //  cam.LocalTurn = LocalTurn;
+            // cam.LocalTurn = LocalTurn;
 
             int fn = 0;
 
             TextureTarget f = ShadowFB.SetFace(fn);
-            SetCam ( f , cam );
+            SetCam ( f, cam );
 
             graph.RenderDepth ( );
 
-            SetCam ( ShadowFB.SetFace ( 1 ) , cam );
+            SetCam ( ShadowFB.SetFace ( 1 ), cam );
             graph.RenderDepth ( );
 
-            // ShadowFB.Release();
-            //  graph.CamOverride = null;
+            // ShadowFB.Release(); graph.CamOverride = null;
 
-            SetCam ( ShadowFB.SetFace ( 2 ) , cam );
+            SetCam ( ShadowFB.SetFace ( 2 ), cam );
             graph.RenderDepth ( );
 
-            SetCam ( ShadowFB.SetFace ( 3 ) , cam );
+            SetCam ( ShadowFB.SetFace ( 3 ), cam );
             graph.RenderDepth ( );
 
-            SetCam ( ShadowFB.SetFace ( 4 ) , cam );
+            SetCam ( ShadowFB.SetFace ( 4 ), cam );
             graph.RenderDepth ( );
 
-            SetCam ( ShadowFB.SetFace ( 5 ) , cam );
+            SetCam ( ShadowFB.SetFace ( 5 ), cam );
             graph.RenderDepth ( );
 
             ShadowFB.Release ( );
@@ -139,33 +138,33 @@ namespace Vivid3D.Lighting
             Help.IOHelp.WriteBool ( CastShadows );
         }
 
-        private static void SetCam ( TextureTarget f , GraphCam3D Cam )
+        private static void SetCam ( TextureTarget f, GraphCam3D Cam )
         {
             switch ( f )
             {
                 case TextureTarget.TextureCubeMapPositiveX:
-                    Cam.LookAtZero ( new Vector3 ( 1 , 0 , 0 ) , new Vector3 ( 0 , -1 , 0 ) );
+                    Cam.LookAtZero ( new Vector3 ( 1, 0, 0 ), new Vector3 ( 0, -1, 0 ) );
                     break;
 
                 case TextureTarget.TextureCubeMapNegativeX:
-                    Cam.LookAtZero ( new Vector3 ( -1 , 0 , 0 ) , new Vector3 ( 0 , -1 , 0 ) );
+                    Cam.LookAtZero ( new Vector3 ( -1, 0, 0 ), new Vector3 ( 0, -1, 0 ) );
                     break;
 
                 case TextureTarget.TextureCubeMapPositiveY:
 
-                    Cam.LookAtZero ( new Vector3 ( 0 , -1 , 0 ) , new Vector3 ( 0 , 0 , -1 ) );
+                    Cam.LookAtZero ( new Vector3 ( 0, -1, 0 ), new Vector3 ( 0, 0, -1 ) );
                     break;
 
                 case TextureTarget.TextureCubeMapNegativeY:
-                    Cam.LookAtZero ( new Vector3 ( 0 , 1 , 0 ) , new Vector3 ( 0 , 0 , 1 ) );
+                    Cam.LookAtZero ( new Vector3 ( 0, 1, 0 ), new Vector3 ( 0, 0, 1 ) );
                     break;
 
                 case TextureTarget.TextureCubeMapPositiveZ:
-                    Cam.LookAtZero ( new Vector3 ( 0 , 0 , 1 ) , new Vector3 ( 0 , -1 , 0 ) );
+                    Cam.LookAtZero ( new Vector3 ( 0, 0, 1 ), new Vector3 ( 0, -1, 0 ) );
                     break;
 
                 case TextureTarget.TextureCubeMapNegativeZ:
-                    Cam.LookAtZero ( new Vector3 ( 0 , 0 , -1 ) , new Vector3 ( 0 , -1 , 0 ) );
+                    Cam.LookAtZero ( new Vector3 ( 0, 0, -1 ), new Vector3 ( 0, -1, 0 ) );
                     break;
             }
         }

@@ -20,15 +20,15 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             zBox.Text = Value.Z.ToString ( );
         }
 
-        private void label3_Click ( object sender , EventArgs e )
+        private void label3_Click ( object sender, EventArgs e )
         {
         }
 
-        private void InspectVec3_Load ( object sender , EventArgs e )
+        private void InspectVec3_Load ( object sender, EventArgs e )
         {
         }
 
-        private void xBox_TextChanged ( object sender , EventArgs e )
+        private void xBox_TextChanged ( object sender, EventArgs e )
         {
             if ( xBox.Text.Length == 0 )
             {
@@ -53,7 +53,7 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             }
         }
 
-        private void yBox_TextChanged ( object sender , EventArgs e )
+        private void yBox_TextChanged ( object sender, EventArgs e )
         {
             if ( yBox.Text.Length == 0 )
             {
@@ -78,7 +78,7 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             }
         }
 
-        private void zBox_TextChanged ( object sender , EventArgs e )
+        private void zBox_TextChanged ( object sender, EventArgs e )
         {
             if ( zBox.Text.Length == 0 )
             {

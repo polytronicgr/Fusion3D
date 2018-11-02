@@ -23,9 +23,9 @@ namespace DataCore.DataTypes
 
             int dl = 0;
 
-            for ( int y = 0 ; y < Map.Height ; y++ )
+            for ( int y = 0; y < Map.Height; y++ )
             {
-                for ( int x = 0 ; x < Map.Width ; x++ )
+                for ( int x = 0; x < Map.Width; x++ )
                 {
                     Color col = Map.GetPixel(x, y);
                     _RawData [ dl++ ] = col.R;
@@ -54,15 +54,15 @@ namespace DataCore.DataTypes
 
             byte[] rgb = new byte[mw * mh * 4];
 
-            ns.Read ( rgb , 0 , mw * mh * 4 );
+            ns.Read ( rgb, 0, mw * mh * 4 );
 
-            Map = new Bitmap ( mw , mh );
+            Map = new Bitmap ( mw, mh );
 
             int dl = 0;
 
-            for ( int y = 0 ; y < mh ; y++ )
+            for ( int y = 0; y < mh; y++ )
             {
-                for ( int x = 0 ; x < mw ; x++ )
+                for ( int x = 0; x < mw; x++ )
                 {
                     int r = rgb[dl++];
                     int g = rgb[dl++];
@@ -71,7 +71,7 @@ namespace DataCore.DataTypes
 
                     Color col = Color.FromArgb(a, r, g, b);
 
-                    Map.SetPixel ( x , y , col );
+                    Map.SetPixel ( x, y, col );
                 }
             }
         }

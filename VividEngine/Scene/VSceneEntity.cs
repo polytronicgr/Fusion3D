@@ -45,7 +45,7 @@ namespace Vivid3D.Scene
             get
             {
                 List<Vector3> verts = new List<Vector3>();
-                GetVerts ( verts , this );
+                GetVerts ( verts, this );
                 return verts;
             }
         }
@@ -71,7 +71,7 @@ namespace Vivid3D.Scene
             switch ( PyType )
             {
                 case Physics.PyType.Box:
-                    PO = new Physics.PyDynamic ( type , this );
+                    PO = new Physics.PyDynamic ( type, this );
                     break;
 
                 case Physics.PyType.Mesh:
@@ -84,7 +84,7 @@ namespace Vivid3D.Scene
         {
             foreach ( VMesh m in node.Meshes )
             {
-                for ( int i = 0 ; i < m.NumVertices ; i++ )
+                for ( int i = 0; i < m.NumVertices; i++ )
                 {
                     int vid = i * 3;
                     if ( m.Vertices [ vid ] < sw )
@@ -122,56 +122,50 @@ namespace Vivid3D.Scene
             }
         }
 
-        public void GetVerts ( List<Vector3> verts , GraphEntity3D node )
+        public void GetVerts ( List<Vector3> verts, GraphEntity3D node )
         {
             foreach ( VMesh m in node.Meshes )
             {
-                for ( int i = 0 ; i < m.NumVertices ; i++ )
+                for ( int i = 0; i < m.NumVertices; i++ )
                 {
                     int vid = i * 3;
                     Vector3 nv = new Vector3(m.Vertices[vid], m.Vertices[vid + 1], m.Vertices[vid + 2]);
-                    nv = Vector3.TransformPosition ( nv , node.World );
+                    nv = Vector3.TransformPosition ( nv, node.World );
                     verts.Add ( nv );
-                    // verts.Add(m.Vertices[vid]);
-                    //  verts.Add(m.Vertices[vid + 1]);
-                    //    verts.Add(m.Vertices[vid + 2]);
+                    // verts.Add(m.Vertices[vid]); verts.Add(m.Vertices[vid + 1]);
+                    // verts.Add(m.Vertices[vid + 2]);
                 }
             }
             foreach ( GraphNode3D snode in node.Sub )
             {
-                GetVerts ( verts , snode as GraphEntity3D );
+                GetVerts ( verts, snode as GraphEntity3D );
             }
         }
 
         public override void Init ( )
         {
-            //     Renderer = new VRMultiPass();
+            // Renderer = new VRMultiPass();
         }
 
         public virtual void PostRender ( )
         {
         }
 
-        /// <summary>
-        /// To be called AFTER data asscoiation.
+        /// <summary> To be called AFTER data asscoiation.
         public virtual void PreRender ( )
         {
         }
 
         public override void Present ( GraphCam3D c )
         {
-            //  GL.MatrixMode(MatrixMode.Projection);
-            // GL.LoadMatrix(ref c.ProjMat);
+            // GL.MatrixMode(MatrixMode.Projection); GL.LoadMatrix(ref c.ProjMat);
             SetMats ( c );
             Bind ( );
             PreRender ( );
             Render ( );
             PostRender ( );
             Release ( );
-            //      foreach (var s in Sub)
-            //    {
-            //      s.Present(c);
-            // }
+            // foreach (var s in Sub) { s.Present(c); }
         }
 
         public override void PresentDepth ( GraphCam3D c )
@@ -191,7 +185,7 @@ namespace Vivid3D.Scene
         public void Read ( )
         {
             int ns1 = Help.IOHelp.ReadInt();
-            for ( int i = 0 ; i < ns1 ; i++ )
+            for ( int i = 0; i < ns1; i++ )
             {
                 Script.ScriptBase sb = new Script.ScriptBase
                 {
@@ -208,13 +202,13 @@ namespace Vivid3D.Scene
             On = Help.IOHelp.ReadBool ( );
             int ns = Help.IOHelp.ReadInt();
             int mc = Help.IOHelp.ReadInt();
-            for ( int m = 0 ; m < mc ; m++ )
+            for ( int m = 0; m < mc; m++ )
             {
                 VMesh msh = new VMesh();
                 msh.Read ( );
                 Meshes.Add ( msh );
             }
-            for ( int i = 0 ; i < ns ; i++ )
+            for ( int i = 0; i < ns; i++ )
             {
                 GraphEntity3D gn = new GraphEntity3D();
                 Sub.Add ( gn );
@@ -248,9 +242,9 @@ namespace Vivid3D.Scene
             }
         }
 
-        public void ScaleMeshes ( float x , float y , float z )
+        public void ScaleMeshes ( float x, float y, float z )
         {
-            DScale ( x , y , z , this );
+            DScale ( x, y, z, this );
         }
 
         public void SetMat ( Material3D mat )
@@ -319,15 +313,15 @@ namespace Vivid3D.Scene
             }
         }
 
-        private void DScale ( float x , float y , float z , GraphEntity3D node )
+        private void DScale ( float x, float y, float z, GraphEntity3D node )
         {
             foreach ( VMesh m in node.Meshes )
             {
-                m.Scale ( x , y , z );
+                m.Scale ( x, y, z );
             }
             foreach ( GraphNode3D snode in node.Sub )
             {
-                DScale ( x , y , z , snode as GraphEntity3D );
+                DScale ( x, y, z, snode as GraphEntity3D );
             }
         }
     }

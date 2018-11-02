@@ -18,27 +18,27 @@ namespace VividEdit.Forms.Inspectors
             IPos = new ValueTypes.InspectVec3 ( );
             IPos.ValueName.Text = "Position";
             Controls.Add ( IPos );
-            IPos.Location = new Point ( 6 , 6 );
+            IPos.Location = new Point ( 6, 6 );
             IPos.Show ( );
             IDiff = new ValueTypes.InspectVec3 ( );
             IDiff.ValueName.Text = "Diffuse";
             Controls.Add ( IDiff );
-            IDiff.Location = new Point ( 6 , 52 );
+            IDiff.Location = new Point ( 6, 52 );
             IDiff.Show ( );
             ISpec = new ValueTypes.InspectVec3 ( );
             ISpec.ValueName.Text = "Specular";
             Controls.Add ( ISpec );
-            ISpec.Location = new Point ( 6 , 96 );
+            ISpec.Location = new Point ( 6, 96 );
             ISpec.Show ( );
             IRange = new ValueTypes.InspectFloat ( );
             IRange.ValueName.Text = "Range";
             Controls.Add ( IRange );
-            IRange.Location = new Point ( 6 , 150 );
+            IRange.Location = new Point ( 6, 150 );
             IRange.Show ( );
             IShadows = new ValueTypes.InspectBool ( );
             IShadows.ValueName.Text = "Shadows?";
             Controls.Add ( IShadows );
-            IShadows.Location = new Point ( 6 , 180 );
+            IShadows.Location = new Point ( 6, 180 );
             IShadows.Show ( );
         }
 
@@ -61,7 +61,7 @@ namespace VividEdit.Forms.Inspectors
             IShadows.AlignToValue ( );
         }
 
-        private void updateInspector_Tick ( object sender , EventArgs e )
+        private void updateInspector_Tick ( object sender, EventArgs e )
         {
             if ( Inspecting == false )
             {
@@ -69,7 +69,7 @@ namespace VividEdit.Forms.Inspectors
             }
 
             Console.WriteLine ( "Ipos:" + IDiff.Value );
-            //  if (Light.Inspecting == false) return;
+            // if (Light.Inspecting == false) return;
             Light.LocalPos = IPos.Value;
             Light.Diff = IDiff.Value;
             Light.Spec = ISpec.Value;

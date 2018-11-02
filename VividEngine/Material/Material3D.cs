@@ -17,9 +17,9 @@ namespace Vivid3D.Material
 
         public Material3D ( )
         {
-            TNorm = new Texture.VTex2D ( "data\\tex\\normblank.png" , Texture.LoadMethod.Single , false );
-            TCol = new Texture.VTex2D ( "data\\tex\\diffblank.png" , Texture.LoadMethod.Single , false );
-            TSpec = new Texture.VTex2D ( "data\\tex\\specblank.png" , Texture.LoadMethod.Single , false );
+            TNorm = new Texture.VTex2D ( "data\\tex\\normblank.png", Texture.LoadMethod.Single, false );
+            TCol = new Texture.VTex2D ( "data\\tex\\diffblank.png", Texture.LoadMethod.Single, false );
+            TSpec = new Texture.VTex2D ( "data\\tex\\specblank.png", Texture.LoadMethod.Single, false );
         }
 
         public void Write ( )
@@ -46,7 +46,8 @@ namespace Vivid3D.Material
 
         public void Read ( )
         {
-            //   Console.WriteLine ( "Thread:" + System.Threading.Thread.CurrentThread.Name + System.Threading.Thread.CurrentThread );
+            // Console.WriteLine ( "Thread:" + System.Threading.Thread.CurrentThread.Name +
+            // System.Threading.Thread.CurrentThread );
             Diff = Help.IOHelp.ReadVec3 ( );
             Spec = Help.IOHelp.ReadVec3 ( );
             Shine = Help.IOHelp.ReadFloat ( );
@@ -67,10 +68,10 @@ namespace Vivid3D.Material
             }
         }
 
-        public void LoadTexs ( string folder , string name )
+        public void LoadTexs ( string folder, string name )
         {
-            TCol = new VTex2D ( folder + "//" + name + "_c.png" , LoadMethod.Single , false );
-            TNorm = new VTex2D ( folder + "//" + name + "_n.png" , LoadMethod.Single , false );
+            TCol = new VTex2D ( folder + "//" + name + "_c.png", LoadMethod.Single, false );
+            TNorm = new VTex2D ( folder + "//" + name + "_n.png", LoadMethod.Single, false );
         }
 
         public virtual void BindLightmap ( )

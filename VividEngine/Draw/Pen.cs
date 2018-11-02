@@ -13,16 +13,16 @@ namespace Vivid3D.Draw
         public Vector4 Col = Vector4.One;
         public float Blur = 0.2f;
 
-        public VEQuadBlur2 ( ) : base ( "" , "Data\\Shader\\blur2VS.glsl" , "Data\\Shader\\blur2FS.glsl" )
+        public VEQuadBlur2 ( ) : base ( "", "Data\\Shader\\blur2VS.glsl", "Data\\Shader\\blur2FS.glsl" )
         {
         }
 
         public override void SetPars ( )
         {
-            SetTex ( "tR" , 0 );
-            SetVec4 ( "col" , Col );
-            SetFloat ( "blur" , Blur );
-            SetMat ( "proj" , Matrix4.CreateOrthographicOffCenter ( 0 , AppInfo.RW , AppInfo.RH , 0 , -1 , 1 ) );
+            SetTex ( "tR", 0 );
+            SetVec4 ( "col", Col );
+            SetFloat ( "blur", Blur );
+            SetMat ( "proj", Matrix4.CreateOrthographicOffCenter ( 0, AppInfo.RW, AppInfo.RH, 0, -1, 1 ) );
         }
     }
 
@@ -32,20 +32,20 @@ namespace Vivid3D.Draw
         public float Blur = 0.2f;
         public float Refract = 0.25f;
 
-        public VEQuadBlur ( ) : base ( "" , "Data\\Shader\\blurVS.glsl" , "Data\\Shader\\blurFS.glsl" )
+        public VEQuadBlur ( ) : base ( "", "Data\\Shader\\blurVS.glsl", "Data\\Shader\\blurFS.glsl" )
         {
         }
 
         public override void SetPars ( )
         {
-            SetTex ( "tR" , 0 );
-            SetTex ( "tB" , 1 );
-            SetTex ( "tN" , 2 );
-            SetFloat ( "blur" , Blur );
-            SetFloat ( "refract" , Refract );
-            SetBool ( "refractOn" , Refract > 0 );
-            SetVec4 ( "col" , Col );
-            SetMat ( "proj" , Matrix4.CreateOrthographicOffCenter ( 0 , AppInfo.RW , AppInfo.RH , 0 , -1 , 1 ) );
+            SetTex ( "tR", 0 );
+            SetTex ( "tB", 1 );
+            SetTex ( "tN", 2 );
+            SetFloat ( "blur", Blur );
+            SetFloat ( "refract", Refract );
+            SetBool ( "refractOn", Refract > 0 );
+            SetVec4 ( "col", Col );
+            SetMat ( "proj", Matrix4.CreateOrthographicOffCenter ( 0, AppInfo.RW, AppInfo.RH, 0, -1, 1 ) );
         }
     }
 
@@ -53,15 +53,15 @@ namespace Vivid3D.Draw
     {
         public Vector4 Col = Vector4.One;
 
-        public VEQuad ( ) : base ( "" , "Data\\Shader\\drawVS.txt" , "Data\\Shader\\drawFS.txt" )
+        public VEQuad ( ) : base ( "", "Data\\Shader\\drawVS.txt", "Data\\Shader\\drawFS.txt" )
         {
         }
 
         public override void SetPars ( )
         {
-            SetTex ( "tR" , 0 );
-            SetVec4 ( "col" , Col );
-            SetMat ( "proj" , Matrix4.CreateOrthographicOffCenter ( 0 , AppInfo.RW , AppInfo.RH , 0 , -1 , 1 ) );
+            SetTex ( "tR", 0 );
+            SetVec4 ( "col", Col );
+            SetMat ( "proj", Matrix4.CreateOrthographicOffCenter ( 0, AppInfo.RW, AppInfo.RH, 0, -1, 1 ) );
 
             // Console.WriteLine("W:" + AppInfo.RW + " H:" + AppInfo.RH);
         }
@@ -90,7 +90,7 @@ namespace Vivid3D.Draw
             QFX = new VEQuad ( );
             BFX = new VEQuadBlur ( );
             BFX2 = new VEQuadBlur2 ( );
-            WhiteTex = new VTex2D ( "Data\\ui\\skin\\white.png" , LoadMethod.Single );
+            WhiteTex = new VTex2D ( "Data\\ui\\skin\\white.png", LoadMethod.Single );
         }
 
         public static void DraqQuadBlur2 ( )
@@ -98,11 +98,11 @@ namespace Vivid3D.Draw
             GL.Disable ( EnableCap.CullFace );
             GL.Disable ( EnableCap.DepthTest );
 
-            GL.Viewport ( 0 , 0 , AppInfo.W , AppInfo.H );
+            GL.Viewport ( 0, 0, AppInfo.W, AppInfo.H );
             //  GL.Disable(EnableCap.Blend);
             //GL.Disable(EnableCap.)
 
-            //    WhiteTex.Bind(0);
+            // WhiteTex.Bind(0);
 
             //BFX.Refract = refract;
             //         Console.WriteLine("R2:" + refract);
@@ -112,21 +112,21 @@ namespace Vivid3D.Draw
 
             GL.BindVertexArray ( qva );
 
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.EnableVertexAttribArray ( 0 );
 
-            GL.VertexAttribPointer ( 0 , 3 , VertexAttribPointerType.Float , false , 9 * 4 , 0 );
+            GL.VertexAttribPointer ( 0, 3, VertexAttribPointerType.Float, false, 9 * 4, 0 );
             GL.EnableVertexAttribArray ( 1 );
-            GL.VertexAttribPointer ( 1 , 2 , VertexAttribPointerType.Float , false , 9 * 4 , 3 * 4 );
+            GL.VertexAttribPointer ( 1, 2, VertexAttribPointerType.Float, false, 9 * 4, 3 * 4 );
             GL.EnableVertexAttribArray ( 2 );
-            GL.VertexAttribPointer ( 2 , 4 , VertexAttribPointerType.Float , false , 9 * 4 , 5 * 4 );
+            GL.VertexAttribPointer ( 2, 4, VertexAttribPointerType.Float, false, 9 * 4, 5 * 4 );
 
             uint[] ind = new uint[4];
             ind [ 0 ] = 0;
             ind [ 1 ] = 1;
             ind [ 2 ] = 2;
             ind [ 3 ] = 3;
-            GL.DrawElements<uint> ( PrimitiveType.Quads , 4 , DrawElementsType.UnsignedInt , ind );
+            GL.DrawElements<uint> ( PrimitiveType.Quads, 4, DrawElementsType.UnsignedInt, ind );
             //GL.DrawArrays(PrimitiveType.Quads, 0, 4);
 
             GL.DisableVertexAttribArray ( 0 );
@@ -138,16 +138,16 @@ namespace Vivid3D.Draw
             GL.Enable ( EnableCap.DepthTest );
         }
 
-        public static void DrawQuadBlur ( float blur , float refract = 0 )
+        public static void DrawQuadBlur ( float blur, float refract = 0 )
         {
             GL.Disable ( EnableCap.CullFace );
             GL.Disable ( EnableCap.DepthTest );
 
-            GL.Viewport ( 0 , 0 , AppInfo.W , AppInfo.H );
+            GL.Viewport ( 0, 0, AppInfo.W, AppInfo.H );
             //  GL.Disable(EnableCap.Blend);
             //GL.Disable(EnableCap.)
 
-            //    WhiteTex.Bind(0);
+            // WhiteTex.Bind(0);
 
             BFX.Refract = refract;
 
@@ -157,21 +157,21 @@ namespace Vivid3D.Draw
 
             GL.BindVertexArray ( qva );
 
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.EnableVertexAttribArray ( 0 );
 
-            GL.VertexAttribPointer ( 0 , 3 , VertexAttribPointerType.Float , false , 9 * 4 , 0 );
+            GL.VertexAttribPointer ( 0, 3, VertexAttribPointerType.Float, false, 9 * 4, 0 );
             GL.EnableVertexAttribArray ( 1 );
-            GL.VertexAttribPointer ( 1 , 2 , VertexAttribPointerType.Float , false , 9 * 4 , 3 * 4 );
+            GL.VertexAttribPointer ( 1, 2, VertexAttribPointerType.Float, false, 9 * 4, 3 * 4 );
             GL.EnableVertexAttribArray ( 2 );
-            GL.VertexAttribPointer ( 2 , 4 , VertexAttribPointerType.Float , false , 9 * 4 , 5 * 4 );
+            GL.VertexAttribPointer ( 2, 4, VertexAttribPointerType.Float, false, 9 * 4, 5 * 4 );
 
             uint[] ind = new uint[4];
             ind [ 0 ] = 0;
             ind [ 1 ] = 1;
             ind [ 2 ] = 2;
             ind [ 3 ] = 3;
-            GL.DrawElements<uint> ( PrimitiveType.Quads , 4 , DrawElementsType.UnsignedInt , ind );
+            GL.DrawElements<uint> ( PrimitiveType.Quads, 4, DrawElementsType.UnsignedInt, ind );
             //GL.DrawArrays(PrimitiveType.Quads, 0, 4);
 
             GL.DisableVertexAttribArray ( 0 );
@@ -188,31 +188,31 @@ namespace Vivid3D.Draw
             GL.Disable ( EnableCap.CullFace );
             GL.Disable ( EnableCap.DepthTest );
 
-            GL.Viewport ( 0 , 0 , AppInfo.W , AppInfo.H );
+            GL.Viewport ( 0, 0, AppInfo.W, AppInfo.H );
             //  GL.Disable(EnableCap.Blend);
             //GL.Disable(EnableCap.)
 
-            //    WhiteTex.Bind(0);
+            // WhiteTex.Bind(0);
 
             QFX.Bind ( );
 
             GL.BindVertexArray ( qva );
 
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.EnableVertexAttribArray ( 0 );
 
-            GL.VertexAttribPointer ( 0 , 3 , VertexAttribPointerType.Float , false , 9 * 4 , 0 );
+            GL.VertexAttribPointer ( 0, 3, VertexAttribPointerType.Float, false, 9 * 4, 0 );
             GL.EnableVertexAttribArray ( 1 );
-            GL.VertexAttribPointer ( 1 , 2 , VertexAttribPointerType.Float , false , 9 * 4 , 3 * 4 );
+            GL.VertexAttribPointer ( 1, 2, VertexAttribPointerType.Float, false, 9 * 4, 3 * 4 );
             GL.EnableVertexAttribArray ( 2 );
-            GL.VertexAttribPointer ( 2 , 4 , VertexAttribPointerType.Float , false , 9 * 4 , 5 * 4 );
+            GL.VertexAttribPointer ( 2, 4, VertexAttribPointerType.Float, false, 9 * 4, 5 * 4 );
 
             uint[] ind = new uint[4];
             ind [ 0 ] = 0;
             ind [ 1 ] = 1;
             ind [ 2 ] = 2;
             ind [ 3 ] = 3;
-            GL.DrawElements<uint> ( PrimitiveType.Quads , 4 , DrawElementsType.UnsignedInt , ind );
+            GL.DrawElements<uint> ( PrimitiveType.Quads, 4, DrawElementsType.UnsignedInt, ind );
             //GL.DrawArrays(PrimitiveType.Quads, 0, 4);
 
             GL.DisableVertexAttribArray ( 0 );
@@ -223,20 +223,20 @@ namespace Vivid3D.Draw
             GL.Enable ( EnableCap.CullFace );
             GL.Enable ( EnableCap.DepthTest );
 
-            //  WhiteTex.Release(0);
+            // WhiteTex.Release(0);
         }
 
-        public static void Line ( int x , int y , int x2 , int y2 )
+        public static void Line ( int x, int y, int x2, int y2 )
         {
-            Line ( x , y , x2 , y2 , Vector4.One );
+            Line ( x, y, x2, y2, Vector4.One );
         }
 
-        public static void Line ( int x , int y , int x2 , int y2 , Vector4 c )
+        public static void Line ( int x, int y, int x2, int y2, Vector4 c )
         {
-            Line ( x , y , x2 , y2 , c , c );
+            Line ( x, y, x2, y2, c, c );
         }
 
-        public static void Line ( int x , int y , int x2 , int y2 , Vector4 c1 , Vector4 c2 )
+        public static void Line ( int x, int y, int x2, int y2, Vector4 c1, Vector4 c2 )
         {
             float a1 = x;
             float b1 = y;
@@ -276,7 +276,7 @@ namespace Vivid3D.Draw
             bi *= 2;
             ai *= 2;
 
-            for ( int i = 0 ; i < steps ; i += 2 )
+            for ( int i = 0; i < steps; i += 2 )
             {
                 // RectRaw((int)dx,(int) dy, 2, 2, Vector4.One,Vector4.One);
 
@@ -284,7 +284,7 @@ namespace Vivid3D.Draw
                 vc.Y = cg1;
                 vc.Z = cb1;
                 vc.W = ca1;
-                GenQuad ( ( int ) dx , ( int ) dy , 2 , 2 , vc , vc );
+                GenQuad ( ( int ) dx, ( int ) dy, 2, 2, vc, vc );
 
                 DrawQuad ( );
 
@@ -298,7 +298,7 @@ namespace Vivid3D.Draw
             WhiteTex.Release ( 0 );
         }
 
-        public static void GenQuad ( int x , int y , int w , int h , Vector4 c1 , Vector4 c2 )
+        public static void GenQuad ( int x, int y, int w, int h, Vector4 c1, Vector4 c2 )
         {
             if ( qva == -1 )
             {
@@ -368,19 +368,19 @@ namespace Vivid3D.Draw
             {
                 qvb = GL.GenBuffer ( );
             }
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
-            GL.BufferData ( BufferTarget.ArrayBuffer , new IntPtr ( 36 * 4 ) , qd , BufferUsageHint.StaticDraw );
-            //  GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
+            GL.BufferData ( BufferTarget.ArrayBuffer, new IntPtr ( 36 * 4 ), qd, BufferUsageHint.StaticDraw );
+            // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
-        public static void SetProj ( int x , int y , int w , int h )
+        public static void SetProj ( int x, int y, int w, int h )
         {
-            DrawMat = Matrix4.CreateOrthographicOffCenter ( x , x + w , y + h , y , 0 , 1 );
+            DrawMat = Matrix4.CreateOrthographicOffCenter ( x, x + w, y + h, y, 0, 1 );
         }
 
         public static void Bind ( )
         {
-            //    GL.Color4(ForeCol);
+            // GL.Color4(ForeCol);
             switch ( BlendMod )
             {
                 case VBlend.Solid:
@@ -389,7 +389,7 @@ namespace Vivid3D.Draw
 
                 case VBlend.Alpha:
                     GL.Enable ( EnableCap.Blend );
-                    GL.BlendFunc ( BlendingFactor.SrcAlpha , BlendingFactor.OneMinusSrcAlpha );
+                    GL.BlendFunc ( BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha );
                     break;
             }
 
@@ -403,19 +403,19 @@ namespace Vivid3D.Draw
         {
         }
 
-        public static void Rect ( int x , int y , int w , int h , VTex2D img )
+        public static void Rect ( int x, int y, int w, int h, VTex2D img )
         {
-            Rect ( x , y , w , h , img , Vector4.One );
+            Rect ( x, y, w, h, img, Vector4.One );
         }
 
-        public static void Rect ( int x , int y , int w , int h , VTex2D img , Vector4 c )
+        public static void Rect ( int x, int y, int w, int h, VTex2D img, Vector4 c )
         {
-            Rect ( x , y , w , h , img , c , c );
+            Rect ( x, y, w, h, img, c, c );
         }
 
-        public static void RectRaw ( int x , int y , int w , int h , Vector4 t1 , Vector4 t2 )
+        public static void RectRaw ( int x, int y, int w, int h, Vector4 t1, Vector4 t2 )
         {
-            GenQuad ( x , y , w , h , t1 , t2 );
+            GenQuad ( x, y, w, h, t1, t2 );
 
             DrawQuad ( );
 
@@ -427,16 +427,16 @@ namespace Vivid3D.Draw
             //GL.End();
         }
 
-        public static void RectBlurRefract ( int x , int y , int w , int h , VTex2D img , VTex2D bimg , VTex2D nimg , Vector4 tc , Vector4 bc , float blur , float refract )
+        public static void RectBlurRefract ( int x, int y, int w, int h, VTex2D img, VTex2D bimg, VTex2D nimg, Vector4 tc, Vector4 bc, float blur, float refract )
         {
             BFX.Col = tc;
 
             Bind ( );
-            GenQuad ( x , y , w , h , tc , bc );
+            GenQuad ( x, y, w, h, tc, bc );
             img.Bind ( 0 );
             bimg.Bind ( 1 );
             nimg.Bind ( 2 );
-            DrawQuadBlur ( blur , refract );
+            DrawQuadBlur ( blur, refract );
             nimg.Release ( 2 );
             bimg.Release ( 1 );
             img.Release ( 0 );
@@ -449,24 +449,24 @@ namespace Vivid3D.Draw
             Release ( );
         }
 
-        public static void RectBlur2 ( int x , int y , int w , int h , VTex2D img , Vector4 col , float blur )
+        public static void RectBlur2 ( int x, int y, int w, int h, VTex2D img, Vector4 col, float blur )
         {
             BFX2.Col = col;
             BFX2.Blur = blur;
             Bind ( );
-            GenQuad ( x , y , w , h , col , col );
+            GenQuad ( x, y, w, h, col, col );
             img.Bind ( 0 );
             DraqQuadBlur2 ( );
             img.Release ( 0 );
             Release ( );
         }
 
-        public static void RectBlur ( int x , int y , int w , int h , VTex2D img , VTex2D bimg , Vector4 tc , Vector4 bc , float blur )
+        public static void RectBlur ( int x, int y, int w, int h, VTex2D img, VTex2D bimg, Vector4 tc, Vector4 bc, float blur )
         {
             BFX.Col = tc;
             BFX.Refract = 0;
             Bind ( );
-            GenQuad ( x , y , w , h , tc , bc );
+            GenQuad ( x, y, w, h, tc, bc );
             img.Bind ( 0 );
             bimg.Bind ( 1 );
             DrawQuadBlur ( blur );
@@ -481,11 +481,11 @@ namespace Vivid3D.Draw
             Release ( );
         }
 
-        public static void Rect ( int x , int y , int w , int h , VTex2D img , Vector4 tc , Vector4 bc )
+        public static void Rect ( int x, int y, int w, int h, VTex2D img, Vector4 tc, Vector4 bc )
         {
             QFX.Col = tc;
             Bind ( );
-            GenQuad ( x , y , w , h , tc , bc );
+            GenQuad ( x, y, w, h, tc, bc );
             img.Bind ( 0 );
             DrawQuad ( );
             img.Release ( 0 );
@@ -498,11 +498,11 @@ namespace Vivid3D.Draw
             Release ( );
         }
 
-        public static void Rect ( int x , int y , int w , int h , Vector4 tc , Vector4 bc )
+        public static void Rect ( int x, int y, int w, int h, Vector4 tc, Vector4 bc )
         {
             QFX.Col = tc;
             Bind ( );
-            GenQuad ( x , y , w , h , tc , bc );
+            GenQuad ( x, y, w, h, tc, bc );
             WhiteTex.Bind ( 0 );
             DrawQuad ( );
             WhiteTex.Release ( 0 );
@@ -515,49 +515,49 @@ namespace Vivid3D.Draw
             Release ( );
         }
 
-        public static void Rect ( int x , int y , int width , int height , Vector4 col )
+        public static void Rect ( int x, int y, int width, int height, Vector4 col )
         {
-            Rect ( x , y , width , height , col , col );
+            Rect ( x, y, width, height, col, col );
         }
 
-        public static void Rect ( float x , float y , float w , float h , Vector4 col )
+        public static void Rect ( float x, float y, float w, float h, Vector4 col )
         {
-            Rect ( ( int ) x , ( int ) y , ( int ) w , ( int ) h , col );
+            Rect ( ( int ) x, ( int ) y, ( int ) w, ( int ) h, col );
         }
 
-        public static void Rect ( float x , float y , float w , float h , Vector4 tc , Vector4 bc )
+        public static void Rect ( float x, float y, float w, float h, Vector4 tc, Vector4 bc )
         {
-            Rect ( ( int ) x , ( int ) y , ( int ) w , ( int ) h , tc , bc );
+            Rect ( ( int ) x, ( int ) y, ( int ) w, ( int ) h, tc, bc );
         }
 
-        public static void Rect ( float x , float y , float w , float h , VTex2D img )
+        public static void Rect ( float x, float y, float w, float h, VTex2D img )
         {
-            Rect ( ( int ) x , ( int ) y , ( int ) w , ( int ) h , img );
+            Rect ( ( int ) x, ( int ) y, ( int ) w, ( int ) h, img );
         }
 
-        public static void Rect ( float x , float y , float w , float h , VTex2D img , Vector4 col )
+        public static void Rect ( float x, float y, float w, float h, VTex2D img, Vector4 col )
         {
-            Rect ( ( int ) x , ( int ) y , ( int ) w , ( int ) h , img , col );
+            Rect ( ( int ) x, ( int ) y, ( int ) w, ( int ) h, img, col );
         }
 
-        public static void Rect ( float x , float y , float w , float h , VTex2D img , Vector4 tc , Vector4 bc )
+        public static void Rect ( float x, float y, float w, float h, VTex2D img, Vector4 tc, Vector4 bc )
         {
-            Rect ( ( int ) x , ( int ) y , ( int ) w , ( int ) h , img , tc , bc );
+            Rect ( ( int ) x, ( int ) y, ( int ) w, ( int ) h, img, tc, bc );
         }
 
-        public static void Line ( float x , float y , float x2 , float y2 )
+        public static void Line ( float x, float y, float x2, float y2 )
         {
-            Line ( ( int ) x , ( int ) y , ( int ) x2 , ( int ) y2 );
+            Line ( ( int ) x, ( int ) y, ( int ) x2, ( int ) y2 );
         }
 
-        public static void Line ( float x , float y , float x2 , float y2 , Vector4 col )
+        public static void Line ( float x, float y, float x2, float y2, Vector4 col )
         {
-            Line ( ( int ) x , ( int ) y , ( int ) x2 , ( int ) y2 , col );
+            Line ( ( int ) x, ( int ) y, ( int ) x2, ( int ) y2, col );
         }
 
-        public static void Line ( float x , float y , float x2 , float y2 , Vector4 c1 , Vector4 c2 )
+        public static void Line ( float x, float y, float x2, float y2, Vector4 c1, Vector4 c2 )
         {
-            Line ( ( int ) x , ( int ) y , ( int ) x2 , ( int ) y2 , c1 , c2 );
+            Line ( ( int ) x, ( int ) y, ( int ) x2, ( int ) y2, c1, c2 );
         }
     }
 }

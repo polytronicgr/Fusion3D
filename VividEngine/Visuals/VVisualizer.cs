@@ -8,7 +8,7 @@ namespace Vivid3D.Visuals
         public VMesh md = null;
         public int Vertices = 0, Indices = 0;
 
-        public VVisualizer ( int vc , int ic )
+        public VVisualizer ( int vc, int ic )
         {
             Vertices = vc;
             Indices = ic;

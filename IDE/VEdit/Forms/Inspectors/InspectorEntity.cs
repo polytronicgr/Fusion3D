@@ -17,10 +17,10 @@ namespace VividEdit.Forms.Inspectors
             IPos = new ValueTypes.InspectVec3 ( );
             IPos.ValueName.Text = "Position";
             Controls.Add ( IPos );
-            IPos.Location = new Point ( 6 , 6 );
+            IPos.Location = new Point ( 6, 6 );
             IPos.Show ( );
 
-            Size = new Size ( 512 , 1000 );
+            Size = new Size ( 512, 1000 );
         }
 
         public override void SetUI ( )
@@ -34,9 +34,9 @@ namespace VividEdit.Forms.Inspectors
                     Text = "Mesh:" + mi + " Material Edit" + mi
                 };
                 mi++;
-                b.Location = new Point ( 6 , vy );
-                b.Size = new Size ( 120 , 25 );
-                b.Click += ( sender , e ) =>
+                b.Location = new Point ( 6, vy );
+                b.Size = new Size ( 120, 25 );
+                b.Click += ( sender, e ) =>
                 {
                     VividEdit.VividED.Main.DockClassInspect.Inspect ( m.Mat );
                 };
@@ -44,14 +44,14 @@ namespace VividEdit.Forms.Inspectors
             }
         }
 
-        private void B_Click ( object sender , EventArgs e )
+        private void B_Click ( object sender, EventArgs e )
         {
             //VividEdit.VividED.Main.DockClassInspect.Inspect(
             // )
             // throw new NotImplementedException();
         }
 
-        private void Nt_Tick ( object sender , EventArgs e )
+        private void Nt_Tick ( object sender, EventArgs e )
         {
             if ( Inspecting )
             {
@@ -72,7 +72,7 @@ namespace VividEdit.Forms.Inspectors
             Align ( );
         }
 
-        private void Nt_Tick1 ( object sender , EventArgs e )
+        private void Nt_Tick1 ( object sender, EventArgs e )
         {
             if ( Inspecting )
             {

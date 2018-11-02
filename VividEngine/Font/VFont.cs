@@ -31,7 +31,7 @@ namespace Vivid3D.Font
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             BinaryReader r = new BinaryReader(fs);
 
-            for ( int c = 0 ; c < 255 ; c++ )
+            for ( int c = 0; c < 255; c++ )
             {
                 VGlyph g = new VGlyph
                 {
@@ -41,9 +41,9 @@ namespace Vivid3D.Font
 
                 byte[] img = new byte[g.W * g.H * 4];
 
-                for ( int y = 0 ; y < g.H ; y++ )
+                for ( int y = 0; y < g.H; y++ )
                 {
-                    for ( int x = 0 ; x < g.W ; x++ )
+                    for ( int x = 0; x < g.W; x++ )
                     {
                         int loc = (y * g.W * 4) + (x * 4);
                         img [ loc++ ] = r.ReadByte ( );
@@ -52,7 +52,7 @@ namespace Vivid3D.Font
                         img [ loc ] = r.ReadByte ( );
                     }
                 }
-                g.Img = new VTex2D ( g.W , g.H , img , true );
+                g.Img = new VTex2D ( g.W, g.H, img, true );
                 Glypth.Add ( g );
             }
 

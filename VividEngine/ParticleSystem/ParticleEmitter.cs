@@ -21,7 +21,7 @@ namespace Vivid3D.ParticleSystem
             PRen = new VRParticle ( );
         }
 
-        public void Emit ( Particle bp , Vector3 pos , Vector3 inertia )
+        public void Emit ( Particle bp, Vector3 pos, Vector3 inertia )
         {
             Particle np = new Particle ( bp )
             {

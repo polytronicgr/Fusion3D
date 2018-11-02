@@ -6,9 +6,9 @@ namespace Vivid3D.Data
     {
         public Dictionary<T, D> Map = new Dictionary<T, D>();
 
-        public virtual void Add ( T key , D data )
+        public virtual void Add ( T key, D data )
         {
-            Map.Add ( key , data );
+            Map.Add ( key, data );
         }
 
         public virtual bool Has ( T key )

@@ -12,7 +12,7 @@ namespace Vivid3D.Resonance.Forms
         public ListForm ( )
         {
             PushArea = true;
-            Col = new Vector4 ( 0.8f , 0.8f , 0.8f , 0.5f );
+            Col = new Vector4 ( 0.8f, 0.8f, 0.8f, 0.5f );
 
             void DrawFunc ( )
             {
@@ -94,7 +94,7 @@ namespace Vivid3D.Resonance.Forms
 
             Scroller = new ScrollBarV ( );
 
-            void PostDragFunc ( int x , int y )
+            void PostDragFunc ( int x, int y )
             {
                 //Scroller.Cur = Scroller.ScrollBut.Y / Scroller.H;
                 //float my = Scroller.Max / Scroller.H;
@@ -125,7 +125,7 @@ namespace Vivid3D.Resonance.Forms
             //Changed?.Invoke();
         }
 
-        public ItemForm AddItem ( string text , VTex2D pic )
+        public ItemForm AddItem ( string text, VTex2D pic )
         {
             ItemForm nitem = new ItemForm
             {

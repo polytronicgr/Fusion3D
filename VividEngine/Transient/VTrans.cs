@@ -16,7 +16,7 @@ namespace Vivid3D.Transient
         {
         }
 
-        public VTransient ( Process act , Process before = null , Process after = null )
+        public VTransient ( Process act, Process before = null, Process after = null )
         {
             Action = act;
             Before = before;

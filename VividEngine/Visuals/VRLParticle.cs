@@ -12,7 +12,7 @@ namespace Vivid3D.Visuals
             fx = new EParticle ( );
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             m.Mat.Bind ( );
             // Lighting.GraphLight3D.Active.ShadowFB.Cube.Bind(2);

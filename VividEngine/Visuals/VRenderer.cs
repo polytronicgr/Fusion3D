@@ -26,13 +26,13 @@ namespace Vivid3D.Visuals
         {
             foreach ( VRenderLayer rl in Layers )
             {
-                rl.Render ( m , m.Viz );
+                rl.Render ( m, m.Viz );
             }
         }
 
         public virtual void RenderDepth ( VMesh m )
         {
-            RLD.Render ( m , m.Viz );
+            RLD.Render ( m, m.Viz );
         }
 
         public virtual void Release ( VMesh m )

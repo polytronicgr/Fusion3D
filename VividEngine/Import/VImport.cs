@@ -10,18 +10,18 @@ namespace Vivid3D.Import
 
         public static void RegDefaults ( )
         {
-            RegImp ( ".3ds" , new AssImpImport ( ) );
-            RegImp ( ".fbx" , new AssImpImport ( ) );
-            RegImp ( ".blend" , new AssImpImport ( ) );
-            RegImp ( ".dae" , new AssImpImport ( ) );
-            RegImp ( ".b3d" , new AssImpImport ( ) );
-            RegImp ( ".gltf" , new AssImpImport ( ) );
-            RegImp ( ".x" , new AssImpImport ( ) );
+            RegImp ( ".3ds", new AssImpImport ( ) );
+            RegImp ( ".fbx", new AssImpImport ( ) );
+            RegImp ( ".blend", new AssImpImport ( ) );
+            RegImp ( ".dae", new AssImpImport ( ) );
+            RegImp ( ".b3d", new AssImpImport ( ) );
+            RegImp ( ".gltf", new AssImpImport ( ) );
+            RegImp ( ".x", new AssImpImport ( ) );
         }
 
-        public static void RegImp ( string key , Importer imp )
+        public static void RegImp ( string key, Importer imp )
         {
-            Imports.Add ( key , imp );
+            Imports.Add ( key, imp );
         }
 
         public static Importer GetImp ( string key )

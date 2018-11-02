@@ -37,12 +37,12 @@ namespace Vivid3D.Scene
         public GraphNode3D ( )
         {
             Init ( );
-            Rot ( new Vector3 ( 0 , 0 , 0 ) , Space.Local );
+            Rot ( new Vector3 ( 0, 0, 0 ), Space.Local );
             Name = "Node:" + nn;
             nn++;
-            LocalPos = new Vector3 ( 0 , 0 , 0 );
-            LocalEular = new Vector3 ( 0 , 0 , 0 );
-            LocalScale = new Vector3 ( 1 , 1 , 1 );
+            LocalPos = new Vector3 ( 0, 0, 0 );
+            LocalEular = new Vector3 ( 0, 0, 0 );
+            LocalScale = new Vector3 ( 1, 1, 1 );
             LocalTurn = Matrix4.Identity;
         }
 
@@ -65,7 +65,7 @@ namespace Vivid3D.Scene
             set
             {
                 _LocalPos = value;
-                PosChanged?.Invoke ( this , null );
+                PosChanged?.Invoke ( this, null );
             }
         }
 
@@ -87,7 +87,7 @@ namespace Vivid3D.Scene
             set
             {
                 _Name = value;
-                NameChanged?.Invoke ( this , null );
+                NameChanged?.Invoke ( this, null );
             }
         }
 
@@ -185,9 +185,9 @@ namespace Vivid3D.Scene
             node.Top = this;
         }
 
-        public virtual void AddLink ( string name , object obj )
+        public virtual void AddLink ( string name, object obj )
         {
-            Links.Add ( name , obj );
+            Links.Add ( name, obj );
         }
 
         public void AddProxy ( GraphNode3D node )
@@ -215,10 +215,10 @@ namespace Vivid3D.Scene
 
         public void LookAt ( GraphNode3D n )
         {
-            LookAt ( n.WorldPos , new Vector3 ( 0 , 1 , 0 ) );
+            LookAt ( n.WorldPos, new Vector3 ( 0, 1, 0 ) );
         }
 
-        public void LookAt ( Vector3 p , Vector3 up )
+        public void LookAt ( Vector3 p, Vector3 up )
         {
             Matrix4 m = Matrix4.LookAt(Vector3.Zero, p - LocalPos, up);
             //Console.WriteLine("Local:" + LocalPos.ToString() + " TO:" + p.ToString());
@@ -232,13 +232,13 @@ namespace Vivid3D.Scene
             LocalTurn = m;
         }
 
-        public void LookAtZero ( Vector3 p , Vector3 up )
+        public void LookAtZero ( Vector3 p, Vector3 up )
         {
             Matrix4 m = Matrix4.LookAt(Vector3.Zero, p, up);
             LocalTurn = m;
         }
 
-        public void Move ( Vector3 v , Space s )
+        public void Move ( Vector3 v, Space s )
         {
             // v.X = -v.X;
             if ( s == Space.Local )
@@ -253,7 +253,7 @@ namespace Vivid3D.Scene
             }
         }
 
-        public void Pos ( Vector3 p , Space s )
+        public void Pos ( Vector3 p, Space s )
         {
             if ( s == Space.Local )
             {
@@ -273,7 +273,7 @@ namespace Vivid3D.Scene
         {
         }
 
-        public virtual void Rot ( Vector3 r , Space s )
+        public virtual void Rot ( Vector3 r, Space s )
         {
             if ( s == Space.Local )
             {
@@ -319,10 +319,10 @@ namespace Vivid3D.Scene
 
         public Vector3 Transform ( Vector3 p )
         {
-            return Vector3.TransformPosition ( p , World );
+            return Vector3.TransformPosition ( p, World );
         }
 
-        public virtual void Turn ( Vector3 r , Space s )
+        public virtual void Turn ( Vector3 r, Space s )
         {
             Matrix4 t = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(r.Y)) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(r.X)) * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(r.Z));
             LocalTurn = LocalTurn * t;

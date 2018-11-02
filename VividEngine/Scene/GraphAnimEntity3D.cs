@@ -73,7 +73,7 @@ namespace Vivid3D.Scene
         /// </summary>
         public override void UpdateNode ( float dt )
         {
-            //  return;
+            // return;
             if ( Animator != null )
             {
                 Update ( dt );
@@ -89,7 +89,7 @@ namespace Vivid3D.Scene
 
                     OpenTK.Vector3 p;// = OpenTK.Vector4.Transform(new OpenTK.Vector4(v.Pos, 1.0f), bones[v.BoneIndices[0]]);
 
-                    p = OpenTK.Vector3.TransformPosition ( v.Pos , bones [ v.BoneIndices [ 0 ] ] );
+                    p = OpenTK.Vector3.TransformPosition ( v.Pos, bones [ v.BoneIndices [ 0 ] ] );
 
                     OpenTK.Vector3 n = OpenTK.Vector3.TransformNormal(v.Norm, bones[v.BoneIndices[0]]);
 

@@ -13,12 +13,12 @@ namespace Vivid3D.ImageProcessing
         public static void InitIP ( )
         {
             FXBlur = new PostProcess.Processes.VEBlur ( );
-            FB = new FrameBuffer.VFrameBuffer ( App.AppInfo.W , App.AppInfo.H );
+            FB = new FrameBuffer.VFrameBuffer ( App.AppInfo.W, App.AppInfo.H );
             QFX = new Vivid3D.PostProcess.VEQuadR ( );
             GenQuad ( );
         }
 
-        public static Vivid3D.Texture.VTex2D BlurImage ( Vivid3D.Texture.VTex2D img , float blur )
+        public static Vivid3D.Texture.VTex2D BlurImage ( Vivid3D.Texture.VTex2D img, float blur )
         {
             FXBlur.Blur = blur;
 
@@ -49,19 +49,18 @@ namespace Vivid3D.ImageProcessing
         {
             // FB.BB.Bind(0);
 
-            //    QFX.Bind();
+            // QFX.Bind();
 
             GL.BindVertexArray ( qva );
 
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.EnableVertexAttribArray ( 0 );
-            GL.VertexAttribPointer ( 0 , 3 , VertexAttribPointerType.Float , false , 0 , 0 );
+            GL.VertexAttribPointer ( 0, 3, VertexAttribPointerType.Float, false, 0, 0 );
 
-            GL.DrawArrays ( PrimitiveType.Triangles , 0 , 6 );
+            GL.DrawArrays ( PrimitiveType.Triangles, 0, 6 );
 
             GL.DisableVertexAttribArray ( 0 );
-            // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            //  QFX.Release();
+            // GL.BindBuffer(BufferTarget.ArrayBuffer, 0); QFX.Release();
 
             //FB.BB.Release(0);
         }
@@ -84,9 +83,9 @@ namespace Vivid3D.ImageProcessing
             qd [ 15 ] = 1.0f; qd [ 16 ] = 1.0f; qd [ 17 ] = 0.0f;
 
             qvb = GL.GenBuffer ( );
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
-            GL.BufferData ( BufferTarget.ArrayBuffer , new IntPtr ( 18 * 4 ) , qd , BufferUsageHint.StaticDraw );
-            //  GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
+            GL.BufferData ( BufferTarget.ArrayBuffer, new IntPtr ( 18 * 4 ), qd, BufferUsageHint.StaticDraw );
+            // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
     }
 }

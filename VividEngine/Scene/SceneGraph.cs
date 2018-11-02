@@ -125,7 +125,7 @@ namespace Vivid3D.Scene
             }
         }
 
-        public void Add ( GraphLight node , bool toGraph = false )
+        public void Add ( GraphLight node, bool toGraph = false )
         {
             if ( toGraph )
             {
@@ -144,13 +144,13 @@ namespace Vivid3D.Scene
             }
         }
 
-        public void Translate ( float x , float y )
+        public void Translate ( float x, float y )
         {
             X = X + x;
             Y = Y + y;
         }
 
-        public void Move ( float x , float y )
+        public void Move ( float x, float y )
         {
             Vector2 r = Util.Maths.Rotate(-x, -y, (180.0f - Rot), 1.0f);
 
@@ -225,7 +225,7 @@ namespace Vivid3D.Scene
                     xc = node.XC;
                     yc = node.YC;
 
-                    Render.Image ( node.DrawP , node.ImgFrame );
+                    Render.Image ( node.DrawP, node.ImgFrame );
 
                     //Render.Image(xc, yc, node.ImgFrame);
 
@@ -243,23 +243,23 @@ namespace Vivid3D.Scene
             DrawNode ( Root );
         }
 
-        private float sign ( Vector2 p1 , Vector2 p2 , Vector2 p3 )
+        private float sign ( Vector2 p1, Vector2 p2, Vector2 p3 )
         {
             return ( p1.X - p3.X ) * ( p2.Y - p3.Y ) - ( p2.X - p3.X ) * ( p1.Y - p3.Y );
         }
 
-        private bool PointInTriangle ( Vector2 pt , Vector2 v1 , Vector2 v2 , Vector2 v3 )
+        private bool PointInTriangle ( Vector2 pt, Vector2 v1, Vector2 v2, Vector2 v3 )
         {
             bool b1, b2, b3;
 
-            b1 = sign ( pt , v1 , v2 ) < 0.0f;
-            b2 = sign ( pt , v2 , v3 ) < 0.0f;
-            b3 = sign ( pt , v3 , v1 ) < 0.0f;
+            b1 = sign ( pt, v1, v2 ) < 0.0f;
+            b2 = sign ( pt, v2, v3 ) < 0.0f;
+            b3 = sign ( pt, v3, v1 ) < 0.0f;
 
             return ( ( b1 == b2 ) && ( b2 == b3 ) );
         }
 
-        public GraphNode PickNode ( GraphNode node , int x , int y )
+        public GraphNode PickNode ( GraphNode node, int x, int y )
         {
             foreach ( GraphNode n in node.Nodes )
             {
@@ -271,11 +271,11 @@ namespace Vivid3D.Scene
             }
             if ( node.DrawP != null )
             {
-                if ( PointInTriangle ( new Vector2 ( x , y ) , node.DrawP [ 0 ] , node.DrawP [ 1 ] , node.DrawP [ 2 ] ) )
+                if ( PointInTriangle ( new Vector2 ( x, y ), node.DrawP [ 0 ], node.DrawP [ 1 ], node.DrawP [ 2 ] ) )
                 {
                     return node;
                 }
-                else if ( PointInTriangle ( new Vector2 ( x , y ) , node.DrawP [ 2 ] , node.DrawP [ 3 ] , node.DrawP [ 0 ] ) )
+                else if ( PointInTriangle ( new Vector2 ( x, y ), node.DrawP [ 2 ], node.DrawP [ 3 ], node.DrawP [ 0 ] ) )
                 {
                     return node;
                 }
@@ -283,19 +283,19 @@ namespace Vivid3D.Scene
             return null;
         }
 
-        public GraphNode Pick ( int x , int y )
+        public GraphNode Pick ( int x, int y )
         {
-            return PickNode ( Root , x , y );
+            return PickNode ( Root, x, y );
         }
 
-        public Vector2 GetPoint ( float x , float y )
+        public Vector2 GetPoint ( float x, float y )
         {
             int w, h;
             w = App.VividApp.W;
             h = App.VividApp.H;
             Vector2 r = new Vector2(x, y);
-            r = Util.Maths.Push ( r , -w / 2 , -h / 2 );
-            r = Util.Maths.Rotate ( r.X , r.Y , Rot , 1 );
+            r = Util.Maths.Push ( r, -w / 2, -h / 2 );
+            r = Util.Maths.Rotate ( r.X, r.Y, Rot, 1 );
             r.X = r.X + X;
             r.Y = r.Y + Y;
             return r;
@@ -319,7 +319,7 @@ namespace Vivid3D.Scene
             Z = r.ReadSingle ( );
             Rot = r.ReadSingle ( );
             int lc = r.ReadInt32();
-            for ( int i = 0 ; i < lc ; i++ )
+            for ( int i = 0; i < lc; i++ )
             {
                 GraphLight nl = new GraphLight();
                 nl.Read ( r );

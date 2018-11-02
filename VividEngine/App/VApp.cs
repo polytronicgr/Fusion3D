@@ -19,20 +19,20 @@ namespace Vivid3D.App
 
     public class VForm : VividApp
     {
-        public static void SetSize ( int w , int h )
+        public static void SetSize ( int w, int h )
         {
             AppInfo.W = w;
             AppInfo.H = h;
             AppInfo.RW = w;
             AppInfo.RH = h;
-            GL.Viewport ( 0 , 0 , w , h );
-            GL.Scissor ( 0 , 0 , w , h );
-            VPen.SetProj ( 0 , 0 , w , h );
+            GL.Viewport ( 0, 0, w, h );
+            GL.Scissor ( 0, 0, w, h );
+            VPen.SetProj ( 0, 0, w, h );
         }
 
         private static bool done = false;
 
-        public static void Set ( int w , int h )
+        public static void Set ( int w, int h )
         {
             GL.ClearColor ( System.Drawing.Color.AliceBlue );
             GL.Enable ( EnableCap.DepthTest );
@@ -46,8 +46,8 @@ namespace Vivid3D.App
             {
                 Import.Import.RegDefaults ( );
             }
-            GL.Viewport ( 0 , 0 , w , h );
-            GL.Scissor ( 0 , 0 , w , h );
+            GL.Viewport ( 0, 0, w, h );
+            GL.Scissor ( 0, 0, w, h );
             GL.Disable ( EnableCap.Blend );
             GL.Disable ( EnableCap.Texture2D );
             GL.Enable ( EnableCap.CullFace );
@@ -55,12 +55,12 @@ namespace Vivid3D.App
             GL.Disable ( EnableCap.StencilTest );
             GL.Disable ( EnableCap.ScissorTest );
             GL.Enable ( EnableCap.DepthTest );
-            GL.DepthRange ( 0 , 1 );
+            GL.DepthRange ( 0, 1 );
 
             GL.ClearDepth ( 1.0f );
             GL.DepthFunc ( DepthFunction.Less );
             // UI.UISys.ActiveUI.OnResize(Width, Height);
-            VPen.SetProj ( 0 , 0 , w , h );
+            VPen.SetProj ( 0, 0, w, h );
             if ( !done )
             {
                 VPen.InitDraw ( );
@@ -71,25 +71,25 @@ namespace Vivid3D.App
             AppInfo.RW = w;
             AppInfo.RH = h;
 
-            GL.Viewport ( 0 , 0 , w , h );
-            GL.Scissor ( 0 , 0 , w , h );
+            GL.Viewport ( 0, 0, w, h );
+            GL.Scissor ( 0, 0, w, h );
             GL.Disable ( EnableCap.Blend );
             GL.Disable ( EnableCap.Texture2D );
             GL.Enable ( EnableCap.CullFace );
             GL.CullFace ( CullFaceMode.Back );
             GL.Disable ( EnableCap.StencilTest );
             GL.Disable ( EnableCap.ScissorTest );
-            //  GL.Disable(EnableCap.Lighting);
+            // GL.Disable(EnableCap.Lighting);
 
             //GL.DepthFunc(DepthFunction.Greater);
 
             GL.Enable ( EnableCap.DepthTest );
-            GL.DepthRange ( 0 , 1 );
+            GL.DepthRange ( 0, 1 );
 
             GL.ClearDepth ( 1.0f );
             GL.DepthFunc ( DepthFunction.Lequal );
 
-            VPen.SetProj ( 0 , 0 , w , h );
+            VPen.SetProj ( 0, 0, w, h );
 
             done = true;
         }
@@ -124,7 +124,7 @@ namespace Vivid3D.App
         {
         }
 
-        public static void PushState ( VividState state , bool start = true )
+        public static void PushState ( VividState state, bool start = true )
         {
             States.Push ( state );
             state.InitState ( );
@@ -166,7 +166,7 @@ namespace Vivid3D.App
             WindowState = WindowState.Fullscreen;
         }
 
-        public VividApp ( string app , int width , int height , bool full ) : base ( width , height , OpenTK.Graphics.GraphicsMode.Default , app , full ? GameWindowFlags.Fullscreen : GameWindowFlags.Default , DisplayDevice.Default , 4 , 5 , OpenTK.Graphics.GraphicsContextFlags.ForwardCompatible )
+        public VividApp ( string app, int width, int height, bool full ) : base ( width, height, OpenTK.Graphics.GraphicsMode.Default, app, full ? GameWindowFlags.Fullscreen : GameWindowFlags.Default, DisplayDevice.Default, 4, 5, OpenTK.Graphics.GraphicsContextFlags.ForwardCompatible )
 
         {
             Link = this;
@@ -231,12 +231,12 @@ namespace Vivid3D.App
 
         protected override void OnKeyDown ( KeyboardKeyEventArgs e )
         {
-            VInput.SetKey ( e.Key , true );
+            VInput.SetKey ( e.Key, true );
         }
 
         protected override void OnKeyUp ( KeyboardKeyEventArgs e )
         {
-            VInput.SetKey ( e.Key , false );
+            VInput.SetKey ( e.Key, false );
         }
 
         protected override void OnResize ( EventArgs e )
@@ -250,20 +250,20 @@ namespace Vivid3D.App
             AppInfo.H = Height;
             AppInfo.RW = Width;
             AppInfo.RH = Height;
-            GL.Viewport ( 0 , 0 , Width , Height );
-            GL.Scissor ( 0 , 0 , Width , Height );
+            GL.Viewport ( 0, 0, Width, Height );
+            GL.Scissor ( 0, 0, Width, Height );
             GL.Disable ( EnableCap.Blend );
             GL.Disable ( EnableCap.Texture2D );
             GL.Enable ( EnableCap.CullFace );
             GL.CullFace ( CullFaceMode.Back );
             GL.Disable ( EnableCap.StencilTest );
             GL.Disable ( EnableCap.ScissorTest );
-            //  GL.Disable(EnableCap.Lighting);
+            // GL.Disable(EnableCap.Lighting);
 
             //GL.DepthFunc(DepthFunction.Greater);
 
             GL.Enable ( EnableCap.DepthTest );
-            GL.DepthRange ( 0 , 1 );
+            GL.DepthRange ( 0, 1 );
 
             GL.ClearDepth ( 1.0f );
             GL.DepthFunc ( DepthFunction.Lequal );
@@ -272,7 +272,7 @@ namespace Vivid3D.App
         protected override void OnLoad ( EventArgs e )
         {
             CursorVisible = true;
-            VPen.SetProj ( 0 , 0 , Width , Height );
+            VPen.SetProj ( 0, 0, Width, Height );
             SetGL ( );
             InitApp ( );
         }

@@ -14,8 +14,8 @@ namespace Vivid3D.Resonance.Forms
 
         public ScrollBarV ( )
         {
-            But = new VTex2D ( "Data\\UI\\Skin\\but_normal.png" , LoadMethod.Single , true );
-            ScrollBut = new ButtonForm ( ).Set ( 0 , 0 , W , 10 ) as ButtonForm;
+            But = new VTex2D ( "Data\\UI\\Skin\\but_normal.png", LoadMethod.Single, true );
+            ScrollBut = new ButtonForm ( ).Set ( 0, 0, W, 10 ) as ButtonForm;
 
             void DrawFunc ( )
             {
@@ -23,7 +23,7 @@ namespace Vivid3D.Resonance.Forms
 
                 float AY = Cur / Max;
 
-                DrawFormSolid ( new Vector4 ( 0.3f , 0.3f , 0.3f , 0.8f ) );
+                DrawFormSolid ( new Vector4 ( 0.3f, 0.3f, 0.3f, 0.8f ) );
             }
 
             void ChangedFunc ( )
@@ -40,7 +40,7 @@ namespace Vivid3D.Resonance.Forms
             Draw = DrawFunc;
             Add ( ScrollBut );
 
-            void DragFunc ( int x , int y )
+            void DragFunc ( int x, int y )
             {
                 ScrollBut.Y += y;
                 Console.WriteLine ( "Y:" + y + " SY:" + ScrollBut.Y );

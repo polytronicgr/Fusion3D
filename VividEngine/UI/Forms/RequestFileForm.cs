@@ -17,11 +17,11 @@ namespace Vivid3D.Resonance.Forms
         public ButtonForm BackFolder;
         public TextBoxForm DirBox, FileBox;
 
-        public RequestFileForm ( string title = "" , string defdir = "" )
+        public RequestFileForm ( string title = "", string defdir = "" )
         {
             LockedSize = true;
-            DirBox = new TextBoxForm ( ).Set ( 55 , 35 , 300 , 20 ) as TextBoxForm;
-            FileBox = new TextBoxForm ( ).Set ( 10 , 415 , 300 , 20 ) as TextBoxForm;
+            DirBox = new TextBoxForm ( ).Set ( 55, 35, 300, 20 ) as TextBoxForm;
+            FileBox = new TextBoxForm ( ).Set ( 10, 415, 300, 20 ) as TextBoxForm;
             Add ( DirBox );
             Add ( FileBox );
 
@@ -48,12 +48,12 @@ namespace Vivid3D.Resonance.Forms
                 title = "Select file";
             }
 
-            Set ( VividApp.W / 2 - 200 , VividApp.H / 2 - 250 , 400 , 500 , title );
+            Set ( VividApp.W / 2 - 200, VividApp.H / 2 - 250, 400, 500, title );
 
-            Files = new ListForm ( ).Set ( 10 , 60 , 370 , 350 , "" ) as ListForm;
+            Files = new ListForm ( ).Set ( 10, 60, 370, 350, "" ) as ListForm;
             Add ( Files );
             Scan ( defdir );
-            BackFolder = new ButtonForm ( ).Set ( 0 , 25 , 64 , 32 , "" ).SetImage ( new VTex2D ( "Data\\UI\\backfolder1.png" , LoadMethod.Single , true ) ) as ButtonForm;
+            BackFolder = new ButtonForm ( ).Set ( 0, 25, 64, 32, "" ).SetImage ( new VTex2D ( "Data\\UI\\backfolder1.png", LoadMethod.Single, true ) ) as ButtonForm;
 
             void BackFunc ( int b )
             {
@@ -64,7 +64,7 @@ namespace Vivid3D.Resonance.Forms
 
                 string curPath = new DirectoryInfo(CurPath).Parent.FullName;
                 Forms.Remove ( Files );
-                Files = new ListForm ( ).Set ( 10 , 60 , 370 , 350 , "" ) as ListForm;
+                Files = new ListForm ( ).Set ( 10, 60, 370, 350, "" ) as ListForm;
 
                 Add ( Files );
 
@@ -96,10 +96,10 @@ namespace Vivid3D.Resonance.Forms
                 {
                     Console.WriteLine ( "Scanning:" + fold.FullName );
                     Forms.Remove ( Files );
-                    Files = new ListForm ( ).Set ( 10 , 60 , 370 , 350 , "" ) as ListForm;
+                    Files = new ListForm ( ).Set ( 10, 60, 370, 350, "" ) as ListForm;
                     Add ( Files );
                     Scan ( fold.FullName );
-                    //   Files.Changed?.Invoke();
+                    // Files.Changed?.Invoke();
                 }
                 ni.DoubleClick = DoubleClickFunc;
             }

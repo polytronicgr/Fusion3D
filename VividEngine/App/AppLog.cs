@@ -4,7 +4,7 @@ namespace Vivid3D.App
 {
     public static class AppLog
     {
-        public static void Log ( string msg , string area = "" )
+        public static void Log ( string msg, string area = "" )
         {
             Console.WriteLine ( msg + "@" + area );
         }

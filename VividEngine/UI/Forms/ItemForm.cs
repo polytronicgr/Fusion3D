@@ -32,16 +32,16 @@ namespace Vivid3D.Resonance.Forms
 
                 if ( Act )
                 {
-                    DrawFormSolid ( new Vector4 ( 0.2f , 0.2f , 0.4f , 0.8f ) , 0 , 0 , W , H );
+                    DrawFormSolid ( new Vector4 ( 0.2f, 0.2f, 0.4f, 0.8f ), 0, 0, W, H );
                 }
                 if ( Pic != null )
                 {
-                    DrawForm ( Pic , 0 , 0 , 28 , 20 );
-                    DrawText ( Text , 38 , 0 );
+                    DrawForm ( Pic, 0, 0, 28, 20 );
+                    DrawText ( Text, 38, 0 );
                 }
                 else
                 {
-                    DrawText ( Text , 0 , 0 );
+                    DrawText ( Text, 0, 0 );
                 }
             }
 

@@ -18,7 +18,7 @@ namespace Vivid3D.FXS
             set;
         }
 
-        public FXLitImage ( ) : base ( "" , "Data/Shader/LitImageVS.glsl" , "Data/Shader/LitImageFS.glsl" )
+        public FXLitImage ( ) : base ( "", "Data/Shader/LitImageVS.glsl", "Data/Shader/LitImageFS.glsl" )
         {
         }
 
@@ -29,8 +29,7 @@ namespace Vivid3D.FXS
             sh = Vivid3D.App.VividApp.H;
             float px, py;
 
-            // px = Light.X + Graph.X;
-            // py = Light.Y + Graph.Y;
+            // px = Light.X + Graph.X; py = Light.Y + Graph.Y;
             px = Light.X * Graph.Z;
             py = Light.Y * Graph.Z;
 
@@ -42,16 +41,16 @@ namespace Vivid3D.FXS
 
             OpenTK.Vector2 res = Maths.Rotate ( px , py , Graph.Rot , 1.0f );
 
-            res = Maths.Push ( res , sw / 2 , sh / 2 );
+            res = Maths.Push ( res, sw / 2, sh / 2 );
 
-            SetTex ( "tDiffuse" , 0 );
-            SetVec3 ( "lPos" , new OpenTK.Vector3 ( res.X , res.Y , 0 ) );
-            SetVec3 ( "lDif" , Light.Diffuse );
-            SetVec3 ( "lSpec" , Light.Specular );
-            SetFloat ( "lShiny" , Light.Shiny );
-            SetFloat ( "lRange" , Light.Range * Graph.Z );
-            SetFloat ( "sWidth" , Vivid3D.App.VividApp.W );
-            SetFloat ( "sHeight" , Vivid3D.App.VividApp.H );
+            SetTex ( "tDiffuse", 0 );
+            SetVec3 ( "lPos", new OpenTK.Vector3 ( res.X, res.Y, 0 ) );
+            SetVec3 ( "lDif", Light.Diffuse );
+            SetVec3 ( "lSpec", Light.Specular );
+            SetFloat ( "lShiny", Light.Shiny );
+            SetFloat ( "lRange", Light.Range * Graph.Z );
+            SetFloat ( "sWidth", Vivid3D.App.VividApp.W );
+            SetFloat ( "sHeight", Vivid3D.App.VividApp.H );
         }
     }
 }

@@ -30,40 +30,40 @@ namespace Vivid3D.Texture
 
         private readonly bool PreLoaded = false;
 
-        public VTex2D ( int w , int h , bool alpha = false )
+        public VTex2D ( int w, int h, bool alpha = false )
         {
-            GenTex ( w , h , alpha );
+            GenTex ( w, h, alpha );
         }
 
         public VTex2D ( )
         {
         }
 
-        public VTex2D ( int w , int h , byte [ ] dat , bool alpha = true )
+        public VTex2D ( int w, int h, byte [ ] dat, bool alpha = true )
         {
             GL.ActiveTexture ( TextureUnit.Texture0 );
             Alpha = alpha;
             W = w;
             H = h;
             ID = GL.GenTexture ( );
-            GL.BindTexture ( TextureTarget.Texture2D , ID );
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
             if ( alpha )
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgba , w , h , 0 , PixelFormat.Rgba , PixelType.UnsignedByte , dat );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, w, h, 0, PixelFormat.Rgba, PixelType.UnsignedByte, dat );
             }
             else
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgb , w , h , 0 , PixelFormat.Rgb , PixelType.UnsignedByte , dat );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, w, h, 0, PixelFormat.Rgb, PixelType.UnsignedByte, dat );
             }
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapS , ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapT , ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMinFilter , ( int ) TextureMinFilter.Nearest );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMagFilter , ( int ) TextureMagFilter.Nearest );
-            GL.PixelStore ( PixelStoreParameter.PackAlignment , 4 * 4 );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Nearest );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Nearest );
+            GL.PixelStore ( PixelStoreParameter.PackAlignment, 4 * 4 );
             pixs = dat;
         }
 
-        public VTex2D ( string path , LoadMethod lm , bool alpha = true )
+        public VTex2D ( string path, LoadMethod lm, bool alpha = true )
         {
             if ( File.Exists ( path ) == false )
             {
@@ -89,7 +89,7 @@ namespace Vivid3D.Texture
             }
             else
             {
-                Lut.Add ( path , this );
+                Lut.Add ( path, this );
             }
 
             Console.WriteLine ( "Reading:" + path );
@@ -97,7 +97,7 @@ namespace Vivid3D.Texture
             GL.Enable ( EnableCap.Texture2D );
             ID = GL.GenTexture ( );
 
-            GL.BindTexture ( TextureTarget.Texture2D , ID );
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
 
             if ( new FileInfo ( path + ".cache" ).Exists )
             {
@@ -116,7 +116,7 @@ namespace Vivid3D.Texture
 
                 RawData = new byte [ W * H * pc ];
 
-                r.Read ( RawData , 0 , W * H * pc );
+                r.Read ( RawData, 0, W * H * pc );
 
                 fs.Close ( );
                 fs = null;
@@ -141,9 +141,9 @@ namespace Vivid3D.Texture
                 //GL.TexImage2D(TextureTarget.Texture2D,0,PixelInternalFormat.)
 
                 int pi = 0;
-                for ( int y = 0 ; y < img.Height ; y++ )
+                for ( int y = 0; y < img.Height; y++ )
                 {
-                    for ( int x = 0 ; x < img.Width ; x++ )
+                    for ( int x = 0; x < img.Width; x++ )
                     {
                         Color pix = img.GetPixel(x, y);
                         RawData [ pi++ ] = pix.R;
@@ -173,7 +173,7 @@ namespace Vivid3D.Texture
                     pc = 4;
                 }
 
-                w.Write ( RawData , 0 , W * H * pc );
+                w.Write ( RawData, 0, W * H * pc );
                 fs.Flush ( );
                 fs.Close ( );
                 fs = null;
@@ -181,21 +181,21 @@ namespace Vivid3D.Texture
 
             if ( alpha )
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgba , W , H , 0 , PixelFormat.Rgba , PixelType.UnsignedByte , RawData );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, RawData );
             }
             else
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgb , W , H , 0 , PixelFormat.Rgb , PixelType.UnsignedByte , RawData );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, W, H, 0, PixelFormat.Rgb, PixelType.UnsignedByte, RawData );
             }
 
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapS , ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapT , ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
 
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMinFilter , ( int ) TextureMinFilter.LinearMipmapLinear );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMagFilter , ( int ) TextureMagFilter.Linear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.LinearMipmapLinear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
             GL.GenerateMipmap ( GenerateMipmapTarget.Texture2D );
 
-            GL.BindTexture ( TextureTarget.Texture2D , 0 );
+            GL.BindTexture ( TextureTarget.Texture2D, 0 );
         }
 
         ~VTex2D ( )
@@ -219,31 +219,31 @@ namespace Vivid3D.Texture
         {
             GL.Enable ( EnableCap.Texture2D );
             GL.ActiveTexture ( ( TextureUnit ) ( ( int ) TextureUnit.Texture0 + texu ) );
-            //  GL.ClientActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
-            GL.BindTexture ( TextureTarget.Texture2D , ID );
+            // GL.ClientActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
         }
 
         public void BindData ( )
         {
             GL.Enable ( EnableCap.Texture2D );
             ID = GL.GenTexture ( );
-            GL.BindTexture ( TextureTarget.Texture2D , ID );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapS , ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapT , ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMinFilter , ( int ) TextureMinFilter.Linear );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMagFilter , ( int ) TextureMagFilter.Linear );
-            GL.PixelStore ( PixelStoreParameter.PackAlignment , 4 * 4 );
-            GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgba , W , H , 0 , PixelFormat.Rgba , PixelType.UnsignedByte , pixs );
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+            GL.PixelStore ( PixelStoreParameter.PackAlignment, 4 * 4 );
+            GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixs );
             GL.Disable ( EnableCap.Texture2D );
         }
 
-        public void CopyTex ( int x , int y )
+        public void CopyTex ( int x, int y )
         {
             GL.Enable ( EnableCap.Texture2D );
             GL.ActiveTexture ( TextureUnit.Texture0 );
-            GL.BindTexture ( TextureTarget.Texture2D , ID );
-            GL.CopyTexSubImage2D ( TextureTarget.Texture2D , 0 , 0 , 0 , x , y , W , H );
-            GL.BindTexture ( TextureTarget.Texture2D , 0 );
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
+            GL.CopyTexSubImage2D ( TextureTarget.Texture2D, 0, 0, 0, x, y, W, H );
+            GL.BindTexture ( TextureTarget.Texture2D, 0 );
         }
 
         public void Delete ( )
@@ -262,43 +262,43 @@ namespace Vivid3D.Texture
             GL.Enable ( EnableCap.Texture2D );
             ID = GL.GenTexture ( );
 
-            GL.BindTexture ( TextureTarget.Texture2D , ID );
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
 
             if ( Alpha )
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgba , W , H , 0 , PixelFormat.Rgba , PixelType.UnsignedByte , RawData );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, RawData );
             }
             else
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgb , W , H , 0 , PixelFormat.Rgb , PixelType.UnsignedByte , RawData );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, W, H, 0, PixelFormat.Rgb, PixelType.UnsignedByte, RawData );
             }
 
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapS , ( int ) TextureWrapMode.ClampToEdge );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapT , ( int ) TextureWrapMode.ClampToEdge );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.ClampToEdge );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.ClampToEdge );
 
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMinFilter , ( int ) TextureMinFilter.Linear );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMagFilter , ( int ) TextureMagFilter.Linear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
 
-            GL.BindTexture ( TextureTarget.Texture2D , 0 );
+            GL.BindTexture ( TextureTarget.Texture2D, 0 );
         }
 
         public void ReadBitmap ( BinaryReader r )
         {
             short bw = r.ReadInt16();
             short bh = r.ReadInt16();
-            TexData = new Bitmap ( bw , bh );
+            TexData = new Bitmap ( bw, bh );
             pixs = r.ReadBytes ( bw * bh * 4 );
             W = bw;
             H = bh;
             Alpha = true;
             return;
-            for ( int y = 0 ; y < bh ; y++ )
+            for ( int y = 0; y < bh; y++ )
             {
-                for ( int x = 0 ; x < bw ; x++ )
+                for ( int x = 0; x < bw; x++ )
                 {
                     byte[] col = r.ReadBytes(4);
                     System.Drawing.Color nc = System.Drawing.Color.FromArgb(col[3], col[0], col[1], col[2]);
-                    TexData.SetPixel ( x , y , nc );
+                    TexData.SetPixel ( x, y, nc );
                 }
             }
             W = bw;
@@ -309,7 +309,7 @@ namespace Vivid3D.Texture
         {
             GL.ActiveTexture ( ( TextureUnit ) ( ( int ) TextureUnit.Texture0 + texu ) );
             // GL.ClientActiveTexture((TextureUnit)((int)TextureUnit.Texture0 + texu));
-            GL.BindTexture ( TextureTarget.Texture2D , 0 );
+            GL.BindTexture ( TextureTarget.Texture2D, 0 );
             GL.Disable ( EnableCap.Texture2D );
         }
 
@@ -328,8 +328,8 @@ namespace Vivid3D.Texture
             BinaryWriter w = new BinaryWriter(fs);
 
             Bitmap sd = new Bitmap(TexData, 32, 32);
-            WriteBitmap ( sd , w );
-            WriteBitmap ( TexData , w );
+            WriteBitmap ( sd, w );
+            WriteBitmap ( TexData, w );
 
             fs.Flush ( );
             fs.Close ( );
@@ -339,9 +339,9 @@ namespace Vivid3D.Texture
         {
             pixs = new byte [ W * H * 4 ];
             int loc = 0;
-            for ( int y = 0 ; y < H ; y++ )
+            for ( int y = 0; y < H; y++ )
             {
-                for ( int x = 0 ; x < W ; x++ )
+                for ( int x = 0; x < W; x++ )
                 {
                     Color p = TexData.GetPixel(x, y);
                     pixs [ loc++ ] = p.R;
@@ -356,7 +356,7 @@ namespace Vivid3D.Texture
         {
             short bw = r.ReadInt16();
             short bh = r.ReadInt16();
-            r.BaseStream.Seek ( bw * bh * 4 , SeekOrigin.Current );
+            r.BaseStream.Seek ( bw * bh * 4, SeekOrigin.Current );
         }
 
         public void T_LoadTex ( )
@@ -396,13 +396,13 @@ namespace Vivid3D.Texture
             Help.IOHelp.WriteBytes ( RawData );
         }
 
-        public void WriteBitmap ( Bitmap b , BinaryWriter w )
+        public void WriteBitmap ( Bitmap b, BinaryWriter w )
         {
             w.Write ( ( short ) b.Width );
             w.Write ( ( short ) b.Height );
-            for ( int y = 0 ; y < b.Height ; y++ )
+            for ( int y = 0; y < b.Height; y++ )
             {
-                for ( int x = 0 ; x < b.Width ; x++ )
+                for ( int x = 0; x < b.Width; x++ )
                 {
                     Color p = b.GetPixel(x, y);
                     w.Write ( p.R );
@@ -413,27 +413,27 @@ namespace Vivid3D.Texture
             }
         }
 
-        private void GenTex ( int w , int h , bool alpha )
+        private void GenTex ( int w, int h, bool alpha )
         {
             GL.ActiveTexture ( TextureUnit.Texture0 );
             Alpha = alpha;
             W = w;
             H = h;
             ID = GL.GenTexture ( );
-            GL.BindTexture ( TextureTarget.Texture2D , ID );
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
             if ( alpha )
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgba , w , h , 0 , PixelFormat.Rgba , PixelType.UnsignedByte , IntPtr.Zero );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, w, h, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero );
             }
             else
             {
-                GL.TexImage2D ( TextureTarget.Texture2D , 0 , PixelInternalFormat.Rgb , w , h , 0 , PixelFormat.Rgb , PixelType.UnsignedByte , IntPtr.Zero );
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, w, h, 0, PixelFormat.Rgb, PixelType.UnsignedByte, IntPtr.Zero );
             }
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapS , ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureWrapT , ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMinFilter , ( int ) TextureMinFilter.Nearest );
-            GL.TexParameter ( TextureTarget.Texture2D , TextureParameterName.TextureMagFilter , ( int ) TextureMagFilter.Nearest );
-            GL.PixelStore ( PixelStoreParameter.PackAlignment , 4 * 4 );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Nearest );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Nearest );
+            GL.PixelStore ( PixelStoreParameter.PackAlignment, 4 * 4 );
         }
     }
 }

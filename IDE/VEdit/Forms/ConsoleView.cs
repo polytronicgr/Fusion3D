@@ -13,17 +13,17 @@ namespace VividEdit.Forms
             Main = this;
         }
 
-        public static void Log ( string info , string type )
+        public static void Log ( string info, string type )
         {
-            Main.LogMsg ( info , type );
+            Main.LogMsg ( info, type );
         }
 
-        public void LogMsg ( string info , string type )
+        public void LogMsg ( string info, string type )
         {
             logBox.Text = logBox.Text + DateTime.Now.ToShortTimeString ( ) + ": " + type + ":" + info + "\n";
         }
 
-        private void toolStripStatusLabel1_Click ( object sender , EventArgs e )
+        private void toolStripStatusLabel1_Click ( object sender, EventArgs e )
         {
         }
     }

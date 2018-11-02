@@ -29,7 +29,7 @@ namespace Vivid3D.State
         {
             Name = name;
             Running = false;
-            //  SUI = new Resonance.UI();
+            // SUI = new Resonance.UI();
         }
 
         public virtual void InitState ( )

@@ -34,9 +34,9 @@ namespace Vivid3D.Animation
         {
             _skeleton = null;
             CurrentAnimationIndex = -1;
-            _bonesByName = new Dictionary<string , Bone> ( );
-            _bonesToIndex = new Dictionary<string , int> ( );
-            _animationNameToId = new Dictionary<string , int> ( );
+            _bonesByName = new Dictionary<string, Bone> ( );
+            _bonesToIndex = new Dictionary<string, int> ( );
+            _animationNameToId = new Dictionary<string, int> ( );
             _bones = new List<Bone> ( );
             Animations = new List<AnimEvaluator> ( );
         }
@@ -55,20 +55,20 @@ namespace Vivid3D.Animation
             CurrentAnimationIndex = index;
         }
 
-        public void InitAssImp ( Assimp.Scene aiRoot , Scene.GraphEntity3D root )
+        public void InitAssImp ( Assimp.Scene aiRoot, Scene.GraphEntity3D root )
         {
             if ( aiRoot.HasAnimations == false )
             {
                 return;
             }
 
-            _skeleton = CreateBoneTree ( aiRoot.RootNode , null );
+            _skeleton = CreateBoneTree ( aiRoot.RootNode, null );
             Console.WriteLine ( "Proc bones:" + _skeleton.Name + " C:" + _skeleton.Children.Count );
             foreach ( Assimp.Mesh mesh in aiRoot.Meshes )
             {
                 foreach ( Assimp.Bone bone in mesh.Bones )
                 {
-                    if ( !_bonesByName.TryGetValue ( bone.Name , out Bone found ) )
+                    if ( !_bonesByName.TryGetValue ( bone.Name, out Bone found ) )
                     {
                         continue;
                     }
@@ -94,16 +94,16 @@ namespace Vivid3D.Animation
             ExtractAnimations ( aiRoot );
 
             const float timestep = 1.0f / 30.0f;
-            for ( int i = 0 ; i < Animations.Count ; i++ )
+            for ( int i = 0; i < Animations.Count; i++ )
             {
                 SetAnimationIndex ( i );
                 float dt = 0.0f;
-                for ( float ticks = 0.0f ; ticks < Animations [ i ].Duration ; ticks += Animations [ i ].TicksPerSecond / 30.0f )
+                for ( float ticks = 0.0f; ticks < Animations [ i ].Duration; ticks += Animations [ i ].TicksPerSecond / 30.0f )
                 {
                     dt += timestep;
                     Calculate ( dt );
                     List<OpenTK.Matrix4> trans = new List<OpenTK.Matrix4> ( );
-                    for ( int a = 0 ; a < _bones.Count ; a++ )
+                    for ( int a = 0; a < _bones.Count; a++ )
                     {
                         OpenTK.Matrix4 rotMat = _bones [ a ].Offset * _bones [ a ].GlobalTransform;
                         trans.Add ( rotMat );
@@ -120,7 +120,7 @@ namespace Vivid3D.Animation
             {
                 return;
             }
-            Animations [ CurrentAnimationIndex ].Evaluate ( dt , _bonesByName );
+            Animations [ CurrentAnimationIndex ].Evaluate ( dt, _bonesByName );
             UpdateTransforms ( _skeleton );
         }
 
@@ -139,7 +139,7 @@ namespace Vivid3D.Animation
             {
                 Animations.Add ( new AnimEvaluator ( animation ) );
             }
-            for ( int i = 0 ; i < Animations.Count ; i++ )
+            for ( int i = 0; i < Animations.Count; i++ )
             {
                 _animationNameToId [ Animations [ i ].Name ] = i;
             }
@@ -148,12 +148,12 @@ namespace Vivid3D.Animation
 
         private OpenTK.Matrix4 ToTK ( Assimp.Matrix4x4 mat )
         {
-            return new OpenTK.Matrix4 ( mat.A1 , mat.B1 , mat.C1 , mat.D1 , mat.A2 , mat.B2 , mat.C2 , mat.D2 , mat.A3 , mat.B3 , mat.C3 , mat.D3 , mat.A4 , mat.B4 , mat.C4 , mat.D4 );
+            return new OpenTK.Matrix4 ( mat.A1, mat.B1, mat.C1, mat.D1, mat.A2, mat.B2, mat.C2, mat.D2, mat.A3, mat.B3, mat.C3, mat.D3, mat.A4, mat.B4, mat.C4, mat.D4 );
         }
 
         private int _i = 0;
 
-        private Bone CreateBoneTree ( Assimp.Node node , Bone parent )
+        private Bone CreateBoneTree ( Assimp.Node node, Bone parent )
         {
             Bone internalNode = new Bone
             {
@@ -172,7 +172,7 @@ namespace Vivid3D.Animation
             internalNode.OriginalLocalTransform = internalNode.LocalTransform;
             CalculateBoneToWorldTransform ( internalNode );
 
-            for ( int i = 0 ; i < node.ChildCount ; i++ )
+            for ( int i = 0; i < node.ChildCount; i++ )
             {
                 Bone child = CreateBoneTree(node.Children[i], internalNode);
                 if ( child != null )
@@ -185,7 +185,7 @@ namespace Vivid3D.Animation
 
         public bool SetAnimation ( string animation )
         {
-            if ( _animationNameToId.TryGetValue ( animation , out int index ) )
+            if ( _animationNameToId.TryGetValue ( animation, out int index ) )
             {
                 int oldIndex = CurrentAnimationIndex;
                 CurrentAnimationIndex = index;
@@ -278,7 +278,7 @@ namespace Vivid3D.Animation
         private readonly List<MutableTuple<int , int , int>> LastPositions = new List<MutableTuple<int , int , int>> ( );
         public List<List<OpenTK.Matrix4>> Transforms { get; private set; }
 
-        public void Evaluate ( float dt , Dictionary<string , Bone> bones )
+        public void Evaluate ( float dt, Dictionary<string, Bone> bones )
         {
             dt *= TicksPerSecond;
             float time = 0.0f;
@@ -286,7 +286,7 @@ namespace Vivid3D.Animation
             {
                 time = dt % Duration;
             }
-            for ( int i = 0 ; i < Channels.Count ; i++ )
+            for ( int i = 0; i < Channels.Count; i++ )
             {
                 AnimChannel channel = Channels[i];
                 if ( !bones.ContainsKey ( channel.Name ) )
@@ -366,7 +366,7 @@ namespace Vivid3D.Animation
                     if ( diffTime > 0 )
                     {
                         float factor = (float)((time - key.Time) / diffTime);
-                        pRot = OpenTK.Quaternion.Slerp ( key.Value , nextKey.Value , factor );
+                        pRot = OpenTK.Quaternion.Slerp ( key.Value, nextKey.Value, factor );
                     }
                     else
                     {
@@ -416,7 +416,7 @@ namespace Vivid3D.Animation
 
         private OpenTK.Matrix4 ToTK ( Assimp.Matrix4x4 mat )
         {
-            return new OpenTK.Matrix4 ( mat.A1 , mat.B1 , mat.C1 , mat.D1 , mat.A2 , mat.B2 , mat.C2 , mat.D2 , mat.A3 , mat.B3 , mat.C3 , mat.D3 , mat.A4 , mat.B4 , mat.C4 , mat.D4 );
+            return new OpenTK.Matrix4 ( mat.A1, mat.B1, mat.C1, mat.D1, mat.A2, mat.B2, mat.C2, mat.D2, mat.A3, mat.B3, mat.C3, mat.D3, mat.A4, mat.B4, mat.C4, mat.D4 );
         }
 
         public List<OpenTK.Matrix4> GetTransforms ( float dt )
@@ -489,7 +489,7 @@ namespace Vivid3D.Animation
                 nac.ScalingKeys = sk;
                 Channels.Add ( nac );
             }
-            LastPositions = Enumerable.Repeat ( new MutableTuple<int , int , int> ( 0 , 0 , 0 ) , anim.NodeAnimationChannelCount ).ToList ( );
+            LastPositions = Enumerable.Repeat ( new MutableTuple<int, int, int> ( 0, 0, 0 ), anim.NodeAnimationChannelCount ).ToList ( );
             Transforms = new List<List<OpenTK.Matrix4>> ( );
             PlayAnimationForward = true;
         }
@@ -512,7 +512,7 @@ namespace Vivid3D.Animation
                 };
                 Channels.Add ( c );
             }
-            LastPositions = Enumerable.Repeat ( new MutableTuple<int , int , int> ( 0 , 0 , 0 ) , anim.NodeAnimationChannels.Count ).ToList ( );
+            LastPositions = Enumerable.Repeat ( new MutableTuple<int, int, int> ( 0, 0, 0 ), anim.NodeAnimationChannels.Count ).ToList ( );
             Transforms = new List<List<OpenTK.Matrix4>> ( );
             PlayAnimationForward = true;
         }
@@ -520,7 +520,7 @@ namespace Vivid3D.Animation
 
     public class MutableTuple<T1, T2, T3>
     {
-        public MutableTuple ( T1 i , T2 i1 , T3 i2 )
+        public MutableTuple ( T1 i, T2 i1, T3 i2 )
         {
             Item1 = i;
             Item2 = i1;

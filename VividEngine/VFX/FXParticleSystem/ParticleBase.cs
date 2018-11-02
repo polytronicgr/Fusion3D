@@ -177,10 +177,10 @@ namespace Vivid3D.VFX
             Life = Life - LifeRate * LifeDrag;
 
             Alpha *= AI;
-            //  Console.WriteLine("Life:" + Life);
+            // Console.WriteLine("Life:" + Life);
             if ( Life <= 0.0f )
             {
-                //   Console.WriteLine("Removed");
+                // Console.WriteLine("Removed");
                 Sys.Remove ( this );
             }
         }

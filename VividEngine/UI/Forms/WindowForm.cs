@@ -16,10 +16,10 @@ namespace Vivid3D.Resonance.Forms
 
         public WindowForm ( )
         {
-            Shadow = new VTex2D ( "Data\\UI\\Shadow1.png" , LoadMethod.Single , true );
-            TitleImg = new VTex2D ( "Data\\UI\\Skin\\wintitle.png" , LoadMethod.Single , true );
-            BodyImg = new VTex2D ( "Data\\UI\\Skin\\windowbg6.jpg" , LoadMethod.Single , true );
-            BodyNorm = new VTex2D ( "Data\\UI\\normal\\winnorm5.jpg" , LoadMethod.Single , false );
+            Shadow = new VTex2D ( "Data\\UI\\Shadow1.png", LoadMethod.Single, true );
+            TitleImg = new VTex2D ( "Data\\UI\\Skin\\wintitle.png", LoadMethod.Single, true );
+            BodyImg = new VTex2D ( "Data\\UI\\Skin\\windowbg6.jpg", LoadMethod.Single, true );
+            BodyNorm = new VTex2D ( "Data\\UI\\normal\\winnorm5.jpg", LoadMethod.Single, false );
 
             UIForm title = new ButtonForm().Set(0, 0, W, 20, "").SetImage(TitleImg);
 
@@ -27,24 +27,24 @@ namespace Vivid3D.Resonance.Forms
             body.Blur = 0.1f;
             body.RefractV = 0.72f;
 
-            resize = ( ButtonForm ) new ButtonForm ( ).Set ( W - 14 , H - 14 , 14 , 14 , "" );
+            resize = ( ButtonForm ) new ButtonForm ( ).Set ( W - 14, H - 14, 14, 14, "" );
 
-            void ResizeDrag ( int x , int y )
+            void ResizeDrag ( int x, int y )
             {
                 if ( LockedSize )
                 {
                     return;
                 }
 
-                Set ( X , Y , W + x , H + y , Text );
-                body.Set ( 0 , 22 , W , H - 24 , "" );
+                Set ( X, Y, W + x, H + y, Text );
+                body.Set ( 0, 22, W, H - 24, "" );
                 resize.X = W - 14;
                 resize.Y = H - 14;
             }
 
             resize.Drag = ResizeDrag;
 
-            void DragFunc ( int x , int y )
+            void DragFunc ( int x, int y )
             {
                 if ( LockedPos )
                 {
@@ -76,7 +76,7 @@ namespace Vivid3D.Resonance.Forms
 
             void DrawFunc ( )
             {
-                DrawFormBlur ( Shadow , 0.1f , new Vector4 ( 0.9f , 0.9f , 0.9f , 0.98f ) , 30 , 30 , W + 50 , H + 50 );
+                DrawFormBlur ( Shadow, 0.1f, new Vector4 ( 0.9f, 0.9f, 0.9f, 0.98f ), 30, 30, W + 50, H + 50 );
                 //DrawForm(TitleImg, 0, 0, W, 20);
             }
 

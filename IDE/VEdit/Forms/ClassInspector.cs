@@ -75,7 +75,7 @@ namespace VividEdit.Forms
                     System.Reflection.MethodInfo sm = prop.GetSetMethod ( );
                     object[] pp = new object[1];
 
-                    void on_new ( object o , EventArgs e )
+                    void on_new ( object o, EventArgs e )
                     {
                         Vivid3D.Script.ScriptBase sb = new Vivid3D.Script.ScriptBase ( );
                         sv.Add ( sb );
@@ -87,7 +87,7 @@ namespace VividEdit.Forms
 
                         pp [ 0 ] = sv;
 
-                        sm?.Invoke ( cls , pp );
+                        sm?.Invoke ( cls, pp );
 
                         Inspect ( cls );
                     }
@@ -107,7 +107,7 @@ namespace VividEdit.Forms
                             Text = s.Name
                         };
 
-                        void on_tc ( object o , EventArgs e )
+                        void on_tc ( object o, EventArgs e )
                         {
                             if ( namebox.Text == "" || namebox.Text == " " || namebox.Text == "    " )
                             {
@@ -115,7 +115,7 @@ namespace VividEdit.Forms
                             }
                             s.Name = namebox.Text;
 
-                            System.IO.File.Move ( s.FilePath , VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + namebox.Text );
+                            System.IO.File.Move ( s.FilePath, VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + namebox.Text );
                             s.FilePath = VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + s.Name;
                         }
                         namebox.TextChanged += on_tc;
@@ -129,7 +129,7 @@ namespace VividEdit.Forms
                         };
                         Controls.Add ( del );
 
-                        void del_s ( object o , EventArgs e )
+                        void del_s ( object o, EventArgs e )
                         {
                             System.IO.File.Delete ( s.FilePath );
                             sv.Remove ( s );
@@ -165,7 +165,7 @@ namespace VividEdit.Forms
 
                     boxv.Text = sv;
 
-                    void c_val ( object o , EventArgs e )
+                    void c_val ( object o, EventArgs e )
                     {
                         try
                         {
@@ -179,7 +179,7 @@ namespace VividEdit.Forms
                         if ( sm != null )
                         {
                             pp [ 0 ] = sv;
-                            sm.Invoke ( cls , pp );
+                            sm.Invoke ( cls, pp );
                         }
                     }
                     boxv.TextChanged += c_val;
@@ -208,7 +208,7 @@ namespace VividEdit.Forms
 
                     boxv.Text = v3.ToString ( );
 
-                    void c_val ( object o , EventArgs e )
+                    void c_val ( object o, EventArgs e )
                     {
                         try
                         {
@@ -221,7 +221,7 @@ namespace VividEdit.Forms
                         if ( sm != null )
                         {
                             pp [ 0 ] = v3;
-                            sm.Invoke ( cls , pp );
+                            sm.Invoke ( cls, pp );
                         }
                     }
 
@@ -243,13 +243,13 @@ namespace VividEdit.Forms
                     boxy = new TextBox ( );
                     boxz = new TextBox ( );
 
-                    labx.Location = new Point ( 5 , propy + 25 );
-                    laby.Location = new Point ( 120 , propy + 25 );
-                    labz.Location = new Point ( 235 , propy + 25 );
+                    labx.Location = new Point ( 5, propy + 25 );
+                    laby.Location = new Point ( 120, propy + 25 );
+                    labz.Location = new Point ( 235, propy + 25 );
 
-                    labx.Size = new Size ( 15 , 25 );
-                    laby.Size = new Size ( 15 , 25 );
-                    labz.Size = new Size ( 15 , 25 );
+                    labx.Size = new Size ( 15, 25 );
+                    laby.Size = new Size ( 15, 25 );
+                    labz.Size = new Size ( 15, 25 );
                     labx.Text = "X";
                     laby.Text = "Y";
                     labz.Text = "Z";
@@ -261,7 +261,7 @@ namespace VividEdit.Forms
 
                     Controls.Add ( labx ); Controls.Add ( laby ); Controls.Add ( labz );
 
-                    void v3_cx ( object s , EventArgs a )
+                    void v3_cx ( object s, EventArgs a )
                     {
                         try
                         {
@@ -274,12 +274,12 @@ namespace VividEdit.Forms
                         if ( sm != null )
                         {
                             pp [ 0 ] = v3;
-                            sm.Invoke ( cls , pp );
+                            sm.Invoke ( cls, pp );
                         }
                         //prop.GetAccessors()[1].Invoke(cls, pp);
                     }
 
-                    void v3_cy ( object s , EventArgs e )
+                    void v3_cy ( object s, EventArgs e )
                     {
                         try
                         {
@@ -292,11 +292,11 @@ namespace VividEdit.Forms
                         if ( sm != null )
                         {
                             pp [ 0 ] = v3;
-                            sm.Invoke ( cls , pp );
+                            sm.Invoke ( cls, pp );
                         }
                     }
 
-                    void v3_cz ( object s , EventArgs e )
+                    void v3_cz ( object s, EventArgs e )
                     {
                         try
                         {
@@ -309,7 +309,7 @@ namespace VividEdit.Forms
                         if ( sm != null )
                         {
                             pp [ 0 ] = v3;
-                            sm.Invoke ( cls , pp );
+                            sm.Invoke ( cls, pp );
                         }
                     }
 
@@ -317,13 +317,13 @@ namespace VividEdit.Forms
                     boxy.TextChanged += v3_cy;
                     boxz.TextChanged += v3_cz;
 
-                    boxx.Location = new Point ( 20 , propy + 22 );
-                    boxy.Location = new Point ( 135 , propy + 22 );
-                    boxz.Location = new Point ( 250 , propy + 22 );
+                    boxx.Location = new Point ( 20, propy + 22 );
+                    boxy.Location = new Point ( 135, propy + 22 );
+                    boxz.Location = new Point ( 250, propy + 22 );
 
-                    boxx.Size = new Size ( 80 , 25 );
-                    boxy.Size = new Size ( 80 , 25 );
-                    boxz.Size = new Size ( 80 , 25 );
+                    boxx.Size = new Size ( 80, 25 );
+                    boxy.Size = new Size ( 80, 25 );
+                    boxz.Size = new Size ( 80, 25 );
 
                     Controls.Add ( boxx ); Controls.Add ( boxy ); Controls.Add ( boxz );
 
@@ -354,7 +354,7 @@ namespace VividEdit.Forms
                 mi.Align ( );
                 mi.StartTick ( );
                 IC = mi;
-                mi.Location = new Point ( 0 , 20 );
+                mi.Location = new Point ( 0, 20 );
                 Controls.Add ( mi );
                 Show ( );
             }
@@ -372,7 +372,7 @@ namespace VividEdit.Forms
                 ei.Align ( );
                 ei.StartTick ( );
                 IC = ei;
-                ei.Location = new Point ( 0 , 20 );
+                ei.Location = new Point ( 0, 20 );
                 Controls.Add ( ei );
                 Show ( );
             }
@@ -390,19 +390,19 @@ namespace VividEdit.Forms
                 li.Light = cls as Vivid3D.Lighting.GraphLight3D;
                 li.Align ( );
                 IC = li;
-                li.Location = new Point ( 0 , 20 );
+                li.Location = new Point ( 0, 20 );
                 Controls.Add ( li );
                 Show ( );
             }
             IC.SetUI ( );
         }
 
-        private void Boxx_TextChanged ( object sender , EventArgs e )
+        private void Boxx_TextChanged ( object sender, EventArgs e )
         {
             throw new NotImplementedException ( );
         }
 
-        private void inspectBox_CheckedChanged ( object sender , EventArgs e )
+        private void inspectBox_CheckedChanged ( object sender, EventArgs e )
         {
             //
             /*
@@ -412,14 +412,14 @@ namespace VividEdit.Forms
                 VividEdit.VividED.Main.BeginInspect();
             }
             else
-            //    Console.WriteLine("Changed false");
+            // Console.WriteLine("Changed false");
             {
                 VividEdit.VividED.Main.EndInspect();
             }
             */
         }
 
-        private void inspectBox_CheckStateChanged ( object sender , EventArgs e )
+        private void inspectBox_CheckStateChanged ( object sender, EventArgs e )
         {
         }
     }

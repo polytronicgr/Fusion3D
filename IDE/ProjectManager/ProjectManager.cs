@@ -31,20 +31,20 @@ namespace ProjectManager
                 string name = dir.Name;
                 TreeNode node = new TreeNode(name);
                 projTree.Nodes [ 0 ].Nodes.Add ( node );
-                ProjMap.Add ( node , name );
+                ProjMap.Add ( node, name );
 
-                //    P
+                // P
             }
             projTree.Nodes [ 0 ].Expand ( );
         }
 
-        private void NewProject_Click ( object sender , EventArgs e )
+        private void NewProject_Click ( object sender, EventArgs e )
         {
             NewProject = new NewProjectForm ( );
             NewProject.Show ( );
         }
 
-        private void projTree_AfterSelect ( object sender , TreeViewEventArgs e )
+        private void projTree_AfterSelect ( object sender, TreeViewEventArgs e )
         {
             TreeNode node = e.Node;
 
@@ -71,11 +71,11 @@ namespace ProjectManager
             iconImg.Invalidate ( );
         }
 
-        private void LoadProject_Click ( object sender , EventArgs e )
+        private void LoadProject_Click ( object sender, EventArgs e )
         {
             if ( ActiveProject == null )
             {
-                MessageBox.Show ( "No project selected." , "Vivid3D" );
+                MessageBox.Show ( "No project selected.", "Vivid3D" );
                 return;
             }
             RunProject ( ActiveProject );
@@ -86,7 +86,7 @@ namespace ProjectManager
             Process proc = new Process();
             Console.WriteLine ( "Starting:" + proj.IDEPath );
 
-            proc.StartInfo = new ProcessStartInfo ( "VividEdit.exe" , proj.IDEPath );
+            proc.StartInfo = new ProcessStartInfo ( "VividEdit.exe", proj.IDEPath );
             proc.Start ( );
             Environment.Exit ( 2 );
         }

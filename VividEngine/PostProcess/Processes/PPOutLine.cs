@@ -17,7 +17,7 @@ namespace Vivid3D.PostProcess.Processes
         public override void Init ( )
         {
             BFX = new VEOutLine ( );
-            DFB = new VFrameBuffer ( App.AppInfo.W , App.AppInfo.H );
+            DFB = new VFrameBuffer ( App.AppInfo.W, App.AppInfo.H );
             QFX = new VEQuadR ( );
             QCT = new VECombineTex ( );
         }
@@ -28,7 +28,7 @@ namespace Vivid3D.PostProcess.Processes
         {
             ib = bb;
             DFB.Bind ( );
-            GL.ClearColor ( 1 , 0 , 0 , 0 );
+            GL.ClearColor ( 1, 0, 0, 0 );
             GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
             OutLineGraph.RenderDepth ( );
 
@@ -36,7 +36,7 @@ namespace Vivid3D.PostProcess.Processes
 
             GL.Disable ( EnableCap.Blend );
 
-            //            var tmp = ImageProcessing.ImageProcessor.BlurImage(DFB.BB, 0.9f);
+            // var tmp = ImageProcessing.ImageProcessor.BlurImage(DFB.BB, 0.9f);
 
             DFB.BB.Bind ( 0 );
             bb.Bind ( 1 );
@@ -51,7 +51,7 @@ namespace Vivid3D.PostProcess.Processes
 
         public override void PostBind ( VTex2D bb )
         {
-            pi = ImageProcessing.ImageProcessor.BlurImage ( bb , 0.3f );
+            pi = ImageProcessing.ImageProcessor.BlurImage ( bb, 0.3f );
         }
 
         public Vivid3D.Texture.VTex2D pi = null;
@@ -81,14 +81,14 @@ namespace Vivid3D.PostProcess.Processes
 
     public class VEOutLine : Vivid3D.Effect.Effect3D
     {
-        public VEOutLine ( ) : base ( "" , "Data\\Shader\\outLineVS.txt" , "Data\\Shader\\outLineFS.txt" )
+        public VEOutLine ( ) : base ( "", "Data\\Shader\\outLineVS.txt", "Data\\Shader\\outLineFS.txt" )
         {
         }
 
         public override void SetPars ( )
         {
-            SetTex ( "tR" , 0 );
-            SetTex ( "tB" , 1 );
+            SetTex ( "tR", 0 );
+            SetTex ( "tB", 1 );
         }
     }
 
@@ -96,15 +96,15 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float Level = 0.5f;
 
-        public VECombineTex ( ) : base ( "" , "Data\\Shader\\outLinevs.txt" , "Data\\Shader\\combineTexFS.txt" )
+        public VECombineTex ( ) : base ( "", "Data\\Shader\\outLinevs.txt", "Data\\Shader\\combineTexFS.txt" )
         {
         }
 
         public override void SetPars ( )
         {
-            SetTex ( "tR1" , 0 );
-            SetTex ( "tR2" , 1 );
-            SetFloat ( "level" , Level );
+            SetTex ( "tR1", 0 );
+            SetTex ( "tR2", 1 );
+            SetFloat ( "level", Level );
         }
     }
 }

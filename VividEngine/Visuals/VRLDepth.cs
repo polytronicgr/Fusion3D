@@ -12,7 +12,7 @@ namespace Vivid3D.Visuals
             fx = new EDepth3D ( );
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             // m.Mat.Bind();
             fx.Bind ( );

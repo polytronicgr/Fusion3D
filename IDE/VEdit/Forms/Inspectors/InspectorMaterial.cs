@@ -18,27 +18,27 @@ namespace VividEdit.Forms.Inspectors
             Diff = new ValueTypes.InspectVec3 ( );
             Diff.ValueName.Text = "Diffuse";
             Controls.Add ( Diff );
-            Diff.Location = new Point ( 6 , 6 );
+            Diff.Location = new Point ( 6, 6 );
             Diff.Show ( );
 
             Spec = new ValueTypes.InspectVec3 ( );
             Spec.ValueName.Text = "Spec";
             Controls.Add ( Spec );
-            Spec.Location = new Point ( 6 , 45 );
+            Spec.Location = new Point ( 6, 45 );
             Spec.Show ( );
 
             Shine = new ValueTypes.InspectFloat ( );
             Shine.ValueName.Text = "Shine";
             Controls.Add ( Shine );
-            Shine.Location = new Point ( 6 , 106 );
+            Shine.Location = new Point ( 6, 106 );
             Shine.Show ( );
 
             ColTex = new ValueTypes.InspectTexture ( );
             ColTex.ValueName.Text = "Diffuse Texture";
             Controls.Add ( ColTex );
-            ColTex.Location = new Point ( 6 , 170 );
+            ColTex.Location = new Point ( 6, 170 );
             ColTex.Show ( );
-            Size = new Size ( 1000 , 1000 );
+            Size = new Size ( 1000, 1000 );
         }
 
         private Timer nt = new Timer();
@@ -67,7 +67,7 @@ namespace VividEdit.Forms.Inspectors
             ColTex.AlignToValue ( );
         }
 
-        private void Nt_Tick ( object sender , EventArgs e )
+        private void Nt_Tick ( object sender, EventArgs e )
         {
             if ( Inspecting )
             {

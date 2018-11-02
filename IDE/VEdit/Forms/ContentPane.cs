@@ -45,7 +45,7 @@ namespace VividEdit.Forms
 
                 Content.Add ( cfold );
 
-                ConsoleView.Log ( "Scanned Folder:" + fold.Name , "Content" );
+                ConsoleView.Log ( "Scanned Folder:" + fold.Name, "Content" );
             }
 
             foreach ( FileInfo file in dir.GetFiles ( ) )
@@ -59,7 +59,7 @@ namespace VividEdit.Forms
                 cfile.DetermineType ( );
                 cfile.BasePath = Paths.Peek ( );
                 Content.Add ( cfile );
-                ConsoleView.Log ( "Scanned File:" + file.Name + " Type:" + cfile.Type , "Content" );
+                ConsoleView.Log ( "Scanned File:" + file.Name + " Type:" + cfile.Type, "Content" );
             }
 
             CleanUI ( );
@@ -86,7 +86,7 @@ namespace VividEdit.Forms
                 {
                     skip = true;
                 }
-                //                if(x+64>=)
+                // if(x+64>=)
             }
 
             if ( !skip )
@@ -103,12 +103,12 @@ namespace VividEdit.Forms
 
         public int X = 0, Y = 0;
 
-        private void contentPane_Resize ( object sender , EventArgs e )
+        private void contentPane_Resize ( object sender, EventArgs e )
         {
             CleanUI ( );
         }
 
-        public ContentBase GetContentAt ( int x , int y )
+        public ContentBase GetContentAt ( int x, int y )
         {
             foreach ( ContentBase con in Content )
             {
@@ -132,7 +132,7 @@ namespace VividEdit.Forms
         public int lastMD = 0;
         public string LastPath = "";
 
-        private void ContentPane_MouseDown_1 ( object sender , MouseEventArgs e )
+        private void ContentPane_MouseDown_1 ( object sender, MouseEventArgs e )
         {
             if ( e.Button == MouseButtons.Right )
             {
@@ -179,18 +179,18 @@ namespace VividEdit.Forms
             Invalidate ( );
         }
 
-        private void contentScroll_ValueChanged ( object sender , EventArgs e )
+        private void contentScroll_ValueChanged ( object sender, EventArgs e )
         {
             Y = contentScroll.Value;
             Invalidate ( );
         }
 
-        private void ContentPane_Resize_1 ( object sender , EventArgs e )
+        private void ContentPane_Resize_1 ( object sender, EventArgs e )
         {
             CleanUI ( );
         }
 
-        private void ContentPane_Paint ( object sender , PaintEventArgs e )
+        private void ContentPane_Paint ( object sender, PaintEventArgs e )
         {
             foreach ( ContentBase con in Content )
             {
@@ -204,15 +204,15 @@ namespace VividEdit.Forms
 
                 if ( con == ActiveContent )
                 {
-                    e.Graphics.FillRectangle ( Brushes.LightBlue , new RectangleF ( dx , dy + 32 , 128 , 128 - 32 ) );
+                    e.Graphics.FillRectangle ( Brushes.LightBlue, new RectangleF ( dx, dy + 32, 128, 128 - 32 ) );
                 }
 
-                e.Graphics.DrawImage ( con.Icon , new Rectangle ( dx + 32 , dy + 32 , 64 , 64 ) );
-                e.Graphics.DrawRectangle ( Pens.Black , new Rectangle ( dx + 8 , dy + 100 , 128 - 16 , 16 ) );
-                e.Graphics.DrawString ( con.Name , SystemFonts.IconTitleFont , Brushes.Black , new RectangleF ( dx + 8 , dy + 100 , 128 - 16 , 16 ) );
+                e.Graphics.DrawImage ( con.Icon, new Rectangle ( dx + 32, dy + 32, 64, 64 ) );
+                e.Graphics.DrawRectangle ( Pens.Black, new Rectangle ( dx + 8, dy + 100, 128 - 16, 16 ) );
+                e.Graphics.DrawString ( con.Name, SystemFonts.IconTitleFont, Brushes.Black, new RectangleF ( dx + 8, dy + 100, 128 - 16, 16 ) );
             }
 
-            e.Graphics.DrawString ( "Path:" + CurPath , SystemFonts.SmallCaptionFont , Brushes.Black , 5 , 5 );
+            e.Graphics.DrawString ( "Path:" + CurPath, SystemFonts.SmallCaptionFont, Brushes.Black, 5, 5 );
         }
     }
 }

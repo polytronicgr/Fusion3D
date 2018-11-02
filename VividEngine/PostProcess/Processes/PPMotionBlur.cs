@@ -15,7 +15,7 @@ namespace Vivid3D.PostProcess.Processes
         {
             BFX = new EVelBuf ( );
             RFX = new EMotionBlur ( );
-            VelFBO = new FrameBuffer.VFrameBuffer ( 512 , 512 );
+            VelFBO = new FrameBuffer.VFrameBuffer ( 512, 512 );
         }
 
         public override void Bind ( VTex2D bb )
@@ -47,9 +47,9 @@ namespace Vivid3D.PostProcess.Processes
             RFX.Release ( );
             bb.Release ( 0 );
             VelFBO.BB.Release ( 1 );
-            //            BFX.Release();
+            // BFX.Release();
 
-            //          bb.Release(0);
+            // bb.Release(0);
         }
     }
 
@@ -57,14 +57,14 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float Blur = 0.5f;
 
-        public EMotionBlur ( ) : base ( "" , "Data\\Shader\\vsMotionBlur.glsl" , "Data\\Shader\\fsMotionBlur.glsl" )
+        public EMotionBlur ( ) : base ( "", "Data\\Shader\\vsMotionBlur.glsl", "Data\\Shader\\fsMotionBlur.glsl" )
         {
         }
 
         public override void SetPars ( )
         {
-            SetTex ( "colorBuffer" , 0 );
-            SetTex ( "velocityMap" , 1 );
+            SetTex ( "colorBuffer", 0 );
+            SetTex ( "velocityMap", 1 );
         }
     }
 
@@ -72,18 +72,18 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float DC = 0;
 
-        public EVelBuf ( ) : base ( "" , "Data/Shader/vsVelBuf.glsl" , "Data/Shader/fsVelBuf.glsl" )
+        public EVelBuf ( ) : base ( "", "Data/Shader/vsVelBuf.glsl", "Data/Shader/fsVelBuf.glsl" )
         {
         }
 
         public override void SetPars ( )
         {
             //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
-            SetMat ( "model" , Effect.FXG.Local );
-            SetMat ( "view" , FXG.Cam.CamWorld );
-            SetMat ( "proj" , FXG.Cam.ProjMat );
-            SetMat ( "pview" , FXG.Cam.PrevCamWorld );
-            SetMat ( "pmodel" , FXG.PrevLocal );
+            SetMat ( "model", Effect.FXG.Local );
+            SetMat ( "view", FXG.Cam.CamWorld );
+            SetMat ( "proj", FXG.Cam.ProjMat );
+            SetMat ( "pview", FXG.Cam.PrevCamWorld );
+            SetMat ( "pmodel", FXG.PrevLocal );
 
             //SetTex("tC", 0)
         }

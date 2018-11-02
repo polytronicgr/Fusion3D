@@ -12,7 +12,7 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             InitializeComponent ( );
         }
 
-        private void textBox1_TextChanged ( object sender , EventArgs e )
+        private void textBox1_TextChanged ( object sender, EventArgs e )
         {
             try
             {

@@ -14,14 +14,14 @@ namespace Vivid3D.Resonance.Forms
 
         public ButtonForm ( )
         {
-            SetImage ( new VTex2D ( "Data\\UI\\Skin\\but_normal.png" , LoadMethod.Single , true ) );
+            SetImage ( new VTex2D ( "Data\\UI\\Skin\\but_normal.png", LoadMethod.Single, true ) );
             Col = NormCol;
             void DrawFunc ( )
             {
                 VPen.BlendMod = VBlend.Alpha;
 
                 DrawForm ( CoreTex );
-                DrawText ( Text , W / 2 - UI.Font.Width ( Text ) / 2 , H / 2 - UI.Font.Height ( ) / 2 );
+                DrawText ( Text, W / 2 - UI.Font.Width ( Text ) / 2, H / 2 - UI.Font.Height ( ) / 2 );
             }
 
             void MouseEnterFunc ( )
@@ -42,7 +42,7 @@ namespace Vivid3D.Resonance.Forms
                 Over = false;
             }
 
-            void MouseMoveFunc ( int x , int y , int dx , int dy )
+            void MouseMoveFunc ( int x, int y, int dx, int dy )
             {
                 if ( Pressed )
                 {

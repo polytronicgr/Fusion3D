@@ -36,7 +36,7 @@ namespace Vivid3D.ParticleSystem
             Tex = bp.Tex;
         }
 
-        public Particle ( int w , int h )
+        public Particle ( int w, int h )
         {
             W = w;
             H = h;
@@ -54,24 +54,24 @@ namespace Vivid3D.ParticleSystem
 
             Vector3 z = Vector3.Zero;
 
-            mesh.SetVertex ( 0 , p1 , z , z , z , uv1 );
-            mesh.SetVertex ( 1 , p2 , z , z , z , uv2 );
-            mesh.SetVertex ( 2 , p3 , z , z , z , uv3 );
-            mesh.SetVertex ( 3 , p4 , z , z , z , uv4 );
+            mesh.SetVertex ( 0, p1, z, z, z, uv1 );
+            mesh.SetVertex ( 1, p2, z, z, z, uv2 );
+            mesh.SetVertex ( 2, p3, z, z, z, uv3 );
+            mesh.SetVertex ( 3, p4, z, z, z, uv4 );
 
-            mesh.SetIndex ( 0 , 0 );
-            mesh.SetIndex ( 1 , 1 );
-            mesh.SetIndex ( 2 , 2 );
-            mesh.SetIndex ( 3 , 2 );
-            mesh.SetIndex ( 4 , 3 );
-            mesh.SetIndex ( 5 , 0 );
+            mesh.SetIndex ( 0, 0 );
+            mesh.SetIndex ( 1, 1 );
+            mesh.SetIndex ( 2, 2 );
+            mesh.SetIndex ( 3, 2 );
+            mesh.SetIndex ( 4, 3 );
+            mesh.SetIndex ( 5, 0 );
 
-            mesh.SetIndex ( 6 , 2 );
-            mesh.SetIndex ( 7 , 1 );
-            mesh.SetIndex ( 8 , 0 );
-            mesh.SetIndex ( 9 , 0 );
-            mesh.SetIndex ( 10 , 3 );
-            mesh.SetIndex ( 11 , 2 );
+            mesh.SetIndex ( 6, 2 );
+            mesh.SetIndex ( 7, 1 );
+            mesh.SetIndex ( 8, 0 );
+            mesh.SetIndex ( 9, 0 );
+            mesh.SetIndex ( 10, 3 );
+            mesh.SetIndex ( 11, 2 );
 
             mesh.Final ( );
 
@@ -93,7 +93,7 @@ namespace Vivid3D.ParticleSystem
             PostRender ( );
             Release ( );
 
-            //    Console.WriteLine("Rendering Particle.");
+            // Console.WriteLine("Rendering Particle.");
         }
     }
 }

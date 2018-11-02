@@ -15,7 +15,7 @@ namespace Vivid3D.Resonance
 
     public delegate void MouseLeave ( );
 
-    public delegate void MouseMove ( int x , int y , int mx , int my );
+    public delegate void MouseMove ( int x, int y, int mx, int my );
 
     public delegate void MouseDown ( int but );
 
@@ -31,9 +31,9 @@ namespace Vivid3D.Resonance
 
     public delegate void Deactivate ( );
 
-    public delegate void KeyPressed ( OpenTK.Input.Key key , bool shift );
+    public delegate void KeyPressed ( OpenTK.Input.Key key, bool shift );
 
-    public delegate void Drag ( int x , int y );
+    public delegate void Drag ( int x, int y );
 
     public delegate void ChangedInfo ( );
 
@@ -77,7 +77,7 @@ namespace Vivid3D.Resonance
         public bool Peak = false;
         public bool Refract = false;
 
-        public UIForm SetPeak ( bool peak , bool refract )
+        public UIForm SetPeak ( bool peak, bool refract )
         {
             Peak = peak;
             Refract = refract;
@@ -123,7 +123,7 @@ namespace Vivid3D.Resonance
         {
         }
 
-        public bool InBounds ( int x , int y )
+        public bool InBounds ( int x, int y )
         {
             if ( x >= GX && y >= GY && x <= ( GX + W ) && y <= ( GY + H ) )
             {
@@ -132,7 +132,7 @@ namespace Vivid3D.Resonance
             return false;
         }
 
-        public void DrawForm ( VTex2D tex , int x = 0 , int y = 0 , int w = -1 , int h = -1 )
+        public void DrawForm ( VTex2D tex, int x = 0, int y = 0, int w = -1, int h = -1 )
         {
             VPen.BlendMod = VBlend.Alpha;
 
@@ -145,15 +145,15 @@ namespace Vivid3D.Resonance
                 dh = h;
             }
 
-            VPen.Rect ( GX + x , GY + y , dw , dh , tex , Col );
+            VPen.Rect ( GX + x, GY + y, dw, dh, tex, Col );
         }
 
-        public void DrawFormBlur ( VTex2D tex , int x = 0 , int y = 0 , int w = -1 , int h = -1 )
+        public void DrawFormBlur ( VTex2D tex, int x = 0, int y = 0, int w = -1, int h = -1 )
         {
-            DrawFormBlur ( tex , Blur , Col , x , y , w , h );
+            DrawFormBlur ( tex, Blur, Col, x, y, w, h );
         }
 
-        public void DrawFormBlurRefract ( VTex2D tex , VTex2D norm , float blur , Vector4 col , float refract , int x = 0 , int y = 0 , int w = -1 , int h = -1 )
+        public void DrawFormBlurRefract ( VTex2D tex, VTex2D norm, float blur, Vector4 col, float refract, int x = 0, int y = 0, int w = -1, int h = -1 )
         {
             VPen.BlendMod = VBlend.Alpha;
 
@@ -168,24 +168,24 @@ namespace Vivid3D.Resonance
 
             VTex2D btex = new VTex2D(dw, dh);
 
-            btex.CopyTex ( GX + x , App.VividApp.H - ( ( GY + y ) + dh ) );
+            btex.CopyTex ( GX + x, App.VividApp.H - ( ( GY + y ) + dh ) );
 
-            VPen.RectBlurRefract ( GX + x , GY + y , dw , dh , tex , btex , norm , col , col , blur , refract );
+            VPen.RectBlurRefract ( GX + x, GY + y, dw, dh, tex, btex, norm, col, col, blur, refract );
 
             btex.Delete ( );
         }
 
-        public void DrawFormSolid ( Vector4 col , int x = 0 , int y = 0 , int w = -1 , int h = -1 )
+        public void DrawFormSolid ( Vector4 col, int x = 0, int y = 0, int w = -1, int h = -1 )
         {
             if ( w == -1 )
             {
                 w = W;
                 h = H;
             }
-            VPen.Rect ( GX + x , GY + y , w , h , col );
+            VPen.Rect ( GX + x, GY + y, w, h, col );
         }
 
-        public void DrawFormBlur ( VTex2D tex , float blur , Vector4 col , int x = 0 , int y = 0 , int w = -1 , int h = -1 )
+        public void DrawFormBlur ( VTex2D tex, float blur, Vector4 col, int x = 0, int y = 0, int w = -1, int h = -1 )
         {
             VPen.BlendMod = VBlend.Alpha;
 
@@ -200,14 +200,14 @@ namespace Vivid3D.Resonance
 
             VTex2D btex = new VTex2D(dw, dh);
 
-            btex.CopyTex ( GX + x , App.VividApp.H - ( ( GY + y ) + dh ) );
+            btex.CopyTex ( GX + x, App.VividApp.H - ( ( GY + y ) + dh ) );
 
-            VPen.RectBlur ( GX + x , GY + y , dw , dh , tex , btex , col , col , blur );
+            VPen.RectBlur ( GX + x, GY + y, dw, dh, tex, btex, col, col, blur );
 
             btex.Delete ( );
         }
 
-        public void DrawForm ( VTex2D tex , Vector4 col , int x = 0 , int y = 0 , int w = -1 , int h = -1 )
+        public void DrawForm ( VTex2D tex, Vector4 col, int x = 0, int y = 0, int w = -1, int h = -1 )
         {
             VPen.BlendMod = VBlend.Alpha;
 
@@ -220,20 +220,20 @@ namespace Vivid3D.Resonance
                 dh = h;
             }
 
-            VPen.Rect ( GX + x , GY + y , dw , dh , tex , col );
+            VPen.Rect ( GX + x, GY + y, dw, dh, tex, col );
         }
 
-        public void DrawText ( string txt , int x , int y )
+        public void DrawText ( string txt, int x, int y )
         {
-            DrawText ( txt , x , y , Vector4.One );
+            DrawText ( txt, x, y, Vector4.One );
         }
 
-        public void DrawText ( string txt , int x , int y , Vector4 col )
+        public void DrawText ( string txt, int x, int y, Vector4 col )
         {
-            VFontRenderer.Draw ( UI.Font , txt , GX + x , GY + y , col );
+            VFontRenderer.Draw ( UI.Font, txt, GX + x, GY + y, col );
         }
 
-        public UIForm Set ( int x , int y , int w , int h , string text = "" )
+        public UIForm Set ( int x, int y, int w, int h, string text = "" )
         {
             X = x;
             Y = y;
@@ -255,7 +255,7 @@ namespace Vivid3D.Resonance
         {
         }
 
-        public UIForm SetImage ( VTex2D tex , VTex2D norm = null )
+        public UIForm SetImage ( VTex2D tex, VTex2D norm = null )
         {
             CoreTex = tex;
             NormTex = norm;

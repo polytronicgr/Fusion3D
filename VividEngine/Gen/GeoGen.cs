@@ -6,7 +6,7 @@ namespace Vivid3D.Gen
 {
     public class GeoGen
     {
-        public static GraphEntity3D Quad ( int w , int h )
+        public static GraphEntity3D Quad ( int w, int h )
         {
             GraphEntity3D r = new GraphEntity3D();
 
@@ -19,13 +19,13 @@ namespace Vivid3D.Gen
 
             Vector3 z = new Vector3(0, 0, 0);
 
-            mesh.SetVertex ( 0 , v1 , z , z , z , new Vector2 ( 0 , 0 ) );
-            mesh.SetVertex ( 1 , v2 , z , z , z , new Vector2 ( 1 , 0 ) );
-            mesh.SetVertex ( 2 , v3 , z , z , z , new Vector2 ( 1 , 1 ) );
-            mesh.SetVertex ( 3 , v4 , z , z , z , new Vector2 ( 0 , 1 ) );
+            mesh.SetVertex ( 0, v1, z, z, z, new Vector2 ( 0, 0 ) );
+            mesh.SetVertex ( 1, v2, z, z, z, new Vector2 ( 1, 0 ) );
+            mesh.SetVertex ( 2, v3, z, z, z, new Vector2 ( 1, 1 ) );
+            mesh.SetVertex ( 3, v4, z, z, z, new Vector2 ( 0, 1 ) );
 
-            mesh.SetTri ( 0 , 0 , 1 , 2 );
-            mesh.SetTri ( 1 , 2 , 3 , 0 );
+            mesh.SetTri ( 0, 0, 1, 2 );
+            mesh.SetTri ( 1, 2, 3, 0 );
 
             /*
                         mesh.SetIndex(0, 0);
@@ -42,7 +42,7 @@ namespace Vivid3D.Gen
             return r;
         }
 
-        public static void Cube ( int w , int h , int d )
+        public static void Cube ( int w, int h, int d )
         {
             GraphEntity3D ent = new GraphEntity3D();
 
@@ -62,7 +62,7 @@ namespace Vivid3D.Gen
 
             Vector3 z = new Vector3(0, 0, 0);
 
-            //           mesh.SetVertex(0,p1,)
+            // mesh.SetVertex(0,p1,)
         }
     }
 }

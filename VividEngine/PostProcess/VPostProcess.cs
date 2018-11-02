@@ -55,11 +55,11 @@ namespace Vivid3D.PostProcess
         {
             GL.BindVertexArray ( qva );
 
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.EnableVertexAttribArray ( 0 );
-            GL.VertexAttribPointer ( 0 , 3 , VertexAttribPointerType.Float , false , 0 , 0 );
+            GL.VertexAttribPointer ( 0, 3, VertexAttribPointerType.Float, false, 0, 0 );
 
-            GL.DrawArrays ( PrimitiveType.Triangles , 0 , 6 );
+            GL.DrawArrays ( PrimitiveType.Triangles, 0, 6 );
 
             GL.DisableVertexAttribArray ( 0 );
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -83,9 +83,9 @@ namespace Vivid3D.PostProcess
             qd [ 15 ] = 1.0f; qd [ 16 ] = 1.0f; qd [ 17 ] = 0.0f;
 
             qvb = GL.GenBuffer ( );
-            GL.BindBuffer ( BufferTarget.ArrayBuffer , qvb );
-            GL.BufferData ( BufferTarget.ArrayBuffer , new IntPtr ( 18 * 4 ) , qd , BufferUsageHint.StaticDraw );
-            //  GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
+            GL.BufferData ( BufferTarget.ArrayBuffer, new IntPtr ( 18 * 4 ), qd, BufferUsageHint.StaticDraw );
+            // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
     }
 }

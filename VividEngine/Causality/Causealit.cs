@@ -24,7 +24,7 @@ namespace Vivid3D.Logic
         public bool Threaded = false;
         public Thread UpdateThread = null;
 
-        public Logics ( int interval = 1000 / 60 , bool threaded = false )
+        public Logics ( int interval = 1000 / 60, bool threaded = false )
         {
             inter = interval;
             if ( threaded )
@@ -56,7 +56,7 @@ namespace Vivid3D.Logic
             }
         }
 
-        public virtual void In ( Act Action , Until Until )
+        public virtual void In ( Act Action, Until Until )
         {
             ActInfo ai = new ActInfo
             {
@@ -67,7 +67,7 @@ namespace Vivid3D.Logic
             Acts.Add ( ai );
         }
 
-        public virtual void In ( int ms , Act Action , Until Until )
+        public virtual void In ( int ms, Act Action, Until Until )
         {
             ActInfo ai = new ActInfo
             {
@@ -78,7 +78,7 @@ namespace Vivid3D.Logic
             Acts.Add ( ai );
         }
 
-        public virtual void In ( int ms , Act Action , bool once = true , int forms = 0 )
+        public virtual void In ( int ms, Act Action, bool once = true, int forms = 0 )
         {
             ActInfo ai = new ActInfo
             {
@@ -90,7 +90,7 @@ namespace Vivid3D.Logic
             Acts.Add ( ai );
         }
 
-        public void Flow ( FlowInit init , FlowLogic logic , Act endLogic = null )
+        public void Flow ( FlowInit init, FlowLogic logic, Act endLogic = null )
         {
             FlowInfo flow = new FlowInfo
             {
@@ -272,7 +272,7 @@ namespace Vivid3D.Logic
             upmut.ReleaseMutex ( );
         }
 
-        public void When ( When when , Act action , Unless unless = null )
+        public void When ( When when, Act action, Unless unless = null )
         {
             foreach ( WhenInfo cw in Whens )
             {
@@ -290,7 +290,7 @@ namespace Vivid3D.Logic
             Whens.Add ( wi );
         }
 
-        public void Do ( Act action , Until until = null , Act then = null )
+        public void Do ( Act action, Until until = null, Act then = null )
         {
             DoInfo di = new DoInfo
             {
@@ -301,7 +301,7 @@ namespace Vivid3D.Logic
             Dos.Add ( di );
         }
 
-        public void If ( If ifact , Act action , Act Else = null , Until until = null )
+        public void If ( If ifact, Act action, Act Else = null, Until until = null )
         {
             IfInfo ni = new IfInfo
             {

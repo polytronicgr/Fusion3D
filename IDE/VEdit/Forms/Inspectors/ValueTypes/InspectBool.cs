@@ -12,7 +12,7 @@ namespace VividEdit.Forms.Inspectors.ValueTypes
             InitializeComponent ( );
         }
 
-        private void checkBox1_CheckedChanged ( object sender , EventArgs e )
+        private void checkBox1_CheckedChanged ( object sender, EventArgs e )
         {
             Value = checkBox1.Checked;
         }

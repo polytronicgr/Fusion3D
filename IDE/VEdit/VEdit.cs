@@ -69,12 +69,13 @@ namespace VividEdit
                     ent.SetMultiPass ( );
                     Vivid3D.Scene.GraphEntity3D e = ent as Vivid3D.Scene.GraphEntity3D;
                     Vivid3D.Material.Material3D tm = new Vivid3D.Material.Material3D ( );
-                    //             tm.TCol = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1.jpg", Vivid3D.Texture.LoadMethod.Single, true);
-                    //           tm.TNorm = new Vivid3D.Texture.VTex2D(CurProject.ContentPath + "\\2D\\Texture\\tex1_nrm.png", Vivid3D.Texture.LoadMethod.Single,true);
-                    //  e.SetMat(tm);
-                    ent.LocalScale = new OpenTK.Vector3 ( 1 , 1 , 1 );
+                    // tm.TCol = new Vivid3D.Texture.VTex2D(CurProject.ContentPath +
+                    // "\\2D\\Texture\\tex1.jpg", Vivid3D.Texture.LoadMethod.Single, true); tm.TNorm
+                    // = new Vivid3D.Texture.VTex2D(CurProject.ContentPath +
+                    // "\\2D\\Texture\\tex1_nrm.png", Vivid3D.Texture.LoadMethod.Single,true); e.SetMat(tm);
+                    ent.LocalScale = new OpenTK.Vector3 ( 1, 1, 1 );
                     Console.WriteLine ( "Imported:" + file.Path );
-                    ConsoleView.Log ( "Imported:" + file.Path + "-3D Data" , "Content" );
+                    ConsoleView.Log ( "Imported:" + file.Path + "-3D Data", "Content" );
                     Vivid3D.Scene.SceneGraph3D g = DockEdit3D.GetGraph ( );
                     g.Add ( ent );
                     DockEdit3D.Selected.Root.Sub.Clear ( );
@@ -119,37 +120,37 @@ namespace VividEdit
             DockAppGraph.Rebuild ( );
         }
 
-        private void VEdit_Load ( object sender , EventArgs e )
+        private void VEdit_Load ( object sender, EventArgs e )
         {
             DockAppGraph = new AppGraph ( );
             DockEdit3D = new Editor ( );
             DockContentExplorer = new ContentExplorer ( );
             DockConsoleView = new ConsoleView ( );
             DockClassInspect = new ClassInspector ( );
-            DockAppGraph.Show ( MainDock , DockState.DockLeft );
-            DockConsoleView.Show ( MainDock , DockState.DockBottom );
-            DockContentExplorer.Show ( MainDock , DockState.DockBottom );
-            DockClassInspect.Show ( MainDock , DockState.DockRightAutoHide );
+            DockAppGraph.Show ( MainDock, DockState.DockLeft );
+            DockConsoleView.Show ( MainDock, DockState.DockBottom );
+            DockContentExplorer.Show ( MainDock, DockState.DockBottom );
+            DockClassInspect.Show ( MainDock, DockState.DockRightAutoHide );
             // DockContentExplorer.Show(MainDock, DockState.Document);
 
             //DockEdit3D.Show(MainDock, DockState.Document);
-            DockClassInspect.Show ( MainDock , DockState.DockRight );
+            DockClassInspect.Show ( MainDock, DockState.DockRight );
 
-            DockEdit3D.Show ( MainDock , DockState.Document );
+            DockEdit3D.Show ( MainDock, DockState.Document );
 
             DockEdit3D.dosize = true;
             DockEdit3D.InitSize ( );
 
-            ConsoleView.Log ( "Vivid Editor started up." , "IDE" );
+            ConsoleView.Log ( "Vivid Editor started up.", "IDE" );
 
-            ConsoleView.Log ( "Loading project:" + BeginProject , "IDE" );
+            ConsoleView.Log ( "Loading project:" + BeginProject, "IDE" );
             CurProject = new ProjectCore.Project ( BeginProject );
             AssImpImport.IPath = CurProject.ContentPath;
-            ConsoleView.Log ( "Project loaded." , "IDE" );
+            ConsoleView.Log ( "Project loaded.", "IDE" );
 
-            ConsoleView.Log ( "Scanning default Content folder:" + CurProject.ContentPath , "IDE" );
+            ConsoleView.Log ( "Scanning default Content folder:" + CurProject.ContentPath, "IDE" );
             DockContentExplorer.SetFolder ( CurProject.ContentPath );
-            ConsoleView.Log ( "IDE initialized." , "IDE" );
+            ConsoleView.Log ( "IDE initialized.", "IDE" );
 
             ContentExplorer.FileOpen = FileOpen;
             DockEdit3D.Picked = ON_Picked;

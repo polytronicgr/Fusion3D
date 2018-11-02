@@ -49,7 +49,7 @@ namespace Vivid3D.Reflect
             {
                 Console.WriteLine ( p.Prop.Name + ":" + p.Val );
 
-                p.Prop.SetValue ( Class , p.Val );
+                p.Prop.SetValue ( Class, p.Val );
             }
         }
     }

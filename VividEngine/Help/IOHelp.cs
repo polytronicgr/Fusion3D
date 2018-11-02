@@ -80,12 +80,12 @@ namespace Vivid3D.Help
 
         public static OpenTK.Vector4 ReadVec4 ( )
         {
-            return new OpenTK.Vector4 ( r.ReadSingle ( ) , r.ReadSingle ( ) , r.ReadSingle ( ) , r.ReadSingle ( ) );
+            return new OpenTK.Vector4 ( r.ReadSingle ( ), r.ReadSingle ( ), r.ReadSingle ( ), r.ReadSingle ( ) );
         }
 
         public static OpenTK.Vector3 ReadVec3 ( )
         {
-            return new OpenTK.Vector3 ( r.ReadSingle ( ) , r.ReadSingle ( ) , r.ReadSingle ( ) );
+            return new OpenTK.Vector3 ( r.ReadSingle ( ), r.ReadSingle ( ), r.ReadSingle ( ) );
         }
 
         public static float ReadFloat ( )

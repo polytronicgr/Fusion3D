@@ -14,7 +14,7 @@ namespace Vivid3D.Resonance.Forms
 
         public TextBoxForm ( )
         {
-            void KeyPressFunc ( OpenTK.Input.Key key , bool shift )
+            void KeyPressFunc ( OpenTK.Input.Key key, bool shift )
             {
                 string k = "";
                 switch ( key )
@@ -91,7 +91,7 @@ namespace Vivid3D.Resonance.Forms
                         {
                             if ( ClaretI == Text.Length )
                             {
-                                Text = Text.Substring ( 0 , Text.Length - 1 );
+                                Text = Text.Substring ( 0, Text.Length - 1 );
                                 ClaretI--;
                                 return;
                             }
@@ -114,11 +114,11 @@ namespace Vivid3D.Resonance.Forms
                         {
                             if ( ( Text.Length - ClaretI ) > 1 )
                             {
-                                Text = Text.Substring ( 0 , ClaretI ) + Text.Substring ( ClaretI + 1 );
+                                Text = Text.Substring ( 0, ClaretI ) + Text.Substring ( ClaretI + 1 );
                             }
                             else
                             {
-                                Text = Text.Substring ( 0 , Text.Length - 1 );
+                                Text = Text.Substring ( 0, Text.Length - 1 );
                             }
                             return;
                         }
@@ -212,9 +212,9 @@ namespace Vivid3D.Resonance.Forms
                 int cc = 0;
                 int t2 = 0;
                 string rtxt = "";
-                for ( int i = 0 ; i < dis.Length ; i++ )
+                for ( int i = 0; i < dis.Length; i++ )
                 {
-                    rtxt = rtxt + dis.Substring ( i , 1 );
+                    rtxt = rtxt + dis.Substring ( i, 1 );
                     string cr = dis.Substring(i, 1);
                     t2 += UI.Font.Width ( cr );
                     if ( t2 > W - 30 )
@@ -225,7 +225,7 @@ namespace Vivid3D.Resonance.Forms
                 }
                 ClaretE = cc;
 
-                DrawText ( rtxt , 5 , 0 , new Vector4 ( 0.2f , 0.2f , 0.2f , 0.9f ) );
+                DrawText ( rtxt, 5, 0, new Vector4 ( 0.2f, 0.2f, 0.2f, 0.9f ) );
 
                 if ( Text.Length == 0 )
                 {
@@ -239,7 +239,7 @@ namespace Vivid3D.Resonance.Forms
                     if ( Text.Length > 0 )
                     {
                         int cv = 0;
-                        for ( int i = StartI ; i < ClaretI ; i++ )
+                        for ( int i = StartI; i < ClaretI; i++ )
                         {
                             int cw = UI.Font.Width(Text.Substring(i, 1));
                             cx = cx + ( cw );
@@ -250,7 +250,7 @@ namespace Vivid3D.Resonance.Forms
                             }
                         }
                     }
-                    DrawFormSolid ( new Vector4 ( 0.2f , 0.2f , 0.2f , 0.8f ) , cx + ( Text.Length > 0 ? 5 : 0 ) , 0 , 5 , 20 );
+                    DrawFormSolid ( new Vector4 ( 0.2f, 0.2f, 0.2f, 0.8f ), cx + ( Text.Length > 0 ? 5 : 0 ), 0, 5, 20 );
                 }
             }
 

@@ -12,7 +12,7 @@ namespace Vivid3D.Visuals
             fx = new EMultiPass3D ( );
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             m.Mat.Bind ( );
             if ( Lighting.GraphLight3D.Active != null )
@@ -29,7 +29,7 @@ namespace Vivid3D.Visuals
             }
             v.SetMesh ( m );
             v.Bind ( );
-            for ( int i = 0 ; i < m.Subs.Count ; i++ )
+            for ( int i = 0; i < m.Subs.Count; i++ )
             {
                 v.Visualize ( i );
             }
@@ -59,7 +59,7 @@ namespace Vivid3D.Visuals
             fx = new EMultiPass3D ( );
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             m.Mat.Bind ( );
             if ( Lighting.GraphLight3D.Active != null )
@@ -103,7 +103,7 @@ namespace Vivid3D.Visuals
             fx = new ETerrain ( );
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             m.Mat.Bind ( );
             if ( Lighting.GraphLight3D.Active != null )
@@ -147,7 +147,7 @@ namespace Vivid3D.Visuals
             FX = new ELightMap ( );
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             m.Mat.BindLightmap ( );
             /* if (Lighting.GraphLight3D.Active != null)
@@ -194,7 +194,7 @@ namespace Vivid3D.Visuals
             FX = new ENoFX ( );
         }
 
-        public override void Render ( VMesh m , VVisualizer v )
+        public override void Render ( VMesh m, VVisualizer v )
         {
             m.Mat.Bind ( );
             /* if (Lighting.GraphLight3D.Active != null)

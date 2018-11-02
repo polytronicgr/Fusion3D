@@ -14,7 +14,7 @@ namespace ProjectManager
 
         public string ImgPath = "";
 
-        private void SelectImage_Click ( object sender , EventArgs e )
+        private void SelectImage_Click ( object sender, EventArgs e )
         {
             selectImg.Filter = "Images|*.jpg;*.bmp;*.png;*.tga";
 
@@ -28,7 +28,7 @@ namespace ProjectManager
             projImg.Invalidate ( );
         }
 
-        private void CreateProject_Click ( object sender , EventArgs e )
+        private void CreateProject_Click ( object sender, EventArgs e )
         {
             Project proj = new Project(projName.Text, projInfo.Text, projAuthor.Text, new Bitmap(new Bitmap(ImgPath), 256, 256));
             ProjectManager.Main.ScanForProjects ( );

@@ -36,7 +36,7 @@ namespace ProjectCore
             Icon = icon.Map;
         }
 
-        public Project ( string name , string info , string author , System.Drawing.Bitmap icon )
+        public Project ( string name, string info, string author, System.Drawing.Bitmap icon )
         {
             IDEPath = name;
             Directory.CreateDirectory ( ProjectPath + name );
@@ -47,11 +47,11 @@ namespace ProjectCore
 
             ProjData = new DataIO ( BasePath + "projectData" );
 
-            ProjData.AddData ( new DataString ( name ) , "Name" );
-            ProjData.AddData ( new DataString ( info ) , "Info" );
-            ProjData.AddData ( new DataString ( author ) , "Author" );
-            ProjData.AddData ( new DataString ( IDEPath ) , "IDEPath" );
-            ProjData.AddData ( new DataBitmap ( icon ) , "Icon" );
+            ProjData.AddData ( new DataString ( name ), "Name" );
+            ProjData.AddData ( new DataString ( info ), "Info" );
+            ProjData.AddData ( new DataString ( author ), "Author" );
+            ProjData.AddData ( new DataString ( IDEPath ), "IDEPath" );
+            ProjData.AddData ( new DataBitmap ( icon ), "Icon" );
 
             ProjData.Save ( );
         }

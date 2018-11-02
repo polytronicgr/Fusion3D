@@ -9,7 +9,7 @@ namespace Vivid3D.Physics
     {
         public class ECB : ErrorCallback
         {
-            public override void ReportError ( ErrorCode errorCode , string message , string file , int lineNumber )
+            public override void ReportError ( ErrorCode errorCode, string message, string file, int lineNumber )
             {
                 Console.WriteLine ( "ErrCode:" + errorCode.ToString ( ) + " Msg:" + message + " File:" + file + " line:" + lineNumber );
             }
@@ -48,15 +48,15 @@ namespace Vivid3D.Physics
             }
             Foundation fd = new Foundation(new ECB());
             pvd = new Pvd ( fd );
-            py = new PhysX.Physics ( fd , true , pvd );
+            py = new PhysX.Physics ( fd, true, pvd );
             SceneD = new SceneDesc
             {
-                Gravity = new System.Numerics.Vector3 ( 0 , -9 , 0 )
+                Gravity = new System.Numerics.Vector3 ( 0, -9, 0 )
             };
             Scene = py.CreateScene ( SceneD );
-            Scene.SetVisualizationParameter ( VisualizationParameter.Scale , 2.0f );
-            Scene.SetVisualizationParameter ( VisualizationParameter.CollisionShapes , true );
-            Scene.SetVisualizationParameter ( VisualizationParameter.ActorAxes , true );
+            Scene.SetVisualizationParameter ( VisualizationParameter.Scale, 2.0f );
+            Scene.SetVisualizationParameter ( VisualizationParameter.CollisionShapes, true );
+            Scene.SetVisualizationParameter ( VisualizationParameter.ActorAxes, true );
             py.Pvd.Connect ( "localhost" );
             // Scene.Gravity = new System.Numerics.Vector3(0, 0, 0);
 

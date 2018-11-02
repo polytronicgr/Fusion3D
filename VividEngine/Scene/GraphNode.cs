@@ -53,7 +53,7 @@ namespace Vivid3D.Scene
                 }
 
                 _ImgBit = value;
-                ImgFrame = new Tex.Tex2D ( value , true )
+                ImgFrame = new Tex.Tex2D ( value, true )
                 {
                     Name = ImgBitmap.ToString ( )
                 };
@@ -99,7 +99,7 @@ namespace Vivid3D.Scene
             set;
         }
 
-        [DefaultValue ( typeof ( float ) , "64.0f" ), Description ( "The width(In pixels) of the node" ), Category ( "Visuals" )]
+        [DefaultValue ( typeof ( float ), "64.0f" ), Description ( "The width(In pixels) of the node" ), Category ( "Visuals" )]
         public float W
         {
             get;
@@ -125,7 +125,7 @@ namespace Vivid3D.Scene
         public float[] YC = new float[4];
         public Vector2[] DrawP = null;
 
-        public void EditMove ( float x , float y )
+        public void EditMove ( float x, float y )
         {
             Vector2 r = Util.Maths.Rotate(x, y, Graph.Rot, 1.0f);
             X = X + r.X;
@@ -152,11 +152,11 @@ namespace Vivid3D.Scene
 
             Vector2[] p = Maths.RotateOC(ox, oy, Rot, Z, 0, 0);
 
-            p = Maths.Push ( p , X - Graph.X , Y - Graph.Y );
+            p = Maths.Push ( p, X - Graph.X, Y - Graph.Y );
 
-            p = Maths.RotateOC ( p , Graph.Rot , Graph.Z , 0 , 0 );
+            p = Maths.RotateOC ( p, Graph.Rot, Graph.Z, 0, 0 );
 
-            p = Maths.Push ( p , sw / 2 , sh / 2 );
+            p = Maths.Push ( p, sw / 2, sh / 2 );
 
             DrawP = p;
 
@@ -183,14 +183,14 @@ namespace Vivid3D.Scene
             Nodes = new List<GraphNode> ( );
         }
 
-        public void Translate ( float x , float y , float z = 0.0f )
+        public void Translate ( float x, float y, float z = 0.0f )
         {
             X = X + x;
             Y = Y + y;
             Z = Z + z;
         }
 
-        public void Move ( float x , float y , float z = 0.0f )
+        public void Move ( float x, float y, float z = 0.0f )
         {
             Vector2 r = Util.Maths.Rotate(x, y, 360 - Rot, 1.0f);
             X = X + r.X;
@@ -198,13 +198,13 @@ namespace Vivid3D.Scene
             Z = Z + z;
         }
 
-        public void Point ( float x , float y )
+        public void Point ( float x, float y )
         {
             double r = Math.Atan2(y, x);
             Rot = ( float ) r * ( 180.0f / ( float ) Math.PI );
         }
 
-        public void SetPos ( float x , float y )
+        public void SetPos ( float x, float y )
         {
             X = x;
             Y = y;
@@ -273,13 +273,12 @@ namespace Vivid3D.Scene
                 string tp = r.ReadString();
                 string tn = r.ReadString();
                 ImgLinkName = tp;
-                //    Console.WriteLine("TN:" + tn + " TP:" + tp);
-                //    ImgFrame = new Tex.Tex2D(tp, alpha);
+                // Console.WriteLine("TN:" + tn + " TP:" + tp); ImgFrame = new Tex.Tex2D(tp, alpha);
             }
 
             int nc = r.ReadInt32();
 
-            for ( int i = 0 ; i < nc ; i++ )
+            for ( int i = 0; i < nc; i++ )
             {
                 GraphNode nn = new GraphNode
                 {

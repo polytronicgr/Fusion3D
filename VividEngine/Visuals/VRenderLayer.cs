@@ -13,15 +13,15 @@ namespace Vivid3D.Visuals
         {
         }
 
-        public virtual void Bind ( VMesh m , VVisualizer v )
+        public virtual void Bind ( VMesh m, VVisualizer v )
         {
         }
 
-        public virtual void Render ( VMesh m , VVisualizer v )
+        public virtual void Render ( VMesh m, VVisualizer v )
         {
         }
 
-        public virtual void Release ( VMesh m , VVisualizer v )
+        public virtual void Release ( VMesh m, VVisualizer v )
         {
         }
     }

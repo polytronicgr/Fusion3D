@@ -63,6 +63,9 @@ namespace VividEdit.Forms
 
         private bool xLock = false, yLock = false, zLock = false;
 
+        public Vivid3D.XInput.XPad EditPad = null;
+        public Timer PadTimer = null;
+
         public Editor ( )
         {
             InitializeComponent ( );
@@ -80,7 +83,30 @@ namespace VividEdit.Forms
             };
             Controls.Add ( Dis );
             ContextMenuStrip = contextMenuStrip1;
+            EditPad = new Vivid3D.XInput.XPad ( 0 );
             // dosize = true;
+            PadTimer = new Timer
+            {
+                Interval = 30
+            };
+            PadTimer.Tick += ON_PadSync;
+            PadTimer.Enabled = true;
+        }
+
+        private bool PadEdit = true;
+
+        private void ON_PadSync ( object sender, EventArgs e )
+        {
+            EditPad.Sync ( );
+            if ( PadEdit == false )
+            {
+                return;
+            }
+
+            Cam.Turn ( new Vector3 ( -EditPad.RightY, -EditPad.RightX, 0 ), Space.Local );
+            Cam.Move ( new Vector3 ( EditPad.LeftX * 2, 0, -EditPad.LeftY * 2 ), Space.Local );
+
+            //throw new NotImplementedException ( );
         }
 
         public void AddLight ( Vivid3D.Lighting.GraphLight3D l )

@@ -59,6 +59,10 @@ namespace VividEdit
         {
             switch ( file.Type )
             {
+                case "Code":
+                    System.Diagnostics.Process.Start ( file.Path );
+                    break;
+
                 case "3D":
 
                     AssImpImport.IPath = file.BasePath;

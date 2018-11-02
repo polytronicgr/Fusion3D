@@ -1,36 +1,11 @@
-﻿using Vivid3D.Scene;
+﻿using CSScriptLibrary;
+using Vivid3D.Scene;
 
 namespace Vivid3D.Script
 {
-    public class ScriptBase : GraphNode3D
+    public class ScriptLink : GraphNode3D
     {
-        public GraphNode3D Node
-        {
-            get => Top;
-            set
-            {
-                if ( Top != null )
-                {
-                    Top.Sub.Remove ( this );
-                }
-                Top = value;
-                Top.Sub.Add ( this );
-            }
-        }
-
-        public GraphEntity3D Entity
-        {
-            get => Top as GraphEntity3D;
-            set
-            {
-                if ( Top != null )
-                {
-                    Top.Sub.Remove ( this );
-                }
-                Top = value;
-                Top.Sub.Add ( this );
-            }
-        }
+        private dynamic script;
 
         public string FilePath
         {
@@ -38,28 +13,44 @@ namespace Vivid3D.Script
             set;
         }
 
-        public virtual void Begin ( )
+        public bool Compiled
         {
+            get;
+            set;
         }
 
-        public virtual void End ( )
+        public ScriptLink ( )
         {
+            Compiled = false;
         }
 
-        public virtual void Pause ( )
+        public void Compile ( GraphNode3D node )
         {
+            if ( Compiled )
+            {
+                return;
+            }
+
+            Compiled = true;
+            script = CSScript.Evaluator.LoadCode ( System.IO.File.ReadAllText ( FilePath ) );
+            script.Pad = new XInput.XPad ( 0 );
+            script.Node = node;
+            System.Console.WriteLine ( "Script:" + FilePath + " Compiled." );
         }
 
-        public virtual void Resume ( )
+        public void Update ( )
         {
+            script.Update ( );
         }
 
-        public virtual void Update ( )
+        public void Begin ( )
         {
+            script.Begin ( );
         }
 
-        public virtual void Draw ( )
+        public void End ( )
         {
+            script.End ( );
         }
     }
 }

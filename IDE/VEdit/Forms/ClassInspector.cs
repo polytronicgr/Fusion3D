@@ -56,7 +56,7 @@ namespace VividEdit.Forms
                     Size = new Size ( 250 , 25 )
                 };
 
-                if ( prop.PropertyType == typeof ( System.Collections.Generic.List<Vivid3D.Script.ScriptBase> ) )
+                if ( prop.PropertyType == typeof ( System.Collections.Generic.List<Vivid3D.Script.ScriptLink> ) )
                 {
                     Label val = new Label
                     {
@@ -71,13 +71,13 @@ namespace VividEdit.Forms
                         Location = new Point ( 60 , propy + 25 ) ,
                         Size = new Size ( 60 , 25 )
                     };
-                    System.Collections.Generic.List<Vivid3D.Script.ScriptBase> sv = (System.Collections.Generic.List<Vivid3D.Script.ScriptBase>)prop.GetAccessors()[0].Invoke(cls,null);
+                    System.Collections.Generic.List<Vivid3D.Script.ScriptLink> sv = (System.Collections.Generic.List<Vivid3D.Script.ScriptLink>)prop.GetAccessors()[0].Invoke(cls,null);
                     System.Reflection.MethodInfo sm = prop.GetSetMethod ( );
                     object[] pp = new object[1];
 
                     void on_new ( object o, EventArgs e )
                     {
-                        Vivid3D.Script.ScriptBase sb = new Vivid3D.Script.ScriptBase ( );
+                        Vivid3D.Script.ScriptLink sb = new Vivid3D.Script.ScriptLink ( );
                         sv.Add ( sb );
 
                         sb.Name = "NewScript.cs";
@@ -98,7 +98,7 @@ namespace VividEdit.Forms
 
                     propy += 10;
 
-                    foreach ( Vivid3D.Script.ScriptBase s in sv )
+                    foreach ( Vivid3D.Script.ScriptLink s in sv )
                     {
                         TextBox namebox = new TextBox
                         {
@@ -114,6 +114,12 @@ namespace VividEdit.Forms
                                 return;
                             }
                             s.Name = namebox.Text;
+
+                            if ( System.IO.File.Exists ( VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + namebox.Text ) )
+                            {
+                                // System.IO.File.Delete ( VividEdit.VividED.CurProject.ContentPath +
+                                // "\\Script\\" + namebox.Text );
+                            }
 
                             System.IO.File.Move ( s.FilePath, VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + namebox.Text );
                             s.FilePath = VividEdit.VividED.CurProject.ContentPath + "\\Script\\" + s.Name;

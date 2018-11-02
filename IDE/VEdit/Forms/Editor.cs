@@ -214,6 +214,16 @@ namespace VividEdit.Forms
             }
         }
 
+        private void button1_Click ( object sender, EventArgs e )
+        {
+            Graph.Begin ( );
+        }
+
+        private void button2_Click ( object sender, EventArgs e )
+        {
+            Graph.End ( );
+        }
+
         private void ON_KeyUp ( Keys k )
         {
             switch ( k )

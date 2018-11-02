@@ -18,6 +18,10 @@ namespace VividEdit.Forms
             string ext = new FileInfo(Path).Extension.ToLower();
             switch ( ext )
             {
+                case ".cs":
+                    Type = "Code";
+                    break;
+
                 case ".3ds":
                 case ".obj":
                 case ".blend":

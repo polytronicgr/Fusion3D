@@ -187,7 +187,7 @@ namespace Vivid3D.Scene
             int ns1 = Help.IOHelp.ReadInt();
             for ( int i = 0; i < ns1; i++ )
             {
-                Script.ScriptBase sb = new Script.ScriptBase
+                Script.ScriptLink sb = new Script.ScriptLink
                 {
                     Name = Help.IOHelp.ReadString ( ) ,
                     FilePath = Help.IOHelp.ReadString ( )
@@ -287,7 +287,7 @@ namespace Vivid3D.Scene
         public void Write ( )
         {
             Help.IOHelp.WriteInt ( Scripts.Count );
-            foreach ( Script.ScriptBase s in Scripts )
+            foreach ( Script.ScriptLink s in Scripts )
             {
                 Help.IOHelp.WriteString ( s.Name );
                 Help.IOHelp.WriteString ( s.FilePath );

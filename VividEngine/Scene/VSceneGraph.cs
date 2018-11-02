@@ -376,8 +376,18 @@ namespace Vivid3D.Scene
             fs.Close ( );
         }
 
+        private XInput.XPad Pad0=null;
+
         public virtual void Update ( )
         {
+            if ( Pad0 == null )
+            {
+                Pad0 = new XInput.XPad ( 0 );
+                //Pad0.Update ( );
+            }
+
+            //var tp = new XInput.XPad(0);
+
             UpdateNode ( Root );
         }
 

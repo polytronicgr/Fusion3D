@@ -32,7 +32,7 @@ namespace Vivid3D.Scene
         private readonly EventHandler PosChanged = null;
         private Vector3 _LocalPos = Vector3.Zero;
         private string _Name="";
-        private List<ScriptBase> scripts = new List<ScriptBase> ( );
+        private List<ScriptLink> scripts = new List<ScriptLink> ( );
 
         public GraphNode3D ( )
         {
@@ -44,6 +44,7 @@ namespace Vivid3D.Scene
             LocalEular = new Vector3 ( 0, 0, 0 );
             LocalScale = new Vector3 ( 1, 1, 1 );
             LocalTurn = Matrix4.Identity;
+            Running = false;
         }
 
         public bool AlwaysAlpha
@@ -91,35 +92,9 @@ namespace Vivid3D.Scene
             }
         }
 
-        public ScriptBase Script { get; set; }
+        public ScriptLink Script { get; set; }
 
-        public List<ScriptBase> Scripts { get => scripts; set => scripts = value; }
-
-        public void Begin ( )
-        {
-            foreach ( ScriptBase script in Scripts )
-            {
-                script.Begin ( );
-            }
-
-            foreach ( GraphNode3D ent in Sub )
-            {
-                ent.Begin ( );
-            }
-        }
-
-        public void End ( )
-        {
-            foreach ( ScriptBase script in Scripts )
-            {
-                script.End ( );
-            }
-
-            foreach ( GraphNode3D ent in Sub )
-            {
-                ent.End ( );
-            }
-        }
+        public List<ScriptLink> Scripts { get => scripts; set => scripts = value; }
 
         public List<GraphNode3D> TopList
         {
@@ -206,6 +181,37 @@ namespace Vivid3D.Scene
             if ( Top != null )
             {
                 Top.AddTop ( l );
+            }
+        }
+
+        public void Begin ( )
+        {
+            foreach ( ScriptLink script in Scripts )
+            {
+                script.Compile ( this );
+                script.Begin ( );
+            }
+            Running = true;
+
+            foreach ( GraphNode3D ent in Sub )
+            {
+                ent.Begin ( );
+            }
+        }
+
+        public void End ( )
+        {
+            foreach ( ScriptLink script in Scripts )
+            {
+                script.Compile ( this );
+                script.End ( );
+            }
+
+            Running = false;
+
+            foreach ( GraphNode3D ent in Sub )
+            {
+                ent.End ( );
             }
         }
 
@@ -330,10 +336,25 @@ namespace Vivid3D.Scene
 
         public virtual void Update ( )
         {
+            UpdateNode ( 1.0f );
+        }
+
+        public bool Running
+        {
+            get;
+            set;
         }
 
         public virtual void UpdateNode ( float t )
         {
+            if ( Running )
+            {
+                foreach ( ScriptLink s in Scripts )
+                {
+                    s.Update ( );
+                }
+            }
+
             foreach ( GraphNode3D n in Sub )
             {
                 n.UpdateNode ( t );

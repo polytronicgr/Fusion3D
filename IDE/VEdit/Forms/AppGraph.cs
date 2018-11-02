@@ -183,6 +183,8 @@ namespace VividEdit.Forms
             VividEdit.VividED.Main.DockEdit3D.Cam = VividEdit.VividED.Main.DockEdit3D.Graph.Cams [ 0 ];
             VividEdit.VividED.Main.DockEdit3D.Selected.Cams.Clear ( );
             VividEdit.VividED.Main.DockEdit3D.Selected.Cams.Add ( VividEdit.VividED.Main.DockEdit3D.Cam );
+
+            VividEdit.VividED.Main.DockEdit3D.Dis.Reset ( );
             Rebuild ( );
         }
 

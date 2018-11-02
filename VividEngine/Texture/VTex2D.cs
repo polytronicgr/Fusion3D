@@ -24,11 +24,10 @@ namespace Vivid3D.Texture
         public byte[] pixs = null;
         public byte[] RawData;
         public Bitmap TexData = null;
+        private readonly bool PreLoaded = false;
         private FileStream nf;
 
         private BinaryReader nr;
-
-        private readonly bool PreLoaded = false;
 
         public VTex2D ( int w, int h, bool alpha = false )
         {
@@ -57,8 +56,10 @@ namespace Vivid3D.Texture
             }
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Nearest );
-            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Nearest );
+
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.LinearMipmapLinear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+            GL.GenerateMipmap ( GenerateMipmapTarget.Texture2D );
             GL.PixelStore ( PixelStoreParameter.PackAlignment, 4 * 4 );
             pixs = dat;
         }
@@ -230,8 +231,10 @@ namespace Vivid3D.Texture
             GL.BindTexture ( TextureTarget.Texture2D, ID );
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
-            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.LinearMipmapLinear );
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+            GL.GenerateMipmap ( GenerateMipmapTarget.Texture2D );
             GL.PixelStore ( PixelStoreParameter.PackAlignment, 4 * 4 );
             GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixs );
             GL.Disable ( EnableCap.Texture2D );
@@ -276,8 +279,9 @@ namespace Vivid3D.Texture
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.ClampToEdge );
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.ClampToEdge );
 
-            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.Linear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.LinearMipmapLinear );
             GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+            GL.GenerateMipmap ( GenerateMipmapTarget.Texture2D );
 
             GL.BindTexture ( TextureTarget.Texture2D, 0 );
         }

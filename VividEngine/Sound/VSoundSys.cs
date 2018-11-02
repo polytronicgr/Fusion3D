@@ -12,14 +12,14 @@ namespace Vivid3D.Sound
             SE = new ISoundEngine ( );
         }
 
-        public static VSound Play2DFile ( string file , bool loop = false )
+        public static VSound Play2DFile ( string file, bool loop = false )
         {
-            return new VSound ( SE.Play2D ( file , loop ) );
+            return new VSound ( SE.Play2D ( file, loop ) );
         }
 
-        public static VSound Play2D ( ISoundSource src , bool loop = false )
+        public static VSound Play2D ( ISoundSource src, bool loop = false )
         {
-            return new VSound ( SE.Play2D ( src , loop , false , false ) );
+            return new VSound ( SE.Play2D ( src, loop, false, false ) );
         }
 
         public static void Update ( )
@@ -83,7 +83,7 @@ namespace Vivid3D.Sound
 
         public VSound Play2D ( bool loop = false )
         {
-            return StarSoundSys.Play2D ( Src , loop );
+            return StarSoundSys.Play2D ( Src, loop );
         }
     }
 }

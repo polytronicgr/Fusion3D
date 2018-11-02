@@ -69,18 +69,18 @@ namespace VividEdit.Forms
             Dis = new VividGL ( ON_Load )
             {
                 // Dis.Dock = DockStyle.Fill;
-                Size = new Size ( Width , Height ) ,
-                EvPaint = ON_Paint ,
-                EvResize = ON_Resize ,
-                EvMouseMoved = ON_MouseMove ,
-                EvMouseDown = ON_MouseDown ,
-                EvMouseUp = ON_MouseUp ,
-                EvKeyDown = ON_KeyDown ,
+                Size = new Size ( Width, Height ),
+                EvPaint = ON_Paint,
+                EvResize = ON_Resize,
+                EvMouseMoved = ON_MouseMove,
+                EvMouseDown = ON_MouseDown,
+                EvMouseUp = ON_MouseUp,
+                EvKeyDown = ON_KeyDown,
                 EvKeyUp = ON_KeyUp
             };
             Controls.Add ( Dis );
             ContextMenuStrip = contextMenuStrip1;
-            //            dosize = true;
+            // dosize = true;
         }
 
         public void AddLight ( Vivid3D.Lighting.GraphLight3D l )
@@ -106,24 +106,24 @@ namespace VividEdit.Forms
                 return;
             }
 
-            RIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconrot.png" , Vivid3D.Texture.LoadMethod.Single , true );
-            XIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconx.png" , Vivid3D.Texture.LoadMethod.Single , true );
-            YIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\icony.png" , Vivid3D.Texture.LoadMethod.Single , true );
-            ZIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconz.png" , Vivid3D.Texture.LoadMethod.Single , true );
-            SIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconscale.png" , Vivid3D.Texture.LoadMethod.Single , true );
-            LightIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconlight.png" , Vivid3D.Texture.LoadMethod.Single , true );
+            RIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconrot.png", Vivid3D.Texture.LoadMethod.Single, true );
+            XIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconx.png", Vivid3D.Texture.LoadMethod.Single, true );
+            YIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\icony.png", Vivid3D.Texture.LoadMethod.Single, true );
+            ZIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconz.png", Vivid3D.Texture.LoadMethod.Single, true );
+            SIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconscale.png", Vivid3D.Texture.LoadMethod.Single, true );
+            LightIcon = new Vivid3D.Texture.VTex2D ( "data\\icon\\iconlight.png", Vivid3D.Texture.LoadMethod.Single, true );
             iconLoaded = true;
         }
 
         public void ON_LightSelected ( GraphNode3D node )
         {
             CurNode = node;
-            ConsoleView.Log ( "Light Selected" , "Info" );
+            ConsoleView.Log ( "Light Selected", "Info" );
             Console.WriteLine ( "Light On :" + ( node == null ).ToString ( ) );
             VividEdit.VividED.Main.DockClassInspect.Inspect ( node as object );
         }
 
-        private void Editor_Resize ( object sender , EventArgs e )
+        private void Editor_Resize ( object sender, EventArgs e )
         {
             if ( dosize )
             {
@@ -135,18 +135,18 @@ namespace VividEdit.Forms
             }
         }
 
-        private void EditTimer_Tick ( object sender , EventArgs e )
+        private void EditTimer_Tick ( object sender, EventArgs e )
         {
             if ( moving )
             {
-                Cam.Move ( new Vector3 ( mX * moveS , mY * moveS , mZ * moveS ) , Space.Local );
+                Cam.Move ( new Vector3 ( mX * moveS, mY * moveS, mZ * moveS ), Space.Local );
                 // Light.LocalPos = Cam.LocalPos;
             }
 
             Dis.Invalidate ( );
         }
 
-        private bool InRect ( int rx , int ry , int rw , int rh )
+        private bool InRect ( int rx, int ry, int rw, int rh )
         {
             int x = msX;
             int y = msY;
@@ -220,52 +220,50 @@ namespace VividEdit.Forms
 
         private void ON_Load ( )
         {
-            Dis.Size = new Size ( Width , Height );
-            VForm.Set ( Width , Height );
-            Grid = GeoGen.Quad ( 100 , 100 );
-            Grid.Rot ( new Vector3 ( -90 , 0 , 0 ) , Space.Local );
+            Dis.Size = new Size ( Width, Height );
+            VForm.Set ( Width, Height );
+            Grid = GeoGen.Quad ( 100, 100 );
+            Grid.Rot ( new Vector3 ( -90, 0, 0 ), Space.Local );
 
             Grid.AlwaysAlpha = true;
-            Vivid3D.Material.Material3D mat = new Vivid3D.Material.Material3D ( );
+            Vivid3D.Material.Material3D mat = new Vivid3D.Material.Material3D();
             Grid.Renderer = new VRNoFx ( );
             Vivid3D.Texture.VTex2D.Lut.Clear ( );
-            mat.TCol = new Vivid3D.Texture.VTex2D ( "data\\ui\\grid.png" , Vivid3D.Texture.LoadMethod.Single , true );
+            mat.TCol = new Vivid3D.Texture.VTex2D ( "data\\ui\\grid.png", Vivid3D.Texture.LoadMethod.Single, true );
             Grid.Meshes [ 0 ].Mat = mat;
             Light = new GraphLight3D ( );
-            Light.Pos ( new Vector3 ( 20 , 120 , 250 ) , Space.Local );
+            Light.Pos ( new Vector3 ( 20, 120, 250 ), Space.Local );
             Light.Range = 800;
             Light.On = true;
-            Light.Diff = new Vector3 ( 3 , 3 , 3 );
+            Light.Diff = new Vector3 ( 3, 3, 3 );
             Light.CastShadows = true;
-            Light.Spec = new Vector3 ( 2 , 2 , 2 );
+            Light.Spec = new Vector3 ( 2, 2, 2 );
             GraphLight3D l2 = new GraphLight3D
             {
-                LocalPos = new Vector3 ( -90 , 90 , -80 ) ,
-                Range = 800 ,
-                On = true ,
-                Diff = new Vector3 ( 0.8f , 1.8f , 1.8f ) ,
+                LocalPos = new Vector3(-90, 90, -80),
+                Range = 800,
+                On = true,
+                Diff = new Vector3(0.8f, 1.8f, 1.8f),
                 CastShadows = true
             };
             GraphLight3D l3 = new GraphLight3D
             {
-                LocalPos = new Vector3 ( 70 , 120 , 80 ) ,
-                Diff = new Vector3 ( 1.4f , 2.2f , 2.2f ) ,
-                Range = 800 ,
-                On = true ,
+                LocalPos = new Vector3(70, 120, 80),
+                Diff = new Vector3(1.4f, 2.2f, 2.2f),
+                Range = 800,
+                On = true,
                 CastShadows = true
             };
 
             Graph = new SceneGraph3D ( );
             Graph.Add ( Grid );
-            //  Graph.Add(Light);
-            //   Graph.Add(l2);
-            //   Graph.Add(l3);
+            // Graph.Add(Light); Graph.Add(l2); Graph.Add(l3);
 
             Cam = new GraphCam3D ( );
             Graph.Add ( Cam );
-            PRen = new Vivid3D.PostProcess.PostProcessRender ( Width , Height );
-            Vivid3D.PostProcess.Processes.PPOutLine vo = new Vivid3D.PostProcess.Processes.PPOutLine ( );
-            Vivid3D.PostProcess.Processes.VPPBlur bpp = new Vivid3D.PostProcess.Processes.VPPBlur ( );
+            PRen = new Vivid3D.PostProcess.PostProcessRender ( Width, Height );
+            Vivid3D.PostProcess.Processes.PPOutLine vo = new Vivid3D.PostProcess.Processes.PPOutLine();
+            Vivid3D.PostProcess.Processes.VPPBlur bpp = new Vivid3D.PostProcess.Processes.VPPBlur();
             //PPBlur.Blur = 0.4f;
             PRen.Scene = Graph;
             PRen.Add ( vo );
@@ -280,7 +278,7 @@ namespace VividEdit.Forms
             Vivid3D.ImageProcessing.ImageProcessor.InitIP ( );
             //Cam.Rot(new Vector3(45, 0, 0), Space.Local);
             //    Grid.Rot(new Vector3(-30, 0, 0), Space.Local);
-            Cam.Pos ( new Vector3 ( 0 , 100 , 350 ) , Space.Local );
+            Cam.Pos ( new Vector3 ( 0, 100, 350 ), Space.Local );
             //  Cam.Rot(new Vector3(-10, 0, 0), Space.Local);
             //Cam.LookAt(new Vector3(0, 0, 0), Vector3.UnitY);
         }
@@ -298,14 +296,14 @@ namespace VividEdit.Forms
                 zLock = false;
                 if ( EMode == EditMode.Scale )
                 {
-                    if ( InRect ( tX - 16 , tY - 16 , 32 , 32 ) )
+                    if ( InRect ( tX - 16, tY - 16, 32, 32 ) )
                     {
                         allLock = true;
                         xLock = yLock = zLock = false;
                         return;
                     }
                 }
-                if ( InRect ( tX - 6 , tY - 80 , 32 , 32 ) )
+                if ( InRect ( tX - 6, tY - 80, 32, 32 ) )
                 {
                     yLock = true;
                     xLock = false;
@@ -313,14 +311,14 @@ namespace VividEdit.Forms
                     Console.WriteLine ( "Left" );
                     return;
                 }
-                if ( InRect ( tX + 80 , tY - 3 , 32 , 32 ) )
+                if ( InRect ( tX + 80, tY - 3, 32, 32 ) )
                 {
                     xLock = true;
                     yLock = false;
                     zLock = false;
                     return;
                 }
-                if ( InRect ( tX + 32 , tY - 32 , 32 , 32 ) )
+                if ( InRect ( tX + 32, tY - 32, 32, 32 ) )
                 {
                     zLock = true;
                     yLock = false;
@@ -332,7 +330,7 @@ namespace VividEdit.Forms
                 foreach ( GraphLight3D l in Graph.Lights )
                 {
                     Vector2 sp = Vivid3D.Pick.Picker.CamTo2D(Cam, l.LocalPos);
-                    if ( InRect ( ( int ) sp.X - 16 , ( int ) sp.Y - 16 , 32 , 32 ) )
+                    if ( InRect ( ( int ) sp.X - 16, ( int ) sp.Y - 16, 32, 32 ) )
                     {
                         Console.WriteLine ( "Picked Light" );
                         l.Select ( );
@@ -341,7 +339,7 @@ namespace VividEdit.Forms
                 }
 
                 //Graph.CamPick(mX, mY);
-                Vivid3D.Pick.PickResult res = Graph.CamPick ( msX , msY );
+                Vivid3D.Pick.PickResult res = Graph.CamPick(msX, msY);
                 if ( res != null )
                 {
                     Console.WriteLine ( "Picked:" + res.Node.Name );
@@ -354,38 +352,38 @@ namespace VividEdit.Forms
                 }
                 else
                 {
-                    //    CurNode = null;
+                    // CurNode = null;
                 }
             }
             // var l = Graph.GetList(true);
         }
 
-        private void ON_MouseMove ( int x , int y , int dx , int dy )
+        private void ON_MouseMove ( int x, int y, int dx, int dy )
         {
             float rx = dx * 0.2f;
             float ry = dy * 0.2f;
             if ( rotate )
             {
-                Cam.Turn ( new Vector3 ( -ry , -rx , 0 ) , Space.Local );
+                Cam.Turn ( new Vector3 ( -ry, -rx, 0 ), Space.Local );
             }
             msX = x;
             msY = y;
             Vector3 mov = Vector3.Zero;
             if ( allLock )
             {
-                mov = new Vector3 ( dx , dx , dx );
+                mov = new Vector3 ( dx, dx, dx );
             }
             if ( xLock )
             {
-                mov = new Vector3 ( dx , 0 , 0 );
+                mov = new Vector3 ( dx, 0, 0 );
             }
             if ( yLock )
             {
-                mov = new Vector3 ( 0 , dy , 0 );
+                mov = new Vector3 ( 0, dy, 0 );
             }
             if ( zLock )
             {
-                mov = new Vector3 ( 0 , 0 , dx );
+                mov = new Vector3 ( 0, 0, dx );
             }
             if ( CurNode != null )
             {
@@ -400,12 +398,12 @@ namespace VividEdit.Forms
 
                         if ( SMode == SpaceMode.Local || spaceLock == true )
                         {
-                            //    Console.WriteLine("Moving");
-                            CurNode.Move ( mov , Space.Local );
+                            // Console.WriteLine("Moving");
+                            CurNode.Move ( mov, Space.Local );
                         }
                         else
                         {
-                            //      Console.WriteLine("Moving node.");
+                            // Console.WriteLine("Moving node.");
                             if ( CurNode.Top == null )
                             {
                                 mov.Y = -mov.Y;
@@ -442,7 +440,7 @@ namespace VividEdit.Forms
                             Console.WriteLine ( "!!!" );
                             foreach ( GraphNode3D tn2 in tn )
                             {
-                                //    Console.WriteLine("Tn2:" + tn2.Name);
+                                // Console.WriteLine("Tn2:" + tn2.Name);
                                 nm = nm * tn2.World.Inverted ( );
                             }
                             if ( zLock )
@@ -458,7 +456,7 @@ namespace VividEdit.Forms
                             }
                             //mv.Y = -mv.Y;
 
-                            mv = Vector3.TransformVector ( mv , nm );
+                            mv = Vector3.TransformVector ( mv, nm );
                             //mv.Y = -mv.Y;
                             //if (zLock)
                             // {
@@ -476,11 +474,11 @@ namespace VividEdit.Forms
                         mov.Z = y1;
                         if ( SMode == SpaceMode.Local )
                         {
-                            CurNode.Turn ( mov , Space.Local );
+                            CurNode.Turn ( mov, Space.Local );
                         }
                         else
                         {
-                            CurNode.Turn ( mov , Space.Local ); ;
+                            CurNode.Turn ( mov, Space.Local ); ;
                         }
                     }
                 }
@@ -510,7 +508,7 @@ namespace VividEdit.Forms
             {
                 Light.LocalPos = Cam.LocalPos;
             }
-            GL.ClearColor ( 0 , 0 , 0 , 1.0f );
+            GL.ClearColor ( 0, 0, 0, 1.0f );
             GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
             Graph?.Root.UpdateNode ( 0.1f );
             // if (run)
@@ -529,7 +527,7 @@ namespace VividEdit.Forms
             {
                 Vector2 lp = Vivid3D.Pick.Picker.CamTo2D(Cam, rl.LocalPos);
                 Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
-                Vivid3D.Draw.VPen.Rect ( lp.X - 16 , lp.Y - 16 , 32 , 32 , LightIcon );
+                Vivid3D.Draw.VPen.Rect ( lp.X - 16, lp.Y - 16, 32, 32, LightIcon );
             }
 
             if ( CurNode != null )
@@ -543,26 +541,26 @@ namespace VividEdit.Forms
 
                 Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
 
-                Vivid3D.Draw.VPen.Rect ( tX - 3 , tY - 3 , 6 , 6 , new Vector4 ( 1 , 1 , 1 , 1 ) );
+                Vivid3D.Draw.VPen.Rect ( tX - 3, tY - 3, 6, 6, new Vector4 ( 1, 1, 1, 1 ) );
 
-                Vivid3D.Draw.VPen.Rect ( tX - 6 , tY - 80 , 32 , 32 , YIcon );
-                Vivid3D.Draw.VPen.Rect ( tX + 80 , tY - 3 , 32 , 32 , XIcon );
-                Vivid3D.Draw.VPen.Rect ( tX + 32 , tY - 32 , 32 , 32 , ZIcon );
+                Vivid3D.Draw.VPen.Rect ( tX - 6, tY - 80, 32, 32, YIcon );
+                Vivid3D.Draw.VPen.Rect ( tX + 80, tY - 3, 32, 32, XIcon );
+                Vivid3D.Draw.VPen.Rect ( tX + 32, tY - 32, 32, 32, ZIcon );
                 switch ( EMode )
                 {
                     case EditMode.Move:
-                        Vivid3D.Draw.VPen.Rect ( 6 , 6 , 16 , 16 , YIcon );
-                        Vivid3D.Draw.VPen.Rect ( 30 , 16 , 16 , 16 , XIcon );
-                        Vivid3D.Draw.VPen.Rect ( 20 , 8 , 16 , 16 , ZIcon );
+                        Vivid3D.Draw.VPen.Rect ( 6, 6, 16, 16, YIcon );
+                        Vivid3D.Draw.VPen.Rect ( 30, 16, 16, 16, XIcon );
+                        Vivid3D.Draw.VPen.Rect ( 20, 8, 16, 16, ZIcon );
                         break;
 
                     case EditMode.Rotate:
-                        Vivid3D.Draw.VPen.Rect ( 6 , 6 , 64 , 64 , RIcon );
+                        Vivid3D.Draw.VPen.Rect ( 6, 6, 64, 64, RIcon );
                         break;
 
                     case EditMode.Scale:
-                        Vivid3D.Draw.VPen.Rect ( 6 , 6 , 64 , 64 , SIcon );
-                        Vivid3D.Draw.VPen.Rect ( tX - 16 , tY - 16 , 32 , 32 , SIcon );
+                        Vivid3D.Draw.VPen.Rect ( 6, 6, 64, 64, SIcon );
+                        Vivid3D.Draw.VPen.Rect ( tX - 16, tY - 16, 32, 32, SIcon );
                         break;
                 }
             }
@@ -571,22 +569,22 @@ namespace VividEdit.Forms
 
         private void ON_Resize ( )
         {
-            Dis.Size = new Size ( Width , Height );
-            VForm.SetSize ( Width , Height );
+            Dis.Size = new Size ( Width, Height );
+            VForm.SetSize ( Width, Height );
             Dis.Invalidate ( );
         }
 
-        private void rotateToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void rotateToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             EMode = EditMode.Rotate;
         }
 
-        private void scaleToolStripMenuItem_Click ( object sender , EventArgs e )
+        private void scaleToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             EMode = EditMode.Scale;
         }
 
-        private void toolStripMenuItem1_Click ( object sender , EventArgs e )
+        private void toolStripMenuItem1_Click ( object sender, EventArgs e )
         {
             EMode = EditMode.Move;
         }

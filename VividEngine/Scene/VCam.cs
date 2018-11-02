@@ -16,6 +16,7 @@ namespace Vivid3D.Scene
             IOHelp.WriteVec ( LocalPos );
             IOHelp.WriteFloat ( MinZ );
             IOHelp.WriteFloat ( MaxZ );
+            IOHelp.WriteVec ( LR );
         }
 
         public void Read ( )
@@ -24,6 +25,7 @@ namespace Vivid3D.Scene
             LocalPos = IOHelp.ReadVec3 ( );
             MinZ = IOHelp.ReadFloat ( );
             MaxZ = IOHelp.ReadFloat ( );
+            LR = IOHelp.ReadVec3 ( );
         }
 
         public override void Rot ( Vector3 r, Space s )
@@ -35,8 +37,10 @@ namespace Vivid3D.Scene
         public override void Turn ( Vector3 t, Space s )
         {
             LR = LR + t;
-            //LR.Z = 0;
             CalcMat ( );
+
+            //Matrix4 t = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(r.X)) * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(r.Y)) * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(r.Z));
+            //LocalTurn = t * LocalTurn;
         }
 
         public void CalcMat ( )

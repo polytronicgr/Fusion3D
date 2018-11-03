@@ -132,7 +132,13 @@ namespace VividEdit.Forms
             AllNodes.Add ( n );
             TreeNode nn = new TreeNode(n.Name);
             n.NameChanged = ON_NameChange;
-            nodeMap.Add ( n, nn );
+            if ( nodeMap.ContainsKey ( n ) )
+            {
+            }
+            else
+            {
+                nodeMap.Add ( n, nn );
+            }
 
             t.Nodes.Add ( nn );
 

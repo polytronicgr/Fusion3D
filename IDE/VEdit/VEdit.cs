@@ -33,7 +33,7 @@ namespace VividEdit
         {
             DockEdit3D.Graph.Add ( e );
             DockEdit3D.Selected.Root.Sub.Clear ( );
-            DockEdit3D.Selected.Add ( e );
+            // DockEdit3D.Selected.Add ( e );
             rebuildUI ( );
         }
 

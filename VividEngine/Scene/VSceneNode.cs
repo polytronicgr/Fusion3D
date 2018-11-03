@@ -22,6 +22,8 @@ namespace Vivid3D.Scene
             set;
         }
 
+        public List<string> RenderTags = new List<string>();
+
         public bool BreakTop = false;
 
         public bool CastDepth = true;
@@ -67,6 +69,7 @@ namespace Vivid3D.Scene
             LocalScale = new Vector3 ( 1, 1, 1 );
             LocalTurn = Matrix4.Identity;
             Running = false;
+            RenderTags.Add ( "All" );
         }
 
         public bool AlwaysAlpha

@@ -2,28 +2,29 @@
 {
     public class OutlineCompositer : Compositer
     {
-        public OutlineCompositer ( ) : base ( 3 )
+        public OutlineCompositer ( ) : base ( 2 )
         {
-            Types [ 0 ] = new FrameTypes.FrameColor ( );
+            InputFrame = new FrameTypes.FrameColor ( );
 
-            Types [ 1 ] = new FrameTypes.FrameDepth ( );
+            Types [ 0 ] = new FrameTypes.FrameDepth ( );
 
-            Types [ 2 ] = new FrameTypes.FrameEffect ( );
+            Types [ 1 ] = new FrameTypes.FrameEffect ( );
 
-            dynamic fe = Types[2];
+            dynamic fe = Types[1];
 
             fe.FX = new PostProcess.Processes.VEOutLine ( );
 
-            Types [ 2 ].TexBind.Add ( Types [ 1 ] );
-            Types [ 2 ].TexBind.Add ( Types [ 0 ] );
+            Types [ 1 ].TexBind.Add ( Types [ 0 ] );
+            Types [ 1 ].TexBind.Add ( InputFrame );
 
-            OutputFrame = Types [ 2 ];
+            OutputFrame = Types [ 1 ];
 
             Blend = FrameBlend.Add;
         }
 
         public override void PreGen ( )
         {
+            return;
             Types [ 0 ] = InputFrame;
             Types [ 2 ].TexBind.Clear ( );
             Types [ 2 ].TexBind.Add ( Types [ 1 ] );

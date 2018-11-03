@@ -241,6 +241,7 @@ namespace VividEdit.Forms
         }
 
         public Vivid3D.Composition.Composite Composer;
+        public Vivid3D.Composition.Composite SelComposer;
 
         private void ON_Load ( )
         {
@@ -255,6 +256,7 @@ namespace VividEdit.Forms
             Vivid3D.Texture.VTex2D.Lut.Clear ( );
             mat.TCol = new Vivid3D.Texture.VTex2D ( "data\\ui\\grid.png", Vivid3D.Texture.LoadMethod.Single, true );
             Grid.Meshes [ 0 ].Mat = mat;
+            Grid.RenderTags.Clear ( );
             Light = new GraphLight3D ( );
             Light.Pos ( new Vector3 ( 20, 120, 250 ), Space.Local );
             Light.Range = 800;
@@ -285,13 +287,16 @@ namespace VividEdit.Forms
 
             Cam = new GraphCam3D ( );
             Graph.Add ( Cam );
-            Vivid3D.Composition.CompositerSet cs1 = new Vivid3D.Composition.CompositerSet ( new Vivid3D.Composition.Compositers.BloomCompositer(), new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
+            Vivid3D.Composition.CompositerSet cs1 = new Vivid3D.Composition.CompositerSet (new Vivid3D.Composition.Compositers.BloomCompositer(),new Vivid3D.Composition.Compositers.OutlineCompositer());// new Vivid3D.Composition.Compositers.BloomCompositer(), new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
+            Vivid3D.Composition.CompositerSet cs2 = new Vivid3D.Composition.CompositerSet(new Vivid3D.Composition.Compositers.OutlineCompositer());
             //         Composer = new Vivid3D.Composition.Composite
             //{
             //    Graph = Graph
             // };
             Composer = cs1.Get ( );
             Composer.Graph = Graph;
+            SelComposer = cs2.Get ( );
+
             //Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
             // Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BloomCompositer ( ) );
 
@@ -315,7 +320,8 @@ namespace VividEdit.Forms
 
             //  vo.SubProcesses.Add(bpp);
             //PRen.Add(bpp);
-
+            Graph.Add ( Grid );
+            Graph.Add ( Light );
             Selected = new SceneGraph3D ( );
             Selected.Add ( Cam );
             Selected.Add ( Light );
@@ -325,6 +331,8 @@ namespace VividEdit.Forms
             //Cam.Rot(new Vector3(45, 0, 0), Space.Local);
             //    Grid.Rot(new Vector3(-30, 0, 0), Space.Local);
             Cam.Pos ( new Vector3 ( 0, 100, 350 ), Space.Local );
+            SelComposer.Graph = Selected;
+
             //  Cam.Rot(new Vector3(-10, 0, 0), Space.Local);
             //Cam.LookAt(new Vector3(0, 0, 0), Vector3.UnitY);
         }
@@ -567,7 +575,7 @@ namespace VividEdit.Forms
         {
             if ( fast )
             {
-                Light.LocalPos = Cam.LocalPos;
+                // Light.LocalPos = Cam.LocalPos;
             }
             GL.ClearColor ( 0, 0, 0, 1.0f );
             GL.Clear ( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
@@ -579,8 +587,16 @@ namespace VividEdit.Forms
             Graph?.RenderShadows ( );
             // PRen.Render ( ); Graph?.Render();
             Vivid3D.Effect.EMultiPass3D.LightMod = 0.4f;
+            //Selected.Render ( );
+            Composer.Mix = Vivid3D.Composition.MixMode.Add;
             Composer.Render ( );
-            //Graph?.Render();
+            //SelComposer.Render ( );
+            //GL.Disable ( EnableCap.Blend );
+            GL.Clear ( ClearBufferMask.DepthBufferBit );
+            //Grid.Render ( );
+
+            //Selected.Render ( );
+            // Graph?.Render ( );
             LoadIcons ( );
 
             foreach ( GraphLight3D rl in Graph.Lights )

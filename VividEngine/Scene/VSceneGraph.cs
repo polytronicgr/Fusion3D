@@ -207,10 +207,40 @@ namespace Vivid3D.Scene
         {
         }
 
+        public virtual void RenderByTags ( List<string> tags )
+        {
+            RenderNodeByTags ( tags, Root );
+        }
+
         public virtual void Render ( )
         {
             SubGraph?.Render ( );
-            RenderNode ( Root );
+            List<string> defTags = new List<string>
+            {
+                "All"
+            };
+            RenderNodeByTags ( defTags, Root );
+        }
+
+        public virtual void RenderNodeByTags ( List<string> tags, GraphNode3D node )
+        {
+            bool rt=false;
+            foreach ( string tag in tags )
+            {
+                if ( node.RenderTags.Contains ( tag ) )
+                {
+                    rt = true;
+                    RenderThis ( node );
+                    break;
+                }
+            }
+            if ( rt )
+            {
+                foreach ( GraphNode3D n in node.Sub )
+                {
+                    RenderNodeByTags ( tags, n );
+                }
+            }
         }
 
         public virtual void RenderDepth ( )
@@ -236,6 +266,16 @@ namespace Vivid3D.Scene
         public virtual void RenderNode ( GraphNode3D node )
         {
             // Console.WriteLine("RenderNode:" + node.Name);
+            RenderThis ( node );
+            foreach ( GraphNode3D snode in node.Sub )
+            {
+                // Console.WriteLine("Rendering Node:" + snode.Name);
+                RenderNode ( snode );
+            }
+        }
+
+        private void RenderThis ( GraphNode3D node )
+        {
             if ( node.Name == "Terrain" )
             {
             }
@@ -303,11 +343,6 @@ namespace Vivid3D.Scene
                         GL.DepthMask ( true );
                     }
                 }
-            }
-            foreach ( GraphNode3D snode in node.Sub )
-            {
-                // Console.WriteLine("Rendering Node:" + snode.Name);
-                RenderNode ( snode );
             }
         }
 

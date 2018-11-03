@@ -3,6 +3,7 @@ using OpenTK.Graphics.OpenGL4;
 using System.Collections.Generic;
 using System.IO;
 using Vivid3D.Lighting;
+using Vivid3D.Reflect;
 
 namespace Vivid3D.Scene
 {
@@ -14,8 +15,18 @@ namespace Vivid3D.Scene
         public List<GraphCam3D> Cams = new List<GraphCam3D>();
 
         public List<GraphLight3D> Lights = new List<GraphLight3D>();
+
         public GraphNode3D Root = new GraphEntity3D();
+
         public SceneGraph3D SubGraph = null;
+
+        private XInput.XPad Pad0=null;
+
+        public ClassIO ClassCopy
+        {
+            get;
+            set;
+        }
 
         public virtual void Add ( GraphCam3D c )
         {
@@ -31,6 +42,11 @@ namespace Vivid3D.Scene
         {
             Root.Add ( n );
             n.Top = Root;
+        }
+
+        public void Begin ( )
+        {
+            Root.Begin ( );
         }
 
         public void BeginFrame ( )
@@ -50,16 +66,6 @@ namespace Vivid3D.Scene
             {
                 BeginFrameNode ( snode );
             }
-        }
-
-        public void Begin ( )
-        {
-            Root.Begin ( );
-        }
-
-        public void End ( )
-        {
-            Root.End ( );
         }
 
         public void BeginRun ( )
@@ -134,6 +140,27 @@ namespace Vivid3D.Scene
 
         public virtual void Clean ( )
         {
+        }
+
+        public void Copy ( )
+        {
+            ClassCopy = new Reflect.ClassIO ( this );
+            ClassCopy.Copy ( );
+            CopyNode ( Root );
+        }
+
+        public void CopyNode ( GraphNode3D node )
+        {
+            node.CopyProps ( );
+            foreach ( GraphNode3D nn in node.Sub )
+            {
+                CopyNode ( nn );
+            }
+        }
+
+        public void End ( )
+        {
+            Root.End ( );
         }
 
         public void EndRun ( )
@@ -344,6 +371,21 @@ namespace Vivid3D.Scene
             }
         }
 
+        public void Restore ( )
+        {
+            ClassCopy.Reset ( );
+            RestoreNode ( Root );
+        }
+
+        public void RestoreNode ( GraphNode3D node )
+        {
+            node.RestoreProps ( );
+            foreach ( GraphNode3D nn in node.Sub )
+            {
+                RestoreNode ( nn );
+            }
+        }
+
         public Vector3 Rot ( Vector3 p, GraphNode3D n )
         {
             return Vector3.TransformPosition ( p, n.World );
@@ -375,8 +417,6 @@ namespace Vivid3D.Scene
             fs.Flush ( );
             fs.Close ( );
         }
-
-        private XInput.XPad Pad0=null;
 
         public virtual void Update ( )
         {

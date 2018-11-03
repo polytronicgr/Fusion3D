@@ -1,64 +1,62 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
-using System.Collections.Generic;
-using Vivid3D.Texture;
+using Vivid3D.FrameBuffer;
 
-namespace Vivid3D.PostProcess
+namespace Vivid3D.Composition
 {
-    public class VPostProcess
+    public class FrameType
     {
-        public List<VPostProcess> SubProcesses = new List<VPostProcess>();
-
-        public bool NeedsPostRender
+        public string Name
         {
             get;
             set;
         }
 
-        public VPostProcess ( )
+        public VFrameBuffer FrameBuffer
         {
-            Init ( );
+            get;
+            set;
+        }
+
+        public int FrameWidth
+        {
+            get;
+            set;
+        }
+
+        public int FrameHeight
+        {
+            get;
+            set;
+        }
+
+        public Scene.SceneGraph3D Graph
+        {
+            get;
+            set;
+        }
+
+        public PostProcess.VEQuadR QuadFX = null;
+
+        public FrameType ( )
+        {
+            FrameWidth = App.AppInfo.W;
+            FrameHeight = App.AppInfo.H;
+            FrameBuffer = new VFrameBuffer ( FrameWidth, FrameHeight );
+            QuadFX = new PostProcess.VEQuadR ( );
             GenQuad ( );
-        }
 
-        public virtual void Init ( )
-        {
-        }
-
-        public virtual void Bind ( VTex2D bb )
-        {
-        }
-
-        public virtual void PostBind ( VTex2D bb )
-        {
-        }
-
-        public virtual void Render ( VTex2D bb )
-        {
-        }
-
-        public virtual void PostRender ( VTex2D bb )
-        {
-        }
-
-        public virtual void RenderSub ( VTex2D bb )
-        {
-            foreach ( VPostProcess sp in SubProcesses )
-            {
-                sp.Bind ( bb );
-                sp.Render ( bb );
-                sp.Release ( bb );
-            }
-        }
-
-        public virtual void Release ( VTex2D bb )
-        {
+            //FrameBuffer
         }
 
         public int qva = 0, qvb = 0;
 
         public void DrawQuad ( )
         {
+            // FB.BB.Bind ( 0 );
+
+            QuadFX.Bind ( );
+
             GL.BindVertexArray ( qva );
 
             GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
@@ -69,6 +67,9 @@ namespace Vivid3D.PostProcess
 
             GL.DisableVertexAttribArray ( 0 );
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            QuadFX.Release ( );
+
+            //FB.BB.Release ( 0 );
         }
 
         public void GenQuad ( )
@@ -92,6 +93,27 @@ namespace Vivid3D.PostProcess
             GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.BufferData ( BufferTarget.ArrayBuffer, new IntPtr ( 18 * 4 ), qd, BufferUsageHint.StaticDraw );
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+        }
+
+        public void BindTarget ( )
+        {
+            FrameBuffer.Bind ( );
+        }
+
+        public void ReleaseTarget ( )
+        {
+            FrameBuffer.Release ( );
+        }
+
+        public virtual void Generate ( )
+        {
+        }
+
+        public void Present ( )
+        {
+            FrameBuffer.BB.Bind ( 0 );
+            DrawQuad ( );
+            FrameBuffer.BB.Release ( 0 );
         }
     }
 }

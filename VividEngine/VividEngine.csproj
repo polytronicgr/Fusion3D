@@ -72,10 +72,16 @@
     <Compile Include="Animation\Animator.cs" />
     <Compile Include="App\AppLog.cs" />
     <Compile Include="App\VApp.cs" />
+    <Compile Include="Composition\Composite.cs" />
+    <Compile Include="Composition\Compositer.cs" />
+    <Compile Include="Composition\Compositers\BlurCompositer.cs" />
+    <Compile Include="Composition\FrameType.cs" />
+    <Compile Include="Composition\FrameTypes\FrameColor.cs" />
     <Compile Include="Help\IOHelp.cs" />
     <Compile Include="ImageProcessing\ImageProcessor.cs" />
     <Compile Include="Pick\Picker.cs" />
     <Compile Include="Pick\PickResult.cs" />
+    <Compile Include="PostProcess\Processes\PPBloom.cs" />
     <Compile Include="PostProcess\Processes\PPOutLine.cs" />
     <Compile Include="Scene\GenList.cs" />
     <Compile Include="Scene\GraphAnimEntity3D.cs" />

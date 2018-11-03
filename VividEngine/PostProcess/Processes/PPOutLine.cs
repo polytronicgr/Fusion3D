@@ -20,6 +20,7 @@ namespace Vivid3D.PostProcess.Processes
             DFB = new VFrameBuffer ( App.AppInfo.W, App.AppInfo.H );
             QFX = new VEQuadR ( );
             QCT = new VECombineTex ( );
+            NeedsPostRender = true;
         }
 
         private Vivid3D.Texture.VTex2D ib = null;
@@ -51,7 +52,7 @@ namespace Vivid3D.PostProcess.Processes
 
         public override void PostBind ( VTex2D bb )
         {
-            pi = ImageProcessing.ImageProcessor.BlurImage ( bb, 0.3f );
+            pi = ImageProcessing.ImageProcessor.BlurImage ( bb, 0.03f );
         }
 
         public Vivid3D.Texture.VTex2D pi = null;
@@ -62,11 +63,11 @@ namespace Vivid3D.PostProcess.Processes
             QCT.Level = 0.7f;
             QCT.Bind ( );
 
-            Vivid3D.PostProcess.PostProcessRender.RBuf.BB.Bind ( 0 );
+            Vivid3D.PostProcess.PostProcessRender.PBuf.BB.Bind ( 0 );
             pi.Bind ( 1 );
             DrawQuad ( );
             pi.Release ( 1 );
-            Vivid3D.PostProcess.PostProcessRender.RBuf.BB.Release ( 0 );
+            Vivid3D.PostProcess.PostProcessRender.PBuf.BB.Release ( 0 );
 
             QCT.Release ( );
         }

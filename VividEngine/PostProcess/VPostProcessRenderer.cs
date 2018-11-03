@@ -39,6 +39,8 @@ namespace Vivid3D.PostProcess
             Processes.Add ( vp );
         }
 
+        public static VFrameBuffer PBuf;
+
         public void Render ( )
         {
             // GL.Disable(EnableCap.Blend);
@@ -58,28 +60,36 @@ namespace Vivid3D.PostProcess
             Scene.Render ( );
             FB.Release ( );
             GL.Disable ( EnableCap.Blend );
-
+            PBuf = RBuf;
             //GL.DrawBuffer(DrawBufferMode.Back);
             foreach ( VPostProcess p in Processes )
             {
-                //FB2.Bind();
+                //FB2.Bind ( );
                 p.Bind ( FB.BB );
                 FB2.Bind ( );
                 p.Render ( FB.BB );
                 FB2.Release ( );
                 p.Release ( FB.BB );
-                p.PostBind ( FB2.BB );
-                VFrameBuffer ob = FB;
-                FB = FB2;
-                FB2 = ob;
-                FB2.Bind ( );
-                p.PostRender ( FB.BB );
-                FB2.Release ( );
-                //FB2.Release();
+                VFrameBuffer ob=null;
+                if ( p.NeedsPostRender )
+                {
+                    p.PostBind ( FB2.BB );
+
+                    ob = FB;
+                    FB = FB2;
+                    FB2 = ob;
+
+                    FB2.Bind ( );
+                    p.PostRender ( FB.BB );
+                    FB2.Release ( );
+                    FB2.Release ( );
+                }
                 ob = FB;
                 FB = FB2;
                 FB2 = ob;
+                //PBuf = FB;
             }
+
             // GL.Viewport(0, 0, 1024, 768);
             GL.Disable ( EnableCap.Blend );
             GL.ClearColor ( 1.0f, 0.8f, 0.8f, 0.8f );

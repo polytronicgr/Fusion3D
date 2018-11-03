@@ -32,10 +32,12 @@ namespace VividEdit.Forms
         public VividGL Dis = null;
 
         public bool dosize = false;
+        public Vivid3D.XInput.XPad EditPad = null;
         public SceneGraph3D Graph = null;
         public GraphEntity3D Grid;
         public GraphLight3D Light;
         public int msX, msY;
+        public Timer PadTimer = null;
         public NodePicked Picked = null;
         public Vivid3D.PostProcess.Processes.VPPBlur PPBlur;
         public Vivid3D.PostProcess.PostProcessRender PRen;
@@ -55,6 +57,7 @@ namespace VividEdit.Forms
 
         private float mX = 0, mY = 0, mZ = 0;
 
+        private bool PadEdit = true;
         private bool rotate = false;
 
         private SpaceMode SMode = SpaceMode.Global;
@@ -62,9 +65,6 @@ namespace VividEdit.Forms
         private bool spaceLock = false;
 
         private bool xLock = false, yLock = false, zLock = false;
-
-        public Vivid3D.XInput.XPad EditPad = null;
-        public Timer PadTimer = null;
 
         public Editor ( )
         {
@@ -91,23 +91,6 @@ namespace VividEdit.Forms
             };
             PadTimer.Tick += ON_PadSync;
             PadTimer.Enabled = true;
-        }
-
-        private bool PadEdit = true;
-
-        private void ON_PadSync ( object sender, EventArgs e )
-        {
-            EditPad.Sync ( );
-            if ( PadEdit == false )
-            {
-                return;
-            }
-
-            Cam.Turn ( new Vector3 ( -EditPad.RightY, -EditPad.RightX, 0 ), Space.Local );
-            Cam.Move ( new Vector3 ( EditPad.LeftX * 2, 0, -EditPad.LeftY * 2 ), Space.Local );
-            EditPad.SetFB ( EditPad.LeftTrigger, EditPad.RightTrigger );
-
-            //throw new NotImplementedException ( );
         }
 
         public void AddLight ( Vivid3D.Lighting.GraphLight3D l )
@@ -148,6 +131,18 @@ namespace VividEdit.Forms
             ConsoleView.Log ( "Light Selected", "Info" );
             Console.WriteLine ( "Light On :" + ( node == null ).ToString ( ) );
             VividEdit.VividED.Main.DockClassInspect.Inspect ( node as object );
+        }
+
+        private void button1_Click ( object sender, EventArgs e )
+        {
+            Graph.Copy ( );
+            Graph.Begin ( );
+        }
+
+        private void button2_Click ( object sender, EventArgs e )
+        {
+            Graph.End ( );
+            Graph.Restore ( );
         }
 
         private void Editor_Resize ( object sender, EventArgs e )
@@ -214,16 +209,6 @@ namespace VividEdit.Forms
             }
         }
 
-        private void button1_Click ( object sender, EventArgs e )
-        {
-            Graph.Begin ( );
-        }
-
-        private void button2_Click ( object sender, EventArgs e )
-        {
-            Graph.End ( );
-        }
-
         private void ON_KeyUp ( Keys k )
         {
             switch ( k )
@@ -254,6 +239,8 @@ namespace VividEdit.Forms
                     break;
             }
         }
+
+        public Vivid3D.Composition.Composite Composer;
 
         private void ON_Load ( )
         {
@@ -298,12 +285,26 @@ namespace VividEdit.Forms
 
             Cam = new GraphCam3D ( );
             Graph.Add ( Cam );
-            PRen = new Vivid3D.PostProcess.PostProcessRender ( Width, Height );
-            Vivid3D.PostProcess.Processes.PPOutLine vo = new Vivid3D.PostProcess.Processes.PPOutLine();
-            Vivid3D.PostProcess.Processes.VPPBlur bpp = new Vivid3D.PostProcess.Processes.VPPBlur();
+            Composer = new Vivid3D.Composition.Composite
+            {
+                Graph = Graph
+            };
+            Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
+
+            //PRen = new Vivid3D.PostProcess.PostProcessRender ( Width, Height );
+            // Vivid3D.PostProcess.Processes.PPOutLine vo = new Vivid3D.PostProcess.Processes.PPOutLine();
+            // Vivid3D.PostProcess.Processes.VPPBlur bpp = new Vivid3D.PostProcess.Processes.VPPBlur
+            // {
             //PPBlur.Blur = 0.4f;
-            PRen.Scene = Graph;
-            PRen.Add ( vo );
+            //   Blur = 0.6f
+            //};
+            // PRen.Scene = Graph;
+
+            // PRen.Add ( new Vivid3D.PostProcess.Processes.PPBloom ( ) ); PRen.Add ( vo );
+
+            // PRen.Add ( bpp )
+            ;
+
             //  vo.SubProcesses.Add(bpp);
             //PRen.Add(bpp);
 
@@ -311,7 +312,7 @@ namespace VividEdit.Forms
             Selected.Add ( Cam );
             Selected.Add ( Light );
             Selected.Add ( Grid );
-            vo.OutLineGraph = Selected;
+            // vo.OutLineGraph = Selected;
             Vivid3D.ImageProcessing.ImageProcessor.InitIP ( );
             //Cam.Rot(new Vector3(45, 0, 0), Space.Local);
             //    Grid.Rot(new Vector3(-30, 0, 0), Space.Local);
@@ -539,6 +540,21 @@ namespace VividEdit.Forms
             allLock = false;
         }
 
+        private void ON_PadSync ( object sender, EventArgs e )
+        {
+            EditPad.Sync ( );
+            if ( PadEdit == false )
+            {
+                return;
+            }
+
+            Cam.Turn ( new Vector3 ( -EditPad.RightY, -EditPad.RightX, 0 ), Space.Local );
+            Cam.Move ( new Vector3 ( EditPad.LeftX * 2, 0, -EditPad.LeftY * 2 ), Space.Local );
+            EditPad.SetFB ( EditPad.LeftTrigger, EditPad.RightTrigger );
+
+            //throw new NotImplementedException ( );
+        }
+
         private void ON_Paint ( )
         {
             if ( fast )
@@ -553,10 +569,9 @@ namespace VividEdit.Forms
             //    Graph?.Render();
             // }
             Graph?.RenderShadows ( );
-            PRen.Render ( );
-            // Graph?.Render();
+            // PRen.Render ( ); Graph?.Render();
             Vivid3D.Effect.EMultiPass3D.LightMod = 0.4f;
-
+            Composer.Render ( );
             //Graph?.Render();
             LoadIcons ( );
 

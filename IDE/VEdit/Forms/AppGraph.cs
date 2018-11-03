@@ -172,7 +172,9 @@ namespace VividEdit.Forms
             VividEdit.VividED.Main.DockEdit3D.Graph = new Vivid3D.Scene.SceneGraph3D ( );
             VividEdit.VividED.Main.DockEdit3D.Graph.LoadGraph ( openFileDialog1.FileName );
             VividEdit.VividED.Main.DockEdit3D.Graph.Root.SetMultiPass ( );
-            VividEdit.VividED.Main.DockEdit3D.PRen.SetScene ( VividEdit.VividED.Main.DockEdit3D.Graph );
+            // VividEdit.VividED.Main.DockEdit3D.PRen.SetScene (
+            // VividEdit.VividED.Main.DockEdit3D.Graph );
+            VividEdit.VividED.Main.DockEdit3D.Composer.SetGraph ( VividEdit.VividED.Main.DockEdit3D.Graph );
             Graph = VividEdit.VividED.Main.DockEdit3D.Graph;
             lights = Graph.Lights;
             foreach ( Vivid3D.Lighting.GraphLight3D l in lights )

@@ -11,6 +11,7 @@ namespace Vivid3D.PostProcess.Processes
         public override void Init ( )
         {
             BFX = new VEBlur ( );
+            NeedsPostRender = false;
         }
 
         public override void Bind ( VTex2D bb )

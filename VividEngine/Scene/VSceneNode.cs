@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Vivid3D.Data;
+using Vivid3D.Reflect;
 using Vivid3D.Script;
 
 namespace Vivid3D.Scene
@@ -15,23 +16,44 @@ namespace Vivid3D.Scene
 
     public class GraphNode3D : VividBase
     {
+        public ClassIO ClassCopy
+        {
+            get;
+            set;
+        }
+
         public bool BreakTop = false;
+
         public bool CastDepth = true;
+
         public bool CastShadows = true;
+
         public bool FaceCamera = false;
+
         public VInfoMap<string, object> Links = new VInfoMap<string, object>();
+
         public bool Lit = true;
 
         public EventHandler NameChanged = null;
+
         public bool On = true;
+
         public Matrix4 PrevWorld;
+
         public NodeSelected Selected = null;
+
         public List<GraphNode3D> Sub = new List<GraphNode3D>();
+
         public GraphNode3D Top = null;
+
         private static int nn = 0;
+
         private readonly EventHandler PosChanged = null;
+
         private Vector3 _LocalPos = Vector3.Zero;
+
         private string _Name="";
+
         private List<ScriptLink> scripts = new List<ScriptLink> ( );
 
         public GraphNode3D ( )
@@ -90,6 +112,12 @@ namespace Vivid3D.Scene
                 _Name = value;
                 NameChanged?.Invoke ( this, null );
             }
+        }
+
+        public bool Running
+        {
+            get;
+            set;
         }
 
         public ScriptLink Script { get; set; }
@@ -182,6 +210,17 @@ namespace Vivid3D.Scene
             {
                 Top.AddTop ( l );
             }
+        }
+
+        public void CopyProps ( )
+        {
+            ClassCopy = new ClassIO ( this );
+            ClassCopy.Copy ( );
+        }
+
+        public void RestoreProps ( )
+        {
+            ClassCopy.Reset ( );
         }
 
         public void Begin ( )
@@ -337,12 +376,6 @@ namespace Vivid3D.Scene
         public virtual void Update ( )
         {
             UpdateNode ( 1.0f );
-        }
-
-        public bool Running
-        {
-            get;
-            set;
         }
 
         public virtual void UpdateNode ( float t )

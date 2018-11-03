@@ -97,8 +97,19 @@ namespace VividEdit.Forms
                 }
                 ce.Text = con.Name;
                 ce.Content = con;
-                void On_Click ( object o, EventArgs e )
+                void On_Click ( object o, MouseEventArgs e )
                 {
+                    if ( e.Button == MouseButtons.Right )
+                    {
+                        Console.WriteLine ( "Paths:" + Paths.Count );
+                        if ( Paths.Count > 1 )
+                        {
+                            Paths.Pop ( );
+                            ContentExplorer.Main.SetFolder ( Paths.Pop ( ) );
+                        }
+                        return;
+                    }
+
                     if ( ce.Highlight )
                     {
                         ce.Highlight = false;

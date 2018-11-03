@@ -34,7 +34,7 @@ namespace Vivid3D.Lighting
             Atten = 0.1f;
             CreateShadowFBO ( );
             LightNum++;
-            Range = 5;
+            Range = 1000;
         }
 
         public Vector3 Amb

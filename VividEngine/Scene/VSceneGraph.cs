@@ -209,7 +209,10 @@ namespace Vivid3D.Scene
 
         public virtual void RenderByTags ( List<string> tags )
         {
-            RenderNodeByTags ( tags, Root );
+            foreach ( GraphNode3D n in Root.Sub )
+            {
+                RenderNodeByTags ( tags, n );
+            }
         }
 
         public virtual void Render ( )

@@ -257,6 +257,7 @@ namespace VividEdit.Forms
             mat.TCol = new Vivid3D.Texture.VTex2D ( "data\\ui\\grid.png", Vivid3D.Texture.LoadMethod.Single, true );
             Grid.Meshes [ 0 ].Mat = mat;
             Grid.RenderTags.Clear ( );
+            Grid.RenderTags.Add ( "Grid" );
             Light = new GraphLight3D ( );
             Light.Pos ( new Vector3 ( 20, 120, 250 ), Space.Local );
             Light.Range = 800;
@@ -594,7 +595,11 @@ namespace VividEdit.Forms
             //GL.Disable ( EnableCap.Blend );
             GL.Clear ( ClearBufferMask.DepthBufferBit );
             //Grid.Render ( );
-
+            System.Collections.Generic.List<string> rt = new System.Collections.Generic.List<string>
+            {
+                "Grid"
+            };
+            Graph.RenderByTags ( rt );
             //Selected.Render ( );
             // Graph?.Render ( );
             LoadIcons ( );

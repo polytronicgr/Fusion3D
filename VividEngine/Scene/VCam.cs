@@ -75,7 +75,7 @@ namespace Vivid3D.Scene
         public bool DepthTest = true;
         public bool AlphaTest = false;
         public bool CullFace = true;
-        public float MinZ = 1f, MaxZ = 2800;
+        public float MinZ = 1f, MaxZ = 20800;
 
         public GraphCam3D ( )
         {

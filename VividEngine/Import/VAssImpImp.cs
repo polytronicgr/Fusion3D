@@ -580,7 +580,14 @@ namespace Vivid3D.Import
                 for ( int i = 0; i < m2.NumVertices; i++ )
                 {
                     Vector3D v = m.Vertices[i];// * new Vector3D(15, 15, 15);
-                    Vector3D n = m.Normals[i];
+
+                    Vector3D n = new Vector3D(0,1,0);
+
+                    if ( m.Normals != null && m.Normals.Count > i )
+                    {
+                        n = m.Normals [ i ];
+                    }
+
                     List<Vector3D> t = m.TextureCoordinateChannels [ 0 ];
                     Vector3D tan, bi;
                     if ( m.Tangents != null && m.Tangents.Count > 0 )
@@ -617,7 +624,10 @@ namespace Vivid3D.Import
                     // t.v2 = (int)nd[i + 2];
 
                     // nd[i] = (uint)id[i];
-                    m2.SetTri ( i / 3, id [ i ], id [ i + 1 ], id [ i + 2 ] );
+                    if ( i + 2 < id.Length )
+                    {
+                        m2.SetTri ( i / 3, id [ i ], id [ i + 1 ], id [ i + 2 ] );
+                    }
                 }
 
                 m2.Indices = nd;

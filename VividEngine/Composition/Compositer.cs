@@ -18,6 +18,10 @@
                 {
                     type.Graph = value;
                 }
+                if ( InputFrame != null )
+                {
+                    InputFrame.Graph = value;
+                }
             }
         }
 
@@ -47,12 +51,13 @@
 
         public void GenerateFrames ( )
         {
+            if ( InputFrame != null )
+            {
+                InputFrame.Generate ( );
+            }
             foreach ( FrameType type in Types )
             {
-                if ( type != InputFrame )
-                {
-                    type.Generate ( );
-                }
+                type.Generate ( );
             }
         }
 

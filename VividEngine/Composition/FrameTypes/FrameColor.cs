@@ -4,6 +4,11 @@
     {
         public override void Generate ( )
         {
+            if ( Regenerate == false )
+            {
+                return;
+            }
+
             BindTarget ( );
 
             Graph.Render ( );

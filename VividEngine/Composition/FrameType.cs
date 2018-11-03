@@ -13,6 +13,12 @@ namespace Vivid3D.Composition
             set;
         }
 
+        public bool Regenerate
+        {
+            get;
+            set;
+        }
+
         public List<FrameType> TexBind
         {
             get; set;
@@ -46,6 +52,7 @@ namespace Vivid3D.Composition
 
         public FrameType ( )
         {
+            Regenerate = true;
             FrameWidth = App.AppInfo.W;
             FrameHeight = App.AppInfo.H;
             FrameBuffer = new VFrameBuffer ( FrameWidth, FrameHeight );

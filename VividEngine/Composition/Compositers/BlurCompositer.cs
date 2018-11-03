@@ -2,23 +2,23 @@
 {
     public class BlurCompositer : Compositer
     {
-        public BlurCompositer ( ) : base ( 2 )
+        public BlurCompositer ( ) : base ( 1 )
         {
-            Types [ 0 ] = new FrameTypes.FrameColor ( );
+            InputFrame = new FrameTypes.FrameColor ( );
 
-            Types [ 1 ] = new FrameTypes.FrameEffect ( );
+            Types [ 0 ] = new FrameTypes.FrameEffect ( );
 
-            FrameTypes.FrameEffect fe = Types [ 1 ] as FrameTypes.FrameEffect;
+            FrameTypes.FrameEffect fe = Types [ 0 ] as FrameTypes.FrameEffect;
 
             fe.FX = new PostProcess.Processes.VEBlur ( );
 
             dynamic bb = fe.FX;
 
-            bb.Blur = 3.0f;
+            bb.Blur = 2f;
 
-            Types [ 1 ].TexBind.Add ( Types [ 0 ] );
+            Types [ 0 ].TexBind.Add ( InputFrame );
 
-            OutputFrame = Types [ 1 ];
+            OutputFrame = Types [ 0 ];
 
             Blend = FrameBlend.Add;
         }

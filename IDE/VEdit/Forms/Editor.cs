@@ -285,7 +285,7 @@ namespace VividEdit.Forms
 
             Cam = new GraphCam3D ( );
             Graph.Add ( Cam );
-            Vivid3D.Composition.CompositerSet cs1 = new Vivid3D.Composition.CompositerSet ( new Vivid3D.Composition.Compositers.BloomCompositer ( ), new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
+            Vivid3D.Composition.CompositerSet cs1 = new Vivid3D.Composition.CompositerSet ( new Vivid3D.Composition.Compositers.BloomCompositer(), new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
             //         Composer = new Vivid3D.Composition.Composite
             //{
             //    Graph = Graph

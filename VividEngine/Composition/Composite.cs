@@ -4,8 +4,27 @@ using System.Collections.Generic;
 
 namespace Vivid3D.Composition
 {
+    public enum MixMode
+    {
+        Final, Add, Defined
+    }
+
     public class Composite
     {
+        public int qva = 0, qvb = 0;
+
+        private Vivid3D.Scene.SceneGraph3D _G;
+
+        private  PostProcess.VEQuadR QuadFX;
+
+        public Composite ( )
+        {
+            Composites = new List<Compositer> ( );
+            QuadFX = new PostProcess.VEQuadR ( );
+            GenQuad ( );
+            Mix = MixMode.Final;
+        }
+
         public List<Compositer> Composites
         {
             get;
@@ -25,23 +44,9 @@ namespace Vivid3D.Composition
             }
         }
 
-        private Vivid3D.Scene.SceneGraph3D _G;
-        private  PostProcess.VEQuadR QuadFX;
-
-        public Composite ( )
+        public MixMode Mix
         {
-            Composites = new List<Compositer> ( );
-            QuadFX = new PostProcess.VEQuadR ( );
-            GenQuad ( );
-        }
-
-        public void SetGraph ( Scene.SceneGraph3D graph )
-        {
-            Graph = graph;
-            foreach ( Compositer cos in Composites )
-            {
-                cos.Graph = graph;
-            }
+            get; set;
         }
 
         public void AddCompositer ( Compositer cos )
@@ -50,46 +55,7 @@ namespace Vivid3D.Composition
             Composites.Add ( cos );
         }
 
-        public void Render ( )
-        {
-            FrameType ot=null;
-            GL.Disable ( EnableCap.Blend );
-            foreach ( Compositer cos in Composites )
-            {
-                cos.InputFrame = ot;
-                if ( ot != null )
-                {
-                    // cos.PreGen ( );
-                }
-
-                cos.Process ( );
-                ot = cos.OutputFrame;
-
-                // cos.PresentFrame ( 0 );
-            }
-            foreach ( Compositer cos in Composites )
-            {
-                switch ( cos.Blend )
-                {
-                    case FrameBlend.Add:
-                        GL.Enable ( EnableCap.Blend );
-                        GL.BlendFunc ( BlendingFactor.One, BlendingFactor.One );
-                        break;
-                }
-
-                cos.OutputFrame.FrameBuffer.BB.Bind ( 0 );
-
-                DrawQuad ( );
-
-                cos.OutputFrame.FrameBuffer.BB.Release ( 0 );
-            }
-            GL.Disable ( EnableCap.Blend );
-        }
-
         //Composites [ 1 ].PresentFrame ( 1 );
-
-        public int qva = 0, qvb = 0;
-
         public void DrawQuad ( )
         {
             // FB.BB.Bind ( 0 );
@@ -132,6 +98,73 @@ namespace Vivid3D.Composition
             GL.BindBuffer ( BufferTarget.ArrayBuffer, qvb );
             GL.BufferData ( BufferTarget.ArrayBuffer, new IntPtr ( 18 * 4 ), qd, BufferUsageHint.StaticDraw );
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+        }
+
+        public void Render ( )
+        {
+            FrameType ot=null;
+            GL.Disable ( EnableCap.Blend );
+            foreach ( Compositer cos in Composites )
+            {
+                // cos.InputFrame = ot;
+                if ( ot != null )
+                {
+                    // cos.PreGen ( );
+                    cos.InputFrame.FrameBuffer = ot.FrameBuffer;
+                    cos.InputFrame.Regenerate = false;
+                }
+
+                cos.Process ( );
+                ot = cos.OutputFrame;
+
+                // cos.PresentFrame ( 0 );
+            }
+
+            switch ( Mix )
+            {
+                case MixMode.Final:
+
+                    GL.Disable ( EnableCap.Blend );
+
+                    Compositer fc = Composites[Composites.Count-1];
+
+                    fc.OutputFrame.FrameBuffer.BB.Bind ( 0 );
+
+                    DrawQuad ( );
+
+                    fc.OutputFrame.FrameBuffer.BB.Release ( 0 );
+
+                    break;
+
+                case MixMode.Add:
+                    foreach ( Compositer cos in Composites )
+                    {
+                        switch ( cos.Blend )
+                        {
+                            case FrameBlend.Add:
+                                GL.Enable ( EnableCap.Blend );
+                                GL.BlendFunc ( BlendingFactor.One, BlendingFactor.One );
+                                break;
+                        }
+
+                        cos.OutputFrame.FrameBuffer.BB.Bind ( 0 );
+
+                        DrawQuad ( );
+
+                        cos.OutputFrame.FrameBuffer.BB.Release ( 0 );
+                    }
+                    GL.Disable ( EnableCap.Blend );
+                    break;
+            }
+        }
+
+        public void SetGraph ( Scene.SceneGraph3D graph )
+        {
+            Graph = graph;
+            foreach ( Compositer cos in Composites )
+            {
+                cos.Graph = graph;
+            }
         }
     }
 }

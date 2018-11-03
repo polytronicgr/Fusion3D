@@ -14,10 +14,18 @@ namespace Vivid3D.Composition
 
         public Vivid3D.Scene.SceneGraph3D Graph
         {
-            get;
-            set;
+            get => _G;
+            set
+            {
+                _G = value;
+                foreach ( Compositer cos in Composites )
+                {
+                    cos.Graph = value;
+                }
+            }
         }
 
+        private Vivid3D.Scene.SceneGraph3D _G;
         private  PostProcess.VEQuadR QuadFX;
 
         public Composite ( )

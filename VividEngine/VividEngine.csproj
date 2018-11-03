@@ -74,6 +74,7 @@
     <Compile Include="App\VApp.cs" />
     <Compile Include="Composition\Composite.cs" />
     <Compile Include="Composition\Compositer.cs" />
+    <Compile Include="Composition\CompositerSet.cs" />
     <Compile Include="Composition\Compositers\BloomCompositer.cs" />
     <Compile Include="Composition\Compositers\BlurCompositer.cs" />
     <Compile Include="Composition\Compositers\OutlineCompositer.cs" />

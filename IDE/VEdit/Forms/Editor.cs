@@ -285,15 +285,18 @@ namespace VividEdit.Forms
 
             Cam = new GraphCam3D ( );
             Graph.Add ( Cam );
-            Composer = new Vivid3D.Composition.Composite
-            {
-                Graph = Graph
-            };
+            Vivid3D.Composition.CompositerSet cs1 = new Vivid3D.Composition.CompositerSet ( new Vivid3D.Composition.Compositers.BloomCompositer ( ), new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
+            //         Composer = new Vivid3D.Composition.Composite
+            //{
+            //    Graph = Graph
+            // };
+            Composer = cs1.Get ( );
+            Composer.Graph = Graph;
             //Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
-            Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BloomCompositer ( ) );
+            // Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BloomCompositer ( ) );
 
             // Composer.AddCompositer ( new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
-            Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
+            //Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
 
             //  Composer.AddCompositer ( new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
             //PRen = new Vivid3D.PostProcess.PostProcessRender ( Width, Height );

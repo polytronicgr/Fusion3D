@@ -75,8 +75,11 @@
     <Compile Include="Composition\Composite.cs" />
     <Compile Include="Composition\Compositer.cs" />
     <Compile Include="Composition\Compositers\BlurCompositer.cs" />
+    <Compile Include="Composition\Compositers\OutlineCompositer.cs" />
     <Compile Include="Composition\FrameType.cs" />
     <Compile Include="Composition\FrameTypes\FrameColor.cs" />
+    <Compile Include="Composition\FrameTypes\FrameDepth.cs" />
+    <Compile Include="Composition\FrameTypes\FrameEffect.cs" />
     <Compile Include="Help\IOHelp.cs" />
     <Compile Include="ImageProcessing\ImageProcessor.cs" />
     <Compile Include="Pick\Picker.cs" />

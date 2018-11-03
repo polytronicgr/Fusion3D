@@ -289,6 +289,7 @@ namespace VividEdit.Forms
             {
                 Graph = Graph
             };
+            Composer.AddCompositer ( new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
             Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
 
             //PRen = new Vivid3D.PostProcess.PostProcessRender ( Width, Height );

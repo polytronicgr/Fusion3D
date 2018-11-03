@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Collections.Generic;
 using Vivid3D.FrameBuffer;
 
 namespace Vivid3D.Composition
@@ -10,6 +11,11 @@ namespace Vivid3D.Composition
         {
             get;
             set;
+        }
+
+        public List<Texture.VTex2D> TexBind
+        {
+            get; set;
         }
 
         public VFrameBuffer FrameBuffer
@@ -45,7 +51,7 @@ namespace Vivid3D.Composition
             FrameBuffer = new VFrameBuffer ( FrameWidth, FrameHeight );
             QuadFX = new PostProcess.VEQuadR ( );
             GenQuad ( );
-
+            TexBind = new List<Texture.VTex2D> ( );
             //FrameBuffer
         }
 
@@ -55,7 +61,7 @@ namespace Vivid3D.Composition
         {
             // FB.BB.Bind ( 0 );
 
-            QuadFX.Bind ( );
+            // QuadFX.Bind ( );
 
             GL.BindVertexArray ( qva );
 
@@ -67,7 +73,7 @@ namespace Vivid3D.Composition
 
             GL.DisableVertexAttribArray ( 0 );
             // GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            QuadFX.Release ( );
+            //QuadFX.Release ( );
 
             //FB.BB.Release ( 0 );
         }
@@ -109,10 +115,32 @@ namespace Vivid3D.Composition
         {
         }
 
+        public void BindTex ( )
+        {
+            int tn=0;
+            foreach ( Texture.VTex2D tex in TexBind )
+            {
+                tex.Bind ( tn );
+                tn++;
+            }
+        }
+
+        public void ReleaseTex ( )
+        {
+            int tn=0;
+            foreach ( Texture.VTex2D tex in TexBind )
+            {
+                tex.Release ( tn );
+                tn++;
+            }
+        }
+
         public void Present ( )
         {
             FrameBuffer.BB.Bind ( 0 );
+            QuadFX.Bind ( );
             DrawQuad ( );
+            QuadFX.Release ( );
             FrameBuffer.BB.Release ( 0 );
         }
     }

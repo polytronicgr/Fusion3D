@@ -23,6 +23,10 @@
 
         private Scene.SceneGraph3D _Graph = null;
 
+        public FrameType OutputFrame = null;
+
+        public FrameBlend Blend = FrameBlend.Add;
+
         public Compositer ( int types )
         {
             Types = new FrameType [ types ];
@@ -49,5 +53,10 @@
         public virtual void Render ( )
         {
         }
+    }
+
+    public enum FrameBlend
+    {
+        Solid, Alpha, Add, Mod
     }
 }

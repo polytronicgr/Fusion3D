@@ -44,12 +44,21 @@ namespace Vivid3D.Composition
 
         public void Render ( )
         {
+            FrameType ot=null;
+            GL.Disable ( EnableCap.Blend );
             foreach ( Compositer cos in Composites )
             {
+                cos.InputFrame = ot;
+                if ( ot != null )
+                {
+                    // cos.PreGen ( );
+                }
+
                 cos.Process ( );
+                ot = cos.OutputFrame;
+
                 // cos.PresentFrame ( 0 );
             }
-
             foreach ( Compositer cos in Composites )
             {
                 switch ( cos.Blend )
@@ -66,6 +75,7 @@ namespace Vivid3D.Composition
 
                 cos.OutputFrame.FrameBuffer.BB.Release ( 0 );
             }
+            GL.Disable ( EnableCap.Blend );
         }
 
         //Composites [ 1 ].PresentFrame ( 1 );

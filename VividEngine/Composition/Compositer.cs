@@ -25,6 +25,19 @@
 
         public FrameType OutputFrame = null;
 
+        public FrameType InputFrame
+        {
+            get => _IF;
+            set
+            {
+                _IF = value;
+                foreach ( FrameType f in Types )
+                {
+                }
+            }
+        }
+
+        private FrameType _IF;
         public FrameBlend Blend = FrameBlend.Add;
 
         public Compositer ( int types )
@@ -36,13 +49,20 @@
         {
             foreach ( FrameType type in Types )
             {
-                type.Generate ( );
+                if ( type != InputFrame )
+                {
+                    type.Generate ( );
+                }
             }
         }
 
         public void PresentFrame ( int frame )
         {
             Types [ frame ].Present ( );
+        }
+
+        public virtual void PreGen ( )
+        {
         }
 
         public virtual void Process ( )

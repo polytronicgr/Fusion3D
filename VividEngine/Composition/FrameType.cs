@@ -13,7 +13,7 @@ namespace Vivid3D.Composition
             set;
         }
 
-        public List<Texture.VTex2D> TexBind
+        public List<FrameType> TexBind
         {
             get; set;
         }
@@ -51,7 +51,7 @@ namespace Vivid3D.Composition
             FrameBuffer = new VFrameBuffer ( FrameWidth, FrameHeight );
             QuadFX = new PostProcess.VEQuadR ( );
             GenQuad ( );
-            TexBind = new List<Texture.VTex2D> ( );
+            TexBind = new List<FrameType> ( );
             //FrameBuffer
         }
 
@@ -118,9 +118,9 @@ namespace Vivid3D.Composition
         public void BindTex ( )
         {
             int tn=0;
-            foreach ( Texture.VTex2D tex in TexBind )
+            foreach ( FrameType tex in TexBind )
             {
-                tex.Bind ( tn );
+                tex.FrameBuffer.BB.Bind ( tn );
                 tn++;
             }
         }
@@ -128,9 +128,9 @@ namespace Vivid3D.Composition
         public void ReleaseTex ( )
         {
             int tn=0;
-            foreach ( Texture.VTex2D tex in TexBind )
+            foreach ( FrameType tex in TexBind )
             {
-                tex.Release ( tn );
+                tex.FrameBuffer.BB.Release ( tn );
                 tn++;
             }
         }

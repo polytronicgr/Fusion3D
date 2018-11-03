@@ -14,20 +14,22 @@
 
             dynamic bb = fe.FX;
 
-            bb.Blur = 2.0f;
+            bb.Blur = 3.0f;
 
-            Types [ 1 ].TexBind.Add ( Types [ 0 ].FrameBuffer.BB );
+            Types [ 1 ].TexBind.Add ( Types [ 0 ] );
 
             OutputFrame = Types [ 1 ];
 
             Blend = FrameBlend.Add;
         }
 
-        public override void Render ( )
+        public override void PreGen ( )
         {
-            // GenerateFrames ( );
-
-            // PresentFrame ( 1 );
+            return;
+            Types [ 0 ] = InputFrame;
+            Types [ 1 ].TexBind.Clear ( );
+            Types [ 1 ].TexBind.Add ( InputFrame );
+            //Types [ 0 ] = InputFrame;
         }
     }
 }

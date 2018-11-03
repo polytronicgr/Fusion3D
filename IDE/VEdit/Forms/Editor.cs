@@ -289,9 +289,13 @@ namespace VividEdit.Forms
             {
                 Graph = Graph
             };
-            Composer.AddCompositer ( new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
+            //Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
+            Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BloomCompositer ( ) );
+
+            // Composer.AddCompositer ( new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
             Composer.AddCompositer ( new Vivid3D.Composition.Compositers.BlurCompositer ( ) );
 
+            //  Composer.AddCompositer ( new Vivid3D.Composition.Compositers.OutlineCompositer ( ) );
             //PRen = new Vivid3D.PostProcess.PostProcessRender ( Width, Height );
             // Vivid3D.PostProcess.Processes.PPOutLine vo = new Vivid3D.PostProcess.Processes.PPOutLine();
             // Vivid3D.PostProcess.Processes.VPPBlur bpp = new Vivid3D.PostProcess.Processes.VPPBlur

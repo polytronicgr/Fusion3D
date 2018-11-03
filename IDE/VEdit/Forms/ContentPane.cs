@@ -65,15 +65,76 @@ namespace VividEdit.Forms
             CleanUI ( );
         }
 
+        public void OpenContent ( ContentBase con )
+        {
+        }
+
         public void CleanUI ( )
         {
+            Controls.Clear ( );
             int x = 5;
             int y = 5;
             bool skip = false;
+            int lc = 0;
             foreach ( ContentBase con in Content )
             {
                 con.X = x;
                 con.Y = y;
+
+                Controls.ContentEntry ce = new Controls.ContentEntry
+                {
+                    Location = new Point ( con.X, con.Y ),
+                    Size = new Size ( 84, 84 )
+                };
+                Controls.Add ( ce );
+                if ( con is ContentFile )
+                {
+                    ce.Look = IconFile;
+                }
+                else
+                {
+                    ce.Look = IconFolder;
+                }
+                ce.Text = con.Name;
+                ce.Content = con;
+                void On_Click ( object o, EventArgs e )
+                {
+                    if ( ce.Highlight )
+                    {
+                        ce.Highlight = false;
+                    }
+                    else
+                    {
+                        ce.Highlight = true;
+                    }
+                    ce.Invalidate ( );
+                    ce.DoDragDrop ( con, DragDropEffects.Copy | DragDropEffects.Move );
+
+                    int tc = Environment.TickCount;
+                    if ( ( tc - lc ) < 250 )
+                    {
+                        ContentBase dc = con;
+                        if ( dc != null )
+                        {
+                            if ( dc is ContentFolder )
+                            {
+                                ContentExplorer.Main.SetFolder ( dc.Path );
+                            }
+                            if ( dc is ContentFile )
+                            {
+                                Console.WriteLine ( "Opened:" + dc.Name );
+                                ContentExplorer.FileOpen?.Invoke ( dc as ContentFile );
+                            }
+                            lc = tc;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                    }
+                    lc = tc;
+                }
+                ce.MouseDown += On_Click;
 
                 x = x + 128;
 
@@ -99,6 +160,11 @@ namespace VividEdit.Forms
             contentScroll.Value = 0;
 
             Invalidate ( );
+        }
+
+        private void Ce_MouseClick ( object sender, MouseEventArgs e )
+        {
+            throw new NotImplementedException ( );
         }
 
         public int X = 0, Y = 0;
@@ -192,6 +258,7 @@ namespace VividEdit.Forms
 
         private void ContentPane_Paint ( object sender, PaintEventArgs e )
         {
+            return;
             foreach ( ContentBase con in Content )
             {
                 int dx = con.X;

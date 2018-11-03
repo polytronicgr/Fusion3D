@@ -29,15 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Nodes");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("States");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("UI");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("App Mode");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Lights");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Nodes");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("States");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("UI");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("App Mode");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Lights");
             this.appTree = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.terrainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newFlatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromHeightMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alignToCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.placeInFrontOfCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,34 +51,32 @@
             this.addOtherGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.terrainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newFlatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fromHeightMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // appTree
             // 
+            this.appTree.AllowDrop = true;
             this.appTree.ContextMenuStrip = this.contextMenuStrip1;
             this.appTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.appTree.Location = new System.Drawing.Point(0, 0);
             this.appTree.Name = "appTree";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Nodes";
-            treeNode2.Name = "Node1";
-            treeNode2.Text = "States";
-            treeNode3.Name = "Node2";
-            treeNode3.Text = "UI";
-            treeNode4.Name = "Node3";
-            treeNode4.Text = "App Mode";
-            treeNode5.Name = "Node0";
-            treeNode5.Text = "Lights";
+            treeNode6.Name = "Node0";
+            treeNode6.Text = "Nodes";
+            treeNode7.Name = "Node1";
+            treeNode7.Text = "States";
+            treeNode8.Name = "Node2";
+            treeNode8.Text = "UI";
+            treeNode9.Name = "Node3";
+            treeNode9.Text = "App Mode";
+            treeNode10.Name = "Node0";
+            treeNode10.Text = "Lights";
             this.appTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5});
+            treeNode6,
+            treeNode7,
+            treeNode8,
+            treeNode9,
+            treeNode10});
             this.appTree.Size = new System.Drawing.Size(800, 450);
             this.appTree.TabIndex = 0;
             this.appTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.appTree_AfterSelect);
@@ -88,7 +89,7 @@
             this.nodeToolStripMenuItem,
             this.graphToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(109, 70);
             // 
             // createToolStripMenuItem
             // 
@@ -96,15 +97,38 @@
             this.pointLightToolStripMenuItem,
             this.terrainToolStripMenuItem});
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem.Text = "Create";
             // 
             // pointLightToolStripMenuItem
             // 
             this.pointLightToolStripMenuItem.Name = "pointLightToolStripMenuItem";
-            this.pointLightToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pointLightToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.pointLightToolStripMenuItem.Text = "Point Light";
             this.pointLightToolStripMenuItem.Click += new System.EventHandler(this.pointLightToolStripMenuItem_Click);
+            // 
+            // terrainToolStripMenuItem
+            // 
+            this.terrainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newFlatToolStripMenuItem,
+            this.fromHeightMapToolStripMenuItem});
+            this.terrainToolStripMenuItem.Name = "terrainToolStripMenuItem";
+            this.terrainToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.terrainToolStripMenuItem.Text = "Terrain";
+            // 
+            // newFlatToolStripMenuItem
+            // 
+            this.newFlatToolStripMenuItem.Name = "newFlatToolStripMenuItem";
+            this.newFlatToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.newFlatToolStripMenuItem.Text = "New Flat";
+            this.newFlatToolStripMenuItem.Click += new System.EventHandler(this.newFlatToolStripMenuItem_Click);
+            // 
+            // fromHeightMapToolStripMenuItem
+            // 
+            this.fromHeightMapToolStripMenuItem.Name = "fromHeightMapToolStripMenuItem";
+            this.fromHeightMapToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.fromHeightMapToolStripMenuItem.Text = "From HeightMap";
+            this.fromHeightMapToolStripMenuItem.Click += new System.EventHandler(this.fromHeightMapToolStripMenuItem_Click);
             // 
             // nodeToolStripMenuItem
             // 
@@ -112,7 +136,7 @@
             this.alignToCameraToolStripMenuItem,
             this.placeInFrontOfCameraToolStripMenuItem});
             this.nodeToolStripMenuItem.Name = "nodeToolStripMenuItem";
-            this.nodeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nodeToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.nodeToolStripMenuItem.Text = "Node";
             // 
             // alignToCameraToolStripMenuItem
@@ -135,7 +159,7 @@
             this.saveGraphToolStripMenuItem,
             this.loadToolStripMenuItem});
             this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
-            this.graphToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.graphToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.graphToolStripMenuItem.Text = "Graph";
             // 
             // saveGraphToolStripMenuItem
@@ -171,31 +195,9 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // terrainToolStripMenuItem
-            // 
-            this.terrainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newFlatToolStripMenuItem,
-            this.fromHeightMapToolStripMenuItem});
-            this.terrainToolStripMenuItem.Name = "terrainToolStripMenuItem";
-            this.terrainToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.terrainToolStripMenuItem.Text = "Terrain";
-            // 
-            // newFlatToolStripMenuItem
-            // 
-            this.newFlatToolStripMenuItem.Name = "newFlatToolStripMenuItem";
-            this.newFlatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newFlatToolStripMenuItem.Text = "New Flat";
-            this.newFlatToolStripMenuItem.Click += new System.EventHandler(this.newFlatToolStripMenuItem_Click);
-            // 
-            // fromHeightMapToolStripMenuItem
-            // 
-            this.fromHeightMapToolStripMenuItem.Name = "fromHeightMapToolStripMenuItem";
-            this.fromHeightMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.fromHeightMapToolStripMenuItem.Text = "From HeightMap";
-            this.fromHeightMapToolStripMenuItem.Click += new System.EventHandler(this.fromHeightMapToolStripMenuItem_Click);
-            // 
             // AppGraph
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);

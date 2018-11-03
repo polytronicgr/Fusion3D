@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ContentEntry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ContentEntry.Designer.cs">
+      <DependentUpon>ContentEntry.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AppGraph.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\ContentEntry.resx">
+      <DependentUpon>ContentEntry.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AppGraph.resx">
       <DependentUpon>AppGraph.cs</DependentUpon>
     </EmbeddedResource>

@@ -23,6 +23,40 @@ namespace VividEdit.Forms
         public AppGraph ( )
         {
             InitializeComponent ( );
+            Load += AppGraph_Load;
+        }
+
+        private void AppGraph_Load ( object sender, EventArgs e )
+        {
+            appTree.DragEnter += AppTree_DragEnter;
+            appTree.DragDrop += AppTree_DragDrop;
+            //throw new NotImplementedException ( );
+        }
+
+        private void AppTree_DragDrop ( object sender, DragEventArgs e )
+        {
+            IDataObject d = e.Data;
+            bool cb= d.GetDataPresent(typeof(ContentFile));
+            if ( cb )
+            {
+                ContentFile ct =(ContentFile) d.GetData(typeof(ContentFile));
+                ContentExplorer.FileOpen?.Invoke ( ct );
+            }
+
+            //throw new NotImplementedException ( );
+        }
+
+        private void AppTree_DragEnter ( object sender, DragEventArgs e )
+        {
+            e.Effect = DragDropEffects.Copy;
+            //throw new NotImplementedException ( );
+        }
+
+        private void AppGraph_DragEnter ( object sender, DragEventArgs e )
+        {
+            //f(e.Data.GetDataPresent(DataFormats.))
+            e.Effect = DragDropEffects.Copy;
+            //throw new NotImplementedException ( );
         }
 
         public void AddLight ( Vivid3D.Lighting.GraphLight3D l )

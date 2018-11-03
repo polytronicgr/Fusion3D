@@ -34,12 +34,15 @@ namespace VividEdit.Forms
 
         public void Inspect ( object cls )
         {
+            Color tc = Color.FromArgb(255,255,25);
             Controls.Clear ( );
             Label header = new Label
             {
                 Text = "Inspecting:" + cls.GetType ( ).Name ,
                 Location = new Point ( 5 , 5 ) ,
                 Size = new Size ( 120 , 25 )
+                   ,
+                ForeColor = tc
             };
             Controls.Add ( header );
 
@@ -54,6 +57,8 @@ namespace VividEdit.Forms
                     Text = prop.Name ,
                     Location = new Point ( 5 , propy ) ,
                     Size = new Size ( 250 , 25 )
+                    ,
+                    ForeColor = tc
                 };
 
                 if ( prop.PropertyType == typeof ( System.Collections.Generic.List<Vivid3D.Script.ScriptLink> ) )
@@ -63,13 +68,16 @@ namespace VividEdit.Forms
                         Text = prop.Name,
                         Location = new Point(5,propy+25),
                         Size = new Size(50,25)
+                        ,
+                        ForeColor = tc
                     };
 
                     Button news = new Button
                     {
                         Text = "New" ,
                         Location = new Point ( 60 , propy + 25 ) ,
-                        Size = new Size ( 60 , 25 )
+                        Size = new Size ( 60 , 25 ),
+                        ForeColor = tc
                     };
                     System.Collections.Generic.List<Vivid3D.Script.ScriptLink> sv = (System.Collections.Generic.List<Vivid3D.Script.ScriptLink>)prop.GetAccessors()[0].Invoke(cls,null);
                     System.Reflection.MethodInfo sm = prop.GetSetMethod ( );
@@ -156,7 +164,8 @@ namespace VividEdit.Forms
                     {
                         Text = prop.Name,
                         Location = new Point(5,propy+25),
-                        Size = new Size(50,25)
+                        Size = new Size(50,25),
+                        ForeColor = tc
                     };
 
                     TextBox boxv = new TextBox
@@ -198,7 +207,8 @@ namespace VividEdit.Forms
                     {
                         Text = prop.Name ,
                         Location = new Point ( 5 , propy + 25 ) ,
-                        Size = new Size ( 40 , 25 )
+                        Size = new Size ( 40 , 25 ),
+                        ForeColor = tc
                     };
 
                     TextBox boxv = new TextBox
@@ -248,6 +258,10 @@ namespace VividEdit.Forms
                     boxx = new TextBox ( );
                     boxy = new TextBox ( );
                     boxz = new TextBox ( );
+
+                    labx.ForeColor = tc;
+                    laby.ForeColor = tc;
+                    labz.ForeColor = tc;
 
                     labx.Location = new Point ( 5, propy + 25 );
                     laby.Location = new Point ( 120, propy + 25 );

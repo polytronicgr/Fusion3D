@@ -18,6 +18,13 @@ namespace VividEdit.Forms
         {
             InitializeComponent ( );
             Main = this;
+            splitContainer1.Panel1.BackColor = Color.FromArgb ( 53, 53, 53 );
+            splitContainer1.Panel2.BackColor = Color.FromArgb ( 53, 53, 53 );
+            splitContainer1.Panel1.Controls [ 0 ].BackColor = Color.FromArgb ( 53, 53, 53 );
+            splitContainer1.Invalidate ( );
+
+            splitContainer1.Panel1.Invalidate ( );
+            splitContainer1.Panel2.Invalidate ( );
         }
 
         public void SetFolder ( string path )

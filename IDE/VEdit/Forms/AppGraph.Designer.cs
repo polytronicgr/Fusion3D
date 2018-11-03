@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Nodes");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("States");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("UI");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("App Mode");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Lights");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Nodes");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("States");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("UI");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("App Mode");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Lights");
             this.appTree = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,26 +57,29 @@
             // appTree
             // 
             this.appTree.AllowDrop = true;
+            this.appTree.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.appTree.ContextMenuStrip = this.contextMenuStrip1;
             this.appTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.appTree.ForeColor = System.Drawing.SystemColors.Window;
+            this.appTree.LineColor = System.Drawing.Color.Gainsboro;
             this.appTree.Location = new System.Drawing.Point(0, 0);
             this.appTree.Name = "appTree";
-            treeNode6.Name = "Node0";
-            treeNode6.Text = "Nodes";
-            treeNode7.Name = "Node1";
-            treeNode7.Text = "States";
-            treeNode8.Name = "Node2";
-            treeNode8.Text = "UI";
-            treeNode9.Name = "Node3";
-            treeNode9.Text = "App Mode";
-            treeNode10.Name = "Node0";
-            treeNode10.Text = "Lights";
+            treeNode1.Name = "Node0";
+            treeNode1.Text = "Nodes";
+            treeNode2.Name = "Node1";
+            treeNode2.Text = "States";
+            treeNode3.Name = "Node2";
+            treeNode3.Text = "UI";
+            treeNode4.Name = "Node3";
+            treeNode4.Text = "App Mode";
+            treeNode5.Name = "Node0";
+            treeNode5.Text = "Lights";
             this.appTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10});
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5});
             this.appTree.Size = new System.Drawing.Size(800, 450);
             this.appTree.TabIndex = 0;
             this.appTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.appTree_AfterSelect);

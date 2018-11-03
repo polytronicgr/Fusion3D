@@ -44,6 +44,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.Controls.Add(this.contentScroll);
             this.Name = "ContentPane";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ContentPane_Paint);

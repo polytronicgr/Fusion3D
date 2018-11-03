@@ -594,7 +594,7 @@ namespace VividEdit.Forms
             //SelComposer.Render ( );
             //GL.Disable ( EnableCap.Blend );
             GL.Clear ( ClearBufferMask.DepthBufferBit );
-            //Grid.Render ( );
+            //Grid.Render ( );-
             System.Collections.Generic.List<string> rt = new System.Collections.Generic.List<string>
             {
                 "Grid"

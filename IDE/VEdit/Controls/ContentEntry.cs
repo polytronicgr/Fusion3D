@@ -49,7 +49,7 @@ namespace VividEdit.Controls
 
             e.Graphics.DrawImage ( Look, new Rectangle ( 0, 0, Width - 20, Height - 20 ) );
 
-            e.Graphics.DrawString ( Text, SystemFonts.DefaultFont, Brushes.Black, 10, Height - 15 );
+            e.Graphics.DrawString ( Text, SystemFonts.DefaultFont, Brushes.White, 10, Height - 15 );
         }
     }
 }

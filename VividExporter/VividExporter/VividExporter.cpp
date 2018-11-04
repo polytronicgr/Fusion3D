@@ -234,7 +234,7 @@ void WriteNode(IGameNode * node) {
 				Point3 v_tan = mesh->GetTangent(v);
 				Point3 v_bi = mesh->GetBinormal(v);
 
-				Point2 v_uv = mesh->GetTexVertex(v);
+				Point2 v_uv = mesh->GetMapVertex(1, v);
 				Point3 v_uvo;
 				v_uvo.x = v_uv.x;
 				v_uvo.y = v_uv.y;
@@ -255,6 +255,12 @@ void WriteNode(IGameNode * node) {
 			}
 			IGameMaterial * gmat = mesh->GetMaterialFromFace(mesh->GetFace(0));
 			WriteString(gmat->GetMaterialName());
+			WriteInt(gmat->GetNumberOfTextureMaps());
+			for (int i = 0; i < gmat->GetNumberOfTextureMaps(); i++) {
+				IGameTextureMap * tm1 = gmat->GetIGameTextureMap(i);
+				WriteString(tm1->GetBitmapFileName());
+			}
+			//IGameProperty * dp = gm
 		}
 		break;
 	}

@@ -145,7 +145,7 @@ namespace V3DM
                 Vector3 vb = biL[vi];
                 Vector3 vn2 = normL[vi];
                 Vector2 vuv = new Vector2(uvL[vi].X,uvL[vi].Y);
-
+                Console.WriteLine ( "uv:" + uvL [ vi ].ToString ( ) );
                 msh.SetVertex ( vi, vp, vt, vb, vn2, vuv );
 
                 vi++;
@@ -160,6 +160,15 @@ namespace V3DM
 
             string mat_name = ReadString();
             Console.WriteLine ( "Mat:" + mat_name );
+            int texc = ReadInt();
+            Console.WriteLine ( "TexMaps:" + texc );
+            string[] texs = new string[texc];
+            for ( int i = 0; i < texc; i++ )
+            {
+                string tex_file = ReadString();
+                texs [ i ] = tex_file;
+                Console.WriteLine ( "TexFile:" + tex_file );
+            }
 
             // Matrix4 tm = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180)); msh.Transform
             // ( tm );
@@ -175,7 +184,11 @@ namespace V3DM
 
             vn.LocalTurn = vn.LocalTurn * tm;
 
-            msh.Mat = new Vivid3D.Material.Material3D ( );
+            msh.Mat = new Vivid3D.Material.Material3D
+            {
+                TCol = new Vivid3D.Texture.VTex2D ( texs [ 0 ], Vivid3D.Texture.LoadMethod.Single, true )
+            };
+
             vn.AddMesh ( msh );
 
             msh.Final ( );

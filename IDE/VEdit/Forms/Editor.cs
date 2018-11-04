@@ -582,14 +582,14 @@ namespace VividEdit.Forms
             Graph?.Root.UpdateNode ( 0.1f );
             // if (run)
             //{
-            //    Graph?.Render();
+            Graph?.Render ( );
             // }
             Graph?.RenderShadows ( );
             // PRen.Render ( ); Graph?.Render();
             Vivid3D.Effect.EMultiPass3D.LightMod = 0.4f;
             //Selected.Render ( );
-            Composer.Mix = Vivid3D.Composition.MixMode.Add;
-            Composer.Render ( );
+            //  Composer.Mix = Vivid3D.Composition.MixMode.Add;
+            // Composer.Render ( );
             //SelComposer.Render ( );
             //GL.Disable ( EnableCap.Blend );
             GL.Clear ( ClearBufferMask.DepthBufferBit );

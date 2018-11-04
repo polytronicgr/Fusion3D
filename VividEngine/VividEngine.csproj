@@ -95,6 +95,7 @@
     <Compile Include="Script\ScriptMod.cs" />
     <Compile Include="Script\ScriptTemplate.cs" />
     <Compile Include="Terrain\GraphTerrain.cs" />
+    <Compile Include="Util\Texture\LeafPacker.cs" />
     <Compile Include="Visuals\VRenderer.cs" />
     <Compile Include="Visuals\VRendererSimple.cs" />
     <Compile Include="Visuals\VRenderLayer.cs" />

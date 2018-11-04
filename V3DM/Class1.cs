@@ -158,6 +158,9 @@ namespace V3DM
                 msh.SetTri ( f, v0, v1, v2 );
             }
 
+            string mat_name = ReadString();
+            Console.WriteLine ( "Mat:" + mat_name );
+
             // Matrix4 tm = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180)); msh.Transform
             // ( tm );
 

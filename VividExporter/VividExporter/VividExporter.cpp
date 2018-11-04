@@ -253,6 +253,8 @@ void WriteNode(IGameNode * node) {
 				WriteInt((int)face->vert[1]);
 				WriteInt((int)face->vert[2]);
 			}
+			IGameMaterial * gmat = mesh->GetMaterialFromFace(mesh->GetFace(0));
+			WriteString(gmat->GetMaterialName());
 		}
 		break;
 	}

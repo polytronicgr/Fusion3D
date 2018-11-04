@@ -107,9 +107,9 @@ namespace V3DM
             for ( int v = 0; v < vc; v++ )
             {
                 OpenTK.Vector3 v_pos = ReadVec3 ( );
-                Vector3 n = FixV(ReadVec3());
-                Vector3 t = FixV(ReadVec3());
-                Vector3 b = FixV(ReadVec3());
+                Vector3 n = ReadVec3();
+                Vector3 t = ReadVec3();
+                Vector3 b = ReadVec3();
                 Vector3 uv = ReadVec3();
                 //posL.Add ( v_pos );
                 //float vy = v_pos.Y;

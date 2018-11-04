@@ -63,6 +63,20 @@ namespace VividEdit
                     System.Diagnostics.Process.Start ( file.Path );
                     break;
 
+                case "V3D":
+                    Console.WriteLine ( "Importing V3D:" + file.Path );
+
+                    V3DM.ImportV3D vi = new V3DM.ImportV3D ( );
+
+                    Vivid3D.Scene.GraphNode3D root = vi.ImportMesh ( file.Path );
+                    root.SetMultiPass ( );
+                    Vivid3D.Material.Material3D mat = new Vivid3D.Material.Material3D ( );
+                    DockEdit3D.Graph.Add ( root );
+                    DockEdit3D.Selected.Root.Sub.Clear ( );
+                    rebuildUI ( );
+
+                    break;
+
                 case "3D":
 
                     AssImpImport.IPath = file.BasePath;

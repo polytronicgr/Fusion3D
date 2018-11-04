@@ -22,6 +22,10 @@ namespace VividEdit.Forms
                     Type = "Code";
                     break;
 
+                case ".v3dm":
+                    Type = "V3D";
+                    break;
+
                 case ".3ds":
                 case ".obj":
                 case ".blend":

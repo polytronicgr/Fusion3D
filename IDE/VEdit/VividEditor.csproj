@@ -225,6 +225,10 @@
       <Project>{2a2abee7-f21c-432e-8999-9cff758dfa54}</Project>
       <Name>ProjectCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\V3DM\V3DM.csproj">
+      <Project>{1767dd9b-165c-41f4-9a03-570afe31c6f5}</Project>
+      <Name>V3DM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\VividEngine\VividEngine.csproj">
       <Project>{82efc008-09ce-483b-b471-2620501c40a1}</Project>
       <Name>VividEngine</Name>

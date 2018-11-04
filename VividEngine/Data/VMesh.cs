@@ -55,6 +55,20 @@ namespace Vivid3D.Data
         {
         }
 
+        public void Transform ( Matrix4 m )
+        {
+            //int v=0;
+
+            for ( int v = 0; v < VertexData.Length; v++ )
+            {
+                Vector3 pos = VertexData[v].Pos;
+                Vector3 res = Vector3.TransformPosition( pos, m );
+                VertexData [ v ].Pos = res;
+
+                //v++;
+            }
+        }
+
         public VMesh ( int indices, int vertices )
         {
             //Data = new VVertex3D(vertices);

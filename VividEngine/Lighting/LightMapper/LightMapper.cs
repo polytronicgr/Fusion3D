@@ -1,0 +1,122 @@
+﻿using System;
+using Vivid3D.Scene;
+using Vivid3D.Util.Texture;
+
+namespace Vivid3D.Lighting.LightMapper
+{
+    public class LightMapper
+    {
+        public SceneGraph3D Graph { get; set; }
+        public TexTree FinalMap { get; set; }
+
+        public LightMapper ( int mapWidth, int mapHeight, SceneGraph3D graph )
+        {
+            Graph = graph;
+            FinalMap = new TexTree ( mapWidth, mapHeight );
+            DoLightMap ( );
+        }
+
+        public void DoLightMap ( )
+        {
+            LightNode ( ( GraphEntity3D ) Graph.Root );
+        }
+
+        public void LightNode ( GraphEntity3D node )
+        {
+            foreach ( Data.VMesh mesh in node.Meshes )
+            {
+                LightMesh ( mesh );
+            }
+        }
+
+        public void LightMesh ( Data.VMesh mesh )
+        {
+            Data.Vertex [ ] verts = mesh.VertexData;
+            Data.Tri [ ] tris = mesh.TriData;
+
+            foreach ( Data.Tri tri in tris )
+            {
+                MapVertex lvert = new MapVertex();
+                lvert.Verts [ 0 ] = verts [ tri.V0 ];
+                lvert.Verts [ 1 ] = verts [ tri.V1 ];
+                lvert.Verts [ 2 ] = verts [ tri.v2 ];
+
+                MapVertex dvert = new MapVertex();
+                dvert.Verts [ 0 ] = verts [ tri.V0 ];
+                dvert.Verts [ 1 ] = verts [ tri.V1 ];
+                dvert.Verts [ 2 ] = verts [ tri.v2 ];
+
+                OpenTK.Vector3 tri_norm = verts [ tri.V0 ].Norm;
+
+                tri_norm.Normalize ( );
+
+                if ( Math.Abs ( tri_norm.X ) > Math.Abs ( tri_norm.Y ) &&
+                    Math.Abs ( tri_norm.X ) > Math.Abs ( tri_norm.Z ) )
+                {
+                    lvert.Verts [ 0 ].UV.X = dvert.Verts [ 0 ].Pos.Y;
+                    lvert.Verts [ 0 ].UV.Y = dvert.Verts [ 0 ].Pos.Z;
+
+                    lvert.Verts [ 1 ].UV.X = dvert.Verts [ 1 ].Pos.Y;
+                    lvert.Verts [ 1 ].UV.Y = dvert.Verts [ 1 ].Pos.Z;
+
+                    lvert.Verts [ 2 ].UV.X = dvert.Verts [ 2 ].Pos.Y;
+                    lvert.Verts [ 2 ].UV.Y = dvert.Verts [ 2 ].Pos.Z;
+                }
+                else if ( Math.Abs ( tri_norm.Y ) > Math.Abs ( tri_norm.X ) &&
+                    Math.Abs ( tri_norm.Y ) > Math.Abs ( tri_norm.Z ) )
+                {
+                    lvert.Verts [ 0 ].UV.X = dvert.Verts [ 0 ].Pos.X;
+                    lvert.Verts [ 0 ].UV.Y = dvert.Verts [ 0 ].Pos.Z;
+
+                    lvert.Verts [ 1 ].UV.X = dvert.Verts [ 1 ].Pos.X;
+                    lvert.Verts [ 1 ].UV.Y = dvert.Verts [ 1 ].Pos.Z;
+
+                    lvert.Verts [ 2 ].UV.X = dvert.Verts [ 2 ].Pos.X;
+                    lvert.Verts [ 2 ].UV.Y = dvert.Verts [ 2 ].Pos.Z;
+                }
+                else
+                {
+                    lvert.Verts [ 0 ].UV.X = dvert.Verts [ 0 ].Pos.X;
+                    lvert.Verts [ 0 ].UV.Y = dvert.Verts [ 0 ].Pos.Y;
+
+                    lvert.Verts [ 1 ].UV.X = dvert.Verts [ 1 ].Pos.X;
+                    lvert.Verts [ 1 ].UV.Y = dvert.Verts [ 1 ].Pos.Y;
+
+                    lvert.Verts [ 2 ].UV.X = dvert.Verts [ 2 ].Pos.X;
+                    lvert.Verts [ 2 ].UV.Y = dvert.Verts [ 2 ].Pos.Y;
+                }
+
+                float min_u = lvert.Verts[0].UV.X;
+                float min_v = lvert.Verts[0].UV.Y;
+
+                float max_u = lvert.Verts[0].UV.X;
+                float max_v = lvert.Verts[0].UV.Y;
+
+                for ( int i = 0; i < 3; i++ )
+                {
+                    if ( lvert.Verts [ i ].UV.X < min_u )
+                    {
+                        min_u = lvert.Verts [ i ].UV.X;
+                    }
+                    if ( lvert.Verts [ i ].UV.X < min_v )
+                    {
+                        min_v = lvert.Verts [ i ].UV.Y;
+                    }
+                    if ( lvert.Verts [ i ].UV.X > max_u )
+                    {
+                        max_u = lvert.Verts [ i ].UV.X;
+                    }
+                    if ( lvert.Verts [ i ].UV.Y > max_v )
+                    {
+                        max_v = lvert.Verts [ i ].UV.Y;
+                    }
+                }
+            }
+        }
+    }
+
+    public class MapVertex
+    {
+        public Data.Vertex[] Verts = new Data.Vertex[3];
+    }
+}

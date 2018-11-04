@@ -43,6 +43,33 @@ namespace TexturePackTest
 
         private void button2_Click ( object sender, EventArgs e )
         {
+            openFileDialog1.ShowDialog ( );
+            string file = openFileDialog1.FileName;
+            Bitmap os = new Bitmap(file);
+            Random rnd = new Random(Environment.TickCount);
+            for ( int i = 0; i < 10000; i++ )
+            {
+                int nw = rnd.Next(8,256);
+                int nh = rnd.Next(8,256);
+                Bitmap nbp = new Bitmap(os,new Size(nw,nh));
+                Vivid3D.Util.Texture.TreeLeaf tn = tt.Insert ( nw, nh );
+                if ( tn == null )
+                {
+                    continue;
+
+                    pictureBox1.Invalidate ( );
+                    return;
+                }
+                for ( int y = 0; y < nh; y++ )
+                {
+                    for ( int x = 0; x < nw; x++ )
+                    {
+                        Color cv = nbp.GetPixel(x,y);
+                        tm.SetPixel ( ( int ) tn.RC.X + x, ( int ) tn.RC.Y + y, cv );
+                    }
+                }
+            }
+            pictureBox1.Invalidate ( );
         }
     }
 }

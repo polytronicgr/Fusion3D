@@ -12,7 +12,7 @@ namespace Vivid3D.Lighting.LightMapper
 
         public int Tri_W,Tri_H;
 
-        public LightMapper ( int mapWidth, int mapHeight, SceneGraph3D graph, int tri_w = 16, int tri_h = 16 )
+        public LightMapper ( int mapWidth, int mapHeight, SceneGraph3D graph, int tri_w = 8, int tri_h = 8 )
         {
             Graph = graph;
             ResultGraph = new SceneGraph3D
@@ -40,10 +40,11 @@ namespace Vivid3D.Lighting.LightMapper
                 {
                     m.Mat.TCol = lm_tex;
                 }
-                ge.Renderer = new Visuals.VRLightMap ( );
+                // ge.Renderer = new Visuals.VRLightMap ( );
             }
 
             ResultGraph.EditGraph ( E_SetTex );
+            ResultGraph.Root.SetLightmap ( );
 
             // ResultGraph.Root.SetMultiPass ( );
         }
@@ -255,7 +256,7 @@ namespace Vivid3D.Lighting.LightMapper
                 edge2.Y = vec2.Y - UVVector.Y;
                 edge2.Z = vec2.Z - UVVector.Z;
 
-                Console.WriteLine ( "Grabbing TexLeaf" );
+                // Console.WriteLine ( "Grabbing TexLeaf" );
                 TreeLeaf tex_node = FinalMap.Insert(Tri_W,Tri_H);
 
                 byte[] rgb = new byte[Tri_W*Tri_H*3];
@@ -287,8 +288,8 @@ namespace Vivid3D.Lighting.LightMapper
                         lumels [ iX, iY ].Z = UVVector.Z + newedge2.Z + newedge1.Z;
 
                         rgb [ rloc ] = 255;
-                        rgb [ rloc + 1 ] = 255;
-                        rgb [ rloc + 2 ] = 255;
+                        rgb [ rloc + 1 ] = 0;
+                        rgb [ rloc + 2 ] = 0;
                     }
                 }
 
@@ -296,9 +297,14 @@ namespace Vivid3D.Lighting.LightMapper
                 {
                     float lx = ((tex_node.RC.X+1)+(tex_node.RC.W-2)* lvert.Verts[cv].UV.X)/tex_node.Root.RC.W;
                     float ly = ((tex_node.RC.Y+1)+(tex_node.RC.H-2)* lvert.Verts[cv].UV.Y)/tex_node.Root.RC.H;
-
-                    res_msh.VertexData [ tri.V0 ].UV = new OpenTK.Vector2 ( lx, ly );
+                    lvert.Verts [ cv ].UV.X = lx;
+                    lvert.Verts [ cv ].UV.Y = ly;
+                    // Console.WriteLine ( "LX:" + lx + " LY:" + ly ); res_msh.VertexData [ tri.V0
+                    // ].UV = new OpenTK.Vector2 ( lx, ly );
                 }
+                res_msh.VertexData [ tri.V0 ].UV = lvert.Verts [ 0 ].UV;
+                res_msh.VertexData [ tri.V1 ].UV = lvert.Verts [ 1 ].UV;
+                res_msh.VertexData [ tri.v2 ].UV = lvert.Verts [ 2 ].UV;
 
                 tex_node.SetRaw ( rgb );
             }

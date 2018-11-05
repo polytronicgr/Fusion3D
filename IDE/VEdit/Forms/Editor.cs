@@ -592,23 +592,22 @@ namespace VividEdit.Forms
             Graph?.Root.UpdateNode ( 0.1f );
             // if (run)
             //{
-            Graph?.Render ( );
-            // }
-            Graph?.RenderShadows ( );
-            // PRen.Render ( ); Graph?.Render();
+            // Graph?.Render ( );
+            // } Graph?.RenderShadows ( ); PRen.Render ( ); Graph?.Render();
             Vivid3D.Effect.EMultiPass3D.LightMod = 0.4f;
             //Selected.Render ( );
             //  Composer.Mix = Vivid3D.Composition.MixMode.Add;
             // Composer.Render ( );
             //SelComposer.Render ( );
             //GL.Disable ( EnableCap.Blend );
+            Graph?.Render ( );
             GL.Clear ( ClearBufferMask.DepthBufferBit );
-            //Grid.Render ( );-
+            ///rid.Render ( );-
             System.Collections.Generic.List<string> rt = new System.Collections.Generic.List<string>
             {
                 "Grid"
             };
-            Graph.RenderByTags ( rt );
+            //Graph.RenderByTags ( rt );
             //Selected.Render ( );
             // Graph?.Render ( );
             LoadIcons ( );

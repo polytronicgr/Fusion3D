@@ -52,7 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="irrKlang.NET4">
-      <HintPath>..\..\..\..\..\..\v2\Vivid3D\Dll\irrKlang.NET4.dll</HintPath>
+      <HintPath>..\Lib\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -221,6 +221,16 @@
     <PackageReference Include="zlib.net">
       <Version>1.0.4</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lib\DataCore\DataCore.csproj">
+      <Project>{6165b697-9df1-4655-bbf6-e6aaf805d0f6}</Project>
+      <Name>DataCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\ProjectCore\ProjectCore.csproj">
+      <Project>{2a2abee7-f21c-432e-8999-9cff758dfa54}</Project>
+      <Name>ProjectCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

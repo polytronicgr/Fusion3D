@@ -116,6 +116,7 @@ namespace Vivid3D.Effect
         {
             GL.UseProgram ( _Program );
             SetPars ( );
+            Console.WriteLine ( "BoundEffect:" + GetType ( ).ToString ( ) );
         }
 
         public virtual void Release ( )

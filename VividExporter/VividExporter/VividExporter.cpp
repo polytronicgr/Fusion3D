@@ -221,9 +221,20 @@ void WriteNode(IGameNode * node) {
 	WriteQuat(rq);
 
 	IGameObject * obj = node->GetIGameObject();
+	IGameLight * light;
+	IGameProperty * light_col;
 
 	switch (obj->GetIGameType()) {
+	case IGameObject::IGAME_LIGHT:
+
+		WriteInt(1);
+		light = (IGameLight *)obj;
+
+		light_col = light->GetLightColor();
+
+		break;
 	case IGameObject::IGAME_MESH:
+		WriteInt(2);
 		IGameMesh * mesh = (IGameMesh*)obj;
 		if (mesh->InitializeData()) {
 			int vc = mesh->GetNumberOfVerts();

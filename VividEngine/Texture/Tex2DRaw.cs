@@ -23,9 +23,9 @@
                 for ( int x = 0; x < w; x++ )
                 {
                     int loc = y * w * 3 + x *3;
-                    Data [ loc ] = 128;
-                    Data [ loc + 1 ] = 128;
-                    Data [ loc + 2 ] = 128;
+                    Data [ loc ] = 0;
+                    Data [ loc + 1 ] = 0;
+                    Data [ loc + 2 ] = 255;
                 }
             }
         }

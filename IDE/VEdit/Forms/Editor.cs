@@ -243,6 +243,13 @@ namespace VividEdit.Forms
         public Vivid3D.Composition.Composite Composer;
         public Vivid3D.Composition.Composite SelComposer;
 
+        private void lightmapCurrentSceneToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            ConsoleView.Log ( "Beginning lightmapping of current scene.", "LightMapper" );
+            Vivid3D.Lighting.LightMapper.LightMapper lmapper = new Vivid3D.Lighting.LightMapper.LightMapper ( 2048, 2048, Graph );
+            ConsoleView.Log ( "Lightmapping succesfull.", "LightMapper" );
+        }
+
         private void ON_Load ( )
         {
             Dis.Size = new Size ( Width, Height );

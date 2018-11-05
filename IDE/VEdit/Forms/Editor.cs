@@ -246,8 +246,11 @@ namespace VividEdit.Forms
         private void lightmapCurrentSceneToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             ConsoleView.Log ( "Beginning lightmapping of current scene.", "LightMapper" );
-            Vivid3D.Lighting.LightMapper.LightMapper lmapper = new Vivid3D.Lighting.LightMapper.LightMapper ( 2048, 2048, Graph );
+            Vivid3D.Lighting.LightMapper.LightMapper lmapper = new Vivid3D.Lighting.LightMapper.LightMapper ( 4096, 4096, Graph );
             ConsoleView.Log ( "Lightmapping succesfull.", "LightMapper" );
+            Graph = lmapper.ResultGraph;
+            VividEdit.VividED.Main.DockAppGraph.Graph = Graph;
+            VividEdit.VividED.Main.DockAppGraph.Rebuild ( );
         }
 
         private void ON_Load ( )

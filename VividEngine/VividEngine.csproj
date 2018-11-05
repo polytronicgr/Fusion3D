@@ -85,6 +85,7 @@
     <Compile Include="Help\IOHelp.cs" />
     <Compile Include="ImageProcessing\ImageProcessor.cs" />
     <Compile Include="Lighting\LightMapper\LightMapper.cs" />
+    <Compile Include="Lighting\LightMapper\Omni.cs" />
     <Compile Include="Pick\Picker.cs" />
     <Compile Include="Pick\PickResult.cs" />
     <Compile Include="PostProcess\Processes\PPBloom.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Script\ScriptMod.cs" />
     <Compile Include="Script\ScriptTemplate.cs" />
     <Compile Include="Terrain\GraphTerrain.cs" />
+    <Compile Include="Texture\Tex2DRaw.cs" />
     <Compile Include="Util\Texture\LeafPacker.cs" />
     <Compile Include="Util\Texture\NextPixelMap.cs" />
     <Compile Include="Visuals\VRenderer.cs" />

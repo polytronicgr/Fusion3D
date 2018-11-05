@@ -254,6 +254,37 @@ namespace Vivid3D.Texture
             GL.DeleteTexture ( ID );
         }
 
+        public VTex2D ( Tex2DRaw raw )
+        {
+            RawData = raw.Data;
+            Alpha = raw.Alpha;
+            W = raw.W;
+            H = raw.H;
+
+            GL.Enable ( EnableCap.Texture2D );
+            ID = GL.GenTexture ( );
+
+            GL.BindTexture ( TextureTarget.Texture2D, ID );
+
+            if ( Alpha )
+            {
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, W, H, 0, PixelFormat.Rgba, PixelType.UnsignedByte, RawData );
+            }
+            else
+            {
+                GL.TexImage2D ( TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, W, H, 0, PixelFormat.Rgb, PixelType.UnsignedByte, RawData );
+            }
+
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapS, ( int ) TextureWrapMode.Repeat );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureWrapT, ( int ) TextureWrapMode.Repeat );
+
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, ( int ) TextureMinFilter.LinearMipmapLinear );
+            GL.TexParameter ( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, ( int ) TextureMagFilter.Linear );
+            GL.GenerateMipmap ( GenerateMipmapTarget.Texture2D );
+
+            GL.BindTexture ( TextureTarget.Texture2D, 0 );
+        }
+
         public void Read ( )
         {
             W = Help.IOHelp.ReadInt ( );

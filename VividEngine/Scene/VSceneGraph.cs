@@ -225,6 +225,16 @@ namespace Vivid3D.Scene
             RenderNodeByTags ( defTags, Root );
         }
 
+        public void SetLightmapTex ( Texture.VTex2D tex )
+        {
+            Root.SetLightmapTex ( tex );
+        }
+
+        public void EditGraph ( EditNode editor )
+        {
+            Root.Edit ( editor );
+        }
+
         public virtual void RenderNodeByTags ( List<string> tags, GraphNode3D node )
         {
             bool rt=false;

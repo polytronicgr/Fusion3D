@@ -191,6 +191,10 @@ namespace Vivid3D.Scene
             node.Top = this;
         }
 
+        public virtual void SetLightmapTex ( Vivid3D.Texture.VTex2D tex )
+        {
+        }
+
         public virtual void AddLink ( string name, object obj )
         {
             Links.Add ( name, obj );
@@ -396,5 +400,16 @@ namespace Vivid3D.Scene
                 n.UpdateNode ( t );
             }
         }
+
+        public void Edit ( EditNode edit )
+        {
+            edit ( this );
+            foreach ( GraphNode3D sub in Sub )
+            {
+                sub.Edit ( edit );
+            }
+        }
     }
+
+    public delegate void EditNode ( GraphNode3D node );
 }

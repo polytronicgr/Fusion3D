@@ -12,13 +12,21 @@ namespace Vivid3D.Util.Texture
             set;
         }
 
+        public Vivid3D.Texture.Tex2DRaw Raw;
+
         public Rect RC;
 
         public TexTree ( int w, int h )
         {
             RC = new Rect ( 0, 0, w, h );
+            Raw = new Vivid3D.Texture.Tex2DRaw ( w, h, false );
             //Root = ne
             //w TreeLeaf (new Rect(0,0,w,h));
+        }
+
+        public Vivid3D.Texture.VTex2D GetMap ( )
+        {
+            return new Vivid3D.Texture.VTex2D ( Raw );
         }
 
         public TreeLeaf Insert ( int w, int h, int id = -1 )
@@ -28,6 +36,7 @@ namespace Vivid3D.Util.Texture
             {
                 Root = new TreeLeaf ( new Rect ( 0, 0, w, h ), id )
                 {
+                    Root = this,
                     Used = true
                 };
                 Root.Child [ 0 ] = new TreeLeaf ( new Rect ( 0, h, RC.W, RC.H - h ) );
@@ -47,6 +56,7 @@ namespace Vivid3D.Util.Texture
         public Rect RC = new Rect();
         public int TexID = 0;
         public bool Used = false;
+        public TexTree Root;
 
         public TreeLeaf ( Rect s, int id = -1 )
         {
@@ -60,25 +70,29 @@ namespace Vivid3D.Util.Texture
         {
             if ( Used )
             {
-                TreeLeaf rn =  Child [ 1 ].Insert ( w, h );
+                TreeLeaf rn =  Child [ 0 ].Insert ( w, h );
                 if ( rn != null )
                 {
+                    rn.Root = Root;
                     return rn;
                 }
-                rn = Child [ 0 ].Insert ( w, h );
+                rn = Child [ 1 ].Insert ( w, h );
                 if ( rn != null )
                 {
+                    rn.Root = Root;
                     return rn;
                 }
             }
             else
             {
-                if ( w < RC.W && h < RC.H )
+                if ( w <= RC.W && h <= RC.H )
                 {
                     Used = true;
 
                     Child [ 0 ] = new TreeLeaf ( new Rect ( RC.X, RC.Y + h, RC.W, RC.H - h ) );
                     Child [ 1 ] = new TreeLeaf ( new Rect ( RC.X + w, RC.Y, RC.W - w, h ) );
+                    Child [ 0 ].Root = Root;
+                    Child [ 1 ].Root = Root;
                     RC.W = w;
                     RC.H = h;
                     return this;
@@ -89,6 +103,22 @@ namespace Vivid3D.Util.Texture
                 }
             }
             return null;
+        }
+
+        public void SetRaw ( byte [ ] rgb )
+        {
+            for ( int y = 0; y < ( int ) RC.H; y++ )
+            {
+                for ( int x = 0; x < ( int ) RC.W; x++ )
+                {
+                    int loc = y * (int)RC.W * 3 + x * 3;
+
+                    int rX = x + (int)RC.X;
+                    int rY = y + (int)RC.Y;
+
+                    Root.Raw.SetPixel ( rX, rY, rgb [ loc ], rgb [ loc + 1 ], rgb [ loc + 2 ] );
+                }
+            }
         }
 
         public bool Fits ( int w, int h )

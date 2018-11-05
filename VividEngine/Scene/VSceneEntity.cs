@@ -6,6 +6,16 @@ using Vivid3D.Visuals;
 
 namespace Vivid3D.Scene
 {
+    public class LightMapOptions
+    {
+        public bool ReceiveLight = true;
+        public bool CastShadows = true;
+
+        public LightMapOptions ( )
+        {
+        }
+    }
+
     public class GraphEntity3D : GraphNode3D
     {
         public Matrix4 GlobalInverse;
@@ -16,6 +26,8 @@ namespace Vivid3D.Scene
         private float bw, bh, bd;
 
         private float sw, sh, sd;
+
+        public LightMapOptions LightMapInfo = new LightMapOptions();
 
         public Bounds Bounds
         {

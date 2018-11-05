@@ -10,9 +10,11 @@ namespace V3DM
     {
         public FileStream _F;
         public BinaryReader _R;
+        private Vivid3D.Scene.SceneGraph3D gr;
 
-        public Vivid3D.Scene.GraphNode3D ImportMesh ( string file )
+        public Vivid3D.Scene.GraphNode3D ImportMesh ( string file, Vivid3D.Scene.SceneGraph3D graph )
         {
+            gr = graph;
             _F = new FileStream ( file, FileMode.Open, FileAccess.Read );
 
             if ( _F == null )
@@ -73,7 +75,7 @@ namespace V3DM
             Matrix4 nmat = ReadMatrix4();
             Quaternion qr = ReadQuat();
             //mat.Transpose ( );
-            Matrix4 mat = wmat;
+            Matrix4 mat = Matrix4.Identity;
 
             vn.LocalPos = FixP ( mat.ExtractTranslation ( ) );
             //vn.LocalPos = new Vector3 ( vn.LocalPos.X, -vn.LocalPos.Y, vn.LocalPos.Z );
@@ -93,11 +95,43 @@ namespace V3DM
             Matrix4 lm = Matrix4.CreateFromQuaternion(qr);
             //vn.LocalTurn = Ma mat; //mat;// Matrix4.Identity;
             vn.LocalTurn = lmat;
-            Console.WriteLine ( "Quat:" + qr );
+            //Console.WriteLine ( "Quat:" + qr );
+            int eType = ReadInt();
 
+            switch ( eType )
+            {
+                case 1:
+                    Vivid3D.Lighting.GraphLight3D new_light = new Vivid3D.Lighting.GraphLight3D();
+                    Console.WriteLine ( "Is Light" );
+                    gr.Lights.Add ( new_light );
+                    new_light.Name = node_name;
+                    new_light.LocalPos = FixP ( omat.ExtractTranslation ( ) );
+
+                    break;
+
+                case 2:
+                    LoadNode ( vn );
+
+                    break;
+            }
+
+            int nc = ReadInt();
+            //int nc=0;
+            Console.WriteLine ( "childNodes:" + nc );
+
+            for ( int i = 0; i < nc; i++ )
+            {
+                vn.Add ( ReadNodes ( ) );
+            }
+            // _R.ReadInt32 ( );
+            return vn;
+        }
+
+        private void LoadNode ( Vivid3D.Scene.GraphEntity3D vn )
+        {
             int vc = ReadInt();
 
-            Console.WriteLine ( "verts:" + vc );
+            //Console.WriteLine ( "verts:" + vc );
             List<OpenTK.Vector3> normL = new List<Vector3>();
             List<Vector3> tanL = new List<Vector3>();
             List<Vector3> biL = new List<Vector3>();
@@ -192,17 +226,6 @@ namespace V3DM
             vn.AddMesh ( msh );
 
             msh.Final ( );
-
-            int nc = ReadInt();
-            //int nc=0;
-            Console.WriteLine ( "childNodes:" + nc );
-
-            for ( int i = 0; i < nc; i++ )
-            {
-                vn.Add ( ReadNodes ( ) );
-            }
-            // _R.ReadInt32 ( );
-            return vn;
         }
 
         private bool CheckHeader ( )

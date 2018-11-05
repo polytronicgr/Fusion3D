@@ -398,6 +398,9 @@ namespace VividEdit.Forms
                     {
                         Console.WriteLine ( "Picked Light" );
                         l.Select ( );
+                        VividEdit.VividED.Main.DockClassInspect.Inspect ( l );
+                        CurNode = l;
+                        Picked?.Invoke ( l );
                         return;
                     }
                 }
@@ -607,7 +610,7 @@ namespace VividEdit.Forms
             {
                 "Grid"
             };
-            //Graph.RenderByTags ( rt );
+            Graph.RenderByTags ( rt );
             //Selected.Render ( );
             // Graph?.Render ( );
             LoadIcons ( );

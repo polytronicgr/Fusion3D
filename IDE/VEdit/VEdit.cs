@@ -68,7 +68,7 @@ namespace VividEdit
 
                     V3DM.ImportV3D vi = new V3DM.ImportV3D ( );
 
-                    Vivid3D.Scene.GraphNode3D root = vi.ImportMesh ( file.Path );
+                    Vivid3D.Scene.GraphNode3D root = vi.ImportMesh ( file.Path,DockEdit3D.Graph );
                     root.SetMultiPass ( );
                     Vivid3D.Material.Material3D mat = new Vivid3D.Material.Material3D ( );
                     DockEdit3D.Graph.Add ( root );

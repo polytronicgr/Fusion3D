@@ -71,6 +71,7 @@ namespace VividEdit.Forms
 
         public void Rebuild ( )
         {
+            lights = Graph.Lights;
             nodeMap.Clear ( );
             AllNodes.Clear ( );
             appTree.Nodes [ 0 ].Nodes.Clear ( );

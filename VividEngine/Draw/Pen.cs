@@ -59,7 +59,6 @@ namespace Vivid3D.Draw
 
         public override void SetPars ( )
         {
-            return;
             SetTex ( "tR", 0 );
             SetVec4 ( "col", Col );
             SetMat ( "proj", Matrix4.CreateOrthographicOffCenter ( 0, AppInfo.RW, AppInfo.RH, 0, -1, 1 ) );

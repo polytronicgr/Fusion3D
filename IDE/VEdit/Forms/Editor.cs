@@ -331,7 +331,7 @@ namespace VividEdit.Forms
             //  vo.SubProcesses.Add(bpp);
             //PRen.Add(bpp);
             Graph.Add ( Grid );
-            Graph.Add ( Light );
+            // Graph.Add ( Light );
             Selected = new SceneGraph3D ( );
             Selected.Add ( Cam );
             Selected.Add ( Light );

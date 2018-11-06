@@ -264,6 +264,7 @@ namespace VividEdit.Forms
             };
             VividEdit.VividED.Main.AddLight ( nl );
             VividEdit.Forms.ConsoleView.Log ( "Added point light at (" + p + ")", "Editor" );
+            VividED.Speak.Say ( "Point light created." );
         }
 
         private void saveGraphToolStripMenuItem_Click ( object sender, EventArgs e )

@@ -141,10 +141,18 @@ namespace V3DM
             for ( int v = 0; v < vc; v++ )
             {
                 OpenTK.Vector3 v_pos = ReadVec3 ( );
+
                 Vector3 n = ReadVec3();
+                //float ny = n.Y;
+                //n.Y = n.Y;
+                //n.Z = ny
+                ;
+
                 Vector3 t = ReadVec3();
                 Vector3 b = ReadVec3();
                 Vector3 uv = ReadVec3();
+                uv.Y = 1 - uv.Y;
+                uv.X = 1 - uv.X;
                 //posL.Add ( v_pos );
                 //float vy = v_pos.Y;
                 //v_pos.Y = v_pos.Z;
@@ -224,7 +232,7 @@ namespace V3DM
             };
 
             vn.AddMesh ( msh );
-
+            msh.GenerateTangents ( );
             msh.Final ( );
         }
 

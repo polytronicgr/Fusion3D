@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Vivid3D.Import;
+using Vivid3D.Speech;
 using VividEdit.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -17,6 +18,7 @@ namespace VividEdit
         public ContentExplorer DockContentExplorer;
         public Editor DockEdit3D;
         public DockPanel MainDock;
+        public static SpeechOut Speak = new SpeechOut();
 
         public VividED ( )
         {
@@ -27,6 +29,7 @@ namespace VividEdit
                 Dock = DockStyle.Fill
             };
             Controls.Add ( MainDock );
+            Speak.Say ( "Welcome to Vivid Three Dee" );
         }
 
         public void AddEnt ( Vivid3D.Scene.GraphEntity3D e )

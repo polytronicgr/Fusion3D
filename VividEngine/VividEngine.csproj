@@ -58,6 +58,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,6 +97,7 @@
     <Compile Include="Script\ScriptBase.cs" />
     <Compile Include="Script\ScriptMod.cs" />
     <Compile Include="Script\ScriptTemplate.cs" />
+    <Compile Include="Speech\SpeechOut.cs" />
     <Compile Include="Terrain\GraphTerrain.cs" />
     <Compile Include="Texture\Tex2DRaw.cs" />
     <Compile Include="Util\Texture\LeafPacker.cs" />

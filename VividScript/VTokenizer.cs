@@ -456,6 +456,7 @@ namespace VividScript
                 TokenClass tc = n.Class;
                 Token nt = n.Token;
                 string text = n.Text;
+
                 switch ( n.Text )
                 {
                     case "int":

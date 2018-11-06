@@ -87,4 +87,9 @@ namespace VividScript
         {
         }
     }
+
+    public enum StrandType
+    {
+        Statement, Assignment, Flow, Define, Macro, Header, Extends, Generic, Unknown
+    }
 }

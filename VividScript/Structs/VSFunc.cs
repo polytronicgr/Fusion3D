@@ -5,6 +5,8 @@ namespace VividScript.VStructs
     public class VSFunc : VStruct
     {
         public string FuncName = "";
+        public VSPars Pars = null;
+        public VSCode Code = null;
 
         public VSFunc ( VTokenStream s ) : base ( s )
         {
@@ -22,7 +24,8 @@ namespace VividScript.VStructs
                 if ( t.Token == Token.LeftPara )
                 {
                     Console.WriteLine ( "Parsing parameters." );
-                    VSPars pars = new VSPars(TokStream);
+                    Pars = new VSPars ( TokStream );
+                    Code = new VSCode ( TokStream );
                 }
                 if ( t.Token == Token.End )
                 {

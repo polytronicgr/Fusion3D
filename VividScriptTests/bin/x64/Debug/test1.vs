@@ -4,6 +4,8 @@ module TestModule
 
 end
 
-func Entry(int age,int name)
+func Entry(int age,string name)
+
+    printf("Hey testing!")
 
 end 

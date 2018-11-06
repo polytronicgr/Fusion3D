@@ -11,6 +11,25 @@ namespace VividScript.VStructs
         {
         }
 
+        public override string DebugString ( )
+        {
+            return "FlatCall:" + FuncName + " Pars:" + CallPars.Pars.Count;
+        }
+
+        public override void Exec ( )
+        {
+            FuncLink funcLink = LocalScope.FindFunc(FuncName,true);
+            if ( funcLink != null )
+            {
+                switch ( funcLink.Type )
+                {
+                    case FuncType.CSharp:
+                        funcLink.Link.Call ( "Testing!" );
+                        break;
+                }
+            }
+        }
+
         public override void SetupParser ( )
         {
             Console.WriteLine ( "Parsing flat-call." );

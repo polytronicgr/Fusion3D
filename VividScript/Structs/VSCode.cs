@@ -11,6 +11,11 @@ namespace VividScript.VStructs
         {
         }
 
+        public override string DebugString ( )
+        {
+            return ( "CodeBody." );
+        }
+
         public override void SetupParser ( )
         {
             Console.WriteLine ( "Parsing function code-body." );

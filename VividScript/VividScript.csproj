@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CFuncLink.cs" />
+    <Compile Include="CodeScope.cs" />
     <Compile Include="Structs\VarType.cs" />
     <Compile Include="Structs\VSCallPars.cs" />
     <Compile Include="Structs\VSCode.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Structs\VSPars.cs" />
     <Compile Include="Structs\VSVar.cs" />
     <Compile Include="VCompiledSource.cs" />
+    <Compile Include="VME.cs" />
     <Compile Include="VSource.cs" />
     <Compile Include="VCompiler.cs" />
     <Compile Include="VividScript.cs" />

@@ -22,6 +22,12 @@ namespace VividScript
         public bool Done = false;
         public VTokenStream TokStream = null;
 
+        public CodeScope LocalScope = new CodeScope();
+
+        public virtual void Exec ( )
+        {
+        }
+
         public virtual string DebugString ( )
         {
             return "Empty";

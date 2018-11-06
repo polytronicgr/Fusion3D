@@ -18,6 +18,18 @@ namespace VividScript.VStructs
             return "EntryPoint: Modules:" + Modules.Count + " SysFuncs:" + SystemFuncs.Count;
         }
 
+        public VSFunc FindSystemFunc ( string name )
+        {
+            foreach ( VSFunc func in SystemFuncs )
+            {
+                if ( func.FuncName == name )
+                {
+                    return func;
+                }
+            }
+            return null;
+        }
+
         public override void SetupParser ( )
         {
             Parser = ( t ) =>
@@ -31,7 +43,10 @@ namespace VividScript.VStructs
                             case Token.Func:
                                 string name = PeekNext().Text;
                                 Console.WriteLine ( "Func:" + name );
-                                VSFunc func = new VSFunc(TokStream);
+                                VSFunc func = new VSFunc ( TokStream )
+                                {
+                                    Name = name
+                                };
                                 Structs.Add ( func );
                                 Console.WriteLine ( "Parsed function:" + name );
                                 SystemFuncs.Add ( func );

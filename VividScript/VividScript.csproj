@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="CFuncLink.cs" />
     <Compile Include="CodeScope.cs" />
+    <Compile Include="LinkEngineBase.cs" />
     <Compile Include="Structs\VarType.cs" />
     <Compile Include="Structs\VSCallPars.cs" />
     <Compile Include="Structs\VSCode.cs" />

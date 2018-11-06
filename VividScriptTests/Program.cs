@@ -1,6 +1,6 @@
 ﻿using VividScript;
 
-namespace Test1
+namespace VividScriptTests
 {
     internal class Program
     {

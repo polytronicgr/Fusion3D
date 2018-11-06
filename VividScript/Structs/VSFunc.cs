@@ -1,28 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VividScript.VStructs
 {
     public class VSFunc : VStruct
     {
         public string FuncName = "";
-        public VSFunc(VTokenStream s) : base(s)
-        {
 
-        }
-        public override void SetupParser()
+        public VSFunc ( VTokenStream s ) : base ( s )
         {
-            PreParser = (t) =>
+        }
+
+        public override void SetupParser ( )
+        {
+            PreParser = ( t ) =>
             {
                 FuncName = t.Text;
             };
 
-            Parser = (t) =>
+            Parser = ( t ) =>
             {
-                if (t.Token == Token.End)
+                if ( t.Token == Token.LeftPara )
+                {
+                    Console.WriteLine ( "Parsing parameters." );
+                    VSPars pars = new VSPars(TokStream);
+                }
+                if ( t.Token == Token.End )
                 {
                     Done = true;
                     return;

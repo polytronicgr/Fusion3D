@@ -1,38 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VividScript.VStructs
 {
     public class VSEntry : VStruct
     {
-        public VSEntry(VTokenStream s) : base(s)
+        public VSEntry ( VTokenStream s ) : base ( s )
         {
             TokStream = s;
         }
-        public override void SetupParser()
+
+        public override void SetupParser ( )
         {
-            Parser = (t) =>
+            Parser = ( t ) =>
             {
                 //Console.WriteLine("Entry. T:" + t.Class + " Txt:" + t.Text);
-                switch (t.Class)
+                switch ( t.Class )
                 {
                     case TokenClass.Define:
-                        switch (t.Token) {
+                        switch ( t.Token )
+                        {
                             case Token.Func:
-                                var name = PeekNext().Text;
-                                Console.WriteLine("Func:" + name);
-                                var func = new VSFunc(TokStream);
-                                Structs.Add(func);
+                                string name = PeekNext().Text;
+                                Console.WriteLine ( "Func:" + name );
+                                VSFunc func = new VSFunc(TokStream);
+                                Structs.Add ( func );
+                                Console.WriteLine ( "Parsed function:" + name );
                                 break;
+
                             case Token.Module:
-                                Console.WriteLine("Parsing Define.");
-                                Console.WriteLine("Module:" + PeekNext().Text);
-                                var mod = new VSModule(TokStream);
-                                Structs.Add(mod);
-                                Console.WriteLine("Parsed module name:" + mod.ModuleName);
+                                Console.WriteLine ( "Parsing Define." );
+                                Console.WriteLine ( "Module:" + PeekNext ( ).Text );
+                                VSModule mod = new VSModule(TokStream);
+                                Structs.Add ( mod );
+                                Console.WriteLine ( "Parsed module name:" + mod.ModuleName );
                                 break;
                         }
                         break;

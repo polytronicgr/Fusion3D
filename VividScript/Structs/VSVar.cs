@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VividScript.VStructs
+﻿namespace VividScript.VStructs
 {
     public class VSVar
     {
-
         public VarType Type
         {
-
             get;
             set;
-            
         }
 
         public string Name
@@ -22,8 +13,10 @@ namespace VividScript.VStructs
             get;
             set;
         }
-        
-       
 
+        public string DebugString ( )
+        {
+            return "Var. Type:" + Type.ToString ( ) + " Name:" + Name;
+        }
     }
 }

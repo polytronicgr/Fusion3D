@@ -12,6 +12,11 @@ namespace VividScript.VStructs
         {
         }
 
+        public override string DebugString ( )
+        {
+            return "Func:" + FuncName;
+        }
+
         public override void SetupParser ( )
         {
             PreParser = ( t ) =>

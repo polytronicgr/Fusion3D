@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VividScript.VStructs
 {
@@ -10,39 +7,41 @@ namespace VividScript.VStructs
     {
         public string ModuleName = "";
         public List<VSVar> Vars = new List<VSVar>();
-        public VSModule(VTokenStream s) : base(s)
-        {
 
+        public VSModule ( VTokenStream s ) : base ( s )
+        {
         }
-        public override void SetupParser()
-        {
 
-            PreParser = (t) =>
+        public override string DebugString ( )
+        {
+            return "Module:" + ModuleName + " Vars:" + Vars.Count;
+        }
+
+        public override void SetupParser ( )
+        {
+            PreParser = ( t ) =>
             {
                 ModuleName = t.Text;
-             
             };
-            Parser = (t) =>
+            Parser = ( t ) =>
             {
-                if(t.Token == Token.End)
+                if ( t.Token == Token.End )
                 {
                     Done = true;
                     return;
                 }
-                switch(t.Class)
+                switch ( t.Class )
                 {
-                    
                     case TokenClass.Type:
 
-                        Console.WriteLine("Parsing Variable definitions.");
-                        BackOne();
-                        var vdef = new VSDefineVars(TokStream);
-                        foreach(var nv in vdef.Vars)
+                        Console.WriteLine ( "Parsing Variable definitions." );
+                        BackOne ( );
+                        VSDefineVars vdef = new VSDefineVars(TokStream);
+                        foreach ( VSVar nv in vdef.Vars )
                         {
-                            Vars.Add(nv);
+                            Vars.Add ( nv );
                         }
-                                              //Structs.Add(vdef);
-
+                        //Structs.Add(vdef);
 
                         break;
                 }

@@ -22,9 +22,19 @@ namespace VividScript
         public bool Done = false;
         public VTokenStream TokStream = null;
 
-        public VStruct ( VTokenStream toks )
+        public virtual string DebugString ( )
+        {
+            return "Empty";
+        }
+
+        public VStruct ( VTokenStream toks, bool noParse = false )
         {
             TokStream = toks;
+            if ( noParse )
+            {
+                return;
+            }
+
             Parse ( );
         }
 
@@ -34,6 +44,15 @@ namespace VividScript
             if ( TokStream.Pos < 0 )
             {
                 TokStream.Pos = 0;
+            }
+        }
+
+        public virtual void SkipOne ( )
+        {
+            TokStream.Pos++;
+            if ( TokStream.Pos > TokStream.Len - 1 )
+            {
+                TokStream.Pos = TokStream.Len - 1;
             }
         }
 
@@ -86,10 +105,35 @@ namespace VividScript
         public virtual void SetupParser ( )
         {
         }
+
+        public StrandType Predict ( )
+        {
+            System.Console.WriteLine ( "Predicting." );
+            int cpos = TokStream.Pos;
+            for ( int i = cpos; i < TokStream.Len; i++ )
+            {
+                switch ( TokStream.Tokes [ i ].Class )
+                {
+                    case TokenClass.Id:
+                        break;
+
+                    case TokenClass.Scope:
+                        return StrandType.FlatStatement;
+                        break;
+                }
+                System.Console.WriteLine ( "Tok:" + TokStream.Tokes [ i ].Class.ToString ( ) + " 2:" + TokStream.Tokes [ i ].Token.ToString ( ) + " 3:" + TokStream.Tokes [ i ].Text );
+            }
+            System.Console.WriteLine ( "Done." );
+            while ( true )
+            {
+            }
+            return StrandType.Unknown;
+        }
     }
 
     public enum StrandType
     {
-        Statement, Assignment, Flow, Define, Macro, Header, Extends, Generic, Unknown
+        Statement, Assignment, Flow, Define, Macro, Header, Extends, Generic, Unknown,
+        FlatStatement
     }
 }

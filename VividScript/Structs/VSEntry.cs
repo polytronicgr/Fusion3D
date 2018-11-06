@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VividScript.VStructs
 {
@@ -7,6 +8,14 @@ namespace VividScript.VStructs
         public VSEntry ( VTokenStream s ) : base ( s )
         {
             TokStream = s;
+        }
+
+        public List<VSModule> Modules = new List<VSModule>();
+        public List<VSFunc> SystemFuncs = new List<VSFunc>();
+
+        public override string DebugString ( )
+        {
+            return "EntryPoint: Modules:" + Modules.Count + " SysFuncs:" + SystemFuncs.Count;
         }
 
         public override void SetupParser ( )
@@ -25,6 +34,7 @@ namespace VividScript.VStructs
                                 VSFunc func = new VSFunc(TokStream);
                                 Structs.Add ( func );
                                 Console.WriteLine ( "Parsed function:" + name );
+                                SystemFuncs.Add ( func );
                                 break;
 
                             case Token.Module:
@@ -33,6 +43,7 @@ namespace VividScript.VStructs
                                 VSModule mod = new VSModule(TokStream);
                                 Structs.Add ( mod );
                                 Console.WriteLine ( "Parsed module name:" + mod.ModuleName );
+                                Modules.Add ( mod );
                                 break;
                         }
                         break;

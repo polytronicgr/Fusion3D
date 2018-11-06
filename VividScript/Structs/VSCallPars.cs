@@ -23,6 +23,7 @@ namespace VividScript.VStructs
                         Console.WriteLine ( "Begin expr:" + t );
                         BackOne ( );
                         Pars.Add ( new VSExpr ( TokStream ) );
+                        Done = true;
                         break;
 
                     default:

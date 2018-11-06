@@ -16,18 +16,26 @@ namespace VividScript.VStructs
             return "FlatCall:" + FuncName + " Pars:" + CallPars.Pars.Count;
         }
 
-        public override void Exec ( )
+        public override dynamic Exec ( )
         {
             FuncLink funcLink = LocalScope.FindFunc(FuncName,true);
             if ( funcLink != null )
             {
+                dynamic[] par = new dynamic[CallPars.Pars.Count];
+                int i=0;
+                foreach ( VSExpr exp in CallPars.Pars )
+                {
+                    par [ i ] = exp.Exec ( );
+                }
+
                 switch ( funcLink.Type )
                 {
                     case FuncType.CSharp:
-                        funcLink.Link.Call ( "Testing!" );
+                        funcLink.Link.Call ( par );
                         break;
                 }
             }
+            return null;
         }
 
         public override void SetupParser ( )
@@ -42,6 +50,7 @@ namespace VividScript.VStructs
                 BackOne ( );
                 CallPars = new VSCallPars ( TokStream );
                 Console.WriteLine ( "FC:" + t.ToString ( ) );
+                Done = true;
             };
         }
     }

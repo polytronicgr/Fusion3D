@@ -227,6 +227,35 @@ namespace VividScript
                         }
                     }
                 }
+                if ( cur == "+" )
+                {
+                    VToken nt = new VToken(TokenClass.Op,Token.Plus,"+");
+                    ts.Add ( nt );
+                    cur = "";
+                    continue;
+                }
+                if ( cur == "-" )
+                {
+                    VToken nt = new VToken(TokenClass.Op,Token.Minus,"-");
+                    ts.Add ( nt );
+                    cur = "";
+                    continue;
+                }
+                if ( cur == "*" )
+                {
+                    VToken nt = new VToken(TokenClass.Op,Token.Multi,"*");
+                    ts.Add ( nt );
+                    cur = "";
+                    continue;
+                }
+                if ( cur == "/" )
+                {
+                    VToken nt = new VToken(TokenClass.Op,Token.Div,"/");
+                    ts.Add ( nt );
+                    cur = "";
+                    continue;
+                }
+
                 if ( stringOn )
                 {
                     continue;

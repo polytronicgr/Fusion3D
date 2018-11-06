@@ -24,8 +24,9 @@ namespace VividScript
 
         public CodeScope LocalScope = new CodeScope();
 
-        public virtual void Exec ( )
+        public virtual dynamic Exec ( )
         {
+            return null;
         }
 
         public virtual string DebugString ( )
@@ -129,10 +130,7 @@ namespace VividScript
                 }
                 System.Console.WriteLine ( "Tok:" + TokStream.Tokes [ i ].Class.ToString ( ) + " 2:" + TokStream.Tokes [ i ].Token.ToString ( ) + " 3:" + TokStream.Tokes [ i ].Text );
             }
-            System.Console.WriteLine ( "Done." );
-            while ( true )
-            {
-            }
+
             return StrandType.Unknown;
         }
     }

@@ -33,6 +33,7 @@ namespace VividScript.VStructs
                     t = BackOne ( );
                     t = BackOne ( );
                     name = t.Text;
+                    ConsumeNext ( );
                 }
                 VSVar nv = new VSVar
                 {

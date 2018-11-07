@@ -56,6 +56,10 @@ namespace VividScript.VStructs
                 case ExprType.Operator:
                     switch ( e.Op )
                     {
+                        case OpType.EqualTo:
+
+                            return prev == NextE ( i + 1, null );
+
                         case OpType.Times:
                             if ( prev is string )
                             {
@@ -151,6 +155,12 @@ namespace VividScript.VStructs
                         // Expr.Add ( op_e );
                         switch ( t.Token )
                         {
+                            case Token.Equal:
+                                op_e.Op = OpType.EqualTo;
+                                op_e.Type = ExprType.Operator;
+                                Expr.Add ( op_e );
+                                break;
+
                             case Token.Plus:
                                 op_e.Op = OpType.Plus;
                                 op_e.Type = ExprType.Operator;

@@ -1,8 +1,8 @@
 func Entry(int ant)
 
-    loop = false;
+    loop = 1;
 
-    while(loop)
+    while(loop=1)
 
     printf("testing!");
 

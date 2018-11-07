@@ -320,6 +320,16 @@ namespace VividScript
                     tok.Class = TokenClass.Flow;
                     tok.Token = Token.EndLine;
                 }
+                if ( tok.Text [ 0 ] >= "0" [ 0 ] && tok.Text [ 0 ] <= "9" [ 0 ] )
+                {
+                    tok.Class = TokenClass.Value;
+                    tok.Token = Token.Int;
+                }
+                if ( tok.Text == "=" )
+                {
+                    tok.Class = TokenClass.Op;
+                    tok.Token = Token.Equal;
+                }
                 //for(int tc = 0l; tc < tok.Token)
                 //{
                 rs.Add ( tok );

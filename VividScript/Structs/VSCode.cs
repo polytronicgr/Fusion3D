@@ -41,7 +41,7 @@ namespace VividScript.VStructs
                         break;
 
                     case StrandType.FlatStatement:
-                        t = ConsumeNext ( );
+                        //t = ConsumeNext ( );
 
                         Console.WriteLine ( "Flat Statement. FuncCall:" + t.Token + " TXT:" + t.Text );
 

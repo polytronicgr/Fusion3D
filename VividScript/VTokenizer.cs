@@ -260,6 +260,7 @@ namespace VividScript
                     case "!":
                     case "{":
                     case "}":
+                    case ";":
                         if ( cur.Length > 0 )
                         {
                             elements.Add ( cur );
@@ -277,6 +278,7 @@ namespace VividScript
             List<string> final_elements = new List<string>();
             foreach ( string ele in elements )
             {
+                Console.WriteLine ( "E:" + ele );
                 bool keep=false;
                 for ( int i = 0; i < good.Length; i++ )
                 {
@@ -293,7 +295,7 @@ namespace VividScript
                     final_elements.Add ( ne );
                 }
             }
-
+            VTokenStream rs = new VTokenStream();
             foreach ( string word in final_elements )
             {
                 VToken tok = Id(word);
@@ -303,13 +305,19 @@ namespace VividScript
                     tok.Class = TokenClass.Value;
                     tok.Token = Token.String;
                 }
+                if ( tok.Text == ";" )
+                {
+                    tok.Class = TokenClass.Flow;
+                    tok.Token = Token.EndLine;
+                }
+                rs.Add ( tok );
                 Console.WriteLine ( "Tok:" + tok );
             }
 
-            return null;
+            return rs;
         }
 
-        public string good = "!£$%^&*()-=_+-=/*,.<>[]{}()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        public string good = "!£$%^&*()-=_+-=/*,.<>[]{}(;:)abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         public VTokenStream ParseString ( string code )
         {

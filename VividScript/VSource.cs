@@ -13,7 +13,7 @@ namespace VividScript
             string code = File.ReadAllText(path);
             VTokenizer toker = new VTokenizer();
             Tokens = new VTokenStream ( );
-            toker.ParseString ( code );
+            Tokens = toker.ParseString ( code );
         }
 
         /*

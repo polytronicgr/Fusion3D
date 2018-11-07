@@ -83,6 +83,7 @@ namespace VividScript
             AddConv ( "for", TokenClass.Flow, Token.For );
             AddConv ( "next", TokenClass.Flow, Token.Next );
             AddConv ( "while", TokenClass.Flow, Token.While );
+            AddConv ( "wend", TokenClass.Flow, Token.Wend );
             AddConv ( "module", TokenClass.Define, Token.Module );
             AddConv ( "method", TokenClass.Define, Token.Method );
             AddConv ( "function", TokenClass.Define, Token.Func );
@@ -182,7 +183,8 @@ namespace VividScript
 
                 string code1 = code.Substring ( 0, find );
                 string code2 = code.Substring(find+3);
-
+                code1 = code1.Trim ( );
+                code2 = code2.Trim ( );
                 code = code1 + " " + code2;
             }
 
@@ -218,6 +220,13 @@ namespace VividScript
                     cur = cur + ch;
                     continue;
                 }
+
+                if ( ConvTable.ContainsKey ( cur ) )
+                {
+                    elements.Add ( cur );
+                    cur = "";
+                }
+
                 switch ( ch )
                 {
                     case "\n":
@@ -261,6 +270,7 @@ namespace VividScript
                     case "{":
                     case "}":
                     case ";":
+
                         if ( cur.Length > 0 )
                         {
                             elements.Add ( cur );
@@ -310,6 +320,8 @@ namespace VividScript
                     tok.Class = TokenClass.Flow;
                     tok.Token = Token.EndLine;
                 }
+                //for(int tc = 0l; tc < tok.Token)
+                //{
                 rs.Add ( tok );
                 Console.WriteLine ( "Tok:" + tok );
             }

@@ -75,6 +75,7 @@
     <Compile Include="Structs\VSPar.cs" />
     <Compile Include="Structs\VSPars.cs" />
     <Compile Include="Structs\VSVar.cs" />
+    <Compile Include="Structs\VSWhile.cs" />
     <Compile Include="VCompiledSource.cs" />
     <Compile Include="VME.cs" />
     <Compile Include="VSource.cs" />

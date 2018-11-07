@@ -5,7 +5,7 @@ namespace VividScript.VStructs
 {
     public enum ExprType
     {
-        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown, VarValue
+        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown, VarValue, BoolValue
     }
 
     public enum OpType
@@ -23,7 +23,13 @@ namespace VividScript.VStructs
         public string StringV="";
         public int intV=0;
         public float floatV=0;
+        public bool BoolV = false;
         public string VarName="";
+
+        public override string DebugString ( )
+        {
+            return "Expr:" + Expr.Count + " Elements";
+        }
 
         public VSExpr ( VTokenStream s, bool no_parse = false ) : base ( s, no_parse )
         {
@@ -89,6 +95,10 @@ namespace VividScript.VStructs
                     val = e.StringV;
 
                     break;
+
+                case ExprType.BoolValue:
+                    val = e.BoolV;
+                    break;
             }
             if ( i < Expr.Count - 1 )
             {
@@ -124,6 +134,18 @@ namespace VividScript.VStructs
                 }
                 switch ( t.Class )
                 {
+                    case TokenClass.Bool:
+                        VSExpr bool_e = new VSExpr ( TokStream, true )
+                        {
+                            Type = ExprType.BoolValue
+                        };
+                        Expr.Add ( bool_e );
+                        if ( t.Text == "true" )
+                        {
+                            bool_e.BoolV = true;
+                        }
+                        break;
+
                     case TokenClass.Op:
                         VSExpr op_e = new VSExpr(TokStream,true);
                         // Expr.Add ( op_e );

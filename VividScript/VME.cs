@@ -91,6 +91,9 @@ namespace VividScript
                 OutterScope = SystemScope
             };
             CurrentScope = func.LocalScope;
+
+            func.Code.Exec ( );
+
             foreach ( VStruct line in func.Code.Lines )
             {
                 Console.WriteLine ( "Line:" + line.DebugString ( ) );

@@ -45,13 +45,14 @@ namespace VividScript
             Parse ( );
         }
 
-        public virtual void BackOne ( )
+        public virtual VToken BackOne ( )
         {
             TokStream.Pos--;
             if ( TokStream.Pos < 0 )
             {
                 TokStream.Pos = 0;
             }
+            return TokStream.Tokes [ TokStream.Pos ];
         }
 
         public virtual void SkipOne ( )
@@ -117,13 +118,25 @@ namespace VividScript
         {
             System.Console.WriteLine ( "Predicting." );
             int cpos = TokStream.Pos;
+            int imod=0;
+            if ( TokStream.Tokes [ cpos ].Token == Token.LeftPara )
+            {
+                imod = -1;
+            }
+
             for ( int i = cpos; i < TokStream.Len; i++ )
             {
-                if ( TokStream.Tokes [ i ].Token == Token.Equal )
+                int ni = i + imod;
+                if ( TokStream.Tokes [ ni ].Token == Token.While )
+                {
+                    System.Console.WriteLine ( "While!" );
+                    return StrandType.While;
+                }
+                if ( TokStream.Tokes [ ni ].Token == Token.Equal )
                 {
                     return StrandType.Assignment;
                 }
-                switch ( TokStream.Tokes [ i ].Class )
+                switch ( TokStream.Tokes [ ni ].Class )
                 {
                     case TokenClass.Id:
                         break;
@@ -132,7 +145,7 @@ namespace VividScript
                         return StrandType.FlatStatement;
                         break;
                 }
-                System.Console.WriteLine ( "Tok:" + TokStream.Tokes [ i ].Class.ToString ( ) + " 2:" + TokStream.Tokes [ i ].Token.ToString ( ) + " 3:" + TokStream.Tokes [ i ].Text );
+                System.Console.WriteLine ( "Tok:" + TokStream.Tokes [ ni ].Class.ToString ( ) + " 2:" + TokStream.Tokes [ ni ].Token.ToString ( ) + " 3:" + TokStream.Tokes [ ni ].Text );
             }
 
             return StrandType.Unknown;
@@ -141,7 +154,7 @@ namespace VividScript
 
     public enum StrandType
     {
-        Statement, Assignment, Flow, Define, Macro, Header, Extends, Generic, Unknown,
+        Statement, Assignment, Flow, Define, Macro, Header, Extends, Generic, Unknown, While, If, Else, ElseIf, Wend, For, Do, Loop,
         FlatStatement
     }
 }

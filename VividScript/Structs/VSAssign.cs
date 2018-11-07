@@ -28,7 +28,12 @@ namespace VividScript.VStructs
             Parser = ( t ) =>
             {
                 string name = t.Text;
-
+                if ( t.Text == "=" )
+                {
+                    t = BackOne ( );
+                    t = BackOne ( );
+                    name = t.Text;
+                }
                 VSVar nv = new VSVar
                 {
                     Name = name

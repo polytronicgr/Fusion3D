@@ -16,6 +16,15 @@ namespace VividScript.VStructs
             return ( "CodeBody." );
         }
 
+        public override dynamic Exec ( )
+        {
+            foreach ( VStruct l in Lines )
+            {
+                l.Exec ( );
+            }
+            return null;
+        }
+
         public override void SetupParser ( )
         {
             Console.WriteLine ( "Parsing function code-body." );
@@ -28,11 +37,26 @@ namespace VividScript.VStructs
             Parser = ( t ) =>
             {
                 Console.WriteLine ( "Code:" + t.Token + " Txt:" + t.Text );
-
+                if ( t.Token == Token.EndLine )
+                {
+                    return;
+                }
+                if ( t.Token == Token.End )
+                {
+                    Done = true;
+                    return;
+                }
                 StrandType strand_type=Predict ( );
                 // SkipOne ( );
                 switch ( strand_type )
                 {
+                    case StrandType.While:
+                        //t = ConsumeNext ( );
+                        Lines.Add ( new VSWhile ( TokStream ) );
+                        //Console.WriteLine ( "while:" + t );
+
+                        break;
+
                     case StrandType.Assignment:
                         //t = ConsumeNext ( );
                         VSAssign as_line = new VSAssign(TokStream);

@@ -9,6 +9,16 @@ namespace VividScript
 
         public void RegisterOSFuncs ( )
         {
+            // - Millisecs()
+
+            CFuncLink millisecs = new CFuncLink
+            {
+                Link = (t) =>
+                {
+                    return (dynamic)Environment.TickCount;
+                }
+            };
+
             // - printF( <Expressions> )
 
             CFuncLink printF = new CFuncLink

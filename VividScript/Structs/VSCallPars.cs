@@ -19,6 +19,7 @@ namespace VividScript.VStructs
                 Console.WriteLine ( "T:" + t );
                 switch ( t.Class )
                 {
+                    case TokenClass.Id:
                     case TokenClass.Value:
                         Console.WriteLine ( "Begin expr:" + t );
                         BackOne ( );

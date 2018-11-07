@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace VividScript
 {
@@ -11,6 +9,14 @@ namespace VividScript
 
         public VSource ( string path )
         {
+            Path = path;
+            string code = File.ReadAllText(path);
+            VTokenizer toker = new VTokenizer();
+            Tokens = new VTokenStream ( );
+            toker.ParseString ( code );
+        }
+
+        /*
             Path = path;
             //FileStream fs = new FileStream(path, FileMode.Open,
             //  FileAccess.Read);
@@ -51,9 +57,12 @@ namespace VividScript
                 //Console.WriteLine("Parsed line. " + ts.Len + " tokens.");
                 foreach ( VToken t in ts.Tokes )
                 {
-                    if ( t.Text.Contains ( System.Environment.NewLine ) && t.Text.Contains ( "\r" ) && t.Text.Length < 3 )
+                    if ( t.Token != Token.String )
                     {
-                        continue;
+                        if ( t.Text.Contains ( System.Environment.NewLine ) && t.Text.Contains ( "\r" ) && t.Text.Length < 3 )
+                        {
+                            continue;
+                        }
                     }
 
                     Tokens.Add ( t );
@@ -112,5 +121,6 @@ namespace VividScript
             Console.WriteLine ( "Done." );
             Console.WriteLine ( "Parsed Source:" + Tokens.Len + " tokens." );
         }
+        */
     }
 }

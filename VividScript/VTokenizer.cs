@@ -168,8 +168,152 @@ namespace VividScript
             return nt;
         }
 
+        public VTokenStream ParseString2 ( string code )
+        {
+            //code = code.Replace ( "   ", "" );
+
+            while ( false )
+            {
+                int find = code.IndexOf("  ");
+                if ( find == -1 )
+                {
+                    break;
+                }
+
+                string code1 = code.Substring ( 0, find );
+                string code2 = code.Substring(find+3);
+
+                code = code1 + " " + code2;
+            }
+
+            List<string> elements = new List<string>();
+            string cur = "";
+            bool string_on=false;
+            for ( int c = 0; c < code.Length; c++ )
+            {
+                string ch = code[c].ToString();
+
+                if ( ch == "\"" )
+                {
+                    if ( !string_on )
+                    {
+                        string_on = true;
+                        if ( cur.Length > 0 )
+                        {
+                            elements.Add ( cur );
+                        }
+                        cur = "";
+                        continue;
+                    }
+                    else
+                    {
+                        elements.Add ( "\"" + cur + "\"" );
+                        string_on = false;
+                        cur = "";
+                        continue;
+                    }
+                }
+                if ( string_on )
+                {
+                    cur = cur + ch;
+                    continue;
+                }
+                switch ( ch )
+                {
+                    case "\n":
+
+                        int lg =0;
+                        for ( int nn = 0; nn < cur.Length; nn++ )
+                        {
+                            if ( cur [ nn ].ToString ( ) != " " && cur [ nn ].ToString ( ) != " " )
+                            {
+                                lg = nn;
+                            }
+                        }
+                        cur = cur.Substring ( 0, lg );
+
+                        break;
+
+                    case " ":
+                        if ( cur.Length > 0 )
+                        {
+                            elements.Add ( cur );
+                        }
+                        cur = "";
+                        continue;
+                        break;
+
+                    case "+":
+                    case "/":
+                    case "-":
+                    case "*":
+                    case "<":
+                    case ">":
+                    case "=":
+                    case ".":
+                    case ",":
+                    case ":":
+                    case "[":
+                    case "]":
+                    case "(":
+                    case ")":
+                    case "!":
+                    case "{":
+                    case "}":
+                        if ( cur.Length > 0 )
+                        {
+                            elements.Add ( cur );
+                        }
+
+                        elements.Add ( ch );
+                        cur = "";
+
+                        continue;
+                        break;
+                }
+                cur += ch;
+                // Console.WriteLine ( ch );
+            }
+            List<string> final_elements = new List<string>();
+            foreach ( string ele in elements )
+            {
+                bool keep=false;
+                for ( int i = 0; i < good.Length; i++ )
+                {
+                    if ( ele.Contains ( good [ i ].ToString ( ) ) )
+                    {
+                        keep = true;
+                        continue;
+                    }
+                }
+                string ne = "";
+                ne = ele.Trim ( );
+                if ( keep )
+                {
+                    final_elements.Add ( ne );
+                }
+            }
+
+            foreach ( string word in final_elements )
+            {
+                VToken tok = Id(word);
+                if ( tok.Text [ 0 ].ToString ( ) == "\"" )
+                {
+                    tok.Text = tok.Text.Substring ( 1, tok.Text.Length - 2 );
+                    tok.Class = TokenClass.Value;
+                    tok.Token = Token.String;
+                }
+                Console.WriteLine ( "Tok:" + tok );
+            }
+
+            return null;
+        }
+
+        public string good = "!£$%^&*()-=_+-=/*,.<>[]{}()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
         public VTokenStream ParseString ( string code )
         {
+            return ParseString2 ( code );
             Console.WriteLine ( "Parsing:" + code );
             VTokenStream ts = new VTokenStream();
             bool stringOn = false;

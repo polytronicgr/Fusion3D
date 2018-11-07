@@ -41,6 +41,10 @@ namespace VividScript.VStructs
                 {
                     return;
                 }
+                if ( t.Token == Token.EndLine )
+                {
+                    return;
+                }
                 if ( t.Token == Token.End )
                 {
                     Done = true;

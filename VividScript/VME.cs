@@ -73,7 +73,7 @@ namespace VividScript
             Entry = entry;
         }
 
-        public void RunEntry ( )
+        public CodeScope RunEntry ( )
         {
             VSFunc entry_func = Entry.FindSystemFunc("Entry");
             if ( entry_func == null )
@@ -81,7 +81,8 @@ namespace VividScript
                 Error ( "Unable to find entry point." );
             }
             PushScope ( SystemScope );
-            ExecuteFunc ( entry_func );
+            return ExecuteFunc ( entry_func );
+            PopScope ( );
         }
 
         public static void PopScope ( )
@@ -102,7 +103,7 @@ namespace VividScript
             Main.Scopes.Push ( scope );
         }
 
-        public void ExecuteFunc ( VSFunc func )
+        public CodeScope ExecuteFunc ( VSFunc func )
         {
             Log ( "Running Func:" + func.Name );
 
@@ -111,6 +112,7 @@ namespace VividScript
             func.Code.Exec ( );
 
             PopScope ( );
+            return func.LocalScope;
         }
     }
 }

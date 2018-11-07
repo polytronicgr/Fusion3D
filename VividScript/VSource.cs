@@ -10,10 +10,37 @@ namespace VividScript
         public VSource ( string path )
         {
             Path = path;
-            string code = File.ReadAllText(path);
+            string[] code = File.ReadAllLines(path);
+
+            int ic=0;
             VTokenizer toker = new VTokenizer();
-            Tokens = new VTokenStream ( );
-            Tokens = toker.ParseString ( code );
+            VTokenStream str= new VTokenStream();
+            while ( true )
+            {
+                System.Console.WriteLine ( "Line:" + code [ ic ] );
+                VTokenStream tokes = toker.ParseString2(code[ic]);
+
+                str.Add ( new VToken ( TokenClass.BeginLine, Token.BeginLine, "" ) );
+                foreach ( VToken t in tokes.Tokes )
+
+                {
+                    str.Add ( t );
+
+                    System.Console.WriteLine ( "Toke:" + t.Text );
+                }
+
+                ic++;
+                if ( ic == code.Length )
+                {
+                    break;
+                }
+            }
+            for ( int i = 0; i < str.Len; i++ )
+            {
+                System.Console.WriteLine ( "T:" + str.Tokes [ i ] );
+            }
+
+            Tokens = str;
         }
 
         /*

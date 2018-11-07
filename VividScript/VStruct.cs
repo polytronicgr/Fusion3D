@@ -85,6 +85,30 @@ namespace VividScript
             return TokStream.Tokes [ TokStream.Pos + c ];
         }
 
+        public virtual void PrevBegin ( )
+        {
+            for ( int i = TokStream.Pos - 1; i == 0; i-- )
+            {
+                if ( TokStream.Tokes [ i ].Class == TokenClass.BeginLine )
+                {
+                    TokStream.Pos = i;
+                    return;
+                }
+            }
+        }
+
+        public virtual void NextBegin ( )
+        {
+            for ( int i = TokStream.Pos; i < TokStream.Len; i++ )
+            {
+                if ( TokStream.Tokes [ i ].Class == TokenClass.BeginLine )
+                {
+                    TokStream.Pos = i;
+                    return;
+                }
+            }
+        }
+
         public virtual void Parse ( )
         {
             SetupParser ( );
@@ -97,6 +121,39 @@ namespace VividScript
             {
                 VToken nt = PeekNext();
                 // Console.WriteLine("VS:" + nt.Text + " T:" + nt.Token);
+                Trace = Trace + TokStream.Tokes [ TokStream.Pos ];
+                TextTrace = TextTrace + " " + TokStream.Tokes [ TokStream.Pos ].Text;
+                if ( TokStream.Tokes [ TokStream.Pos ].Class == TokenClass.BeginLine )
+                {
+                    if ( PeekNext ( ) == null )
+                    {
+                        Done = true;
+                        return;
+                    }
+                    ConsumeNext ( );
+                    if ( PeekNext ( ) == null )
+                    {
+                        Done = true;
+                        return;
+                    }
+                    if ( PeekNext ( ).Class == TokenClass.BeginLine )
+                    {
+                        ConsumeNext ( );
+                    }
+                }
+                if ( PeekNext ( ) == null )
+                {
+                    Done = true;
+                    return;
+                }
+                if ( PeekNext ( ).Class == TokenClass.BeginLine )
+                {
+                    if ( TokStream.Pos >= TokStream.Len - 1 )
+                    {
+                        Done = true;
+                        return;
+                    }
+                }
                 Parser ( TokStream.GetNext ( ) );
                 if ( Done )
                 {
@@ -104,6 +161,9 @@ namespace VividScript
                 }
             }
         }
+
+        public string Trace = "";
+        public string TextTrace = "";
 
         public VToken ConsumeNext ( )
         {
@@ -118,6 +178,10 @@ namespace VividScript
         {
             System.Console.WriteLine ( "Predicting." );
             int cpos = TokStream.Pos;
+            if ( cpos >= TokStream.Len - 1 )
+            {
+                return StrandType.Unknown;
+            }
             int imod=0;
             if ( TokStream.Tokes [ cpos ].Token == Token.LeftPara )
             {

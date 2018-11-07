@@ -28,7 +28,7 @@ namespace VividScript.VStructs
         {
             Parser = ( t ) =>
             {
-                Console.WriteLine ( t );
+                Console.WriteLine ( t.ToString ( ) + PeekNext ( ).ToString ( ) );
                 Initial = new VSAssign ( TokStream );
                 ConsumeNext ( );
                 Condition = new VSExpr ( TokStream );

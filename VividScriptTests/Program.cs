@@ -15,6 +15,8 @@ namespace VividScriptTests
             test_vme.SetEntry ( s.EntryPoint );
 
             test_vme.RunEntry ( );
+
+            while ( true ) { }
         }
     }
 }

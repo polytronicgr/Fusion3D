@@ -5,14 +5,14 @@ namespace VividScript
 {
     public enum TokenClass
     {
-        Type, Value, Statement, Define, Op, Flow, Id, Sep, Scope, Array, New, Bool, Assign
+        Type, Value, Statement, Define, Op, Flow, Id, Sep, Scope, Array, New, Bool, Assign, BeginLine
     }
 
     public enum Token
     {
         If, Else, End, Module, Method, Func, Equal, Plus, Minus, Multi, Div, Comma, Peroid, Colon, SemiColon, StringMark, Int, Short, Byte, Long, Float, Double, String,
         Var, Transient, State, Auto, Link, Pow, ElseIf, For, Next, While, Id, LeftPara, RightPara, LeftArray, RightArray, New, Bool, True, False, Greater, Lesser, Not,
-        GreatEqual, LessEqual, EndLine, Wend
+        GreatEqual, LessEqual, EndLine, Wend, BeginLine
     }
 
     public class VToken

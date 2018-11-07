@@ -21,6 +21,11 @@ namespace VividScript.VStructs
 
             {
                 Console.WriteLine ( "T:" + t.Token + " T:" + t.Text );
+                if ( t.Token == Token.RightPara )
+                {
+                    Done = true;
+                    return;
+                }
                 if ( t.Token == Token.Comma )
                 {
                     return;

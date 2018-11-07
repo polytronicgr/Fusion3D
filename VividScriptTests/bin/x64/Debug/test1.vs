@@ -1,14 +1,23 @@
 func Entry(int ant)
 
-    loop = 0;
+    loop = 25+26;
 
-    for(loop=0;loop<10;loop = loop +1)
+    while(loop>0)
+    
+        loop = loop - 1;
 
-        if(loop>5)
-            printf(loop);
+        v = 0;
+
+        for(v=0;v<5;v=v+1)
+
+            if(v>2)
+            
+                printf(loop);
+
+            end
+
         end
 
     end
-
 
 end 

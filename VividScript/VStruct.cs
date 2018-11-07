@@ -119,6 +119,10 @@ namespace VividScript
             int cpos = TokStream.Pos;
             for ( int i = cpos; i < TokStream.Len; i++ )
             {
+                if ( TokStream.Tokes [ i ].Token == Token.Equal )
+                {
+                    return StrandType.Assignment;
+                }
                 switch ( TokStream.Tokes [ i ].Class )
                 {
                     case TokenClass.Id:

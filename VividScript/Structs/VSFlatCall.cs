@@ -18,7 +18,7 @@ namespace VividScript.VStructs
 
         public override dynamic Exec ( )
         {
-            FuncLink funcLink = LocalScope.FindFunc(FuncName,true);
+            FuncLink funcLink = VME.CurrentScope.FindFunc(FuncName,true);
             if ( funcLink != null )
             {
                 dynamic[] par = new dynamic[CallPars.Pars.Count];

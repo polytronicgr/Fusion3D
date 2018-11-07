@@ -33,6 +33,13 @@ namespace VividScript.VStructs
                 // SkipOne ( );
                 switch ( strand_type )
                 {
+                    case StrandType.Assignment:
+                        //t = ConsumeNext ( );
+                        VSAssign as_line = new VSAssign(TokStream);
+                        Lines.Add ( as_line );
+
+                        break;
+
                     case StrandType.FlatStatement:
                         t = ConsumeNext ( );
 

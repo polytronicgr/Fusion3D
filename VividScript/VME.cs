@@ -28,6 +28,8 @@ namespace VividScript
 
         public VSEntry Entry = null;
 
+        public static CodeScope CurrentScope = null;
+
         public void AddCFunc ( string name, CFuncLink link )
         {
             FuncLink FuncLink = new FuncLink
@@ -78,10 +80,9 @@ namespace VividScript
             {
                 OutterScope = SystemScope
             };
-
+            CurrentScope = func.LocalScope;
             foreach ( VStruct line in func.Code.Lines )
             {
-                line.LocalScope = func.LocalScope;
                 Console.WriteLine ( "Line:" + line.DebugString ( ) );
                 line.Exec ( );
             }

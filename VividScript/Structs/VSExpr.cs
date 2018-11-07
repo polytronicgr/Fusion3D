@@ -5,7 +5,7 @@ namespace VividScript.VStructs
 {
     public enum ExprType
     {
-        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown
+        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown, VarValue
     }
 
     public enum OpType
@@ -23,6 +23,7 @@ namespace VividScript.VStructs
         public string StringV="";
         public int intV=0;
         public float floatV=0;
+        public string VarName="";
 
         public VSExpr ( VTokenStream s, bool no_parse = false ) : base ( s, no_parse )
         {
@@ -73,6 +74,11 @@ namespace VividScript.VStructs
                     }
                     break;
 
+                case ExprType.VarValue:
+
+                    val = VME.CurrentScope.FindVar ( e.VarName, true ).Value;
+                    break;
+
                 case ExprType.IntValue:
 
                     val = e.intV;
@@ -111,7 +117,11 @@ namespace VividScript.VStructs
                     Done = true;
                     return;
                 }
-
+                if ( t.Token == Token.EndLine )
+                {
+                    Done = true;
+                    return;
+                }
                 switch ( t.Class )
                 {
                     case TokenClass.Op:
@@ -145,6 +155,15 @@ namespace VividScript.VStructs
                         }
                         break;
 
+                    case TokenClass.Id:
+                        VSExpr ve = new VSExpr ( TokStream, true )
+                        {
+                            Type = ExprType.VarValue,
+                            VarName = t.Text
+                        };
+                        Expr.Add ( ve );
+                        break;
+
                     case TokenClass.Value:
                         Console.WriteLine ( "Value:" + t.Text );
 
@@ -152,6 +171,11 @@ namespace VividScript.VStructs
                         Expr.Add ( exp );
                         switch ( t.Token )
                         {
+                            case Token.Id:
+                                exp.Type = ExprType.VarValue;
+                                exp.VarName = t.Text;
+                                break;
+
                             case Token.String:
                                 exp.Type = ExprType.StringValue;
                                 exp.StringV = t.Text;

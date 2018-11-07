@@ -4,12 +4,14 @@ module TestModule
 
 end
 
-func Entry(int age,string name)
+func Entry(int age)
+
+    name = "Antony Wells"
 
     printf("Hey testing!"+(" Oh yeah!"+"Damn")+" This is working!")
  
     printf("CodeValue:")
 
-    printf(25+"test")
+    printf("Test:"+name)
 
 end 

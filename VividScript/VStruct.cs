@@ -127,9 +127,18 @@ namespace VividScript
             for ( int i = cpos; i < TokStream.Len; i++ )
             {
                 int ni = i + imod;
+                if ( TokStream.Tokes [ i ].Token == Token.If )
+                {
+                    return StrandType.If;
+                }
+                if ( TokStream.Tokes [ ni ].Token == Token.For )
+                {
+                    //System.Console.WriteLine ( "Yep!" );
+                    return StrandType.For;
+                }
                 if ( TokStream.Tokes [ ni ].Token == Token.While )
                 {
-                    System.Console.WriteLine ( "While!" );
+                    //System.Console.WriteLine ( "While!" );
                     return StrandType.While;
                 }
                 if ( TokStream.Tokes [ ni ].Token == Token.Equal )

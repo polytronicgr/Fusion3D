@@ -37,7 +37,7 @@ namespace VividScript
                     return Scope.OutterScope.FindFunc ( name, true );
                 }
             }
-            VME.Main.Error ( "Could not find func called:" + name, "ScopeError" );
+            // VME.Main.Error ( "Could not find func called:" + name, "ScopeError" );
             return null;
         }
 
@@ -57,7 +57,7 @@ namespace VividScript
                     return Scope.OutterScope.FindVar ( name, true );
                 }
             }
-            VME.Main.Error ( "Could not find variable called:" + name, "ScopeError" );
+            //VME.Main.Error ( "Could not find variable called:" + name, "ScopeError" );
             return null;
         }
     }

@@ -50,6 +50,14 @@ namespace VividScript.VStructs
                 // SkipOne ( );
                 switch ( strand_type )
                 {
+                    case StrandType.If:
+                        Lines.Add ( new VSIf ( TokStream ) );
+                        break;
+
+                    case StrandType.For:
+                        Lines.Add ( new VSFor ( TokStream ) );
+                        break;
+
                     case StrandType.While:
                         //t = ConsumeNext ( );
                         Lines.Add ( new VSWhile ( TokStream ) );

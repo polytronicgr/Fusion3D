@@ -1,11 +1,14 @@
 func Entry(int ant)
 
-    loop = 1;
+    loop = 0;
 
-    while(loop=1)
+    for(loop=0;loop<10;loop = loop +1)
 
-    printf("testing!");
+        if(loop>5)
+            printf(loop);
+        end
 
     end
+
 
 end 

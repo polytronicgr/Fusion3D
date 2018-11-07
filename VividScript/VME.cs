@@ -6,6 +6,7 @@ namespace VividScript
     public class VME
     {
         public CodeScope SystemScope = new CodeScope();
+        public System.Collections.Generic.Stack<CodeScope> Scopes = new System.Collections.Generic.Stack<CodeScope>();
 
         public void RegisterOSFuncs ( )
         {
@@ -38,7 +39,7 @@ namespace VividScript
 
         public VSEntry Entry = null;
 
-        public static CodeScope CurrentScope = null;
+        public static CodeScope CurrentScope => Main.Scopes.Peek ( );
 
         public void AddCFunc ( string name, CFuncLink link )
         {
@@ -79,26 +80,37 @@ namespace VividScript
             {
                 Error ( "Unable to find entry point." );
             }
+            PushScope ( SystemScope );
             ExecuteFunc ( entry_func );
+        }
+
+        public static void PopScope ( )
+        {
+            Main.Scopes.Pop ( );
+        }
+
+        public static void PushScope ( CodeScope scope )
+        {
+            if ( Main.Scopes.Count != 0 )
+            {
+                scope.OutterScope = Main.Scopes.Peek ( );
+            }
+            else
+            {
+                scope.OutterScope = null;
+            }
+            Main.Scopes.Push ( scope );
         }
 
         public void ExecuteFunc ( VSFunc func )
         {
             Log ( "Running Func:" + func.Name );
 
-            func.LocalScope = new CodeScope
-            {
-                OutterScope = SystemScope
-            };
-            CurrentScope = func.LocalScope;
+            PushScope ( func.LocalScope );
 
             func.Code.Exec ( );
 
-            foreach ( VStruct line in func.Code.Lines )
-            {
-                Console.WriteLine ( "Line:" + line.DebugString ( ) );
-                line.Exec ( );
-            }
+            PopScope ( );
         }
     }
 }

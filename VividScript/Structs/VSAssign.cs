@@ -17,7 +17,15 @@ namespace VividScript.VStructs
         {
             if ( !CreatedVars )
             {
-                VME.CurrentScope.RegisterVar ( Vars [ 0 ] );
+                VSVar qv = VME.CurrentScope.FindVar( Vars[0].Name,true );
+                if ( qv != null )
+                {
+                    Vars [ 0 ] = qv;
+                }
+                else
+                {
+                    VME.CurrentScope.RegisterVar ( Vars [ 0 ] );
+                }
             }
             Vars [ 0 ].Value = Expr [ 0 ].NextE ( 0, null );
             return null;
@@ -50,7 +58,7 @@ namespace VividScript.VStructs
                             ConsumeNext ( );
                             Expr.Add ( new VSExpr ( TokStream ) );
                             BackOne ( );
-                            if ( PeekNext ( ).Token == Token.EndLine )
+                            if ( PeekNext ( ).Token == Token.EndLine || PeekNext ( ).Token == Token.RightPara )
                             {
                                 Done = true;
                                 return;

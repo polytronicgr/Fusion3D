@@ -70,7 +70,9 @@
     <Compile Include="Structs\VSEntry.cs" />
     <Compile Include="Structs\VSExpr.cs" />
     <Compile Include="Structs\VSFlatCall.cs" />
+    <Compile Include="Structs\VSFor.cs" />
     <Compile Include="Structs\VSFunc.cs" />
+    <Compile Include="Structs\VSIf.cs" />
     <Compile Include="Structs\VSModule.cs" />
     <Compile Include="Structs\VSPar.cs" />
     <Compile Include="Structs\VSPars.cs" />

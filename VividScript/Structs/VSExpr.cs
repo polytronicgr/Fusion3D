@@ -56,6 +56,14 @@ namespace VividScript.VStructs
                 case ExprType.Operator:
                     switch ( e.Op )
                     {
+                        case OpType.LessThan:
+
+                            return prev < NextE ( i + 1, null );
+
+                        case OpType.MoreThan:
+
+                            return prev > NextE ( i + 1, null );
+
                         case OpType.EqualTo:
 
                             return prev == NextE ( i + 1, null );
@@ -155,6 +163,18 @@ namespace VividScript.VStructs
                         // Expr.Add ( op_e );
                         switch ( t.Token )
                         {
+                            case Token.Greater:
+                                op_e.Op = OpType.MoreThan;
+                                op_e.Type = ExprType.Operator;
+                                Expr.Add ( op_e );
+                                break;
+
+                            case Token.Lesser:
+                                op_e.Op = OpType.LessThan;
+                                op_e.Type = ExprType.Operator;
+                                Expr.Add ( op_e );
+                                break;
+
                             case Token.Equal:
                                 op_e.Op = OpType.EqualTo;
                                 op_e.Type = ExprType.Operator;

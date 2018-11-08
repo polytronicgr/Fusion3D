@@ -1,0 +1,82 @@
+#version 330 core
+
+in vec2 UV;
+
+out vec3 color;
+
+uniform sampler2D tR;
+uniform sampler2D tB;
+
+
+float lineValue(vec2 cv){
+
+    float v = texture2D(tR,cv+vec2(-0.001,0)).r;
+    float v2 = texture2D(tR,cv).r;
+    float v3 = texture2D(tR,cv+vec2(0.001,0)).r;
+    float v4 = texture2D(tR,cv+vec2(0,-0.01)).r;
+    float v5 = texture2D(tR,cv+vec2(0,0.01)).r;
+    float rv=0;
+   // if(v2<0.9){
+      //  rv =1.0;
+      //  if(v>0.8 || v3>0.9)
+       // {
+         //   rv = 0.0;
+        //}
+
+    //}
+
+    //if(v2<){
+       // rv = v2;
+    //}
+
+if(v2<0.95){
+    rv = v2;
+    if(v>0.95 || v3>0.95 || v4>0.95 || v5>0.95)
+    {
+        rv=1.0;
+    }else{
+        rv=0.0;
+    }
+
+}else{
+    rv=0.0;
+}
+
+
+    
+
+ return rv;
+
+}
+
+void main(){
+ 
+    
+    float bv = lineValue(UV);
+    if(bv<0.2)
+    {
+      //  bv = 0.0;
+    }else{
+    //    bv = 1.0;
+    }
+
+
+
+    //for(int i=0;i<8;i++){
+       
+    //}
+ vec3 bc = texture2D(tB,UV).rgb;
+    vec3 fc = vec3(bv,bv,bv);
+    if(fc.r>1.0){
+        fc.r=1.0;
+    }
+    if(fc.g>1.0){
+        fc.g=1.0;
+    }
+    if(fc.b>1.0){
+        fc.b=1.0;
+    }
+
+    color = fc;
+
+}

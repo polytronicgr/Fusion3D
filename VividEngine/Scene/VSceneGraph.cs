@@ -20,7 +20,7 @@ namespace Vivid3D.Scene
 
         public SceneGraph3D SubGraph = null;
 
-        private XInput.XPad Pad0=null;
+   
 
         public ClassIO ClassCopy
         {
@@ -468,11 +468,7 @@ namespace Vivid3D.Scene
 
         public virtual void Update ( )
         {
-            if ( Pad0 == null )
-            {
-                Pad0 = new XInput.XPad ( 0 );
-                //Pad0.Update ( );
-            }
+           
 
             //var tp = new XInput.XPad(0);
 

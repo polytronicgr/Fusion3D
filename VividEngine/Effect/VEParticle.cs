@@ -2,7 +2,7 @@
 {
     public class EParticle : Effect3D
     {
-        public EParticle ( ) : base ( "", "Data\\Shader\\vsParticle.glsl", "Data\\Shader\\fsParticle.glsl" )
+        public EParticle ( ) : base ( "", "data/Shader/vsParticle.glsl", "data/Shader/fsParticle.glsl" )
         {
         }
 

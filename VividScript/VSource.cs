@@ -10,7 +10,7 @@ namespace VividScript
         public VSource ( string path )
         {
             Path = path;
-            string[] code = File.ReadAllLines(path);
+        string[] code = File.ReadAllLines(path);
 
             int ic=0;
             VTokenizer toker = new VTokenizer();

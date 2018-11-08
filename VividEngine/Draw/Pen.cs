@@ -13,7 +13,7 @@ namespace Vivid3D.Draw
         public Vector4 Col = Vector4.One;
         public float Blur = 0.2f;
 
-        public VEQuadBlur2 ( ) : base ( "", "Data\\Shader\\blur2VS.glsl", "Data\\Shader\\blur2FS.glsl" )
+        public VEQuadBlur2 ( ) : base ( "", "data/Shader/blur2VS.glsl", "data/Shader/blur2FS.glsl" )
         {
         }
 
@@ -32,7 +32,7 @@ namespace Vivid3D.Draw
         public float Blur = 0.2f;
         public float Refract = 0.25f;
 
-        public VEQuadBlur ( ) : base ( "", "Data\\Shader\\blurVS.glsl", "Data\\Shader\\blurFS.glsl" )
+        public VEQuadBlur ( ) : base ( "", "data/Shader/blurVS.glsl", "data/Shader/blurFS.glsl" )
         {
         }
 
@@ -53,7 +53,7 @@ namespace Vivid3D.Draw
     {
         public Vector4 Col = Vector4.One;
 
-        public VEQuad ( ) : base ( "", "Data\\Shader\\drawVS.txt", "Data\\Shader\\drawFS.txt" )
+        public VEQuad ( ) : base ( "", "data/Shader/drawVS.txt", "data/Shader/drawFS.txt" )
         {
         }
 
@@ -90,7 +90,7 @@ namespace Vivid3D.Draw
             QFX = new VEQuad ( );
             BFX = new VEQuadBlur ( );
             BFX2 = new VEQuadBlur2 ( );
-            WhiteTex = new VTex2D ( "Data\\ui\\skin\\white.png", LoadMethod.Single );
+            WhiteTex = new VTex2D ( "data/ui/skin/white.png", LoadMethod.Single );
         }
 
         public static void DraqQuadBlur2 ( )

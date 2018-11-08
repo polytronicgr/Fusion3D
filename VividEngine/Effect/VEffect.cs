@@ -103,7 +103,7 @@ namespace Vivid3D.Effect
             GL.AttachShader ( _Program, _Vert );
             GL.AttachShader ( _Program, _Frag );
             GL.LinkProgram ( _Program );
-
+           
             //  GL.DetachShader(_Program, _Vert);
             // GL.DetachShader(_Program, _Frag);
             //GL.DeleteShader(_Vert);

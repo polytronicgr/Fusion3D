@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vivid3D</RootNamespace>
     <AssemblyName>Vivid3D</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\VividEdit\</OutputPath>
+    <OutputPath>bin\x64\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,22 +51,18 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="irrKlang.NET4">
-      <HintPath>..\Lib\irrKlang.NET4.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="XInputDotNetPure">
-      <HintPath>..\..\..\..\..\..\Dev\Xinput2\XInputDotNet-master\BinariesX64\Release\XInputDotNetPure.dll</HintPath>
+    <Reference Include="irrKlang.NET4">
+      <HintPath>..\Lib\irrKlang.NET4.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +93,6 @@
     <Compile Include="Script\ScriptBase.cs" />
     <Compile Include="Script\ScriptMod.cs" />
     <Compile Include="Script\ScriptTemplate.cs" />
-    <Compile Include="Speech\SpeechOut.cs" />
     <Compile Include="Terrain\GraphTerrain.cs" />
     <Compile Include="Texture\Tex2DRaw.cs" />
     <Compile Include="Util\Texture\LeafPacker.cs" />
@@ -128,7 +123,6 @@
     <Compile Include="Tex\Tex2D.cs" />
     <Compile Include="Tex\TexBase.cs" />
     <Compile Include="State\StarState.cs" />
-    <Compile Include="Sound\VSoundSys.cs" />
     <Compile Include="Settings\Quality.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Archive\VirtualFileSystem.cs" />
@@ -199,10 +193,12 @@
     <Compile Include="ParticleSystem\Particle.cs" />
     <Compile Include="ParticleSystem\ParticleEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XInput\XInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\NewFolder1\" />
+    <Folder Include="Speech\" />
+    <Folder Include="XInput\" />
+    <Folder Include="Sound\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AssimpNet">

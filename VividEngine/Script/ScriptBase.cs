@@ -33,7 +33,7 @@ namespace Vivid3D.Script
 
             Compiled = true;
             script = CSScript.Evaluator.LoadCode ( System.IO.File.ReadAllText ( FilePath ) );
-            script.Pad = new XInput.XPad ( 0 );
+          
             script.Node = node;
             System.Console.WriteLine ( "Script:" + FilePath + " Compiled." );
         }

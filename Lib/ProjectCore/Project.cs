@@ -6,7 +6,7 @@ namespace ProjectCore
 {
     public class Project
     {
-        public static string ProjectPath = "c:\\projs\\";
+        public static string ProjectPath = "c:/projs/";
 
         public DataIO ProjData = null;
         public string BasePath { get; set; }
@@ -20,8 +20,8 @@ namespace ProjectCore
         public Project ( string path )
         {
             IDEPath = path;
-            BasePath = ProjectPath + path + "\\";
-            ContentPath = BasePath + "Content\\";
+            BasePath = ProjectPath + path + "/";
+            ContentPath = BasePath + "Content/";
             ProjData = new DataIO ( BasePath + "projectData" );
 
             dynamic name = ProjData.GetData("Name");
@@ -40,10 +40,10 @@ namespace ProjectCore
         {
             IDEPath = name;
             Directory.CreateDirectory ( ProjectPath + name );
-            Directory.CreateDirectory ( ProjectPath + name + "\\Content\\" );
+            Directory.CreateDirectory ( ProjectPath + name + "/Content/" );
 
-            BasePath = ProjectPath + name + "\\";
-            ContentPath = BasePath + "Content\\";
+            BasePath = ProjectPath + name + "/";
+            ContentPath = BasePath + "Content/";
 
             ProjData = new DataIO ( BasePath + "projectData" );
 

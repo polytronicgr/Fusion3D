@@ -31,7 +31,7 @@ namespace Vivid3D.Resonance
 
         public void InitUI ( )
         {
-            Black = new Texture.VTex2D ( "data\\ui\\black.png", Texture.LoadMethod.Single, false );
+            Black = new Texture.VTex2D ( "data/ui/black.png", Texture.LoadMethod.Single, false );
             Font = new VFont ( "data/font/times.ttf.vf" );
         }
 

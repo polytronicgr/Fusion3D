@@ -18,7 +18,7 @@ namespace Vivid3D.FXS
             set;
         }
 
-        public FXLitImage ( ) : base ( "", "Data/Shader/LitImageVS.glsl", "Data/Shader/LitImageFS.glsl" )
+        public FXLitImage ( ) : base ( "", "data/Shader/LitImageVS.glsl", "data/Shader/LitImageFS.glsl" )
         {
         }
 

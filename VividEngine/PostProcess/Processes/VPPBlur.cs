@@ -37,7 +37,7 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float Blur = 0.5f;
 
-        public VEBlur ( ) : base ( "", "Data\\Shader\\blurVS.txt", "Data\\Shader\\blurFS.txt" )
+        public VEBlur ( ) : base ( "", "data/Shader/blurVS.txt", "data/Shader/blurFS.txt" )
         {
         }
 

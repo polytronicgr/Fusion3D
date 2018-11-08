@@ -2,7 +2,7 @@
 {
     public class ENoFX : Effect3D
     {
-        public ENoFX ( ) : base ( "", "Data/Shader/vsNoFX.glsl", "Data/Shader/fsNoFX.glsl" )
+        public ENoFX ( ) : base ( "", "data/Shader/vsNoFX.glsl", "data/Shader/fsNoFX.glsl" )
         {
         }
 
@@ -20,7 +20,7 @@
         public static float LightMod = 1.0f;
         public static float MatMod = 1.0f;
 
-        public ELightMap ( ) : base ( "", "Data/Shader/vsLightMap.glsl", "Data/Shader/fsLightMap.glsl" )
+        public ELightMap ( ) : base ( "", "data/Shader/vsLightMap.glsl", "data/Shader/fsLightMap.glsl" )
         {
         }
 
@@ -42,7 +42,7 @@
         public static float LightMod = 1.0f;
         public static float MatMod = 1.0f;
 
-        public ETerrain ( ) : base ( "", "Data/Shader/vsTerrain.glsl", "Data/Shader/fsTerrain.glsl" )
+        public ETerrain ( ) : base ( "", "data/Shader/vsTerrain.glsl", "data/Shader/fsTerrain.glsl" )
         {
         }
 
@@ -78,7 +78,7 @@
         public static float LightMod = 1.0f;
         public static float MatMod = 1.0f;
 
-        public EMultiPass3D ( ) : base ( "", "Data/Shader/vsMP1.glsl", "Data/Shader/fsMP1.glsl" )
+        public EMultiPass3D ( ) : base ( "", "data/Shader/vsMP1.glsl", "data/Shader/fsMP1.glsl" )
         {
         }
 

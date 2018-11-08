@@ -146,7 +146,7 @@ namespace Vivid3D.PostProcess
 
     public class VEQuadR : Effect3D
     {
-        public VEQuadR ( ) : base ( "", "Data/Shader/passVS.txt", "Data/Shader/passFS.txt" )
+        public VEQuadR ( ) : base ( "", "data/Shader/passVS.txt", "data/Shader/passFS.txt" )
         {
         }
 

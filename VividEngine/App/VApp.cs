@@ -64,7 +64,7 @@ namespace Vivid3D.App
             if ( !done )
             {
                 VPen.InitDraw ( );
-                Vivid3D.Sound.StarSoundSys.Init ( );
+               
             }
             AppInfo.W = w;
             AppInfo.H = h;
@@ -183,7 +183,7 @@ namespace Vivid3D.App
             RH = height;
             Import.Import.RegDefaults ( );
             VPen.InitDraw ( );
-            Vivid3D.Sound.StarSoundSys.Init ( );
+           
         }
 
         protected override void OnMouseDown ( MouseButtonEventArgs e )

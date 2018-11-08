@@ -12,8 +12,8 @@ namespace Vivid3D.Resonance.Forms
     {
         public SelectFile Selected = null;
         public ListForm Files;
-        public VTex2D FolderPic = new VTex2D("Data\\UI\\folder1.png", LoadMethod.Single, true);
-        public VTex2D FilePic = new VTex2D("Data\\UI\\file1.png", LoadMethod.Single, true);
+        public VTex2D FolderPic = new VTex2D("data/UI/folder1.png", LoadMethod.Single, true);
+        public VTex2D FilePic = new VTex2D("data/UI/file1.png", LoadMethod.Single, true);
         public ButtonForm BackFolder;
         public TextBoxForm DirBox, FileBox;
 
@@ -53,7 +53,7 @@ namespace Vivid3D.Resonance.Forms
             Files = new ListForm ( ).Set ( 10, 60, 370, 350, "" ) as ListForm;
             Add ( Files );
             Scan ( defdir );
-            BackFolder = new ButtonForm ( ).Set ( 0, 25, 64, 32, "" ).SetImage ( new VTex2D ( "Data\\UI\\backfolder1.png", LoadMethod.Single, true ) ) as ButtonForm;
+            BackFolder = new ButtonForm ( ).Set ( 0, 25, 64, 32, "" ).SetImage ( new VTex2D ( "data/UI/backfolder1.png", LoadMethod.Single, true ) ) as ButtonForm;
 
             void BackFunc ( int b )
             {

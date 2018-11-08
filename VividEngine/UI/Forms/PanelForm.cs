@@ -8,7 +8,7 @@ namespace Vivid3D.Resonance.Forms
 
         public PanelForm ( )
         {
-            Tex = new VTex2D ( "Data\\UI\\panel.png", LoadMethod.Single, false );
+            Tex = new VTex2D ( "data/UI/panel.png", LoadMethod.Single, false );
 
             void DrawFunc ( )
             {

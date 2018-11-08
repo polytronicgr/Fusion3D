@@ -14,7 +14,7 @@ namespace Vivid3D.Resonance.Forms
 
         public ButtonForm ( )
         {
-            SetImage ( new VTex2D ( "Data\\UI\\Skin\\but_normal.png", LoadMethod.Single, true ) );
+            SetImage ( new VTex2D ( "data/UI/Skin/but_normal.png", LoadMethod.Single, true ) );
             Col = NormCol;
             void DrawFunc ( )
             {

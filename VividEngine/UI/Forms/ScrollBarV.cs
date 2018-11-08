@@ -14,7 +14,7 @@ namespace Vivid3D.Resonance.Forms
 
         public ScrollBarV ( )
         {
-            But = new VTex2D ( "Data\\UI\\Skin\\but_normal.png", LoadMethod.Single, true );
+            But = new VTex2D ( "data/UI/Skin/but_normal.png", LoadMethod.Single, true );
             ScrollBut = new ButtonForm ( ).Set ( 0, 0, W, 10 ) as ButtonForm;
 
             void DrawFunc ( )

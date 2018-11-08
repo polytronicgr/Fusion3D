@@ -61,7 +61,7 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float MinLevel = 0.7f;
 
-        public VEExtract ( ) : base ( "", "Data\\Shader\\extractVS.glsl", "Data\\Shader\\extractFS.glsl" )
+        public VEExtract ( ) : base ( "", "data/Shader/extractVS.glsl", "data/Shader/extractFS.glsl" )
         {
         }
 
@@ -74,7 +74,7 @@ namespace Vivid3D.PostProcess.Processes
 
     public class VEBloom : Effect3D
     {
-        public VEBloom ( ) : base ( "", "Data\\Shader\\bloomVS.glsl", "Data\\Shader\\bloomFS.glsl" )
+        public VEBloom ( ) : base ( "", "data/Shader/bloomVS.glsl", "data/Shader/bloomFS.glsl" )
         {
         }
 

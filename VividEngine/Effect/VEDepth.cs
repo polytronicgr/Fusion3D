@@ -2,7 +2,7 @@
 {
     public class EDepth3D : Effect3D
     {
-        public EDepth3D ( ) : base ( "", "Data/Shader/vsDepth.txt", "Data/Shader/fsDepth.txt" )
+        public EDepth3D ( ) : base ( "", "data/Shader/vsDepth.txt", "data/Shader/fsDepth.txt" )
         {
         }
 

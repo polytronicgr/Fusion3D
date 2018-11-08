@@ -42,9 +42,9 @@ namespace Vivid3D.Import
         {
             if ( NormBlank == null )
             {
-                NormBlank = new Texture.VTex2D ( "data\\tex\\normblank.png", Texture.LoadMethod.Single, false );
-                DiffBlank = new Texture.VTex2D ( "data\\tex\\diffblank.png", Texture.LoadMethod.Single, false );
-                SpecBlank = new Texture.VTex2D ( "data\\tex\\specblank.png", Texture.LoadMethod.Single, false );
+                NormBlank = new Texture.VTex2D ( "data/tex/normblank.png", Texture.LoadMethod.Single, false );
+                DiffBlank = new Texture.VTex2D ( "data/tex/diffblank.png", Texture.LoadMethod.Single, false );
+                SpecBlank = new Texture.VTex2D ( "data/tex/specblank.png", Texture.LoadMethod.Single, false );
             }
 
             GraphAnimEntity3D root = new GraphAnimEntity3D();
@@ -225,14 +225,14 @@ namespace Vivid3D.Import
             if ( sc > 0 )
             {
                 TextureSlot tex2 = mat.GetMaterialTextures(TextureType.Unknown)[0];
-                m1.TSpec = new Texture.VTex2D ( IPath + "\\" + tex2.FilePath, Texture.LoadMethod.Single, false );
+                m1.TSpec = new Texture.VTex2D ( IPath + "/" + tex2.FilePath, Texture.LoadMethod.Single, false );
             }
 
             if ( mat.GetMaterialTextureCount ( TextureType.Normals ) > 0 )
             {
                 TextureSlot ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
                 Console.WriteLine ( "Norm:" + ntt.FilePath );
-                m1.TNorm = new Texture.VTex2D ( IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false );
+                m1.TNorm = new Texture.VTex2D ( IPath + "/" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false );
             }
 
             if ( mat.GetMaterialTextureCount ( TextureType.Diffuse ) > 0 )
@@ -245,7 +245,7 @@ namespace Vivid3D.Import
                     try
                     {
                         // Console.Write("t1:" + t1.FilePath);
-                        m1.TCol = new Texture.VTex2D ( IPath + "\\" + t1.FilePath.Replace ( ".dds", ".png" ), Texture.LoadMethod.Single, false );
+                        m1.TCol = new Texture.VTex2D ( IPath + "/" + t1.FilePath.Replace ( ".dds", ".png" ), Texture.LoadMethod.Single, false );
                         if ( File.Exists ( IPath + "norm" + t1.FilePath ) )
                         {
                             // vm.TNorm = new Texture.VTex2D(IPath + "norm" +
@@ -333,14 +333,14 @@ namespace Vivid3D.Import
                 if (sc > 0)
                 {
                     var tex2 = mat.GetMaterialTextures(TextureType.Unknown)[0];
-                    vm.TSpec = new Texture.VTex2D(IPath + "\\" + tex2.FilePath, Texture.LoadMethod.Single, false);
+                    vm.TSpec = new Texture.VTex2D(IPath + "/" + tex2.FilePath, Texture.LoadMethod.Single, false);
                 }
 
                 if (mat.GetMaterialTextureCount(TextureType.Normals) > 0)
                 {
                     var ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
                     Console.WriteLine("Norm:" + ntt.FilePath);
-                    vm.TNorm = new Texture.VTex2D(IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false);
+                    vm.TNorm = new Texture.VTex2D(IPath + "/" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false);
                 }
 
                 if (mat.GetMaterialTextureCount(TextureType.Diffuse) > 0)
@@ -353,7 +353,7 @@ namespace Vivid3D.Import
                         try
                         {
                             // Console.Write("t1:" + t1.FilePath);
-                            vm.TCol = new Texture.VTex2D(IPath + "\\" + t1.FilePath.Replace(".dds", ".png"), Texture.LoadMethod.Single, false);
+                            vm.TCol = new Texture.VTex2D(IPath + "/" + t1.FilePath.Replace(".dds", ".png"), Texture.LoadMethod.Single, false);
                             if (File.Exists(IPath + "norm" + t1.FilePath))
                             {
                                 // vm.TNorm = new Texture.VTex2D(IPath + "norm" +
@@ -454,9 +454,9 @@ namespace Vivid3D.Import
         {
             if ( NormBlank == null )
             {
-                NormBlank = new Texture.VTex2D ( "data\\tex\\normblank.png", Texture.LoadMethod.Single, false );
-                DiffBlank = new Texture.VTex2D ( "data\\tex\\diffblank.png", Texture.LoadMethod.Single, false );
-                SpecBlank = new Texture.VTex2D ( "data\\tex\\specblank.png", Texture.LoadMethod.Single, false );
+                NormBlank = new Texture.VTex2D ( "data/tex/normblank.png", Texture.LoadMethod.Single, false );
+                DiffBlank = new Texture.VTex2D ( "data/tex/diffblank.png", Texture.LoadMethod.Single, false );
+                SpecBlank = new Texture.VTex2D ( "data/tex/specblank.png", Texture.LoadMethod.Single, false );
             }
 
             GraphEntity3D root = new GraphEntity3D();
@@ -550,14 +550,14 @@ namespace Vivid3D.Import
                 if ( sc > 0 )
                 {
                     TextureSlot tex2 = mat.GetMaterialTextures(TextureType.Unknown)[0];
-                    vm.TSpec = new Texture.VTex2D ( IPath + "\\" + tex2.FilePath, Texture.LoadMethod.Single, false );
+                    vm.TSpec = new Texture.VTex2D ( IPath + "/" + tex2.FilePath, Texture.LoadMethod.Single, false );
                 }
 
                 if ( mat.GetMaterialTextureCount ( TextureType.Normals ) > 0 )
                 {
                     TextureSlot ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
                     Console.WriteLine ( "Norm:" + ntt.FilePath );
-                    vm.TNorm = new Texture.VTex2D ( IPath + "\\" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false );
+                    vm.TNorm = new Texture.VTex2D ( IPath + "/" + ntt.FilePath, Vivid3D.Texture.LoadMethod.Single, false );
                 }
 
                 if ( mat.GetMaterialTextureCount ( TextureType.Diffuse ) > 0 )
@@ -569,10 +569,10 @@ namespace Vivid3D.Import
                     {
                         //Console.WriteLine ( "Tex:" + t1.FilePath );
                         // Console.Write("t1:" + t1.FilePath);
-                        vm.TCol = new Texture.VTex2D ( IPath + "\\" + t1.FilePath.Replace ( ".dds", ".png" ), Texture.LoadMethod.Single, false );
-                        if ( File.Exists ( IPath + "\\" + "norm_" + t1.FilePath ) )
+                        vm.TCol = new Texture.VTex2D ( IPath + "/" + t1.FilePath.Replace ( ".dds", ".png" ), Texture.LoadMethod.Single, false );
+                        if ( File.Exists ( IPath + "/" + "norm_" + t1.FilePath ) )
                         {
-                            vm.TNorm = new Texture.VTex2D ( IPath + "\\" + "norm_" + t1.FilePath, Texture.LoadMethod.Single, false );
+                            vm.TNorm = new Texture.VTex2D ( IPath + "/" + "norm_" + t1.FilePath, Texture.LoadMethod.Single, false );
                         }
                     }
                 }

@@ -57,7 +57,7 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float Blur = 0.5f;
 
-        public EMotionBlur ( ) : base ( "", "Data\\Shader\\vsMotionBlur.glsl", "Data\\Shader\\fsMotionBlur.glsl" )
+        public EMotionBlur ( ) : base ( "", "data/Shader/vsMotionBlur.glsl", "data/Shader/fsMotionBlur.glsl" )
         {
         }
 
@@ -72,7 +72,7 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float DC = 0;
 
-        public EVelBuf ( ) : base ( "", "Data/Shader/vsVelBuf.glsl", "Data/Shader/fsVelBuf.glsl" )
+        public EVelBuf ( ) : base ( "", "data/Shader/vsVelBuf.glsl", "data/Shader/fsVelBuf.glsl" )
         {
         }
 

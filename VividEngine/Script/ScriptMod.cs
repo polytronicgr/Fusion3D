@@ -22,12 +22,7 @@ namespace Vivid3D.Script
             set;
         }
 
-        public XInput.XPad Pad
-        {
-            get;
-            set;
-        }
-
+      
         public virtual void Begin ( )
         {
         }

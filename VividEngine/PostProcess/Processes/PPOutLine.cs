@@ -82,7 +82,7 @@ namespace Vivid3D.PostProcess.Processes
 
     public class VEOutLine : Vivid3D.Effect.Effect3D
     {
-        public VEOutLine ( ) : base ( "", "Data\\Shader\\outLineVS.txt", "Data\\Shader\\outLineFS.txt" )
+        public VEOutLine ( ) : base ( "", "data/Shader/outLineVS.txt", "data/Shader/outLineFS.txt" )
         {
         }
 
@@ -97,7 +97,7 @@ namespace Vivid3D.PostProcess.Processes
     {
         public float Level = 0.5f;
 
-        public VECombineTex ( ) : base ( "", "Data\\Shader\\outLinevs.txt", "Data\\Shader\\combineTexFS.txt" )
+        public VECombineTex ( ) : base ( "", "data/Shader/outLinevs.txt", "data/Shader/combineTexFS.txt" )
         {
         }
 

@@ -37,6 +37,8 @@ namespace Vivid3D.Resonance
 
     public delegate void ChangedInfo ( );
 
+    
+
     public class UIForm
     {
         public bool CheckBounds = true;
@@ -49,6 +51,7 @@ namespace Vivid3D.Resonance
         public float RefractV = 0.4f;
 
         public ChangedInfo Changed = null;
+        public ChangedInfo SubChanged = null;
         public Draw Draw = null;
         public Update Update = null;
         public MouseEnter MouseEnter = null;
@@ -232,12 +235,12 @@ namespace Vivid3D.Resonance
 
         public void DrawText ( string txt, int x, int y )
         {
-            DrawText ( txt, x, y, Vector4.One );
+            DrawText ( txt,x,y, Vector4.One );
         }
 
         public void DrawText ( string txt, int x, int y, Vector4 col )
         {
-            VFontRenderer.Draw ( UI.Font, txt, GX + x, GY + y, col );
+            VFontRenderer.Draw ( UI.Font, txt, GX+x, GY+y , col );
         }
 
         public UIForm Set ( int x, int y, int w, int h, string text = "" )

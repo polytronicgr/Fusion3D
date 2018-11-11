@@ -70,6 +70,7 @@ namespace Vivid3D.Resonance.Forms
                 body.W = W;
                 resize.X = W - 14;
                 resize.Y = H - 20;
+                SubChanged?.Invoke();
             }
 
             Changed = ChangedFunc;

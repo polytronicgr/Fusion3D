@@ -76,11 +76,13 @@ namespace Vivid3D.Resonance
             Graphics.SmartUpdate();
 
             UIForm prev = null;
-            GL.Enable(EnableCap.ScissorTest);
+
+           // GL.Enable(EnableCap.ScissorTest);
             if (Top != null)
             {
-                GL.Enable(EnableCap.ScissorTest);
-                GL.Scissor(0, 0, App.AppInfo.W, App.AppInfo.H);
+
+                //GL.Enable(EnableCap.ScissorTest);
+               // GL.Scissor(0, 0, App.AppInfo.W, App.AppInfo.H);
                 UpdateRenderList(Root);
                 foreach (UIForm form in RenderList)
                 {
@@ -107,17 +109,17 @@ namespace Vivid3D.Resonance
             else
             {
                 UpdateRenderList(Root);
-                GL.Enable(EnableCap.ScissorTest);
+               // GL.Enable(EnableCap.ScissorTest);
                 foreach (UIForm form in RenderList)
                 {
                     if (form.Root != null)
                     {
-                        GL.Enable(EnableCap.ScissorTest);
-                        GL.Scissor(form.Root.X, App.AppInfo.H-form.Root.Y-form.Root.H, form.Root.W, form.Root.H);
+                       // GL.Enable(EnableCap.ScissorTest);
+                     //   GL.Scissor(form.Root.GX, App.AppInfo.H-form.Root.GY-form.Root.H, form.Root.W, form.Root.H);
                     }
                     else
                     {
-                        GL.Disable(EnableCap.ScissorTest);
+                        //GL.Disable(EnableCap.ScissorTest);
 
                         //GL.Scissor(0, 0, App.AppInfo.W, App.AppInfo.H);
                     }
@@ -132,7 +134,7 @@ namespace Vivid3D.Resonance
                     ntex.Delete();
                 }
             }
-            GL.Disable(EnableCap.ScissorTest);
+          //  GL.Disable(EnableCap.ScissorTest);
             Vivid3D.Draw.VPen.SetProj(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
             Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
             Vivid3D.Draw.VPen.Rect(MX, MY, 24, 24, CursorImg, new OpenTK.Vector4(1, 1, 1,1));

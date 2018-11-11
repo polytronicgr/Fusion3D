@@ -96,6 +96,7 @@
     <Compile Include="Terrain\GraphTerrain.cs" />
     <Compile Include="Texture\Tex2DRaw.cs" />
     <Compile Include="UI\Forms\LabelForm.cs" />
+    <Compile Include="UI\Forms\TextAreaForm.cs" />
     <Compile Include="Util\Texture\LeafPacker.cs" />
     <Compile Include="Util\Texture\NextPixelMap.cs" />
     <Compile Include="Visuals\VRenderer.cs" />

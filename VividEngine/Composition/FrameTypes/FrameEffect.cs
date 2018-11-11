@@ -6,6 +6,7 @@
 
         public override void Generate ( )
         {
+            OpenTK.Graphics.OpenGL4.GL.Disable(OpenTK.Graphics.OpenGL4.EnableCap.Blend);
             BindTex ( );
 
             FX.Bind ( );

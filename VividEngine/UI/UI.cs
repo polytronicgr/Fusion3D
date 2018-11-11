@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Vivid3D.Font;
 using Vivid3D.Input;
 using Vivid3D.Logic;
-
+using OpenTK.Graphics.OpenGL4;
+using OpenTK;
 namespace Vivid3D.Resonance
 {
     public class UI
@@ -46,6 +47,7 @@ namespace Vivid3D.Resonance
             {
                 Pressed[i] = null;
             }
+            Root = new UIForm().Set(0, 0, App.AppInfo.W, App.AppInfo.H);
         }
         public void InitUI()
         {
@@ -73,12 +75,19 @@ namespace Vivid3D.Resonance
             }
             Graphics.SmartUpdate();
 
+            UIForm prev = null;
+            GL.Enable(EnableCap.ScissorTest);
             if (Top != null)
             {
+                GL.Enable(EnableCap.ScissorTest);
+                GL.Scissor(0, 0, App.AppInfo.W, App.AppInfo.H);
                 UpdateRenderList(Root);
                 foreach (UIForm form in RenderList)
                 {
+                   
+                      
                     form.Draw?.Invoke();
+                    prev = form;
                 }
                 Texture.VTex2D ntex = new Texture.VTex2D(Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H);
 
@@ -98,9 +107,20 @@ namespace Vivid3D.Resonance
             else
             {
                 UpdateRenderList(Root);
-
+                GL.Enable(EnableCap.ScissorTest);
                 foreach (UIForm form in RenderList)
                 {
+                    if (form.Root != null)
+                    {
+                        GL.Enable(EnableCap.ScissorTest);
+                        GL.Scissor(form.Root.X, App.AppInfo.H-form.Root.Y-form.Root.H, form.Root.W, form.Root.H);
+                    }
+                    else
+                    {
+                        GL.Disable(EnableCap.ScissorTest);
+
+                        //GL.Scissor(0, 0, App.AppInfo.W, App.AppInfo.H);
+                    }
                     form.Draw?.Invoke();
                 }
                 if (TopB > 0)
@@ -112,7 +132,7 @@ namespace Vivid3D.Resonance
                     ntex.Delete();
                 }
             }
-
+            GL.Disable(EnableCap.ScissorTest);
             Vivid3D.Draw.VPen.SetProj(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
             Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
             Vivid3D.Draw.VPen.Rect(MX, MY, 24, 24, CursorImg, new OpenTK.Vector4(1, 1, 1,1));

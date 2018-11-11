@@ -8,7 +8,7 @@ namespace Vivid3D.Composition.Compositers
 {
     public class BloomUICompositer : Compositer
     {
-        public BloomUICompositer() : base(1)
+        public BloomUICompositer() : base(3)
         {
             InputFrame = new FrameTypes.FrameUI();
 
@@ -21,10 +21,30 @@ namespace Vivid3D.Composition.Compositers
 
             fe.FX = new PostProcess.Processes.VEExtract();
 
-            fe.FX.MinLevel = 0.1f;
+            fe.FX.MinLevel = 0.22f;
+
+            Types[1] = new FrameTypes.FrameEffect();
+
+            dynamic fe2 = Types[1];
+            Types[1].TexBind.Add(Types[0]);
+
+            fe2.FX = new PostProcess.Processes.VEBlur();
+
+
+            fe2.FX.Blur = 0.5f;
+
+            Types[2] = new FrameTypes.FrameEffect();
+
+            dynamic fe3 = Types[2];
+            Types[2].TexBind.Add(Types[1]);
+            Types[2].TexBind.Add(InputFrame);
+
+            fe3.FX = new PostProcess.Processes.VEBloom();
+
+            
 
             //  Types[1].TexBind.Add(InputFrame);
-            OutputFrame = Types[0];
+            OutputFrame = Types[2];
         
         }
 

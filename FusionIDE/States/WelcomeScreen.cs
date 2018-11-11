@@ -31,8 +31,8 @@ namespace FusionIDE.States
             BGForm = (BackgroundForm)new BackgroundForm(20).Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
 
             SUI.Root.Add(BGForm);
-
-            SUI.Top = MainForm;
+            BGForm.Add(MainForm);
+          //  SUI.Top = MainForm;
             MainForm.Create = (user, pass) =>
             {
 

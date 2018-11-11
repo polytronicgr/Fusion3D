@@ -17,5 +17,5 @@ vec3 fc = texture2D(tR,UV).rgb;
         fc = vec3(0,0,0);
     }
 
-    color = vec3(1,0,0);
+    color = fc;
 }

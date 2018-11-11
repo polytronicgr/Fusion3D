@@ -19,7 +19,7 @@ namespace FusionIDE.Forms
             TextEdit = new TextAreaForm();
             SubChanged = () =>
             {
-                TextEdit.X = 5;
+                TextEdit.X = 100;
                 TextEdit.Y = 25;
                 TextEdit.W = W - 10;
                 TextEdit.H = H - 30;

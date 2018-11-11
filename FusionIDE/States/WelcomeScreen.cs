@@ -15,6 +15,7 @@ namespace FusionIDE.States
         public Vivid3D.Texture.VTex2D bg_img;
         public ImageForm BG = null;
         public WelcomeForm MainForm = null;
+        public BackgroundForm BGForm = null;
         public WelcomeScreen()
         {
 
@@ -23,7 +24,10 @@ namespace FusionIDE.States
             BG = (ImageForm)new ImageForm().Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
             BG.SetImage(bg_img);
             MainForm = (WelcomeForm)new WelcomeForm().Set(350, 200, Vivid3D.App.AppInfo.W - 700, 250, "Welcome to Fusion");
-            SUI.Root.Add(BG);
+            BGForm = (BackgroundForm)new BackgroundForm(20).Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
+
+            SUI.Root.Add(BGForm);
+
             SUI.Top = MainForm;
             MainForm.Create = (user, pass) =>
             {

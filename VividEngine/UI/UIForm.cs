@@ -131,7 +131,14 @@ namespace Vivid3D.Resonance
             }
             return false;
         }
+        public void DrawLine(int x,int y,int x2,int y2,OpenTK.Vector4 col)
+        {
 
+            VPen.BlendMod = VBlend.Solid;
+
+            VPen.Line(x, y, x2, y2);
+
+        }
         public void DrawForm ( VTex2D tex, int x = 0, int y = 0, int w = -1, int h = -1 )
         {
             VPen.BlendMod = VBlend.Alpha;

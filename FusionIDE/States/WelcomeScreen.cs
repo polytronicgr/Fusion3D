@@ -16,8 +16,12 @@ namespace FusionIDE.States
         public ImageForm BG = null;
         public WelcomeForm MainForm = null;
         public BackgroundForm BGForm = null;
+        public Vivid3D.Composition.Composite Com;
+            public Vivid3D.Composition.Compositers.BloomUICompositer BloomUI;
         public WelcomeScreen()
         {
+
+           
 
             SUI = new UI();
             bg_img = new Vivid3D.Texture.VTex2D("data/ui/skin/windowbg1.png", Vivid3D.Texture.LoadMethod.Single, true);
@@ -36,6 +40,12 @@ namespace FusionIDE.States
 
             };
 
+            Com = new Vivid3D.Composition.Composite();
+            BloomUI = new Vivid3D.Composition.Compositers.BloomUICompositer();
+            dynamic ui = BloomUI.InputFrame;
+            ui.GUI = SUI;
+            Com.AddCompositer(BloomUI);
+
         }
 
         public override void InitState()
@@ -52,8 +62,8 @@ namespace FusionIDE.States
         public override void DrawState()
         {
             //base.DrawState();
-
-            SUI.Render();
+            Com.Render();
+         //   SUI.Render();
 
         }
 

@@ -53,6 +53,7 @@ namespace Vivid3D.Composition
         {
             cos.Graph = Graph;
             Composites.Add ( cos );
+            Mix = MixMode.Final;
         }
 
         //Composites [ 1 ].PresentFrame ( 1 );

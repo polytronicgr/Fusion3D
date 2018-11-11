@@ -25,7 +25,7 @@ namespace FusionIDE.App
             dynamic full_screen = scope.FindVar("full_screen",false).Value;
 
             App = new FusionApp ( width, height, full_screen );
-            InitState = new States.WelcomeScreen();
+            InitState = new States.CodeScreen();
             App.Run ( );
         }
 

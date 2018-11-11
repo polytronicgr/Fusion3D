@@ -29,8 +29,11 @@ namespace FusionIDE.States
             BG.SetImage(bg_img);
             MainForm = (WelcomeForm)new WelcomeForm().Set(350, 200, Vivid3D.App.AppInfo.W - 700, 250, "Welcome to Fusion");
             BGForm = (BackgroundForm)new BackgroundForm(20).Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
+            var bgi = new ImageForm().Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H, "");
+            bgi.SetImage(new Vivid3D.Texture.VTex2D("data/ui/bg1.jpg",Vivid3D.Texture.LoadMethod.Single,false));
+            bgi.Add(BGForm);
+            SUI.Root.Add(bgi);
 
-            SUI.Root.Add(BGForm);
             BGForm.Add(MainForm);
           //  SUI.Top = MainForm;
             MainForm.Create = (user, pass) =>

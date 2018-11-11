@@ -94,7 +94,7 @@ namespace FusionIDE.Forms
                                         }
                                         break;
                                 }
-                                DrawFormSolid(new OpenTK.Vector4(3, 3, 3, 3), line.SP, line.Y, line.SL, 1);
+                                DrawFormSolid(new OpenTK.Vector4(3, 3, 3, 3), line.SP, line.Y, line.SL, 3);
 
                             }
 
@@ -145,7 +145,7 @@ namespace FusionIDE.Forms
                             DrawFormSolid(new OpenTK.Vector4(0.4f,0.4f,0.4f,0.4f), line.X, 0, 2, line.L);
                             if (line.Sub)
                             {
-                                DrawFormSolid(new OpenTK.Vector4(3, 3, 3, 3), line.X, line.SP, 1, line.SL);
+                                DrawFormSolid(new OpenTK.Vector4(3, 3, 3, 3), line.X, line.SP, 3, line.SL);
                             }
 
 

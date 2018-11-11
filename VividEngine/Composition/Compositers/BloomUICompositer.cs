@@ -21,7 +21,7 @@ namespace Vivid3D.Composition.Compositers
 
             fe.FX = new PostProcess.Processes.VEExtract();
 
-            fe.FX.MinLevel = 0.22f;
+            fe.FX.MinLevel = 0.62f;
 
             Types[1] = new FrameTypes.FrameEffect();
 

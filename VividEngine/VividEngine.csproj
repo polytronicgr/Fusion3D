@@ -62,9 +62,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="irrKlang.NET4">
-      <HintPath>..\Lib\irrKlang.NET4.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\Animator.cs" />
@@ -96,6 +93,7 @@
     <Compile Include="Script\ScriptTemplate.cs" />
     <Compile Include="Terrain\GraphTerrain.cs" />
     <Compile Include="Texture\Tex2DRaw.cs" />
+    <Compile Include="UI\Forms\LabelForm.cs" />
     <Compile Include="Util\Texture\LeafPacker.cs" />
     <Compile Include="Util\Texture\NextPixelMap.cs" />
     <Compile Include="Visuals\VRenderer.cs" />

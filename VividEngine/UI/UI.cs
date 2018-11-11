@@ -8,41 +8,122 @@ namespace Vivid3D.Resonance
 {
     public class UI
     {
-        public static UIForm TopForm = null;
-        public Logics Logics = new Logics();
-        public Logics Graphics = new Logics();
-
-        public static Font.VFont Font = null;
         public static UIForm Active = null;
+        public static Font.VFont Font = null;
+        public static int MX, MY, MXD, MYD;
+        public static UIForm TopForm = null;
+        public int clicks = 0;
+        public bool FirstMouse = true;
+        public Logics Graphics = new Logics();
+        public int lastClick = 0;
+        public OpenTK.Input.Key LastKey = OpenTK.Input.Key.LastKey;
+        public Logics Logics = new Logics();
+        public int NextKey = 0;
+        public UIForm[] Pressed = new UIForm[32];
+        public List<UIForm> RenderList = new List<UIForm>();
+        public UIForm Root = new UIForm();
         public UIForm Top = null;
+        public List<UIForm> UpdateList = new List<UIForm>();
+        public Vivid3D.Texture.VTex2D CursorImg;
+        private readonly int ux;
 
-        public UIForm Root;
-
-        public UI ( )
-        {
-            InitUI ( );
-            for ( int i = 0; i < 32; i++ )
-            {
-                Pressed [ i ] = null;
-            }
-        }
+        private readonly int uy;
 
         private Texture.VTex2D Black = null;
 
-        public void InitUI ( )
+        private bool sdrag = true;
+
+        private int sdx;
+
+        private int sdy;
+
+        private float TopB = 0.0f;
+
+        public UI()
         {
-            Black = new Texture.VTex2D ( "data/ui/black.png", Texture.LoadMethod.Single, false );
-            Font = new VFont ( "data/font/times.ttf.vf" );
+            InitUI();
+            for (int i = 0; i < 32; i++)
+            {
+                Pressed[i] = null;
+            }
+        }
+        public void InitUI()
+        {
+            Black = new Texture.VTex2D("data/ui/black.png", Texture.LoadMethod.Single, false);
+            Font = new VFont("data/font/times.ttf.vf");
+            CursorImg = new Texture.VTex2D("data/ui/cursor1.png", Vivid3D.Texture.LoadMethod.Single, true);
+        }
+        public void Render()
+        {
+            if (Top != null)
+            {
+                TopB = TopB + 0.065f;
+                if (TopB > 0.8f)
+                {
+                    TopB = 0.8f;
+                }
+            }
+            else
+            {
+                TopB = TopB - 0.085f;
+                if (TopB < 0)
+                {
+                    TopB = 0;
+                }
+            }
+            Graphics.SmartUpdate();
+
+            if (Top != null)
+            {
+                UpdateRenderList(Root);
+                foreach (UIForm form in RenderList)
+                {
+                    form.Draw?.Invoke();
+                }
+                Texture.VTex2D ntex = new Texture.VTex2D(Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H);
+
+                ntex.CopyTex(0, 0);
+                OpenTK.Graphics.OpenGL4.GL.Clear(OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit);
+                Vivid3D.Draw.VPen.RectBlur2(0, 0, Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H, ntex, new OpenTK.Vector4(1, 1, 1, 1), TopB);
+
+                UpdateRenderList(Top);
+
+                foreach (UIForm form in RenderList)
+                {
+                    form.Draw?.Invoke();
+                }
+
+                ntex.Delete();
+            }
+            else
+            {
+                UpdateRenderList(Root);
+
+                foreach (UIForm form in RenderList)
+                {
+                    form.Draw?.Invoke();
+                }
+                if (TopB > 0)
+                {
+                    Texture.VTex2D ntex = new Texture.VTex2D(Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H);
+                    ntex.CopyTex(0, 0);
+                    OpenTK.Graphics.OpenGL4.GL.Clear(OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit);
+                    Vivid3D.Draw.VPen.RectBlur2(0, 0, Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H, ntex, new OpenTK.Vector4(1, 1, 1, 1), TopB);
+                    ntex.Delete();
+                }
+            }
+
+            Vivid3D.Draw.VPen.SetProj(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
+            Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Alpha;
+            Vivid3D.Draw.VPen.Rect(MX, MY, 24, 24, CursorImg, new OpenTK.Vector4(1, 1, 1,1));
+
         }
 
-        public bool FirstMouse = true;
-        public static int MX, MY, MXD, MYD;
-
-        public void Update ( )
+        public void Update()
         {
-            Logics.SmartUpdate ( );
+            Logics.SmartUpdate();
 
-            if ( FirstMouse )
+            if (FirstMouse)
             {
                 MX = VInput.MX;
                 MY = VInput.MY;
@@ -54,165 +135,165 @@ namespace Vivid3D.Resonance
             MX = VInput.MX;
             MY = VInput.MY;
 
-            if ( Top != null )
+            if (Top != null)
             {
-                UpdateUpdateList ( Top );
+                UpdateUpdateList(Top);
             }
             else
             {
-                UpdateUpdateList ( Root );
+                UpdateUpdateList(Root);
             }
-            foreach ( UIForm form in UpdateList )
+            foreach (UIForm form in UpdateList)
             {
-                form.Update?.Invoke ( );
+                form.Update?.Invoke();
             }
             UIForm top = GetTopForm(MX, MY);
 
-            if ( top != null )
+            if (top != null)
             {
-                if ( TopForm != top )
+                if (TopForm != top)
                 {
-                    if ( TopForm != null )
+                    if (TopForm != null)
                     {
-                        if ( TopForm != Pressed [ 0 ] )
+                        if (TopForm != Pressed[0])
                         {
-                            TopForm.MouseLeave?.Invoke ( );
+                            TopForm.MouseLeave?.Invoke();
                         }
                     }
 
-                    top.MouseEnter?.Invoke ( );
+                    top.MouseEnter?.Invoke();
                 }
             }
-            if ( top != null )
+            if (top != null)
             {
-                if ( top == TopForm )
+                if (top == TopForm)
                 {
-                    top.MouseMove?.Invoke ( MX - top.GX, MY - top.GY, MXD, MYD );
+                    top.MouseMove?.Invoke(MX - top.GX, MY - top.GY, MXD, MYD);
                 }
             }
-            if ( top == null )
+            if (top == null)
             {
-                if ( TopForm != null )
+                if (TopForm != null)
                 {
-                    if ( TopForm != Pressed [ 0 ] )
+                    if (TopForm != Pressed[0])
                     {
-                        TopForm.MouseLeave?.Invoke ( );
+                        TopForm.MouseLeave?.Invoke();
                     }
                 }
             }
             TopForm = top;
 
-            if ( Active != null )
+            if (Active != null)
             {
-                OpenTK.Input.Key key = VInput.KeyIn ( );
-                if ( key != OpenTK.Input.Key.LastKey )
+                OpenTK.Input.Key key = VInput.KeyIn();
+                if (key != OpenTK.Input.Key.LastKey)
                 {
-                    if ( key == OpenTK.Input.Key.LastKey )
+                    if (key == OpenTK.Input.Key.LastKey)
                     {
                         LastKey = OpenTK.Input.Key.LastKey;
                         NextKey = 0;
                     }
-                    if ( key == LastKey )
+                    if (key == LastKey)
                     {
                         bool shift = false;
-                        if ( VInput.KeyIn ( OpenTK.Input.Key.ShiftLeft ) )
+                        if (VInput.KeyIn(OpenTK.Input.Key.ShiftLeft))
                         {
                             shift = true;
                         }
-                        if ( VInput.KeyIn ( OpenTK.Input.Key.ShiftRight ) )
+                        if (VInput.KeyIn(OpenTK.Input.Key.ShiftRight))
                         {
                             shift = true;
                         }
-                        if ( Environment.TickCount > NextKey )
+                        if (Environment.TickCount > NextKey)
                         {
-                            Active.KeyPress?.Invoke ( key, shift );
+                            Active.KeyPress?.Invoke(key, shift);
                             NextKey = Environment.TickCount + 90;
                         }
                     }
                     else
                     {
                         bool shift = false;
-                        if ( VInput.KeyIn ( OpenTK.Input.Key.ShiftLeft ) )
+                        if (VInput.KeyIn(OpenTK.Input.Key.ShiftLeft))
                         {
                             shift = true;
                         }
-                        if ( VInput.KeyIn ( OpenTK.Input.Key.ShiftRight ) )
+                        if (VInput.KeyIn(OpenTK.Input.Key.ShiftRight))
                         {
                             shift = true;
                         }
                         LastKey = key;
-                        Active.KeyPress?.Invoke ( key, shift );
+                        Active.KeyPress?.Invoke(key, shift);
                         NextKey = Environment.TickCount + 250;
                     }
                 }
             }
 
-            if ( VInput.MB [ 0 ] )
+            if (VInput.MB[0])
             {
-                if ( TopForm != null )
+                if (TopForm != null)
                 {
-                    if ( Pressed [ 0 ] == null )
+                    if (Pressed[0] == null)
                     {
-                        Console.WriteLine ( "Click:" + clicks );
-                        if ( Environment.TickCount < lastClick + 300 )
+                        Console.WriteLine("Click:" + clicks);
+                        if (Environment.TickCount < lastClick + 300)
                         {
                             clicks++;
-                            if ( clicks == 2 )
+                            if (clicks == 2)
                             {
-                                TopForm.DoubleClick?.Invoke ( 0 );
-                                Console.WriteLine ( "DoubleClicked:" + TopForm.Text + ":" + TopForm.GetType ( ).ToString ( ) );
+                                TopForm.DoubleClick?.Invoke(0);
+                                Console.WriteLine("DoubleClicked:" + TopForm.Text + ":" + TopForm.GetType().ToString());
                             }
                         }
                         else
                         {
-                            Console.WriteLine ( "Click One" );
+                            Console.WriteLine("Click One");
                             clicks = 1;
                         }
                         lastClick = Environment.TickCount;
-                        TopForm.MouseDown?.Invoke ( 0 );
-                        Pressed [ 0 ] = TopForm;
-                        if ( Active != TopForm )
+                        TopForm.MouseDown?.Invoke(0);
+                        Pressed[0] = TopForm;
+                        if (Active != TopForm)
                         {
-                            if ( Active != null )
+                            if (Active != null)
                             {
-                                Active.Deactivate?.Invoke ( );
+                                Active.Deactivate?.Invoke();
                             }
                         }
                         Active = TopForm;
-                        TopForm.Activate?.Invoke ( );
+                        TopForm.Activate?.Invoke();
 
-                        if ( sdrag )
+                        if (sdrag)
                         {
                             sdx = MX;
                             sdy = MY;
                         }
                     }
-                    else if ( Pressed [ 0 ] == TopForm )
+                    else if (Pressed[0] == TopForm)
                     {
-                        TopForm.MousePressed?.Invoke ( 0 );
+                        TopForm.MousePressed?.Invoke(0);
                     }
-                    else if ( Pressed [ 0 ] != TopForm )
+                    else if (Pressed[0] != TopForm)
                     {
-                        Pressed [ 0 ].MousePressed?.Invoke ( 0 );
+                        Pressed[0].MousePressed?.Invoke(0);
                     }
                 }
                 else
                 {
-                    if ( Pressed [ 0 ] != null )
+                    if (Pressed[0] != null)
                     {
-                        Pressed [ 0 ].MousePressed?.Invoke ( 0 );
+                        Pressed[0].MousePressed?.Invoke(0);
                     }
                 }
 
-                if ( Pressed [ 0 ] != null )
+                if (Pressed[0] != null)
                 {
                     // Console.WriteLine("MX:" + MX + " MY:" + MY + " SDX:" + sdx + " SDY:" + sdy);
                     int mvx = MX - sdx;
                     int mvy = MY - sdy;
-                    if ( mvx != 0 || mvy != 0 )
+                    if (mvx != 0 || mvy != 0)
                     {
-                        Pressed [ 0 ].Drag?.Invoke ( mvx, mvy );
-                        Pressed [ 0 ].PostDrag?.Invoke ( mvx, mvy );
+                        Pressed[0].Drag?.Invoke(mvx, mvy);
+                        Pressed[0].PostDrag?.Invoke(mvx, mvy);
                     }
                     sdx = MX;
 
@@ -227,38 +308,54 @@ namespace Vivid3D.Resonance
             else
             {
                 //Console.WriteLine("Wop");
-                if ( Pressed [ 0 ] != null )
+                if (Pressed[0] != null)
                 {
-                    if ( Pressed [ 0 ].InBounds ( MX, MY ) == false )
+                    if (Pressed[0].InBounds(MX, MY) == false)
                     {
-                        Pressed [ 0 ].MouseLeave?.Invoke ( );
+                        Pressed[0].MouseLeave?.Invoke();
                     }
 
-                    Pressed [ 0 ].MouseUp?.Invoke ( 0 );
-                    Pressed [ 0 ] = null;
+                    Pressed[0].MouseUp?.Invoke(0);
+                    Pressed[0] = null;
                     sdrag = true;
                 }
             }
         }
-
-        public int NextKey = 0;
-        public OpenTK.Input.Key LastKey = OpenTK.Input.Key.LastKey;
-        public int clicks = 0;
-        public int lastClick = 0;
-        private bool sdrag = true;
-        private int sdx;
-        private int sdy;
-        private readonly int ux;
-        private readonly int uy;
-        public UIForm[] Pressed = new UIForm[32];
-
-        private UIForm GetTopForm ( int mx, int my )
+        private void AddNodeBackward(List<UIForm> forms, UIForm form)
         {
-            foreach ( UIForm form in UpdateList )
+            int fc = form.Forms.Count;
+            if (fc > 0)
             {
-                if ( form.CheckBounds == true )
+                while (true)
                 {
-                    if ( form.InBounds ( mx, my ) )
+                    fc--;
+                    UIForm af = form.Forms[fc];
+                    AddNodeBackward(forms, af);
+                    if (fc == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+            forms.Add(form);
+        }
+
+        private void AddNodeForward(List<UIForm> forms, UIForm form)
+        {
+            RenderList.Add(form);
+            foreach (UIForm nf in form.Forms)
+            {
+                AddNodeForward(forms, nf);
+            }
+        }
+
+        private UIForm GetTopForm(int mx, int my)
+        {
+            foreach (UIForm form in UpdateList)
+            {
+                if (form.CheckBounds == true)
+                {
+                    if (form.InBounds(mx, my))
                     {
                         // Console.WriteLine("Form:" + form.Text);
                         return form;
@@ -267,113 +364,18 @@ namespace Vivid3D.Resonance
             }
             return null;
         }
-
-        private float TopB = 0.0f;
-
-        public void Render ( )
+        private void UpdateRenderList(UIForm begin)
         {
-            if ( Top != null )
-            {
-                TopB = TopB + 0.065f;
-                if ( TopB > 0.8f )
-                {
-                    TopB = 0.8f;
-                }
-            }
-            else
-            {
-                TopB = TopB - 0.085f;
-                if ( TopB < 0 )
-                {
-                    TopB = 0;
-                }
-            }
-            Graphics.SmartUpdate ( );
+            RenderList.Clear();
 
-            if ( Top != null )
-            {
-                UpdateRenderList ( Root );
-                foreach ( UIForm form in RenderList )
-                {
-                    form.Draw?.Invoke ( );
-                }
-                Texture.VTex2D ntex = new Texture.VTex2D ( Vivid3D.App.VividApp.W , Vivid3D.App.VividApp.H );
-
-                ntex.CopyTex ( 0, 0 );
-                OpenTK.Graphics.OpenGL4.GL.Clear ( OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit );
-                Vivid3D.Draw.VPen.RectBlur2 ( 0, 0, Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H, ntex, new OpenTK.Vector4 ( 1, 1, 1, 1 ), TopB );
-
-                UpdateRenderList ( Top );
-
-                foreach ( UIForm form in RenderList )
-                {
-                    form.Draw?.Invoke ( );
-                }
-
-                ntex.Delete ( );
-            }
-            else
-            {
-                UpdateRenderList ( Root );
-
-                foreach ( UIForm form in RenderList )
-                {
-                    form.Draw?.Invoke ( );
-                }
-                if ( TopB > 0 )
-                {
-                    Texture.VTex2D ntex = new Texture.VTex2D(Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H);
-                    ntex.CopyTex ( 0, 0 );
-                    OpenTK.Graphics.OpenGL4.GL.Clear ( OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit );
-                    Vivid3D.Draw.VPen.RectBlur2 ( 0, 0, Vivid3D.App.VividApp.W, Vivid3D.App.VividApp.H, ntex, new OpenTK.Vector4 ( 1, 1, 1, 1 ), TopB );
-                    ntex.Delete ( );
-                }
-            }
+            AddNodeForward(RenderList, begin);
         }
 
-        public List<UIForm> UpdateList = new List<UIForm>();
-        public List<UIForm> RenderList = new List<UIForm>();
-
-        private void UpdateUpdateList ( UIForm begin )
+        private void UpdateUpdateList(UIForm begin)
         {
-            UpdateList.Clear ( );
+            UpdateList.Clear();
 
-            AddNodeBackward ( UpdateList, begin );
-        }
-
-        private void UpdateRenderList ( UIForm begin )
-        {
-            RenderList.Clear ( );
-
-            AddNodeForward ( RenderList, begin );
-        }
-
-        private void AddNodeBackward ( List<UIForm> forms, UIForm form )
-        {
-            int fc = form.Forms.Count;
-            if ( fc > 0 )
-            {
-                while ( true )
-                {
-                    fc--;
-                    UIForm af = form.Forms[fc];
-                    AddNodeBackward ( forms, af );
-                    if ( fc == 0 )
-                    {
-                        break;
-                    }
-                }
-            }
-            forms.Add ( form );
-        }
-
-        private void AddNodeForward ( List<UIForm> forms, UIForm form )
-        {
-            RenderList.Add ( form );
-            foreach ( UIForm nf in form.Forms )
-            {
-                AddNodeForward ( forms, nf );
-            }
+            AddNodeBackward(UpdateList, begin);
         }
     }
 }

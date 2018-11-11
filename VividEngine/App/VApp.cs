@@ -166,7 +166,7 @@ namespace Vivid3D.App
             WindowState = WindowState.Fullscreen;
         }
 
-        public VividApp ( string app, int width, int height, bool full ) : base ( width, height, OpenTK.Graphics.GraphicsMode.Default, app, full ? GameWindowFlags.Fullscreen : GameWindowFlags.Default, DisplayDevice.Default, 4, 5, OpenTK.Graphics.GraphicsContextFlags.ForwardCompatible )
+        public VividApp ( string app, int width, int height, bool full ) : base ( width, height, OpenTK.Graphics.GraphicsMode.Default, app, full ? GameWindowFlags.Fullscreen : GameWindowFlags.Default)
 
         {
             Link = this;
@@ -183,6 +183,8 @@ namespace Vivid3D.App
             RH = height;
             Import.Import.RegDefaults ( );
             VPen.InitDraw ( );
+            CursorVisible = false;
+
            
         }
 
@@ -309,6 +311,8 @@ namespace Vivid3D.App
 
         protected override void OnRenderFrame ( FrameEventArgs e )
         {
+            CursorVisible = false;
+
             if ( Environment.TickCount > fpsL + 1000 )
             {
                 fpsL = Environment.TickCount + 1000;

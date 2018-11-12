@@ -18,7 +18,7 @@ namespace FusionIDE.States
         {
             SUI = new UI();
 
-            var code_bg = new ImageForm().Set(0, 0, AppInfo.W, AppInfo.H, "").SetImage(new VTex2D("data/ui/codebg1.png", LoadMethod.Single, false));
+            var code_bg = new ImageForm().Set(0, 0, AppInfo.W, AppInfo.H, "").SetImage(new VTex2D("data/ui/codebg1.jpg", LoadMethod.Single, false));
 
             EditWin = (CodeEditorForm)new CodeEditorForm().Set(10, 50, AppInfo.W - 20, AppInfo.H - 60, "Fusion - Code Editor");
 

@@ -55,6 +55,7 @@ namespace FusionIDE.States
         {
             //            base.InitState();
             Console.WriteLine("Welcome to Fusion.");
+            Vivid3D.Audio.VividAudio.Play("data/audio/bootup.wav");
         }
 
         public override void UpdateState()

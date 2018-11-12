@@ -27,7 +27,7 @@ namespace FusionIDE.States
             bg_img = new Vivid3D.Texture.VTex2D("data/ui/skin/windowbg1.png", Vivid3D.Texture.LoadMethod.Single, true);
             BG = (ImageForm)new ImageForm().Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
             BG.SetImage(bg_img);
-            MainForm = (WelcomeForm)new WelcomeForm().Set(350, 200, Vivid3D.App.AppInfo.W - 700, 250, "Welcome to Fusion");
+            MainForm = (WelcomeForm)new WelcomeForm().Set(450, 200, Vivid3D.App.AppInfo.W - 900, 250, "Welcome to Fusion");
             BGForm = (BackgroundForm)new BackgroundForm(20).Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H);
             var bgi = new ImageForm().Set(0, 0, Vivid3D.App.AppInfo.W, Vivid3D.App.AppInfo.H, "");
             bgi.SetImage(new Vivid3D.Texture.VTex2D("data/ui/bg1.jpg",Vivid3D.Texture.LoadMethod.Single,false));
@@ -48,14 +48,18 @@ namespace FusionIDE.States
             dynamic ui = BloomUI.InputFrame;
             ui.GUI = SUI;
             Com.AddCompositer(BloomUI);
+            int t = System.Environment.TickCount + 8000;
+            while (System.Environment.TickCount < t)
+            {
 
+            }
         }
 
         public override void InitState()
         {
             //            base.InitState();
             Console.WriteLine("Welcome to Fusion.");
-            Vivid3D.Audio.VividAudio.Play("data/audio/bootup.wav");
+            new Vivid3D.Audio.VSoundSource("data/audio/bootup2.wav").Play2D(false);
         }
 
         public override void UpdateState()

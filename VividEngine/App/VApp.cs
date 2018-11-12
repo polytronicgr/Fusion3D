@@ -184,7 +184,7 @@ namespace Vivid3D.App
             Import.Import.RegDefaults ( );
             VPen.InitDraw ( );
             CursorVisible = false;
-            Audio.VividAudio.Init();
+            Audio.StarSoundSys.Init();
            
         }
 

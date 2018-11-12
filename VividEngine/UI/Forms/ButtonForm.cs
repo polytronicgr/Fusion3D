@@ -11,11 +11,17 @@ namespace Vivid3D.Resonance.Forms
         private Vector4 NormCol = new Vector4(0.9f, 0.9f, 0.9f, 0.9f);
         private Vector4 OverCol = new Vector4(0.8f, 0.8f, 0.8f, 0.9f);
         private Vector4 PressCol = new Vector4(1, 1, 1, 1);
-
+        public static Audio.VSoundSource BeepSound;
         public ButtonForm ( )
         {
-            SetImage ( new VTex2D ( "data/UI/Skin/but_normal.png", LoadMethod.Single, true ) );
+            if (BeepSound == null)
+            {
+                BeepSound = new Audio.VSoundSource("data/audio/button1.wav");
+            }
+            
+                SetImage ( new VTex2D ( "data/UI/Skin/but_normal.png", LoadMethod.Single, true ) );
             Col = NormCol;
+
             void DrawFunc ( )
             {
                 VPen.BlendMod = VBlend.Alpha;
@@ -54,6 +60,7 @@ namespace Vivid3D.Resonance.Forms
             {
                 Col = PressCol;
                 Pressed = true;
+                BeepSound.Play2D();
             }
 
             void MouseUpFunc ( int b )

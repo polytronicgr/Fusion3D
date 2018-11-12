@@ -10,6 +10,8 @@ namespace FusionIDE.App
 
         public static void InitFusion ( )
         {
+           
+
             MainVM = new VME ( );
 
             VSource init_ide_src = new VSource("data/script/ide/ide_init.vs");

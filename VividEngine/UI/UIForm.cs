@@ -155,7 +155,7 @@ namespace Vivid3D.Resonance
                 dh = h;
             }
 
-            VPen.Rect ( GX + x, GY + y, dw, dh, tex, Col );
+            VPen.Rect ( GX + x, GY + y, dw, dh, tex, Col *UI.BootAlpha);
         }
 
         public void DrawFormBlur ( VTex2D tex, int x = 0, int y = 0, int w = -1, int h = -1 )
@@ -180,7 +180,7 @@ namespace Vivid3D.Resonance
 
             btex.CopyTex ( GX + x, App.VividApp.H - ( ( GY + y ) + dh ) );
 
-            VPen.RectBlurRefract ( GX + x, GY + y, dw, dh, tex, btex, norm, col, col, blur, refract );
+            VPen.RectBlurRefract ( GX + x, GY + y, dw, dh, tex, btex, norm, col*UI.BootAlpha, col*UI.BootAlpha, blur, refract );
 
             btex.Delete ( );
         }
@@ -192,7 +192,7 @@ namespace Vivid3D.Resonance
                 w = W;
                 h = H;
             }
-            VPen.Rect ( GX + x, GY + y, w, h, col );
+            VPen.Rect ( GX + x, GY + y, w, h, col *UI.BootAlpha);
         }
 
         public void DrawFormBlur ( VTex2D tex, float blur, Vector4 col, int x = 0, int y = 0, int w = -1, int h = -1 )
@@ -212,7 +212,7 @@ namespace Vivid3D.Resonance
 
             btex.CopyTex ( GX + x, App.VividApp.H - ( ( GY + y ) + dh ) );
 
-            VPen.RectBlur ( GX + x, GY + y, dw, dh, tex, btex, col, col, blur );
+            VPen.RectBlur ( GX + x, GY + y, dw, dh, tex, btex, col*UI.BootAlpha, col *UI.BootAlpha, blur );
 
             btex.Delete ( );
         }
@@ -230,17 +230,17 @@ namespace Vivid3D.Resonance
                 dh = h;
             }
 
-            VPen.Rect ( GX + x, GY + y, dw, dh, tex, col );
+            VPen.Rect ( GX + x, GY + y, dw, dh, tex, col *UI.BootAlpha);
         }
 
         public void DrawText ( string txt, int x, int y )
         {
-            DrawText ( txt,x,y, Vector4.One );
+            DrawText ( txt,x,y, Vector4.One *UI.BootAlpha);
         }
 
         public void DrawText ( string txt, int x, int y, Vector4 col )
         {
-            VFontRenderer.Draw ( UI.Font, txt, GX+x, GY+y , col );
+            VFontRenderer.Draw ( UI.Font, txt, GX+x, GY+y , col*UI.BootAlpha );
         }
 
         public UIForm Set ( int x, int y, int w, int h, string text = "" )

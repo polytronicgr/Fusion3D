@@ -25,6 +25,7 @@ namespace Vivid3D.Resonance
         public UIForm Root = new UIForm();
         public UIForm Top = null;
         public List<UIForm> UpdateList = new List<UIForm>();
+        public static float BootAlpha = 0.0f;
         public Vivid3D.Texture.VTex2D CursorImg;
         private readonly int ux;
 
@@ -40,6 +41,8 @@ namespace Vivid3D.Resonance
 
         private float TopB = 0.0f;
 
+        public Audio.VSoundSource WindRush = null;
+        public Audio.VSound WindSound = null;
         public UI()
         {
             InitUI();
@@ -48,6 +51,11 @@ namespace Vivid3D.Resonance
                 Pressed[i] = null;
             }
             Root = new UIForm().Set(0, 0, App.AppInfo.W, App.AppInfo.H);
+            WindRush = new Audio.VSoundSource("data/audio/wind1.wav");
+            WindSound = WindRush.Play2D(true);
+            WindSound.Pitch = 0;
+            WindSound.Vol = 0;
+
         }
         public void InitUI()
         {
@@ -143,6 +151,10 @@ namespace Vivid3D.Resonance
 
         public void Update()
         {
+            if (BootAlpha < 1)
+            {
+                BootAlpha += (1.0f - BootAlpha) * 0.07f;
+            }
             Logics.SmartUpdate();
 
             if (FirstMouse)
@@ -342,7 +354,21 @@ namespace Vivid3D.Resonance
                     sdrag = true;
                 }
             }
+            if (Pressed[0] != null)
+            {
+
+                WindS += (float)(Math.Abs(MXD + MYD)) / 150.0f;
+                if (WindS > 1.5f) WindS = 1.5f;
+            }
+
+            WindSound.Pitch = 1.0f + (-0.2f + WindS * 0.2f);
+                WindSound.Vol = WindS;
+
+                WindS = WindS + (0.0f - WindS) * 0.08f;
+
+            
         }
+        public float WindS = 0.0f;
         private void AddNodeBackward(List<UIForm> forms, UIForm form)
         {
             int fc = form.Forms.Count;

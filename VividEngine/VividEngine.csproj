@@ -52,6 +52,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="irrKlang.NET4">
+      <HintPath>..\irrKlang.NET4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -67,7 +70,7 @@
     <Compile Include="Animation\Animator.cs" />
     <Compile Include="App\AppLog.cs" />
     <Compile Include="App\VApp.cs" />
-    <Compile Include="Audio\VividAudio.cs" />
+    <Compile Include="Audio\Audio.cs" />
     <Compile Include="Composition\Composite.cs" />
     <Compile Include="Composition\Compositer.cs" />
     <Compile Include="Composition\CompositerSet.cs" />

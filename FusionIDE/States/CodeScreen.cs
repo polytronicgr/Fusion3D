@@ -26,6 +26,8 @@ namespace FusionIDE.States
 
             SUI.Root.Add(code_bg);
 
+            script.Scripts.ScanMods();
+
             base.InitState();
         }
 

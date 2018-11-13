@@ -339,7 +339,7 @@ namespace Vivid3D.Resonance.Forms
                 CodeDY = CodeDY + (CodeY - CodeDY) * ScrollSpeed;
 
                 int ex = EditX - (int)CodeX;
-                Console.WriteLine("EX:" + ex);
+             
                 int ey = EditY;
                 if (ex < 0) ex = 0;
                 if (ey < 0) ey = 0;
@@ -402,7 +402,7 @@ namespace Vivid3D.Resonance.Forms
                                 string tb = (s1 + s2).Substring(r, 1);
                                 rx += UI.Font.Width((s1+s2).Substring(r, 1));
                             }
-                            Console.WriteLine("RX:" + rx);
+                      
                             int ciy = (line_num-1) * 25;
                             DrawText2(s1+s2, (int)line_pos.X, (int)line_pos.Y, new Vector4(0.8f, 0.8f, 0.8f, 1.0f));
                             if(curs_on) DrawFormSolid(new Vector4(0, 0, 0, 1), (int)line_pos.X + rx, (int)line_pos.Y+2, 3, 15) ;

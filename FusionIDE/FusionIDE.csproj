@@ -70,6 +70,7 @@
     <Compile Include="FusionApp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="script\Scripts.cs" />
     <Compile Include="States\CodeScreen.cs" />
     <Compile Include="States\WelcomeScreen.cs" />
   </ItemGroup>

@@ -32,7 +32,7 @@ namespace VividScript
             Ops.Add ( "/" );
             Ops.Add ( "*" );
             Ops.Add ( "^" );
-            Ops.Add ( "mod" );
+       
             Ops.Add ( "==" );
             Ops.Add ( "=" );
             AddConv ( "+", new VToken ( TokenClass.Op, Token.Plus, "+" ) );
@@ -40,7 +40,7 @@ namespace VividScript
             AddConv ( "/", new VToken ( TokenClass.Op, Token.Div, "/" ) );
             AddConv ( "*", new VToken ( TokenClass.Op, Token.Div, "*" ) );
             AddConv ( "^", new VToken ( TokenClass.Op, Token.Pow, "^" ) );
-            AddConv ( "mod", new VToken ( TokenClass.Op, Token.Pow, "mod" ) );
+        
             AddConv ( "==", new VToken ( TokenClass.Op, Token.Equal, "==" ) );
             AddConv ( "=", new VToken ( TokenClass.Op, Token.Equal, "=" ) );
             AddConv ( "!", new VToken ( TokenClass.Op, Token.Not, "!" ) );
@@ -284,6 +284,10 @@ namespace VividScript
                 }
                 cur += ch;
                 // Console.WriteLine ( ch );
+            }
+            if(cur.Length>0)
+            {
+                elements.Add(cur);
             }
             List<string> final_elements = new List<string>();
             foreach ( string ele in elements )

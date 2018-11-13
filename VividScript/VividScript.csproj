@@ -62,6 +62,7 @@
     <Compile Include="CFuncLink.cs" />
     <Compile Include="CodeScope.cs" />
     <Compile Include="LinkEngineBase.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Structs\VarType.cs" />
     <Compile Include="Structs\VSAssign.cs" />
     <Compile Include="Structs\VSCallPars.cs" />

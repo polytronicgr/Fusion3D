@@ -1,23 +1,21 @@
-func Entry(int ant)
+module draw
 
-    loop = 25+26;
+	
 
-    while(loop>0)
-    
-        loop = loop - 1;
+	func static rect(x,y,w,h)
+	
+		
+	
+	end
 
-        v = 0;
+end
 
-        for(v=0;v<5;v=v+1)
+func testFunc()
 
-            if(v>2)
-            
-                printf(loop);
+	test = new draw();
+	
+	printf("Testing.");
+	
+	
 
-            end
-
-        end
-
-    end
-
-end 
+end

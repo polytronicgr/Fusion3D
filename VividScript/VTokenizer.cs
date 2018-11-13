@@ -76,6 +76,8 @@ namespace VividScript
             Keys.Add ( "module" );
             Keys.Add ( "method" );
             Keys.Add ( "function" );
+            Keys.Add("var");
+            AddConv("var", TokenClass.Define, Token.Var);
             AddConv ( "end", TokenClass.Flow, Token.End );
             AddConv ( "if", TokenClass.Flow, Token.If );
             AddConv ( "elseif", TokenClass.Flow, Token.ElseIf );

@@ -25,6 +25,8 @@ namespace VividScript.VStructs
         public float floatV=0;
         public bool BoolV = false;
         public string VarName="";
+        public bool NewClass = false;
+        public VSCallPars NewPars;
 
         public override string DebugString ( )
         {
@@ -146,6 +148,17 @@ namespace VividScript.VStructs
                 }
                 switch ( t.Class )
                 {
+                    case TokenClass.New:
+
+                        NewClass = true;
+
+                        var new_name = ConsumeNext();
+
+                        Console.WriteLine("NewClass:" + new_name.Text);
+                        NewPars = new VSCallPars(TokStream);
+                        Console.WriteLine("Pars:" + NewPars.Pars.Count);
+
+                        break;
                     case TokenClass.Bool:
                         VSExpr bool_e = new VSExpr ( TokStream, true )
                         {

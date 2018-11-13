@@ -1,12 +1,13 @@
 ﻿using System;
 using VividScript.VStructs;
-
+using System.Collections.Generic;
 namespace VividScript
 {
     public class VME
     {
-        public CodeScope SystemScope = new CodeScope();
+        public CodeScope SystemScope = new CodeScope("SystemScope");
         public System.Collections.Generic.Stack<CodeScope> Scopes = new System.Collections.Generic.Stack<CodeScope>();
+        public List<Module> Mods = new List<Module>();
 
         public void RegisterOSFuncs ( )
         {
@@ -41,6 +42,46 @@ namespace VividScript
 
         public static CodeScope CurrentScope => Main.Scopes.Peek ( );
 
+        public void AddModule(Module mod)
+        {
+            Mods.Add(mod);
+            foreach(var mv in mod.Mod.Modules)
+            {
+               
+            }
+
+        }
+
+        public VSModule FindMod(string name)
+        {
+            foreach(var mod in Mods)
+            {
+               foreach(var imod in mod.Mod.Modules)
+                {
+                    if(imod.ModuleName == name)
+                    {
+                        return imod;
+                    }
+                }
+            }
+            return null;
+        }
+        public VSVar FindVar(string name)
+        {
+
+            foreach(var mod in Mods)
+            {
+
+                foreach(var imod in mod.Mod.Modules)
+                {
+                    var cv = imod.FindVar(name);
+                    if (cv != null) return cv;
+                    
+                }
+
+            }
+            return null;
+        }
         public void AddCFunc ( string name, CFuncLink link )
         {
             FuncLink FuncLink = new FuncLink
@@ -103,15 +144,60 @@ namespace VividScript
             Main.Scopes.Push ( scope );
         }
 
+        public CodeScope ExecuteStaticFunc(string name)
+        {
+            foreach(var mod in Mods)
+            {
+                foreach(var sf in mod.Mod.SystemFuncs)
+                {
+
+                    if (sf.FuncName == name)
+                    {
+                        PushScope(sf.LocalScope);
+                        var rv = ExecuteFunc(sf);
+                        PopScope();
+                        return rv;
+                    }
+
+                }
+                foreach(var imod in mod.Mod.Modules)
+                {
+
+                    foreach(var sfunc in imod.StaticFuncs)
+                    {
+
+                        if(sfunc.FuncName == name)
+                        {
+
+                            PushScope(imod.StaticScope);
+                            var rv= ExecuteFunc(sfunc);
+                            PopScope();
+                            return rv;
+
+
+                        }
+
+                    }
+
+                }
+
+            }
+            return null;
+
+        }
+
         public CodeScope ExecuteFunc ( VSFunc func )
         {
             Log ( "Running Func:" + func.Name );
+
+            PushScope(SystemScope);
 
             PushScope ( func.LocalScope );
 
             func.Code.Exec ( );
 
             PopScope ( );
+            PopScope();
             return func.LocalScope;
         }
     }

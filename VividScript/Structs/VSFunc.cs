@@ -10,6 +10,7 @@ namespace VividScript.VStructs
 
         public VSFunc ( VTokenStream s ) : base ( s )
         {
+            LocalScope = new CodeScope("FuncScope");
         }
 
         public override string DebugString ( )

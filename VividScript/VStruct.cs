@@ -22,7 +22,7 @@ namespace VividScript
         public bool Done = false;
         public VTokenStream TokStream = null;
 
-        public CodeScope LocalScope = new CodeScope();
+        public CodeScope LocalScope = null;
 
         public virtual dynamic Exec ( )
         {
@@ -130,7 +130,16 @@ namespace VividScript
                         Done = true;
                         return;
                     }
+                    if(PeekNext().Token == Token.End)
+                    {
+                        Done = true;
+                        return;
+                    }
                     ConsumeNext ( );
+                    if(PeekNext().Token == Token.End){
+                        Done = true;
+                        return;
+                    }
                     if ( PeekNext ( ) == null )
                     {
                         Done = true;

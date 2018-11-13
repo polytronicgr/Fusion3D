@@ -8,6 +8,19 @@ namespace VividScript
 
         public LinkEngineBase Linker = null;
 
+        public string ScopeID = "";
+
+        public CodeScope(string id)
+        {
+
+            ScopeID = id;
+            Linker = new LinkEngineBase()
+            {
+                Scope = this
+            };
+
+        }
+
         public void RegisterFunc ( FuncLink link )
         {
             Linker.RegisterFunc ( link );
@@ -28,12 +41,6 @@ namespace VividScript
             return Linker.FindVar ( name, outterScope );
         }
 
-        public CodeScope ( )
-        {
-            Linker = new LinkEngineBase ( )
-            {
-                Scope = this
-            };
-        }
+        
     }
 }

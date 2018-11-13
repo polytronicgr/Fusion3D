@@ -31,6 +31,14 @@ namespace VividScript.VStructs
                     return;
                 }
                 VSPar np = new VSPar(TokStream);
+                if(t.Token == Token.Id)
+                {
+
+                    Console.WriteLine("Par:" + t.Text);
+                    Pars.Add(np);
+
+                }
+                /*
                 switch ( t.Token )
                 {
                     case Token.Int:
@@ -61,7 +69,7 @@ namespace VividScript.VStructs
                         Pars.Add ( np );
                         break;
                 }
-
+                */
                 if ( t.Token == Token.RightPara )
                 {
                     Done = true;

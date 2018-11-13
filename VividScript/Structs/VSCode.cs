@@ -37,6 +37,10 @@ namespace VividScript.VStructs
             Parser = ( t ) =>
             {
                 Console.WriteLine ( "Code:" + t.Token + " Txt:" + t.Text );
+                if(t.Token == Token.BeginLine)
+                {
+                    return;
+                }
                 if ( t.Token == Token.EndLine )
                 {
                     return;

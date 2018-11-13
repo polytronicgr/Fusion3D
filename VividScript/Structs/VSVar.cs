@@ -14,6 +14,8 @@
             set;
         }
 
+        public VSExpr Init = null;
+
         public dynamic Value =0;
 
         public string DebugString ( )

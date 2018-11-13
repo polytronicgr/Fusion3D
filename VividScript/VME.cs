@@ -51,7 +51,22 @@ namespace VividScript
             }
 
         }
+        public VSModule FindClass(string name)
+        {
+            foreach(var bmod in Mods)
+            {
 
+                foreach(var mod in bmod.Mod.Modules)
+                {
+                    if(mod.ModuleName == name)
+                    {
+                        return mod;
+                    }
+                }
+
+            }
+            return null;
+        }
         public VSModule FindMod(string name)
         {
             foreach(var mod in Mods)
@@ -153,8 +168,11 @@ namespace VividScript
 
                     if (sf.FuncName == name)
                     {
+                        PushScope(SystemScope);
                         PushScope(sf.LocalScope);
                         var rv = ExecuteFunc(sf);
+                        PopScope();
+
                         PopScope();
                         return rv;
                     }
@@ -190,14 +208,13 @@ namespace VividScript
         {
             Log ( "Running Func:" + func.Name );
 
-            PushScope(SystemScope);
+   
 
-            PushScope ( func.LocalScope );
+         
 
             func.Code.Exec ( );
 
-            PopScope ( );
-            PopScope();
+ 
             return func.LocalScope;
         }
     }

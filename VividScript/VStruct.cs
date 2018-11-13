@@ -45,6 +45,11 @@ namespace VividScript
             Parse ( );
         }
 
+        public VStruct()
+        {
+
+        }
+
         public virtual VToken BackOne ( )
         {
             TokStream.Pos--;

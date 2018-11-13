@@ -27,6 +27,7 @@ namespace VividScript.VStructs
         public string VarName="";
         public bool NewClass = false;
         public VSCallPars NewPars;
+        public string NewClassType = "";
 
         public override string DebugString ( )
         {
@@ -40,6 +41,15 @@ namespace VividScript.VStructs
 
         public override dynamic Exec ( )
         {
+            if (NewClass)
+            {
+
+                var base_class = VME.Main.FindClass(NewClassType);
+                var nvar = new VSVar();
+                nvar.Name = base_class.ModuleName + "_Instnace";
+                return base_class.CreateInstance();
+
+            }
             return NextE ( 0, null );
 
             return null;
@@ -49,6 +59,13 @@ namespace VividScript.VStructs
         {
             dynamic val="";
             VSExpr e = Expr[i];
+
+            if (prev is VSModule && e.VarName != ".") 
+            {
+
+                return prev.FindVar(e.VarName).Value;
+            }
+
             switch ( e.Type )
             {
                 case ExprType.SubExpr:
@@ -96,6 +113,11 @@ namespace VividScript.VStructs
 
                 case ExprType.VarValue:
 
+                    if(e.VarName == ".")
+                    {
+                        return NextE(i + 1, prev);
+                    }
+
                     val = VME.CurrentScope.FindVar ( e.VarName, true ).Value;
                     break;
 
@@ -114,7 +136,7 @@ namespace VividScript.VStructs
                     val = e.BoolV;
                     break;
             }
-            if ( i < Expr.Count - 1 )
+            if ( i < Expr.Count -1 )
             {
                 val = NextE ( i + 1, val );
             }
@@ -127,6 +149,11 @@ namespace VividScript.VStructs
             Parser = ( t ) =>
             {
                 Console.WriteLine ( "PE:" + t );
+
+                if (t.Text == "=")
+                {
+                    return;
+                }
 
                 if ( t.Token == Token.LeftPara )
                 {
@@ -157,6 +184,7 @@ namespace VividScript.VStructs
                         Console.WriteLine("NewClass:" + new_name.Text);
                         NewPars = new VSCallPars(TokStream);
                         Console.WriteLine("Pars:" + NewPars.Pars.Count);
+                        NewClassType = new_name.Text;
 
                         break;
                     case TokenClass.Bool:

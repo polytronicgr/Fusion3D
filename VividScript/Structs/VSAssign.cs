@@ -27,7 +27,7 @@ namespace VividScript.VStructs
                     VME.CurrentScope.RegisterVar ( Vars [ 0 ] );
                 }
             }
-            Vars [ 0 ].Value = Expr [ 0 ].NextE ( 0, null );
+            Vars[0].Value = Expr[0].Exec();
             return null;
         }
 

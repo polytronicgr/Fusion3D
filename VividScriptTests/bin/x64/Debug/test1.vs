@@ -1,5 +1,6 @@
 module draw
 
+	var val = 5+25;
 	
 
 	func static rect(x,y,w,h)
@@ -14,7 +15,7 @@ func testFunc()
 
 	test = new draw();
 	
-	printf("Testing.");
+	printf("Testing:"+test.val);
 	
 	
 

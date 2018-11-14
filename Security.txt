@@ -1,1 +1,1 @@
-This repo is secured with both SSH and GPG.
+This repo is secured with both SSH and GPG.2

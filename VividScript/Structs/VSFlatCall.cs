@@ -40,7 +40,6 @@ namespace VividScript.VStructs
 
         public override void SetupParser ( )
         {
-            Console.WriteLine ( "Parsing flat-call." );
             Parser = ( t ) =>
             {
                 if ( t.Token == Token.LeftPara )

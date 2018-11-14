@@ -59,11 +59,14 @@ namespace VividScript.VStructs
         {
             dynamic val="";
             VSExpr e = Expr[i];
-
+            if(e.VarName == ".")
+            {
+                val = NextE(i + 1, prev);
+            }
             if (prev is VSModule && e.VarName != ".") 
             {
 
-                return prev.FindVar(e.VarName).Value;
+                val= prev.FindVar(e.VarName).Value;
             }
 
             switch ( e.Type )
@@ -118,7 +121,14 @@ namespace VividScript.VStructs
                         return NextE(i + 1, prev);
                     }
 
-                    val = VME.CurrentScope.FindVar ( e.VarName, true ).Value;
+                    if (prev is VSModule)
+                    {
+                        val = prev.FindVar (e.VarName).Value;
+                    }
+                    else
+                    {
+                        val = VME.CurrentScope.FindVar(e.VarName, true).Value;
+                    }
                     break;
 
                 case ExprType.IntValue:
@@ -136,19 +146,19 @@ namespace VividScript.VStructs
                     val = e.BoolV;
                     break;
             }
-            if ( i < Expr.Count -1 )
+            if(i<Expr.Count-1)
             {
-                val = NextE ( i + 1, val );
+                return  NextE(i + 1, val);
             }
             return val;
         }
 
         public override void SetupParser ( )
         {
-            Console.WriteLine ( "Parsing expression." );
+     
             Parser = ( t ) =>
             {
-                Console.WriteLine ( "PE:" + t );
+ 
 
                 if (t.Text == "=")
                 {
@@ -258,8 +268,7 @@ namespace VividScript.VStructs
                         break;
 
                     case TokenClass.Value:
-                        Console.WriteLine ( "Value:" + t.Text );
-
+      
                         VSExpr exp = new VSExpr(TokStream,true);
                         Expr.Add ( exp );
                         switch ( t.Token )

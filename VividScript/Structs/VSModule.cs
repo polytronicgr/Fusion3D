@@ -183,7 +183,7 @@ namespace VividScript.VStructs
                         break;
                     case TokenClass.Type:
 
-                        Console.WriteLine ( "Parsing Variable definitions." );
+                    
                         BackOne ( );
                         VSDefineVars vdef = new VSDefineVars(TokStream);
                         foreach ( VSVar nv in vdef.Vars )

@@ -294,7 +294,7 @@ namespace VividScript
             List<string> final_elements = new List<string>();
             foreach ( string ele in elements )
             {
-                Console.WriteLine ( "E:" + ele );
+                //Console.WriteLine ( "E:" + ele );
                 bool keep=false;
                 for ( int i = 0; i < good.Length; i++ )
                 {
@@ -339,7 +339,7 @@ namespace VividScript
                 //for(int tc = 0l; tc < tok.Token)
                 //{
                 rs.Add ( tok );
-                Console.WriteLine ( "Tok:" + tok );
+              //  Console.WriteLine ( "Tok:" + tok );
             }
 
             return rs;

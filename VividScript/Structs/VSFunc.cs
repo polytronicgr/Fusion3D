@@ -29,7 +29,7 @@ namespace VividScript.VStructs
             {
                 if ( t.Token == Token.LeftPara )
                 {
-                    Console.WriteLine ( "Parsing parameters." );
+
                     Pars = new VSPars ( TokStream );
                     Code = new VSCode ( TokStream );
                 }

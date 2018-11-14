@@ -27,7 +27,7 @@ namespace VividScript.VStructs
 
         public override void SetupParser ( )
         {
-            Console.WriteLine ( "Parsing function code-body." );
+   
 
             PreParser = ( t ) =>
             {
@@ -36,7 +36,7 @@ namespace VividScript.VStructs
 
             Parser = ( t ) =>
             {
-                Console.WriteLine ( "Code:" + t.Token + " Txt:" + t.Text );
+              
                 if(t.Token == Token.BeginLine)
                 {
                     return;
@@ -83,7 +83,7 @@ namespace VividScript.VStructs
                     case StrandType.FlatStatement:
                         //t = ConsumeNext ( );
 
-                        Console.WriteLine ( "Flat Statement. FuncCall:" + t.Token + " TXT:" + t.Text );
+    
 
                         VToken left_par = ConsumeNext();
 

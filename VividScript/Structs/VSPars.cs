@@ -20,7 +20,7 @@ namespace VividScript.VStructs
             Parser = ( t ) =>
 
             {
-                Console.WriteLine ( "T:" + t.Token + " T:" + t.Text );
+                
                 if ( t.Token == Token.RightPara )
                 {
                     Done = true;
@@ -34,7 +34,7 @@ namespace VividScript.VStructs
                 if(t.Token == Token.Id)
                 {
 
-                    Console.WriteLine("Par:" + t.Text);
+                   
                     Pars.Add(np);
 
                 }

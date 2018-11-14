@@ -190,7 +190,7 @@ namespace VividScript
 
         public StrandType Predict ( )
         {
-            System.Console.WriteLine ( "Predicting." );
+         
             int cpos = TokStream.Pos;
             if ( cpos >= TokStream.Len - 1 )
             {

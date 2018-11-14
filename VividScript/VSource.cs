@@ -17,7 +17,7 @@ namespace VividScript
             VTokenStream str= new VTokenStream();
             while ( true )
             {
-                System.Console.WriteLine ( "Line:" + code [ ic ] );
+             //   System.Console.WriteLine ( "Line:" + code [ ic ] );
                 VTokenStream tokes = toker.ParseString2(code[ic]);
 
                 str.Add ( new VToken ( TokenClass.BeginLine, Token.BeginLine, "" ) );
@@ -26,7 +26,7 @@ namespace VividScript
                 {
                     str.Add ( t );
 
-                    System.Console.WriteLine ( "Toke:" + t.Text );
+               //     System.Console.WriteLine ( "Toke:" + t.Text );
                 }
 
                 ic++;
@@ -37,7 +37,7 @@ namespace VividScript
             }
             for ( int i = 0; i < str.Len; i++ )
             {
-                System.Console.WriteLine ( "T:" + str.Tokes [ i ] );
+                //System.Console.WriteLine ( "T:" + str.Tokes [ i ] );
             }
 
             Tokens = str;

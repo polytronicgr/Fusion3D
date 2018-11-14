@@ -13,15 +13,15 @@ namespace VividScript.VStructs
 
         public override void SetupParser ( )
         {
-            Console.WriteLine ( "Parsing callpars" );
+        
             Parser = ( t ) =>
             {
-                Console.WriteLine ( "T:" + t );
+         
                 switch ( t.Class )
                 {
                     case TokenClass.Id:
                     case TokenClass.Value:
-                        Console.WriteLine ( "Begin expr:" + t );
+             
                         BackOne ( );
                         Pars.Add ( new VSExpr ( TokStream ) );
                         Done = true;

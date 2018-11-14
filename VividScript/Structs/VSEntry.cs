@@ -53,13 +53,13 @@ namespace VividScript.VStructs
                                 break;
 
                             case Token.Module:
-                                Console.WriteLine ( "Parsing Define.--------------------------------" );
+                                //Console.WriteLine ( "Parsing Define.--------------------------------" );
                                 Console.WriteLine ( "Module:" + PeekNext ( ).Text );
                                 VSModule mod = new VSModule(TokStream);
                                 Structs.Add ( mod );
                                 Console.WriteLine ( "Parsed module name:" + mod.ModuleName );
                                 Modules.Add ( mod );
-                                Console.WriteLine("NextTok:" + PeekNext());
+                       
                                 break;
                         }
                         break;

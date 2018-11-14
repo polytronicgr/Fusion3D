@@ -90,13 +90,13 @@
       <Project>{1767dd9b-165c-41f4-9a03-570afe31c6f5}</Project>
       <Name>V3DM</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VividEngine\VividEngine.csproj">
+    <ProjectReference Include="..\FusionEngine\FusionEngine.csproj">
       <Project>{82efc008-09ce-483b-b471-2620501c40a1}</Project>
-      <Name>VividEngine</Name>
+      <Name>FusionEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VividScript\VividScript.csproj">
+    <ProjectReference Include="..\FusionScript\FusionScript.csproj">
       <Project>{fd078afc-101a-4ee8-b67b-066255154f59}</Project>
-      <Name>VividScript</Name>
+      <Name>FusionScript</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Vivid3D.Script;
+using Fusion3D.Script;
 namespace FusionIDE.script
 {
     public class Scripts
@@ -35,8 +35,8 @@ namespace FusionIDE.script
         public static void LoadMod(string path)
         {
 
-            var compiler = new VividScript.VCompiler();
-            var src = new VividScript.VSource(path);
+            var compiler = new FusionScript.Compiler();
+            var src = new FusionScript.ScriptSource(path);
             var csrc = compiler.Compile(src);
             
 

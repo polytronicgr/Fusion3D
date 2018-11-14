@@ -1,22 +1,22 @@
-﻿using Vivid3D.App;
-using VividScript;
+﻿using Fusion3D.App;
+using FusionScript;
 
 namespace FusionIDE.App
 {
-    public class FusionApp : VividApp
+    public class FusionIDE : FusionApp
     {
-        public static VME MainVM = null;
+        public static ManagedHost MainVM = null;
         public static FusionApp App = null;
 
         public static void InitFusion ( )
         {
            
 
-            MainVM = new VME ( );
+            MainVM = new ManagedHost ( );
 
-            VSource init_ide_src = new VSource("data/script/ide/ide_init.vs");
-            VCompiler comp = new VCompiler();
-            VCompiledSource init_ide_compiled = comp.Compile(init_ide_src);
+            ScriptSource init_ide_src = new ScriptSource("data/script/ide/ide_init.vs");
+            Compiler comp = new Compiler();
+            CompiledSource init_ide_compiled = comp.Compile(init_ide_src);
 
             MainVM.SetEntry ( init_ide_compiled.EntryPoint );
 
@@ -26,12 +26,13 @@ namespace FusionIDE.App
             dynamic height = scope.FindVar("app_height",false).Value;
             dynamic full_screen = scope.FindVar("full_screen",false).Value;
 
-            App = new FusionApp ( width, height, full_screen );
+            App = new FusionIDE ( width, height, full_screen );
             InitState = new States.CodeScreen();
+
             App.Run ( );
         }
 
-        public FusionApp ( int width, int height, bool full_screen ) : base ( "FusionIDE", width, height, full_screen )
+        public FusionIDE ( int width, int height, bool full_screen ) : base ( "FusionIDE", width, height, full_screen )
         {
         }
     }

@@ -6,7 +6,7 @@ namespace FusionIDE
     {
         private static void Main ( string [ ] args )
         {
-            FusionApp.InitFusion ( );
+            FusionIDE.App.FusionIDE.InitFusion ( );
         }
     }
 }

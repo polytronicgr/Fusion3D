@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{82EFC008-09CE-483B-B471-2620501C40A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vivid3D</RootNamespace>
+    <AssemblyName>Vivid3D</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x64\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="irrKlang.NET4">
+      <HintPath>..\irrKlang.NET4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation\Animator.cs" />
+    <Compile Include="App\AppLog.cs" />
+    <Compile Include="App\FusionApp.cs" />
+    <Compile Include="Audio\Audio.cs" />
+    <Compile Include="Composition\Composite.cs" />
+    <Compile Include="Composition\Compositer.cs" />
+    <Compile Include="Composition\CompositerSet.cs" />
+    <Compile Include="Composition\Compositers\BloomCompositer.cs" />
+    <Compile Include="Composition\Compositers\BloomUICompositer.cs" />
+    <Compile Include="Composition\Compositers\BlurCompositer.cs" />
+    <Compile Include="Composition\Compositers\OutlineCompositer.cs" />
+    <Compile Include="Composition\FrameType.cs" />
+    <Compile Include="Composition\FrameTypes\FrameColor.cs" />
+    <Compile Include="Composition\FrameTypes\FrameDepth.cs" />
+    <Compile Include="Composition\FrameTypes\FrameEffect.cs" />
+    <Compile Include="Composition\FrameTypes\FrameUI.cs" />
+    <Compile Include="Help\IOHelp.cs" />
+    <Compile Include="ImageProcessing\ImageProcessor.cs" />
+    <Compile Include="Lighting\LightMapper\LightMapper.cs" />
+    <Compile Include="Lighting\LightMapper\Omni.cs" />
+    <Compile Include="Pick\Picker.cs" />
+    <Compile Include="Pick\PickResult.cs" />
+    <Compile Include="PostProcess\Processes\PPBloom.cs" />
+    <Compile Include="PostProcess\Processes\PPOutLine.cs" />
+    <Compile Include="Scene\GenList.cs" />
+    <Compile Include="Scene\AnimEntity3D.cs" />
+    <Compile Include="Scene\FusionBase.cs" />
+    <Compile Include="Script\ScriptBase.cs" />
+    <Compile Include="Script\ScriptMod.cs" />
+    <Compile Include="Script\ScriptTemplate.cs" />
+    <Compile Include="Terrain\Terrain3D.cs" />
+    <Compile Include="Texture\TextureRaw.cs" />
+    <Compile Include="UI\Forms\LabelForm.cs" />
+    <Compile Include="UI\Forms\TextAreaForm.cs" />
+    <Compile Include="Util\Texture\LeafPacker.cs" />
+    <Compile Include="Util\Texture\NextPixelMap.cs" />
+    <Compile Include="Visuals\Renderer.cs" />
+    <Compile Include="Visuals\RendererSimple.cs" />
+    <Compile Include="Visuals\RenderLayer.cs" />
+    <Compile Include="Visuals\RLDepth.cs" />
+    <Compile Include="Visuals\RLMultiPass.cs" />
+    <Compile Include="Visuals\RLParticle.cs" />
+    <Compile Include="Visuals\RLSimple.cs" />
+    <Compile Include="Visuals\RMultiPass.cs" />
+    <Compile Include="Visuals\RParticle.cs" />
+    <Compile Include="Visuals\Visualizer.cs" />
+    <Compile Include="Visuals\VSimple.cs" />
+    <Compile Include="Visuals\VVBO.cs" />
+    <Compile Include="VFX\FXParticleSystem\ParticleBase.cs" />
+    <Compile Include="VFX\FXParticleSystem\SoftParticle.cs" />
+    <Compile Include="VFX\FXParticleSystem\VFXParticleSystem.cs" />
+    <Compile Include="VFX\VFXBase.cs" />
+    <Compile Include="VFX\VisualFX.cs" />
+    <Compile Include="Transient\Transient.cs" />
+    <Compile Include="Texture\Texture2D.cs" />
+    <Compile Include="Texture\TextureBase.cs" />
+    <Compile Include="Texture\TextureCube.cs" />
+    <Compile Include="Texture\TextureDepth.cs" />
+    <Compile Include="Texture\TextureUtil.cs" />
+    <Compile Include="Tex\Tex2D.cs" />
+    <Compile Include="Tex\TexBase.cs" />
+    <Compile Include="State\FusionState.cs" />
+    <Compile Include="Settings\Quality.cs" />
+    <Compile Include="Archive\VirtualFileSystem.cs" />
+    <Compile Include="Archive\ZLib.cs" />
+    <Compile Include="Cam\VCam.cs" />
+    <Compile Include="Causality\Causealit.cs" />
+    <Compile Include="Data\VInfoMap.cs" />
+    <Compile Include="Data\Mesh3D.cs" />
+    <Compile Include="Data\Vertex3D.cs" />
+    <Compile Include="Data\VertexData.cs" />
+    <Compile Include="Draw\Pen.cs" />
+    <Compile Include="Draw\Render.cs" />
+    <Compile Include="Effect\FXG.cs" />
+    <Compile Include="Effect\FXDepth.cs" />
+    <Compile Include="Effect\Effect.cs" />
+    <Compile Include="Effect\FXMultiPass.cs" />
+    <Compile Include="Effect\FXParticle.cs" />
+    <Compile Include="Env\EnvRenderer.cs" />
+    <Compile Include="Font\Font2D.cs" />
+    <Compile Include="Font\FontRenderer.cs" />
+    <Compile Include="Framebuffer\FrameBufferColor.cs" />
+    <Compile Include="Framebuffer\FrameBufferCube.cs" />
+    <Compile Include="FX\FXG.cs" />
+    <Compile Include="FX\VEffect.cs" />
+    <Compile Include="FXS\FXLitImage.cs" />
+    <Compile Include="Gen\GeoGen.cs" />
+    <Compile Include="Import\AssImpImp.cs" />
+    <Compile Include="Import\Import.cs" />
+    <Compile Include="Import\Importer.cs" />
+    <Compile Include="Input\AppInput.cs" />
+    <Compile Include="Input\Input.cs" />
+    <Compile Include="Lighting\Light3D.cs" />
+    <Compile Include="Material\Material3D.cs" />
+    <Compile Include="Material\MaterialParticle3D.cs" />
+    <Compile Include="Maths\Maths.cs" />
+    <Compile Include="Scene\Bounds.cs" />
+    <Compile Include="Scene\GraphLight.cs" />
+    <Compile Include="Scene\GraphNode.cs" />
+    <Compile Include="Scene\GraphParticle3D.cs" />
+    <Compile Include="Scene\GraphSprite.cs" />
+    <Compile Include="Scene\SceneGraph.cs" />
+    <Compile Include="Scene\SceneInfo.cs" />
+    <Compile Include="Scene\Cam3D.cs" />
+    <Compile Include="Scene\Entity3D.cs" />
+    <Compile Include="Scene\SceneGraph3D.cs" />
+    <Compile Include="Scene\Node3D.cs" />
+    <Compile Include="UI\Forms\ButtonForm.cs" />
+    <Compile Include="UI\Forms\Graph3DForm.cs" />
+    <Compile Include="UI\Forms\ImageForm.cs" />
+    <Compile Include="UI\Forms\ItemForm.cs" />
+    <Compile Include="UI\Forms\ListForm.cs" />
+    <Compile Include="UI\Forms\PanelForm.cs" />
+    <Compile Include="UI\Forms\RequestFileForm.cs" />
+    <Compile Include="UI\Forms\ScrollBarV.cs" />
+    <Compile Include="UI\Forms\TextBoxForm.cs" />
+    <Compile Include="UI\Forms\WindowForm.cs" />
+    <Compile Include="UI\UI.cs" />
+    <Compile Include="UI\UIForm.cs" />
+    <Compile Include="Reflect\ClassIO.cs" />
+    <Compile Include="Reflect\ClassProperty.cs" />
+    <Compile Include="Physics\PhysicsManager.cs" />
+    <Compile Include="Physics\PyObject.cs" />
+    <Compile Include="Physics\PyType.cs" />
+    <Compile Include="PostProcess\Processes\PPMotionBlur.cs" />
+    <Compile Include="PostProcess\Processes\VPPBlur.cs" />
+    <Compile Include="PostProcess\VPostProcess.cs" />
+    <Compile Include="PostProcess\VPostProcessRenderer.cs" />
+    <Compile Include="ParticleSystem\Particle.cs" />
+    <Compile Include="ParticleSystem\ParticleEmitter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sound\" />
+    <Folder Include="Speech\" />
+    <Folder Include="UI\NewFolder1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AssimpNet">
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="assimp_native">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="CS-Script.bin">
+      <Version>3.28.7</Version>
+    </PackageReference>
+    <PackageReference Include="CSCore">
+      <Version>1.2.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="OpenTK">
+      <Version>3.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="PhysX.Net">
+      <Version>0.11.0-alpha</Version>
+    </PackageReference>
+    <PackageReference Include="zlib.net">
+      <Version>1.0.4</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lib\DataCore\DataCore.csproj">
+      <Project>{6165b697-9df1-4655-bbf6-e6aaf805d0f6}</Project>
+      <Name>DataCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\ProjectCore\ProjectCore.csproj">
+      <Project>{2a2abee7-f21c-432e-8999-9cff758dfa54}</Project>
+      <Name>ProjectCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

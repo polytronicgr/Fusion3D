@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid3D.Resonance;
+using Fusion3D.Resonance;
 namespace FusionIDE.Forms
 {
     public class BackgroundForm : UIForm
@@ -22,16 +22,16 @@ namespace FusionIDE.Forms
                 switch (lt) {
                     case 0:
                         sx = 0;
-                        sy = r.Next(Vivid3D.App.AppInfo.H);
+                        sy = r.Next(Fusion3D.App.AppInfo.H);
                         st = LineType.Horiz;
-                        sl = Vivid3D.App.AppInfo.W;
+                        sl = Fusion3D.App.AppInfo.W;
 
                     break;
                     case 1:
                         sy = 0;
-                        sx = r.Next(Vivid3D.App.AppInfo.W);
+                        sx = r.Next(Fusion3D.App.AppInfo.W);
                         st = LineType.Vert;
-                        sl = Vivid3D.App.AppInfo.H;
+                        sl = Fusion3D.App.AppInfo.H;
 
                         break;
                 }
@@ -42,7 +42,7 @@ namespace FusionIDE.Forms
 
             Draw = () =>
             {
-                Vivid3D.Draw.VPen.BlendMod = Vivid3D.Draw.VBlend.Solid;
+                Fusion3D.Draw.Pen2D.BlendMod = Fusion3D.Draw.PenBlend.Solid;
                 Random R = new Random(Environment.TickCount);
                 foreach(var line in Lines)
                 {

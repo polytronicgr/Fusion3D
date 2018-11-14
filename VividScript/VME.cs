@@ -158,7 +158,31 @@ namespace VividScript
             }
             Main.Scopes.Push ( scope );
         }
+        public CodeScope ExecuteMethod(VSModule cls,string func,dynamic[] pars)
+        {
 
+            foreach(var f in cls.Methods)
+            {
+                if(f.FuncName == func)
+                {
+                    int ii = 0;
+                    var ns = new CodeScope("func_pars");
+                    foreach(var p in pars)
+                    {
+                        var rp = f.Pars.Pars[ii];
+                        ns.RegisterVar(rp);
+                        rp.Value = p;
+                        ii++;
+                    }
+                    PushScope(cls.InstanceScope);
+                    PushScope(ns);
+                    f.Code.Exec();
+                    PopScope();
+                    PopScope();
+                }
+            }
+            return null;
+        }
         public CodeScope ExecuteStaticFunc(string name)
         {
             foreach(var mod in Mods)

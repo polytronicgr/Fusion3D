@@ -16,7 +16,7 @@ namespace VividScript.VStructs
         public VSModule ( VTokenStream s ) : base ( s )
         {
  
-            Console.WriteLine("VSModule------------------------<<<<<<<<<<<<<<<<<<<<<");
+
         }
 
         public VSModule()
@@ -60,6 +60,7 @@ namespace VividScript.VStructs
                 nv.Value = v.Init.Exec();
 
                 ret.Vars.Add(nv);
+                ret.InstanceScope.RegisterVar(nv);
 
             }
 
@@ -75,7 +76,18 @@ namespace VividScript.VStructs
             };
             Parser = ( t ) =>
             {
-           
+                if(t.Token == Token.Module)
+                {
+                    BackOne();
+                    Done = true;
+                    return;
+                }
+                if(Peek(0).Token == Token.End)
+                {
+                    BackOne();
+                    Done = true;
+                    return;
+                }
                 if ( t.Token == Token.End )
                 {
                     Done = true;
@@ -115,7 +127,7 @@ namespace VividScript.VStructs
                                         return;
                                     }
                                     VSVar newv = null;
-                                    Console.WriteLine("Var:" + text.Text + " static:" + vstatic);
+                                 
                                     if (vstatic)
                                     {
                                         var svar = new VSVar();
@@ -173,8 +185,9 @@ namespace VividScript.VStructs
                                     Methods.Add(f);
                                 }
 
-                                Console.WriteLine("Added func:" + f.FuncName + " static:" + fstatic);
+                           
                                 var nt2 = PeekNext();
+                                Console.WriteLine("Method:" + f.FuncName);
                                 
                                 break;
 

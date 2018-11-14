@@ -48,7 +48,7 @@ namespace VividScript.VStructs
                 }
                 BackOne ( );
                 CallPars = new VSCallPars ( TokStream );
-                Console.WriteLine ( "FC:" + t.ToString ( ) );
+              ;
                 Done = true;
             };
         }

@@ -58,6 +58,13 @@ namespace VividScript.VStructs
                 // SkipOne ( );
                 switch ( strand_type )
                 {
+                    case StrandType.ClassStatement:
+                        Console.WriteLine("ClassCall");
+                        BackOne();
+                        Lines.Add(new VSClassCall(TokStream));
+                        Console.WriteLine("::");
+
+                        break;
                     case StrandType.If:
                         Lines.Add ( new VSIf ( TokStream ) );
                         break;

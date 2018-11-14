@@ -54,7 +54,8 @@ namespace VividScript.VStructs
                     case Token.Id:
                         if ( PeekNext ( ).Token == Token.Equal )
                         {
-                            Console.WriteLine ( "=" );
+
+                            //Console.WriteLine ( "=" );
                             ConsumeNext ( );
                             Expr.Add ( new VSExpr ( TokStream ) );
                             BackOne ( );

@@ -35,6 +35,22 @@ namespace VividScript.VStructs
             Parser = ( t ) =>
             {
                 //Console.WriteLine("Entry. T:" + t.Class + " Txt:" + t.Text);
+                if (t.Token == Token.End)
+                {
+                    t = ConsumeNext();
+
+                }
+                while (true)
+                {
+                    if (t.Token == Token.BeginLine)
+                    {
+                        t = ConsumeNext();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 switch ( t.Class )
                 {
                     case TokenClass.Define:
@@ -56,6 +72,7 @@ namespace VividScript.VStructs
                                 //Console.WriteLine ( "Parsing Define.--------------------------------" );
                                 Console.WriteLine ( "Module:" + PeekNext ( ).Text );
                                 VSModule mod = new VSModule(TokStream);
+                                var pn = PeekNext();
                                 Structs.Add ( mod );
                                 Console.WriteLine ( "Parsed module name:" + mod.ModuleName );
                                 Modules.Add ( mod );

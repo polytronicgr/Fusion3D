@@ -47,6 +47,7 @@ namespace VividScript.VStructs
                 var base_class = VME.Main.FindClass(NewClassType);
                 var nvar = new VSVar();
                 nvar.Name = base_class.ModuleName + "_Instnace";
+                
                 return base_class.CreateInstance();
 
             }
@@ -172,6 +173,11 @@ namespace VividScript.VStructs
                     sub_e.Type = ExprType.SubExpr;
                     return;
                 }
+                if(t.Text == ".")
+                {
+                    Done = true;
+                    return;
+                }
 
                 if ( t.Token == Token.RightPara )
                 {
@@ -191,9 +197,9 @@ namespace VividScript.VStructs
 
                         var new_name = ConsumeNext();
 
-                        Console.WriteLine("NewClass:" + new_name.Text);
+                       // Console.WriteLine("NewClass:" + new_name.Text);
                         NewPars = new VSCallPars(TokStream);
-                        Console.WriteLine("Pars:" + NewPars.Pars.Count);
+                      //  Console.WriteLine("Pars:" + NewPars.Pars.Count);
                         NewClassType = new_name.Text;
 
                         break;

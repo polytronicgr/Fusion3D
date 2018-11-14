@@ -6,6 +6,7 @@ module other
 	
 		num =25;
 	
+	
 	end
 	
 
@@ -16,9 +17,9 @@ module draw
 	var c1 = new other();
 	var val = 20;
 
-	func static rect(x,y,w,h)
+	func rect(x,y,w,h)
 	
-		
+		printf("Rect:"+x);
 	
 	end
 
@@ -26,11 +27,10 @@ end
 
 func testFunc()
 
-	test = new draw();
-	test2 = new other();
+
+	drawI = new draw();
 	
-	printf("Testing:"+test.c1.num);
-	printf("Test2:"+test2.num);
+	drawI.rect(20,20,200,200);
 	
 
 end

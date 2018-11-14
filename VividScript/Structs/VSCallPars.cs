@@ -24,14 +24,20 @@ namespace VividScript.VStructs
              
                         BackOne ( );
                         Pars.Add ( new VSExpr ( TokStream ) );
-                        Done = true;
+                        var ntok = PeekNext();
+
                         break;
 
                     default:
                         if ( t.Token == Token.Comma )
                         {
                         }
-                        if ( t.Token == Token.RightPara )
+                        if(t.Token == Token.EndLine)
+                        {
+                            Done = true;
+                            return;
+                        }
+                        if (t.Token == Token.RightPara) 
                         {
                             Done = true;
                             return;

@@ -86,7 +86,10 @@ namespace VividScript
             {
                 return null;
             }
-
+            if (TokStream.Pos + c < 0)
+            {
+                return new VToken(TokenClass.BeginLine, Token.BeginLine, "");
+            }
             return TokStream.Tokes [ TokStream.Pos + c ];
         }
 
@@ -137,6 +140,12 @@ namespace VividScript
                     }
                     if(PeekNext().Token == Token.End)
                     {
+                        Done = true;
+                        return;
+                    }
+                    if(Peek(0).Token == Token.End)
+                    {
+                        ConsumeNext();
                         Done = true;
                         return;
                     }
@@ -201,6 +210,7 @@ namespace VividScript
             {
                 imod = -1;
             }
+            bool ca = false;
 
             for ( int i = cpos; i < TokStream.Len; i++ )
             {
@@ -223,16 +233,27 @@ namespace VividScript
                 {
                     return StrandType.Assignment;
                 }
+                if(TokStream.Tokes[ni].Text == ".")
+                {
+                    ca = true;
+                }
                 switch ( TokStream.Tokes [ ni ].Class )
                 {
                     case TokenClass.Id:
                         break;
 
                     case TokenClass.Scope:
-                        return StrandType.FlatStatement;
+                        if (ca)
+                        {
+                            return StrandType.ClassStatement;
+                        }
+                        else { 
+                            return StrandType.FlatStatement;
+                         //   break;
+                        }
                         break;
                 }
-                System.Console.WriteLine ( "Tok:" + TokStream.Tokes [ ni ].Class.ToString ( ) + " 2:" + TokStream.Tokes [ ni ].Token.ToString ( ) + " 3:" + TokStream.Tokes [ ni ].Text );
+               // System.Console.WriteLine ( "Tok:" + TokStream.Tokes [ ni ].Class.ToString ( ) + " 2:" + TokStream.Tokes [ ni ].Token.ToString ( ) + " 3:" + TokStream.Tokes [ ni ].Text );
             }
 
             return StrandType.Unknown;
@@ -242,6 +263,6 @@ namespace VividScript
     public enum StrandType
     {
         Statement, Assignment, Flow, Define, Macro, Header, Extends, Generic, Unknown, While, If, Else, ElseIf, Wend, For, Do, Loop,
-        FlatStatement
+        FlatStatement,ClassStatement
     }
 }

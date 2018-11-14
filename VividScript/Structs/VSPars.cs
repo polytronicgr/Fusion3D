@@ -4,7 +4,7 @@ namespace VividScript.VStructs
 {
     public class VSPars : VStruct
     {
-        public System.Collections.Generic.List<VSPar> Pars = new System.Collections.Generic.List<VSPar>();
+        public System.Collections.Generic.List<VSVar> Pars = new System.Collections.Generic.List<VSVar>();
 
         public VSPars ( VTokenStream s ) : base ( s )
         {
@@ -30,14 +30,9 @@ namespace VividScript.VStructs
                 {
                     return;
                 }
-                VSPar np = new VSPar(TokStream);
-                if(t.Token == Token.Id)
-                {
-
-                   
-                    Pars.Add(np);
-
-                }
+                VSVar np = new VSVar();
+                np.Name = t.Text;
+                Pars.Add(np);
                 /*
                 switch ( t.Token )
                 {

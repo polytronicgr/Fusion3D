@@ -66,6 +66,7 @@
     <Compile Include="Structs\VarType.cs" />
     <Compile Include="Structs\VSAssign.cs" />
     <Compile Include="Structs\VSCallPars.cs" />
+    <Compile Include="Structs\VSClassCall.cs" />
     <Compile Include="Structs\VSCode.cs" />
     <Compile Include="Structs\VSDefineVars.cs" />
     <Compile Include="Structs\VSEntry.cs" />

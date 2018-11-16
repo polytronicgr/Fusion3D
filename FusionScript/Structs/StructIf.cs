@@ -20,14 +20,7 @@
 
         public override void SetupParser ( )
         {
-            Parser = ( t ) =>
-            {
-                ConsumeNext ( );
-                Condition = new StructExpr ( TokStream );
-                TrueCode = new StructCode ( TokStream );
-                Done = true;
-                return;
-            };
+          
         }
     }
 }

@@ -26,18 +26,7 @@ namespace FusionScript.Structs
 
         public override void SetupParser ( )
         {
-            Parser = ( t ) =>
-            {
-                Console.WriteLine ( t.ToString ( ) + PeekNext ( ).ToString ( ) );
-                Initial = new StructAssign ( TokStream );
-                ConsumeNext ( );
-                Condition = new StructExpr ( TokStream );
-                Inc = new StructAssign ( TokStream );
-                // ConsumeNext ( );
-                Code = new StructCode ( TokStream );
-                Done = true;
-                return;
-            };
+           
         }
     }
 }

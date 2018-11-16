@@ -7,11 +7,8 @@ namespace FusionScript.Structs
         public string FuncName = "";
         public StructPars Pars = null;
         public StructCode Code = null;
-
-        public StructFunc ( TokenStream s ) : base ( s )
-        {
-            LocalScope = new CodeScope("FuncScope");
-        }
+        public bool Static = false;
+ 
 
         public override string DebugString ( )
         {
@@ -27,17 +24,7 @@ namespace FusionScript.Structs
 
             Parser = ( t ) =>
             {
-                if ( t.Token == Token.LeftPara )
-                {
-
-                    Pars = new StructPars ( TokStream );
-                    Code = new StructCode ( TokStream );
-                }
-                if ( t.Token == Token.End )
-                {
-                    Done = true;
-                    return;
-                }
+           
             };
         }
     }

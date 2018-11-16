@@ -13,7 +13,10 @@ namespace FusionScript
         {
             CompiledSource cs = new CompiledSource();
 
-            StructEntry entry = new StructEntry(s.Tokens);
+
+            var parser = new Parser(s.Tokens);
+
+            StructEntry entry = parser.Entry;
 
             cs.EntryPoint = entry;
 

@@ -34,6 +34,11 @@ namespace FusionScript
             return "Empty";
         }
 
+        public Struct()
+        {
+
+        }
+
         public Struct ( TokenStream toks, bool noParse = false )
         {
             TokStream = toks;
@@ -45,13 +50,11 @@ namespace FusionScript
             Parse ( );
         }
 
-        public Struct()
-        {
-
-        }
+       
 
         public virtual CodeToken BackOne ( )
         {
+            return null;
             TokStream.Pos--;
             if ( TokStream.Pos < 0 )
             {
@@ -117,7 +120,25 @@ namespace FusionScript
             }
         }
 
-        public virtual void Parse ( )
+        public virtual void Parse()
+        {
+
+            SetupParser();
+
+            TokStream.GotoPrev(Token.BeginLine);
+
+            while (TokStream.Pos < TokStream.Len)
+            {
+
+                var toke = TokStream.GetNext();
+
+                Parser(toke);
+
+            
+
+            }
+        }
+        public virtual void Parse2 ( )
         {
             SetupParser ( );
             if ( PreParser != null )
@@ -146,7 +167,7 @@ namespace FusionScript
                     if(Peek(0).Token == Token.End)
                     {
                         ConsumeNext();
-                        Done = true;
+                       // Done = true;
                         return;
                     }
                     ConsumeNext ( );

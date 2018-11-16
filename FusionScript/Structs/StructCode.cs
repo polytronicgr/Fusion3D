@@ -7,9 +7,7 @@ namespace FusionScript.Structs
     {
         public List<Struct> Lines = new List<Struct>();
 
-        public StructCode ( TokenStream s ) : base ( s )
-        {
-        }
+    
 
         public override string DebugString ( )
         {

@@ -20,26 +20,34 @@ namespace FusionScript.Structs
             dynamic bc = null;
             for (int i = 0; i < call.Count; i++)
             {
-                if (bc != null)
+                if (bc != null && i == call.Count - 1)
                 {
 
                     var meth = call[i];
                     dynamic[] pars = new dynamic[Pars.Pars.Count];
                     for (int p = 0; p < Pars.Pars.Count; p++)
                     {
-              
-            
+
+
 
                         pars[p] = Pars.Pars[p].Exec();
                     }
-                    ManagedHost.Main.ExecuteMethod(bc, meth,pars);
+                    ManagedHost.Main.ExecuteMethod(bc, meth, pars);
 
 
                     //Console.WriteLine("Class:" + bc.ModuleName + " Meth:" + call[i]);
 
-                }else
+                }
+                else
                 {
-                    bc = ManagedHost.CurrentScope.FindVar(call[i], true).Value;
+                    if (bc == null)
+                    {
+                        bc = ManagedHost.CurrentScope.FindVar(call[i], true).Value;
+                    }
+                    else
+                    {
+                        bc = bc.FindVar(call[i]).Value;
+                    }
                 }
             }
             Console.WriteLine(":");
@@ -49,29 +57,7 @@ namespace FusionScript.Structs
         public override void SetupParser()
         {
 
-            dynamic prev = null;
-            Parser = (t) =>
-            {
-
-                if (t.Text == ".")
-                {
-                    return;
-                }
-                if(t.Text == "(")
-                {
-                    Pars = new StructCallPars(TokStream);
-                    return;
-                }
-                if(t.Text == ";")
-                {
-                    Done = true;
-                    return;
-                }
-                call.Add(t.Text);
-                
-
-            };
-
+        
         }
 
     }

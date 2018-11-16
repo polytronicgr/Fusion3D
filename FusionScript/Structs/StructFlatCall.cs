@@ -40,17 +40,6 @@ namespace FusionScript.Structs
 
         public override void SetupParser ( )
         {
-            Parser = ( t ) =>
-            {
-                if ( t.Token == Token.LeftPara )
-                {
-                    return;
-                }
-                BackOne ( );
-                CallPars = new StructCallPars ( TokStream );
-              ;
-                Done = true;
-            };
         }
     }
 }

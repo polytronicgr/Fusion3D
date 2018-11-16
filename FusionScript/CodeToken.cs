@@ -49,6 +49,8 @@ namespace FusionScript
 
     public class TokenStream
     {
+
+        
         public List<CodeToken> Tokes
         {
             get => _Toks;
@@ -63,6 +65,34 @@ namespace FusionScript
         private List<CodeToken> _Toks = new List<CodeToken>();
         public int Pos = 0;
         public int Len = 0;
+
+     
+
+        public void GotoPrev(Token t)
+        {
+            for(int i = Pos; i >= 0; i--)
+            {
+                if(Tokes[i].Token == t)
+                {
+                    Pos = i;
+                    return;
+                }
+            }
+        }
+
+        public void GotoNext(Token t)
+        {
+
+            for(int i = Pos; i < Len; i++)
+            {
+                if (Tokes[i].Token == t)
+                {
+                    Pos = i;
+                    return;
+                }
+            }
+
+        }
 
         public void Add ( CodeToken t )
         {

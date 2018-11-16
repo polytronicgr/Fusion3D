@@ -44,6 +44,8 @@ namespace FusionScript
 
         public void AddModule(Module mod)
         {
+            if (mod == null) return;
+            if (mod.Mod == null) return;
             Mods.Add(mod);
             foreach(var mv in mod.Mod.Modules)
             {
@@ -167,12 +169,15 @@ namespace FusionScript
                 {
                     int ii = 0;
                     var ns = new CodeScope("func_pars");
-                    foreach(var p in pars)
+                    if (pars != null)
                     {
-                        var rp = f.Pars.Pars[ii];
-                        ns.RegisterVar(rp);
-                        rp.Value = p;
-                        ii++;
+                        foreach (var p in pars)
+                        {
+                            var rp = f.Pars.Pars[ii];
+                            ns.RegisterVar(rp);
+                            rp.Value = p;
+                            ii++;
+                        }
                     }
                     PushScope(cls.InstanceScope);
                     PushScope(ns);

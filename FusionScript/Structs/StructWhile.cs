@@ -28,13 +28,7 @@
 
         public override void SetupParser ( )
         {
-            Parser = ( t ) =>
-            {
-                Condition = new StructExpr ( TokStream );
-                Code = new StructCode ( TokStream );
-                Done = true;
-                return;
-            };
+          
         }
     }
 }

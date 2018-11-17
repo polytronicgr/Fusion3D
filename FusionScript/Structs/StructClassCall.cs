@@ -17,6 +17,10 @@ namespace FusionScript.Structs
             dynamic bc = null;
             for (int i = 0; i < call.Count; i++)
             {
+                if(call[i]==".")
+                {
+                    continue;
+                }
                 if (bc != null && i == call.Count - 1)
                 {
 

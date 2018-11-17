@@ -37,6 +37,15 @@ namespace FusionScript
                         code.Lines.Add(assign);
 
                         break;
+                    case StrandType.ClassStatement:
+
+                        i = NextToken(i, Token.Id);
+
+                        var class_state = ParseClassStatement(ref i);
+
+                        code.Lines.Add(class_state);
+
+                        break;
                     case StrandType.FlatStatement:
 
                         i = NextToken(i, Token.Id);

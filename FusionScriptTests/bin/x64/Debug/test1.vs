@@ -1,6 +1,12 @@
 module draw
 
-	func static testMeth()
+	func draw()
+	
+		printf("InitDraw");
+	
+	end
+
+	func testMeth()
 	
 		printf("TestMeth!");
 	
@@ -10,8 +16,8 @@ end
 
 func test()
 
-	val = 5;
+	val = new draw();
 
-	printf("in test."+(val*val));
+	val.testMeth();
 
 end

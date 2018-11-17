@@ -5,7 +5,27 @@ Begun parsing module
  [module](Module)(Define) draw  
 
 Begun parsing function
- [func](Func)(Define) static testMeth ( )  
+ [func](Func)(Define) draw ( )  
+
+Begun parsing code body
+[](BeginLine)(BeginLine) 
+
+BeginFS:
+ [printf](Id)(Id) ( InitDraw ) ;  
+
+Func:printf
+
+Parsing expressionj
+ printf ( [InitDraw](String)(Value) ) ;  
+
+Expr:Expr:1 Elements
+ printf ( InitDraw [)](RightPara)(Scope) ;  
+
+Parsed code-body.
+ [end](End)(Flow)  
+
+Begun parsing function
+ [func](Func)(Define) testMeth ( )  
 
 Begun parsing code body
 [](BeginLine)(BeginLine) 
@@ -31,42 +51,18 @@ Begun parsing code body
 [](BeginLine)(BeginLine) 
 
 Parsing Assign
- [val](Id)(Id) = 5 ;  
+ [val](Id)(Id) = new draw ( ) ;  
 
 Parsing Var:val
- [val](Id)(Id) = 5 ;  
+ [val](Id)(Id) = new draw ( ) ;  
 
 Parsing expressionj
- val = [5](Int)(Value) ;  
+ val = [new](New)(New) draw ( ) ;  
 
-Expr:Expr:1 Elements
- val = 5 [;](EndLine)(Flow)  
+New Class:draw
 
 End of assign:
- val = 5 [;](EndLine)(Flow)  
-
-BeginFS:
- [printf](Id)(Id) ( in test. + ( val * val ) ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [in test.](String)(Value) + ( val * val ) ) ;  
-
-Parsing expressionj
- printf ( in test. + ( [val](Id)(Id) * val ) ) ;  
-
-VarInExpr:val
- printf ( in test. + ( [val](Id)(Id) * val ) ) ;  
-
-VarInExpr:val
- printf ( in test. + ( val * [val](Id)(Id) ) ) ;  
-
-Expr:Expr:3 Elements
- printf ( in test. + ( val * val [)](RightPara)(Scope) ) ;  
-
-Expr:Expr:3 Elements
- printf ( in test. + ( val * val ) [)](RightPara)(Scope) ;  
+ val = new draw ( [)](RightPara)(Scope) ;  
 
 Parsed code-body.
 EOF

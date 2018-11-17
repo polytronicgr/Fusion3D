@@ -5,7 +5,7 @@ namespace FusionScript.Structs
 {
     public enum ExprType
     {
-        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown, VarValue, BoolValue
+        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown, VarValue, BoolValue,NewClass
     }
 
     public enum OpType
@@ -38,23 +38,32 @@ namespace FusionScript.Structs
 
         public override dynamic Exec()
         {
-            if (NewClass)
+            if (Expr[0].NewClass)
             {
 
-                var base_class = ManagedHost.Main.FindClass(NewClassType);
+                var base_class = ManagedHost.Main.FindClass(Expr[0].NewClassType);
                 var nvar = new Var();
                 nvar.Name = base_class.ModuleName + "_Instnace";
 
                 var bc = base_class.CreateInstance();
 
-                ManagedHost.Main.ExecuteMethod(bc, base_class.ModuleName, null);
+                try
+                {
+                    ManagedHost.Main.ExecuteMethod(bc, base_class.ModuleName, null);
+                }
+                catch
+                {
 
+                }
                 return bc;
 
             }
             //Val.Clear();
             switch (Expr[0].Type)
             {
+                case ExprType.NewClass:
+                    Console.WriteLine("NC");
+                    break;
                 case ExprType.StringValue:
 
                     string rs = "";

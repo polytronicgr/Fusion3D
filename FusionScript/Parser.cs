@@ -7,21 +7,14 @@ using FusionScript.Structs;
 using System.IO;
 namespace FusionScript
 {
-    public class Parser
+    public partial class Parser
     {
 
         public StructEntry Entry;
 
-        TokenStream toks = null;
-
-        public CodeToken Peek(int i)
-        {
-            return toks.Tokes[i];
-        }
         public FileStream fs;
         public TextWriter wr;
-
-   
+        TokenStream toks = null;
 
         public Parser(TokenStream stream)
         {
@@ -54,9 +47,9 @@ namespace FusionScript
                         Entry.Modules.Add(mod);
 
                         break;
-                        
+
                     default:
-                      //  Error(i, "Expected module/func or similar construct definition");
+                        //  Error(i, "Expected module/func or similar construct definition");
                         break;
                 }
 
@@ -68,142 +61,19 @@ namespace FusionScript
 
         }
 
-        public StructModule ParseModule(ref int i)
+        public void AssertTok(int i, Token tok, string err = "!")
         {
-
-            Log("Begun parsing module", i);
-            Console.WriteLine("Parsing Module:" + Peek(i + 1).Text);
-            var name = Peek(i + 1).Text;
-            i = i + 2;
-
-            var mod = new StructModule();
-
-            mod.ModuleName = name;
-
-
-            for (i = i; i < toks.Len; i++)
+            if (err == "!")
             {
-                var mtok = toks.Tokes[i];
-
-                switch (mtok.Token)
-                {
-                    case Token.Func:
-
-                          var func = ParseFunc(ref i);
-
-                        if (func.Static)
-                        {
-
-                            mod.StaticFuncs.Add(func);
-
-                        }
-                        else
-                        {
-
-                            mod.Methods.Add(func);
-
-                        }
-
-                            break;
-                    case Token.Var:
-
-                        break;
-
-                }
-
-
+                err = "Expecting:" + tok.ToString();
             }
-
-
-            return null;
-          
-
+            if (toks.Tokes[i].Token != tok)
+            {
+                Error(i, err);
+            }
         }
 
-        public StructFunc ParseFunc(ref int i)
-        {
-
-            bool is_static = false;
-
-            Log("Begun parsing function", i);
-
-            if (toks.Tokes[i].Token != Token.Func)
-            {
-                Error(i,"Expecting 'func' definition.");
-            }
-
-            if (Peek(i + 1).Text == "static")
-            {
-                is_static = true;
-                i++;
-            }
-
-            string func_name = Peek(i + 1).Text;
-
-            Console.WriteLine("Module func:" + func_name + " static:" + is_static);
-
-            i+=2;
-
-            StructFunc func = new StructFunc();
-
-            func.Static = is_static;
-            func.FuncName = func_name;
-
-            var ftok = toks.Tokes[i];
-
-            if (ftok.Text != "(")
-            {
-                Error(i, "Expected begining of function definition parameters.");
-                //    Console.WriteLine("Error, expected (");
-            }
-
-
-            var pars = new StructCallPars();
-
-            if (toks.Tokes[i + 1].Token != Token.RightPara)
-            {
-                for (i = i; i < toks.Len; i++)
-                {
-
-                    var tok = toks.Tokes[i];
-
-                    switch (tok.Token)
-                    {
-                        case Token.Id:
-
-                            break;
-
-
-                    }
-
-                }
-            }
-            else
-            {
-                i+=2;
-            }
-
-
-            var code_body = ParseCodeBody(ref i);
-
-            func.Code = code_body;
-
-            return func;
-
-        }
-
-        public void Log(string msg,int i = -1)
-        {
-            wr.WriteLine(msg);
-            if (i != -1)
-            {
-                string line = GenLine(i);
-                wr.WriteLine(line);
-               
-            }
-            wr.WriteLine("");
-        }
-        public void Error(int i,string err)
+        public void Error(int i, string err)
         {
             string line = GenLine(i);
 
@@ -221,143 +91,29 @@ namespace FusionScript
 
         }
 
-        private string GenLine(int i)
+        public CodeToken Get(int i)
         {
-            int begin = 0;
-            int end = toks.Len;
-            for (int ci = i; ci >= 0; ci--)
-            {
-                if (toks.Tokes[ci].Token == Token.BeginLine)
-                {
-                    begin = ci;
-                    break;
-                }
-            }
-
-            for (int ci = i; ci < toks.Len; ci++)
-            {
-                if (toks.Tokes[ci].Token == Token.BeginLine)
-                {
-                    end = ci;
-                    break;
-                }
-            }
-            var line = "";
-            for (int ic = begin; ic <= end; ic++)
-
-            {
-                if (ic == i)
-                {
-                    line = line + "[";
-                }
-                line = line + toks.Tokes[ic].Text;
-                if (ic == i)
-                {
-                    line = line + "](" + toks.Tokes[ic].Token + ")(" + toks.Tokes[ic].Class + ")";
-                }
-                line = line + " ";
-
-            }
-
-            return line;
+            return toks.Tokes[i];
         }
 
-        public StructCode ParseCodeBody(ref int i)
+        public void Log(string msg, int i = -1)
         {
-
-            Log("Begun parsing code body", i);
-
-          
-
-            var code = new StructCode();
-
-            for (i = i; i < toks.Len; i++)
+            wr.WriteLine(msg);
+            if (i != -1)
             {
-
-                var st = Predict(i);
-                switch(st)
-                {
-                    case StrandType.Assignment:
-
-                        i = NextToken(i, Token.Id);
-
-                        var assign = ParseAssign(ref i);
-
-                        code.Lines.Add(assign);
-
-                        break;
-                    case StrandType.FlatStatement:
-
-                        i = NextToken(i, Token.Id);
-
-                        var flat_state = ParseFlatStatement(ref i);
-
-                        code.Lines.Add(flat_state);
-
-                        break;
-                }
-                
+                string line = GenLine(i);
+                wr.WriteLine(line);
 
             }
-
-
-            return code;
-
+            wr.WriteLine("");
         }
 
-
-        public StructFlatCall ParseFlatStatement(ref int i)
-        {
-
-            Log("BeginFS:", i);
-            var flat = new StructFlatCall();
-
-            var name = Get(i).Text;
-
-            flat.FuncName = name;
-            Log("Func:" + name);
-
-            i++;
-            var callpars = ParseCallPars(ref i);
-            flat.CallPars = callpars;
-
-            return flat;
-
-        }
-
-        public StructCallPars ParseCallPars(ref int i)
-        {
-
-            var cp = new StructCallPars();
-            AssertTok(i, Token.LeftPara);
-            if(Get(i+1).Token == Token.RightPara)
-            {
-                return cp;
-            }
-
-            i++;
-
-            for (i = i; i < toks.Len; i++)
-            {
-
-                if(Get(i).Token == Token.RightPara)
-                {
-                    return cp;
-                }
-                var exp = ParseExp(ref i);
-                i--;
-                cp.Pars.Add(exp);
-
-            }
-            return cp;
-        }
-
-        public int NextToken(int i,Token tok)
+        public int NextToken(int i, Token tok)
         {
             int bi = i;
             for (i = i; i < toks.Len; i++)
             {
-                if(toks.Tokes[i].Token == tok)
+                if (toks.Tokes[i].Token == tok)
                 {
                     return i;
                 }
@@ -367,7 +123,7 @@ namespace FusionScript
 
         public StructAssign ParseAssign(ref int i)
         {
-            if(toks.Tokes[i].Token != Token.Id)
+            if (toks.Tokes[i].Token != Token.Id)
             {
                 Error(i, "Expecting identifier");
             }
@@ -387,7 +143,7 @@ namespace FusionScript
             av.Name = var_name;
 
             assign.Vars.Add(av);
-            
+
 
 
             StructExpr exp = ParseExp(ref i);
@@ -401,6 +157,34 @@ namespace FusionScript
 
         }
 
+        public StructCallPars ParseCallPars(ref int i)
+        {
+
+            var cp = new StructCallPars();
+            AssertTok(i, Token.LeftPara);
+            if (Get(i + 1).Token == Token.RightPara)
+            {
+                return cp;
+            }
+
+            i++;
+
+            for (i = i; i < toks.Len; i++)
+            {
+
+                if (Get(i).Token == Token.RightPara)
+                {
+                    return cp;
+                }
+                var exp = ParseExp(ref i);
+                i--;
+                cp.Pars.Add(exp);
+
+            }
+            return cp;
+        }
+
+       
         public StructExpr ParseExp(ref int i)
         {
 
@@ -411,7 +195,7 @@ namespace FusionScript
             bool prev_op = false;
             bool first_toke = true;
             bool prev_op_min = false;
-            for (i = i;i < toks.Len;i++)
+            for (i = i; i < toks.Len; i++)
             {
 
                 switch (Get(i).Token)
@@ -425,11 +209,27 @@ namespace FusionScript
                         return exp;
 
                         break;
+                    case Token.Id:
+                        Log("VarInExpr:" + Get(i).Text, i);
+                        var ve = new StructExpr();
+                        ve.Type = ExprType.VarValue;
+                        ve.VarName = Get(i).Text;
+                        exp.Expr.Add(ve);
+                        if (!prev_op && !first_toke)
+                        {
+                            Error(i, "Expecting operator.");
+                        }
+                        prev_op = false;
+                        first_toke = false;
+
+                        break;
                     case Token.LeftPara:
 
                         i++;
                         var sub_e = ParseExp(ref i);
                         first_toke = false;
+                        sub_e.Type = ExprType.SubExpr;
+                        exp.Expr.Add(sub_e);
 
                         break;
 
@@ -473,7 +273,7 @@ namespace FusionScript
                             prev_op = true;
                             prev_op_min = true;
                             continue;
-                            
+
                             //Error(i, "Expecting value.");
                         }
 
@@ -483,7 +283,7 @@ namespace FusionScript
                         em.Op = OpType.Minus;
                         exp.Expr.Add(em);
                         prev_op = true;
-                        
+
                         break;
                     case Token.Div:
 
@@ -492,7 +292,7 @@ namespace FusionScript
                             Error(i, "Expecting value.");
                         }
 
-
+                        Log("Times?", i);
                         var ed = new StructExpr();
                         ed.Type = ExprType.Operator;
                         ed.Op = OpType.Divide;
@@ -530,7 +330,7 @@ namespace FusionScript
                         prev_op = false;
                         var es = new StructExpr();
                         es.StringV = Get(i).Text;
-                        es.Type = ExprType.StringValue ;
+                        es.Type = ExprType.StringValue;
                         exp.Expr.Add(es);
                         first_toke = false;
 
@@ -540,9 +340,9 @@ namespace FusionScript
                     case Token.Short:
                     case Token.Long:
                     case Token.Double:
-              
 
-                        if (!prev_op && !first_toke) 
+
+                        if (!prev_op && !first_toke)
                         {
                             Error(i, "Expecting operator.");
                         }
@@ -555,7 +355,7 @@ namespace FusionScript
 
                         break;
                     default:
-                        Error(i,"Illegal token within expression:");
+                        Error(i, "Illegal token within expression:");
                         break;
                 }
 
@@ -566,35 +366,46 @@ namespace FusionScript
             return exp;
 
         }
-        
-        public CodeToken Get(int i)
-            {
-                return toks.Tokes[i];
-            }
-        
-        public void AssertTok(int i,Token tok,string err="!")
+
+        public StructFlatCall ParseFlatStatement(ref int i)
         {
-            if (err == "!")
-            {
-                err = "Expecting:" + tok.ToString();
-            }
-            if(toks.Tokes[i].Token != tok)
-            {
-                Error(i, err);
-            }
+
+            Log("BeginFS:", i);
+            var flat = new StructFlatCall();
+
+            var name = Get(i).Text;
+
+            flat.FuncName = name;
+            Log("Func:" + name);
+
+            i++;
+            var callpars = ParseCallPars(ref i);
+            flat.CallPars = callpars;
+
+            return flat;
+
         }
 
+   
+
+        public CodeToken Peek(int i)
+        {
+            return toks.Tokes[i];
+        }
         public StrandType Predict(int i)
         {
             StrandType ret = StrandType.Unknown;
-            for(i = i; i < toks.Len; i++)
+            for (i = i; i < toks.Len; i++)
             {
-
-                if(toks.Tokes[i].Token==Token.Equal)
+                if(toks.Tokes[i].Token == Token.BeginLine)
+                {
+                    return StrandType.Unknown;
+                }
+                if (toks.Tokes[i].Token == Token.Equal)
                 {
                     return StrandType.Assignment;
                 }
-                if(toks.Tokes[i].Token == Token.LeftPara)
+                if (toks.Tokes[i].Token == Token.LeftPara)
                 {
                     return StrandType.FlatStatement;
                 }
@@ -604,5 +415,46 @@ namespace FusionScript
             return ret;
         }
 
+        private string GenLine(int i)
+        {
+            if (i >= toks.Tokes.Count - 1) return "EOF";
+            int begin = 0;
+            int end = toks.Len;
+            for (int ci = i; ci >= 0; ci--)
+            {
+                if (toks.Tokes[ci].Token == Token.BeginLine)
+                {
+                    begin = ci;
+                    break;
+                }
+            }
+
+            for (int ci = i; ci < toks.Len; ci++)
+            {
+                if (toks.Tokes[ci].Token == Token.BeginLine)
+                {
+                    end = ci;
+                    break;
+                }
+            }
+            var line = "";
+            for (int ic = begin; ic <= end; ic++)
+
+            {
+                if (ic == i)
+                {
+                    line = line + "[";
+                }
+                line = line + toks.Tokes[ic].Text;
+                if (ic == i)
+                {
+                    line = line + "](" + toks.Tokes[ic].Token + ")(" + toks.Tokes[ic].Class + ")";
+                }
+                line = line + " ";
+
+            }
+
+            return line;
+        }
     }
 }

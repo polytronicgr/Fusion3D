@@ -1,5 +1,17 @@
+module draw
+
+	func static testMeth()
+	
+		printf("TestMeth!");
+	
+	end
+
+end
+
 func test()
 
-		printf(20+30);
+	val = 5;
+
+	printf("in test."+(val*val));
 
 end

@@ -34,9 +34,9 @@ namespace FusionScript.Structs
             return "Expr:" + Expr.Count + " Elements";
         }
 
-     
 
-        public override dynamic Exec ( )
+
+        public override dynamic Exec()
         {
             if (NewClass)
             {
@@ -44,8 +44,8 @@ namespace FusionScript.Structs
                 var base_class = ManagedHost.Main.FindClass(NewClassType);
                 var nvar = new Var();
                 nvar.Name = base_class.ModuleName + "_Instnace";
-                
-                var bc= base_class.CreateInstance();
+
+                var bc = base_class.CreateInstance();
 
                 ManagedHost.Main.ExecuteMethod(bc, base_class.ModuleName, null);
 
@@ -53,23 +53,51 @@ namespace FusionScript.Structs
 
             }
             //Val.Clear();
-            Stack.Clear();
-            Output.Clear();
-            ToRPN(Expr);
-
-
-
-
-            Stack<StructExpr> Exp = new Stack<StructExpr>();
-            foreach (var v in Expr)
+            switch (Expr[0].Type)
             {
-                Exp.Push(v);
+                case ExprType.StringValue:
+
+                    string rs = "";
+                    foreach(var se in Expr)
+                    {
+                        switch (se.Type)
+                        {
+                            case ExprType.StringValue:
+                                rs = rs + se.StringV;
+                                break;
+                            case ExprType.SubExpr:
+                                var ser = se.Exec();
+                                rs = rs + se.Exec();
+                                break;
+                            case ExprType.IntValue:
+                                rs = rs + se.intV.ToString();
+                                break;
+                            case ExprType.VarValue:
+                                var strv = ManagedHost.CurrentScope.FindVar(se.VarName, true);
+                                rs = rs + strv.Value;
+
+                                break;
+                        }
+                    }
+                    return rs;
+                    break;
+                case ExprType.IntValue:
+                case ExprType.VarValue:
+                    Stack.Clear();
+                    Output.Clear();
+                    ToRPNInt(Expr);
+                    var res = CalcInt();
+
+
+                    return res.intV;
+                    break;
             }
-            return (dynamic)ParseInt(Exp);
-            return null;
+
+            return 0;
+
         }
 
-        public int CalcInt()
+        public StructExpr CalcInt()
         {
             Stack.Clear();
             for (int i = 0; i < Output.Count; i++)
@@ -78,13 +106,28 @@ namespace FusionScript.Structs
                 {
                     var left = Stack.Pop();
                     var right = Stack.Pop();
-                    switch(Output[i].Op)
+                    switch (Output[i].Op)
                     {
                         case OpType.Plus:
                             var ne1 = new StructExpr();
-                            ne1.intV = left.intV + right.intV; 
-                                Stack.Push(ne1);
-                        break;
+                            ne1.intV = left.intV + right.intV;
+                            Stack.Push(ne1);
+                            break;
+                        case OpType.Times:
+                            var ne2 = new StructExpr();
+                            ne2.intV = left.intV * right.intV;
+                            Stack.Push(ne2);
+                            break;
+                        case OpType.Divide:
+                            var ne3 = new StructExpr();
+                            ne3.intV = left.intV / right.intV;
+                            Stack.Push(ne3);
+                            break;
+                        case OpType.Minus:
+                            var ne4 = new StructExpr();
+                            ne4.intV = left.intV - right.intV;
+                            Stack.Push(ne4);
+                            break;
                     }
                     //switch(Output[i].)
 
@@ -95,8 +138,8 @@ namespace FusionScript.Structs
                 }
 
             }
-
-            return 0;
+            return Stack.Peek();
+          
         }
         List<StructExpr> Output = new List<StructExpr>();
         Stack<StructExpr> Stack = new Stack<StructExpr>();
@@ -110,6 +153,18 @@ namespace FusionScript.Structs
             {
                 switch (exp[i].Type)
                 {
+                    case ExprType.VarValue:
+            
+                        var av = ManagedHost.CurrentScope.FindVar(exp[i].VarName, true);
+                        var ne = new StructExpr();
+                        ne.intV = av.Value;
+                        Output.Add(ne);
+                        break;
+                    case ExprType.SubExpr:
+                        var ns = new StructExpr();
+                        ns.intV = exp[i].Exec();
+                        Output.Add(ns);
+                        break;
                     case ExprType.IntValue:
                         Output.Add(exp[i]);
                         break;

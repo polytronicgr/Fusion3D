@@ -64,6 +64,9 @@
     <Compile Include="LinkEngineBase.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="ParserCodeBody.cs" />
+    <Compile Include="ParserFunc.cs" />
+    <Compile Include="ParserMod.cs" />
     <Compile Include="Structs\VarType.cs" />
     <Compile Include="Structs\StructAssign.cs" />
     <Compile Include="Structs\StructCallPars.cs" />

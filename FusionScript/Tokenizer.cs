@@ -40,7 +40,7 @@ namespace FusionScript
             AddConv ( "+", new CodeToken ( TokenClass.Op, Token.Plus, "+" ) );
             AddConv ( "-", new CodeToken ( TokenClass.Op, Token.Minus, "-" ) );
             AddConv ( "/", new CodeToken ( TokenClass.Op, Token.Div, "/" ) );
-            AddConv ( "*", new CodeToken ( TokenClass.Op, Token.Div, "*" ) );
+            AddConv ( "*", new CodeToken ( TokenClass.Op, Token.Multi, "*" ) );
             AddConv ( "^", new CodeToken ( TokenClass.Op, Token.Pow, "^" ) );
         
             AddConv ( "==", new CodeToken ( TokenClass.Op, Token.Equal, "==" ) );

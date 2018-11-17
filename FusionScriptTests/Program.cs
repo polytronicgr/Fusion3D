@@ -17,7 +17,7 @@ namespace VividScriptTests
 
           
 
-            test_vme.ExecuteStaticFunc("testFunc");
+            test_vme.ExecuteStaticFunc("test");
 
          
 

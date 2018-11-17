@@ -10,10 +10,7 @@ namespace FusionScript.Structs
     {
         public List<string> call = new List<string>();
         public StructCallPars Pars;// = new VSCallPars();
-        public StructClassCall(TokenStream s) : base(s)
-        {
-
-        }
+     
 
         public override dynamic Exec()
         {
@@ -54,11 +51,6 @@ namespace FusionScript.Structs
             return null;
         }
 
-        public override void SetupParser()
-        {
-
-        
-        }
-
+    
     }
 }

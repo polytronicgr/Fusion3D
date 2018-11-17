@@ -7,11 +7,6 @@ namespace FusionScript.Structs
     {
         public List<StructExpr> Pars = new List<StructExpr>();
 
-      
-        public override void SetupParser ( )
-        {
-        
-          
-        }
+   
     }
 }

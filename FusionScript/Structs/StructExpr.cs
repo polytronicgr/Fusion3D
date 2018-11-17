@@ -34,10 +34,7 @@ namespace FusionScript.Structs
             return "Expr:" + Expr.Count + " Elements";
         }
 
-        public StructExpr ( TokenStream s, bool no_parse = false ) : base ( s, no_parse )
-        {
-            Done = true;
-        }
+     
 
         public override dynamic Exec ( )
         {
@@ -158,10 +155,6 @@ namespace FusionScript.Structs
             return val;
         }
 
-        public override void SetupParser ( )
-        {
-     
-          
-        }
+    
     }
 }

@@ -7,9 +7,7 @@ namespace FusionScript.Structs
         public StructCallPars CallPars = null;
         public string FuncName = "";
 
-        public StructFlatCall ( TokenStream s ) : base ( s )
-        {
-        }
+     
 
         public override string DebugString ( )
         {
@@ -38,8 +36,6 @@ namespace FusionScript.Structs
             return null;
         }
 
-        public override void SetupParser ( )
-        {
-        }
+       
     }
 }

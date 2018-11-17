@@ -5,10 +5,7 @@
         public StructExpr Condition = null;
         public StructCode Code = null;
 
-        public StructWhile ( TokenStream s ) : base ( s )
-        {
-        }
-
+   
         public override string DebugString ( )
         {
             return "Conditon:" + Condition.DebugString ( );
@@ -26,9 +23,6 @@
             return null;
         }
 
-        public override void SetupParser ( )
-        {
-          
-        }
+     
     }
 }

@@ -32,9 +32,11 @@ namespace FusionScript
             Ops.Add ( "/" );
             Ops.Add ( "*" );
             Ops.Add ( "^" );
+            Ops.Add("%");
        
             Ops.Add ( "==" );
             Ops.Add ( "=" );
+            AddConv("%", new CodeToken(TokenClass.Op, Token.Percent, "%"));
             AddConv ( "+", new CodeToken ( TokenClass.Op, Token.Plus, "+" ) );
             AddConv ( "-", new CodeToken ( TokenClass.Op, Token.Minus, "-" ) );
             AddConv ( "/", new CodeToken ( TokenClass.Op, Token.Div, "/" ) );

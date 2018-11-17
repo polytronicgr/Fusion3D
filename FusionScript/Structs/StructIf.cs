@@ -5,10 +5,7 @@
         public StructExpr Condition;
         public StructCode TrueCode;
 
-        public StructIf ( TokenStream s ) : base ( s )
-        {
-        }
-
+     
         public override dynamic Exec ( )
         {
             if ( Condition.Exec ( ) )
@@ -18,9 +15,6 @@
             return null;
         }
 
-        public override void SetupParser ( )
-        {
-          
-        }
+       
     }
 }

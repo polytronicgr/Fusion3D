@@ -13,12 +13,7 @@ namespace FusionScript.Structs
         public CodeScope StaticScope = new CodeScope("ModuleStatic");
         public CodeScope InstanceScope = new CodeScope("ModuleInstance");
  
-        public StructModule ( TokenStream s ) : base ( s )
-        {
- 
-
-        }
-
+     
         public StructModule()
         {
 
@@ -66,9 +61,6 @@ namespace FusionScript.Structs
 
             return ret;
         }
-        public override void SetupParser ( )
-        {
-        
-        }
+       
     }
 }

@@ -5,10 +5,7 @@ namespace FusionScript.Structs
 {
     public class StructEntry : Struct
     {
-        public StructEntry ( TokenStream s ) : base ( s )
-        {
-            TokStream = s;
-        }
+        
 
         public List<StructModule> Modules = new List<StructModule>();
         public List<StructFunc> SystemFuncs = new List<StructFunc>();
@@ -30,9 +27,6 @@ namespace FusionScript.Structs
             return null;
         }
 
-        public override void SetupParser ( )
-        {
-           
-        }
+  
     }
 }

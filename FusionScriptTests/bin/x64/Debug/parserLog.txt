@@ -1,2 +1,21 @@
-Log:Begun parsing source.
-[] 
+Begun parsing source.
+ [func](Func)(Define) test ( )  
+
+Begun parsing function
+ [func](Func)(Define) test ( )  
+
+Begun parsing code body
+[](BeginLine)(BeginLine) 
+
+Parsing Assign
+ [val](Id)(Id) = 20 + 20 ;  
+
+Parsing Var:val
+ [val](Id)(Id) = 20 + 20 ;  
+
+Parsing expressionj
+ val = [20](Int)(Value) + 20 ;  
+
+Expr:Expr:3 Elements
+ val = 20 + 20 [;](EndLine)(Flow)  
+

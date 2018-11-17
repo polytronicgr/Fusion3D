@@ -1,11 +1,5 @@
-module test
+func test()
 
-	func check()
-	
-	end
-	
-	func static checkTwo()
-	
-	end
+	val = 20+20;
 
 end

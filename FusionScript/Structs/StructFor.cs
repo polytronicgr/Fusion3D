@@ -9,9 +9,7 @@ namespace FusionScript.Structs
         public StructAssign Inc;
         public StructCode Code;
 
-        public StructFor ( TokenStream s ) : base ( s )
-        {
-        }
+       
 
         public override dynamic Exec ( )
         {
@@ -24,9 +22,6 @@ namespace FusionScript.Structs
             return null;
         }
 
-        public override void SetupParser ( )
-        {
-           
-        }
+    
     }
 }

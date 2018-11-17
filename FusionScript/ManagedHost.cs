@@ -241,7 +241,7 @@ namespace FusionScript
 
          
 
-            func.Code.Exec ( );
+            func.Exec ( );
 
  
             return func.LocalScope;

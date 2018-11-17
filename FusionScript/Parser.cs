@@ -286,6 +286,15 @@ namespace FusionScript
                         code.Lines.Add(assign);
 
                         break;
+                    case StrandType.FlatStatement:
+
+                        i = NextToken(i, Token.Id);
+
+                        var flat_state = ParseFlatStatement(ref i);
+
+                        code.Lines.Add(flat_state);
+
+                        break;
                 }
                 
 
@@ -294,6 +303,53 @@ namespace FusionScript
 
             return code;
 
+        }
+
+
+        public StructFlatCall ParseFlatStatement(ref int i)
+        {
+
+            Log("BeginFS:", i);
+            var flat = new StructFlatCall();
+
+            var name = Get(i).Text;
+
+            flat.FuncName = name;
+            Log("Func:" + name);
+
+            i++;
+            var callpars = ParseCallPars(ref i);
+            flat.CallPars = callpars;
+
+            return flat;
+
+        }
+
+        public StructCallPars ParseCallPars(ref int i)
+        {
+
+            var cp = new StructCallPars();
+            AssertTok(i, Token.LeftPara);
+            if(Get(i+1).Token == Token.RightPara)
+            {
+                return cp;
+            }
+
+            i++;
+
+            for (i = i; i < toks.Len; i++)
+            {
+
+                if(Get(i).Token == Token.RightPara)
+                {
+                    return cp;
+                }
+                var exp = ParseExp(ref i);
+                i--;
+                cp.Pars.Add(exp);
+
+            }
+            return cp;
         }
 
         public int NextToken(int i,Token tok)
@@ -338,6 +394,8 @@ namespace FusionScript
 
             assign.Expr.Add(exp);
 
+            Log("End of assign:", i);
+
 
             return assign;
 
@@ -358,7 +416,9 @@ namespace FusionScript
 
                 switch (Get(i).Token)
                 {
+                    case Token.RightPara:
                     case Token.EndLine:
+                    case Token.Comma:
 
                         Log("Expr:" + exp.DebugString(), i);
 
@@ -461,13 +521,26 @@ namespace FusionScript
                         prev_op = true;
 
                         break;
+                    case Token.String:
 
+                        if (!prev_op && !first_toke)
+                        {
+                            Error(i, "Expecting operator.");
+                        }
+                        prev_op = false;
+                        var es = new StructExpr();
+                        es.StringV = Get(i).Text;
+                        es.Type = ExprType.StringValue ;
+                        exp.Expr.Add(es);
+                        first_toke = false;
+
+                        break;
                     case Token.Int:
                     case Token.Float:
                     case Token.Short:
                     case Token.Long:
                     case Token.Double:
-                    case Token.String:
+              
 
                         if (!prev_op && !first_toke) 
                         {
@@ -520,6 +593,10 @@ namespace FusionScript
                 if(toks.Tokes[i].Token==Token.Equal)
                 {
                     return StrandType.Assignment;
+                }
+                if(toks.Tokes[i].Token == Token.LeftPara)
+                {
+                    return StrandType.FlatStatement;
                 }
 
 

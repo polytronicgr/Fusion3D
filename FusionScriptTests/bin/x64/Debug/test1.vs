@@ -1,5 +1,5 @@
 func test()
 
-	val = 20+20;
+		printf(20+30);
 
 end

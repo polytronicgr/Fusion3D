@@ -52,10 +52,130 @@ namespace FusionScript.Structs
                 return bc;
 
             }
-            return NextE ( 0, null );
+            //Val.Clear();
+            Stack.Clear();
+            Output.Clear();
+            ToRPN(Expr);
 
+
+
+
+            Stack<StructExpr> Exp = new Stack<StructExpr>();
+            foreach (var v in Expr)
+            {
+                Exp.Push(v);
+            }
+            return (dynamic)ParseInt(Exp);
             return null;
         }
+
+        public int CalcInt()
+        {
+            Stack.Clear();
+            for (int i = 0; i < Output.Count; i++)
+            {
+                if (Output[i].Type == ExprType.Operator)
+                {
+                    var left = Stack.Pop();
+                    var right = Stack.Pop();
+                    switch(Output[i].Op)
+                    {
+                        case OpType.Plus:
+                            var ne1 = new StructExpr();
+                            ne1.intV = left.intV + right.intV; 
+                                Stack.Push(ne1);
+                        break;
+                    }
+                    //switch(Output[i].)
+
+                }
+                else
+                {
+                    Stack.Push(Output[i]);
+                }
+
+            }
+
+            return 0;
+        }
+        List<StructExpr> Output = new List<StructExpr>();
+        Stack<StructExpr> Stack = new Stack<StructExpr>();
+    
+        public void ToRPNInt(List<StructExpr> exp)
+        {
+
+            Output.Clear();
+
+            for(int i = 0; i < exp.Count; i++)
+            {
+                switch (exp[i].Type)
+                {
+                    case ExprType.IntValue:
+                        Output.Add(exp[i]);
+                        break;
+                    case ExprType.Operator:
+                        while (Stack.Count > 0 && Priority(Stack.Peek()) >= Priority(exp[i]))
+                            Output.Add(Stack.Pop());
+                        Stack.Push(exp[i]);
+                        //{
+                        //   o
+                        //}
+                        break;
+                    
+                }
+
+            }
+            while (Stack.Count > 0)
+                Output.Add(Stack.Pop());
+        }
+
+      
+
+        public int ParseInt(Stack<StructExpr> vals)
+        {
+
+            StructExpr val = vals.Pop();
+            int x=0, y=0;
+            if ((val.Type == ExprType.Operator))
+            {
+
+                y = ParseInt(vals);
+                x = ParseInt(vals);
+                if (val.Op == OpType.Plus) x += y;
+                else if (val.Op == OpType.Minus) x -= y;
+                else if (val.Op == OpType.Times) x *= y;
+                else if (val.Op == OpType.Divide) x /= y;
+                else throw new Exception("Wrong expression");
+            }
+            else
+            {
+                x = val.intV; 
+            }
+            return x;
+
+            
+            
+            
+              
+            
+
+          
+        }
+
+        private static int Priority(StructExpr op)
+        {
+            
+
+            if (op.Op == OpType.Pow2)
+                return 4;
+            if (op.Op == OpType.Times || op.Op == OpType.Divide)
+                return 3;
+            if (op.Op == OpType.Plus || op.Op == OpType.Minus)
+                return 2;
+            else
+                return 1;
+        }
+
 
         public dynamic NextE ( int i, dynamic prev )
         {

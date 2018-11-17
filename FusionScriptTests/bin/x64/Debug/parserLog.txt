@@ -7,15 +7,14 @@ Begun parsing function
 Begun parsing code body
 [](BeginLine)(BeginLine) 
 
-Parsing Assign
- [val](Id)(Id) = 20 + 20 ;  
+BeginFS:
+ [printf](Id)(Id) ( 20 + 30 ) ;  
 
-Parsing Var:val
- [val](Id)(Id) = 20 + 20 ;  
+Func:printf
 
 Parsing expressionj
- val = [20](Int)(Value) + 20 ;  
+ printf ( [20](Int)(Value) + 30 ) ;  
 
 Expr:Expr:3 Elements
- val = 20 + 20 [;](EndLine)(Flow)  
+ printf ( 20 + 30 [)](RightPara)(Scope) ;  
 

@@ -8,7 +8,7 @@
      
         public override dynamic Exec ( )
         {
-            if ( Condition.Exec ( ) )
+            if ( Condition.Exec ( )==1 )
             {
                 TrueCode.Exec ( );
             }

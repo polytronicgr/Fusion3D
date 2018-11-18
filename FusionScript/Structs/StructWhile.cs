@@ -14,7 +14,7 @@
         public override dynamic Exec ( )
         {
             System.Console.WriteLine ( "ExecWhile" );
-            while ( Condition.Exec ( ) )
+            while ( Condition.Exec ( )==1 )
             {
                 Code.Exec ( );
             }

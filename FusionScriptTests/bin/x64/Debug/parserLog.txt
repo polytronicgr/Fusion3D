@@ -1,98 +1,5 @@
 Begun parsing source.
- [module](Module)(Define) draw  
-
-Begun parsing module
- [module](Module)(Define) draw  
-
-Begun parsing function
- [func](Func)(Define) draw ( )  
-
-Checking parameters.
- func draw [(](LeftPara)(Scope) )  
-
-ParsPassed:
- func draw ( [)](RightPara)(Scope)  
-
-Begun parsing code body
- func draw ( [)](RightPara)(Scope)  
-
-Parsing flat-statement.
- [printf](Id)(Id) ( Test2 ) ;  
-
-BeginFS:
- [printf](Id)(Id) ( Test2 ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [Test2](String)(Value) ) ;  
-
-Expr:Expr:1 Elements
- printf ( Test2 [)](RightPara)(Scope) ;  
-
-Parsed code-body.
- [end](End)(Flow)  
-
-Begun parsing function
- [func](Func)(Define) draw ( val1 )  
-
-Checking parameters.
- func draw [(](LeftPara)(Scope) val1 )  
-
-ParsPassed:
- func draw ( val1 [)](RightPara)(Scope)  
-
-Begun parsing code body
- func draw ( val1 [)](RightPara)(Scope)  
-
-Parsing flat-statement.
- [printf](Id)(Id) ( Test: + val1 ) ;  
-
-BeginFS:
- [printf](Id)(Id) ( Test: + val1 ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [Test:](String)(Value) + val1 ) ;  
-
-VarInExpr:val1
- printf ( Test: + [val1](Id)(Id) ) ;  
-
-Expr:Expr:3 Elements
- printf ( Test: + val1 [)](RightPara)(Scope) ;  
-
-Parsed code-body.
- [end](End)(Flow)  
-
-Begun parsing function
- [func](Func)(Define) testMeth ( )  
-
-Checking parameters.
- func testMeth [(](LeftPara)(Scope) )  
-
-ParsPassed:
- func testMeth ( [)](RightPara)(Scope)  
-
-Begun parsing code body
- func testMeth ( [)](RightPara)(Scope)  
-
-Parsing flat-statement.
- [printf](Id)(Id) ( TestMeth! ) ;  
-
-BeginFS:
- [printf](Id)(Id) ( TestMeth! ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [TestMeth!](String)(Value) ) ;  
-
-Expr:Expr:1 Elements
- printf ( TestMeth! [)](RightPara)(Scope) ;  
-
-Parsed code-body.
- [end](End)(Flow)  
+ [func](Func)(Define) test ( )  
 
 Begun parsing function
  [func](Func)(Define) test ( )  
@@ -106,31 +13,52 @@ ParsPassed:
 Begun parsing code body
  func test ( [)](RightPara)(Scope)  
 
-Parsing flat-statement.
- [stop](Id)(Id) ( ) ;  
-
 Parsing assignment.
- [val](Id)(Id) = new draw ( 33 ) ;  
+ [var](Var)(Define) a = 2 ;  
 
 Parsing Assign
- [val](Id)(Id) = new draw ( 33 ) ;  
+ var [a](Id)(Id) = 2 ;  
 
-Parsing Var:val
- [val](Id)(Id) = new draw ( 33 ) ;  
-
-Parsing expressionj
- val = [new](New)(New) draw ( 33 ) ;  
-
-New Class:draw
+Parsing Var:a
+ var [a](Id)(Id) = 2 ;  
 
 Parsing expressionj
- val = new draw ( [33](Int)(Value) ) ;  
+ var a = [2](Int)(Value) ;  
 
 Expr:Expr:1 Elements
- val = new draw ( 33 [)](RightPara)(Scope) ;  
+ var a = 2 [;](EndLine)(Flow)  
 
 End of assign:
- val = new draw ( 33 [)](RightPara)(Scope) ;  
+ var a = 2 [;](EndLine)(Flow)  
+
+Parsing expressionj
+ while ( [12](Int)(Value) < ( 10 + 2 ) )  
+
+Parsing expressionj
+ while ( 12 < ( [10](Int)(Value) + 2 ) )  
+
+Expr:Expr:3 Elements
+ while ( 12 < ( 10 + 2 [)](RightPara)(Scope) )  
+
+Expr:Expr:3 Elements
+ while ( 12 < ( 10 + 2 ) [)](RightPara)(Scope)  
+
+Begun parsing code body
+ while ( 12 < ( 10 + 2 ) [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [printf](Id)(Id) ( A=2! ) ;  
+
+BeginFS:
+ [printf](Id)(Id) ( A=2! ) ;  
+
+Func:printf
+
+Parsing expressionj
+ printf ( [A=2!](String)(Value) ) ;  
+
+Expr:Expr:1 Elements
+ printf ( A=2! [)](RightPara)(Scope) ;  
 
 Parsed code-body.
 EOF

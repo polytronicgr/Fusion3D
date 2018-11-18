@@ -81,7 +81,48 @@ namespace FusionScript
                         exp.Expr.Add(sub_e);
 
                         break;
+                    case Token.Greater:
 
+                        if (prev_op || first_toke)
+                        {
+                            Error(i, "Expecting value.");
+                        }
+
+                        var more_op = new StructExpr();
+                        more_op.Op = OpType.MoreThan;
+                        more_op.Type = ExprType.Operator;
+                        exp.Expr.Add(more_op);
+                        prev_op = true;
+
+                        break;
+                    case Token.Lesser:
+
+                        if (prev_op || first_toke)
+                        {
+                            Error(i, "Expecting value.");
+                        }
+
+                        var less_op = new StructExpr();
+                        less_op.Op = OpType.LessThan;
+                        less_op.Type = ExprType.Operator;
+                        exp.Expr.Add(less_op);
+                        prev_op = true;
+
+                        break;
+                    case Token.Equal:
+
+                        if (prev_op || first_toke)
+                        {
+                            Error(i, "Expecting value.");
+                        }
+
+                        var equal_op = new StructExpr();
+                        equal_op.Op = OpType.EqualTo;
+                        equal_op.Type = ExprType.Operator;
+                        exp.Expr.Add(equal_op);
+                        prev_op = true;
+
+                        break;
                     case Token.Plus:
 
                         if (prev_op || first_toke)
@@ -204,7 +245,7 @@ namespace FusionScript
 
                         break;
                     default:
-                        Error(i, "Illegal token within expression:");
+                        Error(i, "Illegal token within expression:"+Get(i).ToString());
                         break;
                 }
 

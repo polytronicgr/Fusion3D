@@ -131,6 +131,24 @@ namespace FusionScript.Structs
                     var right = Stack.Pop();
                     switch (Output[i].Op)
                     {
+                        case OpType.LessThan:
+
+                            var lt1 = new StructExpr();
+                            lt1.intV = (left.intV > right.intV) ? 1 : 0;
+                            Stack.Push(lt1);
+                            break;
+
+                        case OpType.MoreThan:
+
+                            var mt1 = new StructExpr();
+                            mt1.intV = (left.intV < right.intV) ? 1 : 0;
+                            Stack.Push(mt1);
+                            break;
+                        case OpType.EqualTo:
+                            var et1 = new StructExpr();
+                            et1.intV = (left.intV == right.intV) ? 1 : 0;
+                            Stack.Push(et1);
+                            break;
                         case OpType.Plus:
                             var ne1 = new StructExpr();
                             ne1.intV = left.intV + right.intV;

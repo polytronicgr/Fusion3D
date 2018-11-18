@@ -5,7 +5,8 @@ namespace FusionScript.Structs
     public class StructFunc : Struct
     {
         public string FuncName = "";
-        public StructPars Pars = null;
+        //public StructPars Pars = null;
+        public StructParameters Pars = null;
         public StructCode Code = null;
         public bool Static = false;
 

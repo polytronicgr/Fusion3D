@@ -157,6 +157,42 @@ namespace FusionScript
 
         }
 
+        public StructParameters ParseParameters(ref int i)
+        {
+
+            var sp = new StructParameters();
+
+            Console.WriteLine("PP:" + Get(i).Text);
+            Log("Checking parameters.", i);
+            AssertTok(i, Token.LeftPara);
+
+            i++;
+            for (i = i; i < toks.Len; i++)
+            {
+                switch (Get(i).Token)
+                {
+                    case Token.Id:
+
+                        var vv = new Var();
+                        vv.Name = Get(i).Text;
+                        sp.Pars.Add(vv);
+
+                        break;
+                    case Token.Comma:
+
+                        break;
+                    case Token.RightPara:
+                        return sp;
+                        break;
+
+                }
+
+            }
+
+            return sp;
+
+        }
+
         public StructCallPars ParseCallPars(ref int i)
         {
 

@@ -1,0 +1,34 @@
+here's a few links to my work, feel free to check them out.
+
+My current product is a full blown 3d engine/ide and custom scripting language, that's been in dev for a year.
+
+https://github.com/AntDevUnity/Vivid3D < its for windows and the last day i got it compiling and running on Linux. In the project you'll see a windows form based editor, but that's being replaced by a custom
+ide using resonance(the ui that is a part of the engine. it's pretty cool, can blur bgs, refract through textures etc like windows 7+)
+
+Here is a demo reel,
+
+https://www.youtube.com/edit?o=U&video_id=GXiZlRX2o3g just a few projects i did over the course of 2010-2011. done lots more obviously but not got much physical evidence of them.
+
+Here's a few videos of vivid3d ide running,
+
+https://www.youtube.com/edit?o=U&video_id=-IxbARzCj_0 < this is a video of me exporting a 3ds scene using vivid's custom 3ds 2018 exporter, I wrote in C++ with maxSDK.
+
+https://www.youtube.com/edit?o=U&video_id=gdywbnsMt58 < this is showing play/stop. it uses a clever reflection scan to save/restore the structure/state of the whole scene, so it's automatic, not manually done.
+
+https://www.youtube.com/edit?o=U&video_id=HqftFGtVpo8 < shows animated meshes in the engine, note this is a custom animator that uses AssetImporter to load the anims.
+
+https://www.youtube.com/edit?o=U&video_id=DENjytGNhEs < this is fusion3d, a vulkan engine I started. all wrote in C++ and working although vivid3d is my focus for now.
+
+https://www.youtube.com/edit?o=U&video_id=zUdNqO32SMg < a cool little intro i did for a game called "Stardom" I think you can guess it was going to be a starflight clone lol.
+
+https://www.gamedev.net/projects/937-vivid3d-3d-engineide/?do=edit&csrfKey=c7d0357c0ccc85a1ca45f6f9f16d43ef < project page for vivid, worth checking it has severl really nice screenshots of the lighting/fx in the engine. has full unified lighting and shadows.
+
+https://github.com/VividMaster/imaginationn < a little a.i experiemnt. it trains a neural network on images, then 'randomly' creates new images based on random inputs to the trained network. it's basically a really cool cross-fader.
+
+https://www.indiedb.com/games/futuristic - this was a labour of love that I lost along the way - it was going to be some futuristic sci-fi rpg fps like deus ex. quite  a a few screenshots, i love the look tbh.
+
+- thats about all I have atm, the rest you know, lost the shots, the files etc.
+
+So yeah even though starflight 3 fell through, i'd love to help you guys remotely if you need the help. I'm happy to work for royalties or whatever really, just dying to make a great game atm. i.e dont need paying for it.
+
+I'm full of ideas for games, or I can just help code. Cheers for your reply, and good luck with your future projects. BTW I loved toe jam and earl on the megadrive. I'll try your version out one day. got an xbox if it's out on that?

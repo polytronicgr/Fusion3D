@@ -28,6 +28,7 @@ namespace FusionScript.Structs
         public bool NewClass = false;
         public StructCallPars NewPars;
         public string NewClassType = "";
+ 
 
         public override string DebugString ( )
         {
@@ -47,13 +48,26 @@ namespace FusionScript.Structs
 
                 var bc = base_class.CreateInstance();
 
-                try
+                if (Expr[0].NewPars != null)
                 {
-                    ManagedHost.Main.ExecuteMethod(bc, base_class.ModuleName, null);
+                    dynamic[] pars = new dynamic[Expr[0].NewPars.Pars.Count];
+                    if (Expr[0].NewPars != null)
+                    {
+                        int ii = 0;
+                        foreach (var pe in Expr[0].NewPars.Pars)
+                        {
+                            pars[ii] = pe.Exec();
+                            ii++;
+                        }
+
+                        ManagedHost.Main.ExecuteMethod(bc, base_class.ModuleName, pars);
+                    }
                 }
-                catch
+                else
                 {
 
+
+                    ManagedHost.Main.ExecuteMethod(bc, base_class.ModuleName, null);
                 }
                 return bc;
 

@@ -26,7 +26,7 @@ namespace FusionScript
                         scc.call.Add(Get(i).Text);
                         break;
                     case Token.LeftPara:
-
+                        Log("Checking.", i);
                         var pars = ParseCallPars(ref i);
                         scc.Pars = pars;
 

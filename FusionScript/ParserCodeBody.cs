@@ -30,6 +30,8 @@ namespace FusionScript
                 {
                     case StrandType.Assignment:
 
+                        Log("Parsing assignment.", i);
+
                         i = NextToken(i, Token.Id);
 
                         var assign = ParseAssign(ref i);
@@ -38,7 +40,7 @@ namespace FusionScript
 
                         break;
                     case StrandType.ClassStatement:
-
+                        Log("Parsing class-statement.", i);
                         i = NextToken(i, Token.Id);
 
                         var class_state = ParseClassStatement(ref i);
@@ -47,8 +49,15 @@ namespace FusionScript
 
                         break;
                     case StrandType.FlatStatement:
-
+                        Log("Parsing flat-statement.", i);
                         i = NextToken(i, Token.Id);
+
+                        if(Get(i).Text == "stop")
+                        {
+                            code.Lines.Add(new StructStop());
+                            i++;
+                            continue;
+                        }
 
                         var flat_state = ParseFlatStatement(ref i);
 

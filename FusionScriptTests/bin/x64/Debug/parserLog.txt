@@ -7,19 +7,60 @@ Begun parsing module
 Begun parsing function
  [func](Func)(Define) draw ( )  
 
+Checking parameters.
+ func draw [(](LeftPara)(Scope) )  
+
+ParsPassed:
+ func draw ( [)](RightPara)(Scope)  
+
 Begun parsing code body
-[](BeginLine)(BeginLine) 
+ func draw ( [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [printf](Id)(Id) ( Test2 ) ;  
 
 BeginFS:
- [printf](Id)(Id) ( InitDraw ) ;  
+ [printf](Id)(Id) ( Test2 ) ;  
 
 Func:printf
 
 Parsing expressionj
- printf ( [InitDraw](String)(Value) ) ;  
+ printf ( [Test2](String)(Value) ) ;  
 
 Expr:Expr:1 Elements
- printf ( InitDraw [)](RightPara)(Scope) ;  
+ printf ( Test2 [)](RightPara)(Scope) ;  
+
+Parsed code-body.
+ [end](End)(Flow)  
+
+Begun parsing function
+ [func](Func)(Define) draw ( val1 )  
+
+Checking parameters.
+ func draw [(](LeftPara)(Scope) val1 )  
+
+ParsPassed:
+ func draw ( val1 [)](RightPara)(Scope)  
+
+Begun parsing code body
+ func draw ( val1 [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [printf](Id)(Id) ( Test: + val1 ) ;  
+
+BeginFS:
+ [printf](Id)(Id) ( Test: + val1 ) ;  
+
+Func:printf
+
+Parsing expressionj
+ printf ( [Test:](String)(Value) + val1 ) ;  
+
+VarInExpr:val1
+ printf ( Test: + [val1](Id)(Id) ) ;  
+
+Expr:Expr:3 Elements
+ printf ( Test: + val1 [)](RightPara)(Scope) ;  
 
 Parsed code-body.
  [end](End)(Flow)  
@@ -27,8 +68,17 @@ Parsed code-body.
 Begun parsing function
  [func](Func)(Define) testMeth ( )  
 
+Checking parameters.
+ func testMeth [(](LeftPara)(Scope) )  
+
+ParsPassed:
+ func testMeth ( [)](RightPara)(Scope)  
+
 Begun parsing code body
-[](BeginLine)(BeginLine) 
+ func testMeth ( [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [printf](Id)(Id) ( TestMeth! ) ;  
 
 BeginFS:
  [printf](Id)(Id) ( TestMeth! ) ;  
@@ -47,22 +97,40 @@ Parsed code-body.
 Begun parsing function
  [func](Func)(Define) test ( )  
 
+Checking parameters.
+ func test [(](LeftPara)(Scope) )  
+
+ParsPassed:
+ func test ( [)](RightPara)(Scope)  
+
 Begun parsing code body
-[](BeginLine)(BeginLine) 
+ func test ( [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [stop](Id)(Id) ( ) ;  
+
+Parsing assignment.
+ [val](Id)(Id) = new draw ( 33 ) ;  
 
 Parsing Assign
- [val](Id)(Id) = new draw ( ) ;  
+ [val](Id)(Id) = new draw ( 33 ) ;  
 
 Parsing Var:val
- [val](Id)(Id) = new draw ( ) ;  
+ [val](Id)(Id) = new draw ( 33 ) ;  
 
 Parsing expressionj
- val = [new](New)(New) draw ( ) ;  
+ val = [new](New)(New) draw ( 33 ) ;  
 
 New Class:draw
 
+Parsing expressionj
+ val = new draw ( [33](Int)(Value) ) ;  
+
+Expr:Expr:1 Elements
+ val = new draw ( 33 [)](RightPara)(Scope) ;  
+
 End of assign:
- val = new draw ( [)](RightPara)(Scope) ;  
+ val = new draw ( 33 [)](RightPara)(Scope) ;  
 
 Parsed code-body.
 EOF

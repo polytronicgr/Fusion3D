@@ -33,8 +33,19 @@ namespace FusionScript
                         newe.Type = ExprType.NewClass;
                         newe.NewClassType = Get(i + 1).Text;
                         Log("New Class:" + newe.NewClassType);
-                        i = NextToken(i, Token.RightPara);
+                        i = NextToken(i, Token.LeftPara);
                         exp.Expr.Add(newe);
+                        //i--;
+                        if (Get(i + 1).Text != ")")
+                        {
+
+                            newe.NewPars = ParseCallPars(ref i);
+                        }
+                        else
+                        {
+                            i++;
+                        }
+
                         return exp;
                         break;
                             break;

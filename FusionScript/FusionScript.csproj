@@ -69,6 +69,8 @@
     <Compile Include="ParserExpr.cs" />
     <Compile Include="ParserFunc.cs" />
     <Compile Include="ParserMod.cs" />
+    <Compile Include="Structs\StructParameters.cs" />
+    <Compile Include="Structs\StructStop.cs" />
     <Compile Include="Structs\VarType.cs" />
     <Compile Include="Structs\StructAssign.cs" />
     <Compile Include="Structs\StructCallPars.cs" />

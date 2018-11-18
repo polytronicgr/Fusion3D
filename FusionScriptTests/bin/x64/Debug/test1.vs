@@ -2,7 +2,14 @@ module draw
 
 	func draw()
 	
-		printf("InitDraw");
+		printf("Test2");
+	
+	end
+
+	func draw(val1)
+	
+
+		printf("Test:"+val1);
 	
 	end
 
@@ -16,8 +23,9 @@ end
 
 func test()
 
-	val = new draw();
+	stop();
+	val = new draw(33);
 
-	val.testMeth();
+	
 
 end

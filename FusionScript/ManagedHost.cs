@@ -167,13 +167,34 @@ namespace FusionScript
             {
                 if(f.FuncName == func)
                 {
+                    if (pars != null)
+                    {
+                        if (f.Pars.Pars.Count != pars.Length)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (f.Pars != null)
+                        {
+                            if (f.Pars.Pars.Count != 0)
+                            {
+                                continue;
+                            }
+                        }
+                    }
                     int ii = 0;
                     var ns = new CodeScope("func_pars");
+
                     if (pars != null)
                     {
                         foreach (var p in pars)
                         {
                             var rp = f.Pars.Pars[ii];
+
+
+
                             ns.RegisterVar(rp);
                             rp.Value = p;
                             ii++;
@@ -184,6 +205,7 @@ namespace FusionScript
                     f.Code.Exec();
                     PopScope();
                     PopScope();
+                    return null;
                 }
             }
             return null;

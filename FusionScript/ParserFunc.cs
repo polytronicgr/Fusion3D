@@ -48,35 +48,14 @@ namespace FusionScript
             }
 
 
-            var pars = new StructCallPars();
+            var pars = ParseParameters(ref i);
 
-            if (toks.Tokes[i + 1].Token != Token.RightPara)
-            {
-                for (i = i; i < toks.Len; i++)
-                {
-
-                    var tok = toks.Tokes[i];
-
-                    switch (tok.Token)
-                    {
-                        case Token.Id:
-
-                            break;
-
-
-                    }
-
-                }
-            }
-            else
-            {
-                i += 2;
-            }
-
+            Log("ParsPassed:", i);
 
             var code_body = ParseCodeBody(ref i);
             Log("Parsed code-body.", i);
             func.Code = code_body;
+            func.Pars = pars;
 
             return func;
 

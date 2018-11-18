@@ -7,7 +7,7 @@ namespace FusionScript
     public enum StrandType
     {
         Statement, Assignment, Flow, Define, Macro, Header, Extends, Generic, Unknown, While, If, Else, ElseIf, Wend, For, Do, Loop,
-        FlatStatement, ClassStatement
+        FlatStatement, ClassStatement,Return
     }
 
     public enum StructType

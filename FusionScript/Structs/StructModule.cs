@@ -38,7 +38,32 @@ namespace FusionScript.Structs
             return null;
         }
 
-        
+        public bool IsFunc(string name)
+        {
+
+            foreach(var f in Methods)
+            {
+                if(f.FuncName == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public dynamic ExecFunc(string name,dynamic[] pars)
+        {
+            foreach(var m in Methods)
+            {
+                if(m.FuncName == name)
+                {
+
+                    return ManagedHost.Main.ExecuteMethod(this, name, pars);
+
+
+                }
+            }
+            return null;
+        }
         public StructModule CreateInstance()
         {
 

@@ -76,6 +76,18 @@ namespace FusionScript
                             }
                             else
                             {
+                                if (Get(i + 1).Text == "(")
+                                {
+                                    if (Get(i + 2).Text == ")")
+                                    {
+                                        i = i + 2;
+                                    }
+                                    else
+                                    {
+                                        i++;
+                                        ve.CallPars = ParseCallPars(ref i);
+                                    }
+                                }
                                 break;
                             }
                         }

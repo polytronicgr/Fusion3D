@@ -188,6 +188,7 @@ namespace FusionScript.Structs
         }
         List<StructExpr> Output = new List<StructExpr>();
         Stack<StructExpr> Stack = new Stack<StructExpr>();
+        public StructCallPars CallPars;
     
         public void ToRPNInt(List<StructExpr> exp)
         {
@@ -228,46 +229,79 @@ namespace FusionScript.Structs
 
                         break;
                     case ExprType.VarValue:
-                        if (av == null)
+                        try
                         {
-                            av = ManagedHost.CurrentScope.FindVar(exp[i].VarName, true);
-                            if(av.Value is StructModule || av.Value is Module)
+                            if (av == null)
                             {
+                                av = ManagedHost.CurrentScope.FindVar(exp[i].VarName, true);
+                                if (av.Value is StructModule || av.Value is Module)
+                                {
 
+                                }
+                                else
+                                {
+                                    var nnn = new StructExpr();
+                                    nnn.intV = av.Value;
+                                    Output.Add(nnn);
+                                }
                             }
                             else
                             {
-                                var nnn = new StructExpr();
-                                nnn.intV = av.Value;
-                                Output.Add(nnn);
-                            }
-                        }
-                        else
-                        {
-                            
-                            if(av.Value is Module)
-                            {
-                                if(av.Value.CMod != null)
+
+                                if (av.Value is Module)
                                 {
-                                    if (av.Value.CMod.HasStaticVar(exp[i].VarName))
+                                    if (av.Value.CMod != null)
                                     {
-                                        av = av.Value.CMod.GetStaticValue(exp[i].VarName);
-                                        var ne = new StructExpr();
-                                        ne.intV = av;
-                                        Output.Add(ne);
+                                        if (av.Value.CMod.HasStaticVar(exp[i].VarName))
+                                        {
+                                            av = av.Value.CMod.GetStaticValue(exp[i].VarName);
+                                            var ne = new StructExpr();
+                                            ne.intV = av;
+                                            Output.Add(ne);
+                                        }
                                     }
                                 }
-                            }else if (av.Value is StructModule)
-                            {
-                                av = av.Value.FindVar(exp[i].VarName);
-                                if(av.Value is int)
+                                else if (av.Value is StructModule)
                                 {
-                                    var ni = new StructExpr();
-                                    ni.intV = av.Value;
-                                    Output.Add(ni);
+                                    if (av.Value.IsFunc(exp[i].VarName))
+                                    {
+                                        if (exp[i].CallPars != null)
+                                        {
+                                            dynamic[] pars = new dynamic[exp[i].CallPars.Pars.Count];
+                                            for (int cpi = 0; cpi < exp[i].CallPars.Pars.Count; cpi++)
+                                            {
+                                                pars[cpi] = exp[i].CallPars.Pars[cpi].Exec();
+                                            }
+
+                                            av = av.Value.ExecFunc(exp[i].VarName, pars);
+                                        }
+                                        else
+                                        {
+                                            av = av.Value.ExecFunc(exp[i].VarName, null);
+                                        }
+                                            var fr = new StructExpr();
+                                        fr.intV = av;
+                                        Output.Add(fr);
+                                    }
+                                    else
+                                    {
+                                        av = av.Value.FindVar(exp[i].VarName);
+                                        if (av.Value is int)
+                                        {
+                                            var ni = new StructExpr();
+                                            ni.intV = av.Value;
+                                            Output.Add(ni);
+                                        }
+                                    }
                                 }
+
                             }
-                           
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Variable retrival error.");
+                            ManagedHost.RaiseError("Variable retrival error.");
+                            
                         }
                         break;
                     case ExprType.SubExpr:

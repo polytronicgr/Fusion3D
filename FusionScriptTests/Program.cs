@@ -15,9 +15,9 @@ namespace VividScriptTests
             ManagedHost test_vme = new ManagedHost();
             test_vme.AddModule(new Module(s.EntryPoint));
 
-          
 
-            test_vme.ExecuteStaticFunc("test");
+
+            System.Console.WriteLine("R:" + test_vme.ExecuteStaticFunc("test"));
 
          
 

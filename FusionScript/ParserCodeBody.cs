@@ -34,6 +34,17 @@ namespace FusionScript
                 var st = Predict(i);
                 switch (st)
                 {
+                    case StrandType.Return:
+                        //Console.WriteLine("RET:");
+                        i = NextToken(i, Token.Return);
+                        var cl_return = new StructReturn();
+                        if (Get(i+1).Token != Token.EndLine)
+                        {
+                            i++;
+                            cl_return.ReturnExp = ParseExp(ref i);
+                        }
+                        code.Lines.Add(cl_return);
+                        break;
                     case StrandType.For:
 
                         i = NextToken(i, Token.For);

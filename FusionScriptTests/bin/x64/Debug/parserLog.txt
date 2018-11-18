@@ -25,31 +25,25 @@ Parsing expressionj
 New Class:other
 
 Begun parsing function
- [func](Func)(Define) test ( )  
+ [func](Func)(Define) test ( time )  
 
 Checking parameters.
- func test [(](LeftPara)(Scope) )  
+ func test [(](LeftPara)(Scope) time )  
 
 ParsPassed:
- func test ( [)](RightPara)(Scope)  
+ func test ( time [)](RightPara)(Scope)  
 
 Begun parsing code body
- func test ( [)](RightPara)(Scope)  
-
-Parsing assignment.
- [a](Id)(Id) = 5 ;  
-
-Parsing Assign
- [a](Id)(Id) = 5 ;  
+ func test ( time [)](RightPara)(Scope)  
 
 Parsing expressionj
- a = [5](Int)(Value) ;  
+ return [30](Int)(Value) + time ;  
 
-Expr:Expr:1 Elements
- a = 5 [;](EndLine)(Flow)  
+VarInExpr:time
+ return 30 + [time](Id)(Id) ;  
 
-End of assign:
- a = 5 [;](EndLine)(Flow)  
+Expr:Expr:3 Elements
+ return 30 + time [;](EndLine)(Flow)  
 
 Parsed code-body.
  [end](End)(Flow)  
@@ -81,21 +75,33 @@ End of assign:
  ant = new draw ( [)](RightPara)(Scope) ;  
 
 Parsing flat-statement.
- [printf](Id)(Id) ( Test: + ant . l . c ) ;  
+ [printf](Id)(Id) ( Test: + ant . test ( 20 ) ) ;  
 
 BeginFS:
- [printf](Id)(Id) ( Test: + ant . l . c ) ;  
+ [printf](Id)(Id) ( Test: + ant . test ( 20 ) ) ;  
 
 Func:printf
 
 Parsing expressionj
- printf ( [Test:](String)(Value) + ant . l . c ) ;  
+ printf ( [Test:](String)(Value) + ant . test ( 20 ) ) ;  
 
 VarInExpr:ant
- printf ( Test: + [ant](Id)(Id) . l . c ) ;  
+ printf ( Test: + [ant](Id)(Id) . test ( 20 ) ) ;  
+
+Parsing expressionj
+ printf ( Test: + ant . test ( [20](Int)(Value) ) ) ;  
+
+Expr:Expr:1 Elements
+ printf ( Test: + ant . test ( 20 [)](RightPara)(Scope) ) ;  
 
 Expr:Expr:3 Elements
- printf ( Test: + ant . l . c [)](RightPara)(Scope) ;  
+ printf ( Test: + ant . test ( 20 ) [)](RightPara)(Scope) ;  
+
+Parsing expressionj
+ return [5](Int)(Value) ;  
+
+Expr:Expr:1 Elements
+ return 5 [;](EndLine)(Flow)  
 
 Parsed code-body.
 EOF

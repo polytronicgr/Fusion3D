@@ -9,9 +9,9 @@ module draw
 	var a = 2;
 	var l = new other();
 
-	func test()
+	func test(time)
 	
-		a=5;
+		return 30+time;
 	
 	end
 
@@ -21,6 +21,9 @@ func test()
 
 	ant = new draw();
 
-	printf("Test:"+ant.l.c);
+
+	printf("Test:"+ant.test(20));
+
+	return 5;
 
 end

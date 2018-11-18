@@ -266,7 +266,18 @@ namespace FusionScript
             }
             Main.Scopes.Push ( scope );
         }
-        public CodeScope ExecuteMethod(StructModule cls,string func,dynamic[] pars)
+
+        public static void RaiseError(string err)
+        {
+
+            Console.WriteLine(err);
+            while (true)
+            {
+
+            }
+        }
+
+        public dynamic ExecuteMethod(StructModule cls,string func,dynamic[] pars)
         {
 
             foreach(var f in cls.Methods)
@@ -309,7 +320,7 @@ namespace FusionScript
                     PushScope(SystemScope);
                     PushScope(cls.InstanceScope);
                     PushScope(ns);
-                    f.Code.Exec();
+                    return f.Code.Exec();
                     PopScope();
                     PopScope();
                     PopScope();
@@ -318,7 +329,7 @@ namespace FusionScript
             }
             return null;
         }
-        public CodeScope ExecuteStaticFunc(string name)
+        public dynamic ExecuteStaticFunc(string name)
         {
             foreach(var mod in Mods)
             {
@@ -364,7 +375,7 @@ namespace FusionScript
 
         }
 
-        public CodeScope ExecuteFunc ( StructFunc func )
+        public dynamic ExecuteFunc ( StructFunc func )
         {
             Log ( "Running Func:" + func.Name );
 
@@ -372,7 +383,7 @@ namespace FusionScript
 
          
 
-            func.Exec ( );
+            return func.Exec ( );
 
  
             return func.LocalScope;

@@ -269,6 +269,10 @@ namespace FusionScript
             StrandType ret = StrandType.Unknown;
             for (i = i; i < toks.Len; i++)
             {
+                if(toks.Tokes[i].Token == Token.Return)
+                {
+                    return StrandType.Return;
+                }
                 if(toks.Tokes[i].Token == Token.For)
                 {
                     return StrandType.For;

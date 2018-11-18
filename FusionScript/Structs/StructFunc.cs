@@ -18,7 +18,7 @@ namespace FusionScript.Structs
         public override dynamic Exec()
         {
             Console.WriteLine("Running Func:" + FuncName);
-            Code.Exec();
+            return Code.Exec();
             return null;
         }
 

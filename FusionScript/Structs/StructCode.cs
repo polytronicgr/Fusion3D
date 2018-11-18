@@ -18,6 +18,15 @@ namespace FusionScript.Structs
         {
             foreach ( Struct l in Lines )
             {
+                if(l is StructReturn)
+                {
+                    var sr = l as StructReturn;
+                    if (sr.ReturnExp!=null)
+                    {
+                        return sr.ReturnExp.Exec();
+                    }
+                    return null;
+                }
                 l.Exec ( );
             }
             return null;

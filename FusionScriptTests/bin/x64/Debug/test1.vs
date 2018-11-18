@@ -1,10 +1,11 @@
 func test()
 
-	var a = 2;
+	a = 2;
 	
-	while(12<(10+2))
-
-		printf("A=2!");
+	
+	for(a = 1;a<10;a=a+1)
+	
+		printf("A:"+a);
 	
 	end
 

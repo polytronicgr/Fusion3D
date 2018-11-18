@@ -14,51 +14,84 @@ Begun parsing code body
  func test ( [)](RightPara)(Scope)  
 
 Parsing assignment.
- [var](Var)(Define) a = 2 ;  
+ [a](Id)(Id) = 2 ;  
 
 Parsing Assign
- var [a](Id)(Id) = 2 ;  
+ [a](Id)(Id) = 2 ;  
 
 Parsing Var:a
- var [a](Id)(Id) = 2 ;  
+ [a](Id)(Id) = 2 ;  
 
 Parsing expressionj
- var a = [2](Int)(Value) ;  
+ a = [2](Int)(Value) ;  
 
 Expr:Expr:1 Elements
- var a = 2 [;](EndLine)(Flow)  
+ a = 2 [;](EndLine)(Flow)  
 
 End of assign:
- var a = 2 [;](EndLine)(Flow)  
+ a = 2 [;](EndLine)(Flow)  
+
+Parsing Assign
+ for ( [a](Id)(Id) = 1 ; a < 10 ; a = a + 1 )  
+
+Parsing Var:a
+ for ( [a](Id)(Id) = 1 ; a < 10 ; a = a + 1 )  
 
 Parsing expressionj
- while ( [12](Int)(Value) < ( 10 + 2 ) )  
+ for ( a = [1](Int)(Value) ; a < 10 ; a = a + 1 )  
+
+Expr:Expr:1 Elements
+ for ( a = 1 [;](EndLine)(Flow) a < 10 ; a = a + 1 )  
+
+End of assign:
+ for ( a = 1 [;](EndLine)(Flow) a < 10 ; a = a + 1 )  
 
 Parsing expressionj
- while ( 12 < ( [10](Int)(Value) + 2 ) )  
+ for ( a = 1 ; [a](Id)(Id) < 10 ; a = a + 1 )  
+
+VarInExpr:a
+ for ( a = 1 ; [a](Id)(Id) < 10 ; a = a + 1 )  
 
 Expr:Expr:3 Elements
- while ( 12 < ( 10 + 2 [)](RightPara)(Scope) )  
+ for ( a = 1 ; a < 10 [;](EndLine)(Flow) a = a + 1 )  
+
+Parsing Assign
+ for ( a = 1 ; a < 10 ; [a](Id)(Id) = a + 1 )  
+
+Parsing Var:a
+ for ( a = 1 ; a < 10 ; [a](Id)(Id) = a + 1 )  
+
+Parsing expressionj
+ for ( a = 1 ; a < 10 ; a = [a](Id)(Id) + 1 )  
+
+VarInExpr:a
+ for ( a = 1 ; a < 10 ; a = [a](Id)(Id) + 1 )  
 
 Expr:Expr:3 Elements
- while ( 12 < ( 10 + 2 ) [)](RightPara)(Scope)  
+ for ( a = 1 ; a < 10 ; a = a + 1 [)](RightPara)(Scope)  
+
+End of assign:
+ for ( a = 1 ; a < 10 ; a = a + 1 [)](RightPara)(Scope)  
 
 Begun parsing code body
- while ( 12 < ( 10 + 2 ) [)](RightPara)(Scope)  
+[](BeginLine)(BeginLine) 
 
 Parsing flat-statement.
- [printf](Id)(Id) ( A=2! ) ;  
+ [printf](Id)(Id) ( A: + a ) ;  
 
 BeginFS:
- [printf](Id)(Id) ( A=2! ) ;  
+ [printf](Id)(Id) ( A: + a ) ;  
 
 Func:printf
 
 Parsing expressionj
- printf ( [A=2!](String)(Value) ) ;  
+ printf ( [A:](String)(Value) + a ) ;  
 
-Expr:Expr:1 Elements
- printf ( A=2! [)](RightPara)(Scope) ;  
+VarInExpr:a
+ printf ( A: + [a](Id)(Id) ) ;  
+
+Expr:Expr:3 Elements
+ printf ( A: + a [)](RightPara)(Scope) ;  
 
 Parsed code-body.
 EOF

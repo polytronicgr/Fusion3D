@@ -14,7 +14,7 @@ namespace FusionScript.Structs
         public override dynamic Exec ( )
         {
             Initial.Exec ( );
-            while ( Condition.Exec ( ) )
+            while ( Condition.Exec ( )==1 )
             {
                 Code.Exec ( );
                 Inc.Exec ( );

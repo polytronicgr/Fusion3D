@@ -28,6 +28,25 @@ namespace FusionScript
                 var st = Predict(i);
                 switch (st)
                 {
+                    case StrandType.For:
+
+                        i = NextToken(i, Token.For);
+
+                        i += 2;
+
+                        var cl_for = new StructFor();
+
+                        cl_for.Initial = ParseAssign(ref i);
+                        i++;
+                        cl_for.Condition = ParseExp(ref i);
+                        i++;
+                        cl_for.Inc = ParseAssign(ref i);
+                        i++;
+                        cl_for.Code = ParseCodeBody(ref i);
+
+                        code.Lines.Add(cl_for);
+
+                        break;
                     case StrandType.While:
 
                         i = NextToken(i, Token.While);

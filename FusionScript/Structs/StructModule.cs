@@ -52,8 +52,13 @@ namespace FusionScript.Structs
 
                 var nv = new Var();
                 nv.Name = v.Name;
-                nv.Value = v.Init.Exec();
-
+                try
+                {
+                    nv.Value = v.Init.Exec();
+                }
+                catch { 
+                    nv.Value = 0;
+                }
                 ret.Vars.Add(nv);
                 ret.InstanceScope.RegisterVar(nv);
 

@@ -34,6 +34,110 @@ namespace FusionScript
             };
 
             AddCFunc ( "printf", printF );
+
+            AddClass(typeof(TestClass));
+
+        }
+
+        public void AddClass(Type type)
+        {
+
+            var mod = new Module();
+            mod.CMod = new CModule();
+            mod.CMod.BaseName = type.Name;
+            foreach(var prop in type.GetProperties())
+            {
+                if (type.GetProperty(prop.Name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static) != null)
+                {
+                    mod.CMod.StaticProps.Add(prop.Name);
+                }
+                else { 
+                    mod.CMod.Props.Add(prop.Name);
+                }
+            }
+            mod.CMod.CType = type;
+            Mods.Add(mod);
+            Var cvar = new Var();
+            cvar.Name = type.Name;
+            cvar.Value = mod;
+            SystemScope.RegisterVar(cvar);
+        }
+
+        public class CModule
+        {
+            public Type CType;
+            public string BaseName = "";
+            public List<string> Props = new List<string>();
+            public List<string> Meths = new List<string>();
+            public List<string> StaticFuncs = new List<string>();
+            public List<string> StaticProps = new List<string>();
+            public dynamic GetStaticValue(string val)
+            {
+                return (dynamic)CType.GetProperty(val, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).GetValue(null);
+            }
+            public bool HasFunc(string name)
+            {
+                foreach(var f in Meths)
+                {
+                    if (f == name) return true;
+                }
+                return false;
+            }
+            public bool HasStaticFunc(string name)
+            {
+                foreach(var sf in StaticFuncs)
+                {
+                    if (sf == name) return true;
+                }
+                return false;
+            }
+            public bool HasStaticVar(string name)
+            {
+                foreach(var sp in StaticProps)
+                {
+                    if(sp == name)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            public bool HasVar(string name)
+            {
+                foreach(var p in Props)
+                {
+                    if (p == name)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public class TestClass
+        {
+            public int Test
+            {
+                get { return _Test; }
+                set
+                {
+                    _Test = value;
+                }
+            }
+            public static int TestStat
+            {
+                get
+                {
+                    return _TestStat;
+                }
+                set
+                {
+                    _TestStat = value;
+                }
+            }
+            private int _Test = 2;
+            private static int _TestStat = 5;
         }
 
         public static ManagedHost Main = null;
@@ -57,12 +161,14 @@ namespace FusionScript
         {
             foreach(var bmod in Mods)
             {
-
-                foreach(var mod in bmod.Mod.Modules)
+                if (bmod.Mod != null)
                 {
-                    if(mod.ModuleName == name)
+                    foreach (var mod in bmod.Mod.Modules)
                     {
-                        return mod;
+                        if (mod.ModuleName == name)
+                        {
+                            return mod;
+                        }
                     }
                 }
 
@@ -200,9 +306,11 @@ namespace FusionScript
                             ii++;
                         }
                     }
+                    PushScope(SystemScope);
                     PushScope(cls.InstanceScope);
                     PushScope(ns);
                     f.Code.Exec();
+                    PopScope();
                     PopScope();
                     PopScope();
                     return null;
@@ -214,6 +322,7 @@ namespace FusionScript
         {
             foreach(var mod in Mods)
             {
+                if (mod.Mod == null) continue;
                 foreach(var sf in mod.Mod.SystemFuncs)
                 {
 

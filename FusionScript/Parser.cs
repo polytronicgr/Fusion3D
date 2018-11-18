@@ -131,18 +131,34 @@ namespace FusionScript
 
             var assign = new StructAssign();
 
-            var var_name = toks.Tokes[i].Text;
+            while (true)
+            {
+                var var_name = toks.Tokes[i].Text;
+                if(var_name==".")
+                {
+                    i++;
+                    continue;
+                }
+                if (var_name == "=")
+                {
+                    i--;
+                    break;
+                }
+                else
+                {
+                    i++;
+                    var nv = new Var();
+                    nv.Name = var_name;
+                    assign.Vars.Add(nv);
+                }
 
-            Log("Parsing Var:" + var_name, i);
-
+            }
+     
             AssertTok(i + 1, Token.Equal, "Expecting =");
 
             i = i + 2;
 
-            var av = new Var();
-            av.Name = var_name;
-
-            assign.Vars.Add(av);
+            //            assign.Vars.Add(av);
 
 
 

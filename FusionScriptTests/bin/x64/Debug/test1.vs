@@ -1,26 +1,26 @@
-func test()
+module other
 
-	a = 3;
+	var c = 3;
+
+end
+
+module draw
+
+	var a = 2;
+	var l = new other();
+
+	func test()
 	
-	
-	if(a=5)
-	
-		printf("True!:");
-	
-	else if (a=4)
-	
-		printf("Else!");
-	
-	else if (a = 7)
-	
-		printf("Else2");
-	
-	else
-	
-		printf("Final");
+		a=5;
 	
 	end
 
-	
+end
+
+func test()
+
+	ant = new draw();
+
+	printf("Test:"+ant.l.c);
 
 end

@@ -25,7 +25,31 @@ namespace FusionScript.Structs
                     ManagedHost.CurrentScope.RegisterVar ( Vars [ 0 ] );
                 }
             }
-            Vars[0].Value = Expr[0].Exec();
+            if (Vars.Count == 1)
+            {
+                Vars[0].Value = Expr[0].Exec();
+            }
+            else
+            {
+                dynamic basev = null;
+                foreach(var var in Vars)
+                {
+                    if (basev == null)
+                    {
+                        
+                        basev = ManagedHost.CurrentScope.FindVar(var.Name, true);
+                    }
+                    else
+                    {
+                        basev = basev.Value.FindVar(var.Name);
+                    }
+                }
+
+                basev.Value = Expr[0].Exec();
+
+                Console.WriteLine("!");
+
+            }
             Console.WriteLine("Assign:" + Vars[0].Name + " Val:" + Vars[0].Value);
             return null;
         }

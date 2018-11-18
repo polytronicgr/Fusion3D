@@ -1,5 +1,28 @@
 Begun parsing source.
- [func](Func)(Define) test ( )  
+ [module](Module)(Define) other  
+
+Begun parsing module
+ [module](Module)(Define) other  
+
+Parsing expressionj
+ var c = [3](Int)(Value) ;  
+
+Expr:Expr:1 Elements
+ var c = 3 [;](EndLine)(Flow)  
+
+Begun parsing module
+ [module](Module)(Define) draw  
+
+Parsing expressionj
+ var a = [2](Int)(Value) ;  
+
+Expr:Expr:1 Elements
+ var a = 2 [;](EndLine)(Flow)  
+
+Parsing expressionj
+ var l = [new](New)(New) other ( ) ;  
+
+New Class:other
 
 Begun parsing function
  [func](Func)(Define) test ( )  
@@ -14,117 +37,65 @@ Begun parsing code body
  func test ( [)](RightPara)(Scope)  
 
 Parsing assignment.
- [a](Id)(Id) = 3 ;  
+ [a](Id)(Id) = 5 ;  
 
 Parsing Assign
- [a](Id)(Id) = 3 ;  
-
-Parsing Var:a
- [a](Id)(Id) = 3 ;  
+ [a](Id)(Id) = 5 ;  
 
 Parsing expressionj
- a = [3](Int)(Value) ;  
+ a = [5](Int)(Value) ;  
 
 Expr:Expr:1 Elements
- a = 3 [;](EndLine)(Flow)  
+ a = 5 [;](EndLine)(Flow)  
 
 End of assign:
- a = 3 [;](EndLine)(Flow)  
+ a = 5 [;](EndLine)(Flow)  
+
+Parsed code-body.
+ [end](End)(Flow)  
+
+Begun parsing function
+ [func](Func)(Define) test ( )  
+
+Checking parameters.
+ func test [(](LeftPara)(Scope) )  
+
+ParsPassed:
+ func test ( [)](RightPara)(Scope)  
+
+Begun parsing code body
+ func test ( [)](RightPara)(Scope)  
+
+Parsing assignment.
+ [ant](Id)(Id) = new draw ( ) ;  
+
+Parsing Assign
+ [ant](Id)(Id) = new draw ( ) ;  
 
 Parsing expressionj
- if ( [a](Id)(Id) = 5 )  
+ ant = [new](New)(New) draw ( ) ;  
 
-VarInExpr:a
- if ( [a](Id)(Id) = 5 )  
+New Class:draw
+
+End of assign:
+ ant = new draw ( [)](RightPara)(Scope) ;  
+
+Parsing flat-statement.
+ [printf](Id)(Id) ( Test: + ant . l . c ) ;  
+
+BeginFS:
+ [printf](Id)(Id) ( Test: + ant . l . c ) ;  
+
+Func:printf
+
+Parsing expressionj
+ printf ( [Test:](String)(Value) + ant . l . c ) ;  
+
+VarInExpr:ant
+ printf ( Test: + [ant](Id)(Id) . l . c ) ;  
 
 Expr:Expr:3 Elements
- if ( a = 5 [)](RightPara)(Scope)  
-
-Begun parsing code body
- if ( a = 5 [)](RightPara)(Scope)  
-
-Parsing flat-statement.
- [printf](Id)(Id) ( True!: ) ;  
-
-BeginFS:
- [printf](Id)(Id) ( True!: ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [True!:](String)(Value) ) ;  
-
-Expr:Expr:1 Elements
- printf ( True!: [)](RightPara)(Scope) ;  
-
-Parsing expressionj
- else if ( [a](Id)(Id) = 4 )  
-
-VarInExpr:a
- else if ( [a](Id)(Id) = 4 )  
-
-Expr:Expr:3 Elements
- else if ( a = 4 [)](RightPara)(Scope)  
-
-Begun parsing code body
- else if ( a = 4 [)](RightPara)(Scope)  
-
-Parsing flat-statement.
- [printf](Id)(Id) ( Else! ) ;  
-
-BeginFS:
- [printf](Id)(Id) ( Else! ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [Else!](String)(Value) ) ;  
-
-Expr:Expr:1 Elements
- printf ( Else! [)](RightPara)(Scope) ;  
-
-Parsing expressionj
- else if ( [a](Id)(Id) = 7 )  
-
-VarInExpr:a
- else if ( [a](Id)(Id) = 7 )  
-
-Expr:Expr:3 Elements
- else if ( a = 7 [)](RightPara)(Scope)  
-
-Begun parsing code body
- else if ( a = 7 [)](RightPara)(Scope)  
-
-Parsing flat-statement.
- [printf](Id)(Id) ( Else2 ) ;  
-
-BeginFS:
- [printf](Id)(Id) ( Else2 ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [Else2](String)(Value) ) ;  
-
-Expr:Expr:1 Elements
- printf ( Else2 [)](RightPara)(Scope) ;  
-
-Begun parsing code body
-[](BeginLine)(BeginLine) 
-
-Parsing flat-statement.
- [printf](Id)(Id) ( Final ) ;  
-
-BeginFS:
- [printf](Id)(Id) ( Final ) ;  
-
-Func:printf
-
-Parsing expressionj
- printf ( [Final](String)(Value) ) ;  
-
-Expr:Expr:1 Elements
- printf ( Final [)](RightPara)(Scope) ;  
+ printf ( Test: + ant . l . c [)](RightPara)(Scope) ;  
 
 Parsed code-body.
 EOF

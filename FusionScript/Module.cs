@@ -10,11 +10,15 @@ namespace FusionScript
     {
 
         public StructEntry Mod;
-
+        public ManagedHost.CModule CMod;
         public Module(StructEntry entry)
         {
 
             Mod = entry;
+
+        }
+        public Module()
+        {
 
         }
 

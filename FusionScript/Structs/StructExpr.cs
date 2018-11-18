@@ -5,7 +5,7 @@ namespace FusionScript.Structs
 {
     public enum ExprType
     {
-        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown, VarValue, BoolValue,NewClass
+        IntValue, FloatValue, StringValue, RefValue, ClassValue, SubExpr, Operator, Unknown, VarValue, BoolValue,NewClass,ClassVar
     }
 
     public enum OpType
@@ -100,12 +100,16 @@ namespace FusionScript.Structs
                                 rs = rs + strv.Value;
 
                                 break;
+                            case ExprType.ClassVar:
+                                rs = rs + se.Exec();
+                                break;
                         }
                     }
                     return rs;
                     break;
                 case ExprType.IntValue:
                 case ExprType.VarValue:
+                case ExprType.ClassVar:
                     Stack.Clear();
                     Output.Clear();
                     ToRPNInt(Expr);
@@ -189,17 +193,82 @@ namespace FusionScript.Structs
         {
 
             Output.Clear();
-
+            dynamic av = null;
             for(int i = 0; i < exp.Count; i++)
             {
                 switch (exp[i].Type)
                 {
+                    case ExprType.ClassVar:
+
+                        dynamic basev = null;
+                        foreach(var cve in exp[i].Expr)
+                        {
+                            if (basev == null)
+                            {
+                                basev = ManagedHost.CurrentScope.FindVar(cve.VarName, true);
+                                if (basev == null)
+                                {
+                                    Console.WriteLine("No var:" + cve.VarName);
+                                    while (true)
+                                    {
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                basev = basev.Value.FindVar(cve.VarName);
+
+                            }
+                        }
+
+                        var cv = new StructExpr();
+                        cv.intV = basev.Value;
+                        Output.Add(cv);
+
+                        break;
                     case ExprType.VarValue:
-            
-                        var av = ManagedHost.CurrentScope.FindVar(exp[i].VarName, true);
-                        var ne = new StructExpr();
-                        ne.intV = av.Value;
-                        Output.Add(ne);
+                        if (av == null)
+                        {
+                            av = ManagedHost.CurrentScope.FindVar(exp[i].VarName, true);
+                            if(av.Value is StructModule || av.Value is Module)
+                            {
+
+                            }
+                            else
+                            {
+                                var nnn = new StructExpr();
+                                nnn.intV = av.Value;
+                                Output.Add(nnn);
+                            }
+                        }
+                        else
+                        {
+                            
+                            if(av.Value is Module)
+                            {
+                                if(av.Value.CMod != null)
+                                {
+                                    if (av.Value.CMod.HasStaticVar(exp[i].VarName))
+                                    {
+                                        av = av.Value.CMod.GetStaticValue(exp[i].VarName);
+                                        var ne = new StructExpr();
+                                        ne.intV = av;
+                                        Output.Add(ne);
+                                    }
+                                }
+                            }else if (av.Value is StructModule)
+                            {
+                                av = av.Value.FindVar(exp[i].VarName);
+                                if(av.Value is int)
+                                {
+                                    var ni = new StructExpr();
+                                    ni.intV = av.Value;
+                                    Output.Add(ni);
+                                }
+                            }
+                           
+                        }
                         break;
                     case ExprType.SubExpr:
                         var ns = new StructExpr();

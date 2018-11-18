@@ -60,10 +60,26 @@ namespace FusionScript
                         break;
                     case Token.Id:
                         Log("VarInExpr:" + Get(i).Text, i);
-                        var ve = new StructExpr();
-                        ve.Type = ExprType.VarValue;
-                        ve.VarName = Get(i).Text;
-                        exp.Expr.Add(ve);
+                        var ie = new StructExpr();
+                        ie.Type = ExprType.ClassVar;
+
+                        while (true)
+                        {
+                            var ve = new StructExpr();
+                            ve.Type = ExprType.VarValue;
+                            ve.VarName = Get(i).Text;
+                            ie.Expr.Add(ve);
+                            if (Get(i + 1).Text == ".")
+                            {
+                                i += 2;
+                                continue;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        exp.Expr.Add(ie);
                         if (!prev_op && !first_toke)
                         {
                             Error(i, "Expecting operator.");

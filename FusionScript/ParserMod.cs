@@ -50,6 +50,33 @@ namespace FusionScript
 
                         break;
                     case Token.Var:
+                        i++;
+                        while (true)
+                        {
+
+                            var t = Get(i);
+                            if(t.Text == ",")
+                            {
+                                i++;
+                                continue;
+                            }
+                            if(t.Text == ";")
+                            {
+                                break;
+                            }
+                            var nv = new Var();
+                            nv.Name = t.Text;
+                            nv.Value = 0;
+                            mod.Vars.Add(nv);
+                            i++;
+                            if(Get(i).Text == "=")
+                            {
+                                i++;
+                                nv.Init = ParseExp(ref i);
+                            }
+
+
+                        }
 
                         break;
 

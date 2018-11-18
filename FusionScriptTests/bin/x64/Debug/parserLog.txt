@@ -14,84 +14,117 @@ Begun parsing code body
  func test ( [)](RightPara)(Scope)  
 
 Parsing assignment.
- [a](Id)(Id) = 2 ;  
+ [a](Id)(Id) = 3 ;  
 
 Parsing Assign
- [a](Id)(Id) = 2 ;  
+ [a](Id)(Id) = 3 ;  
 
 Parsing Var:a
- [a](Id)(Id) = 2 ;  
+ [a](Id)(Id) = 3 ;  
 
 Parsing expressionj
- a = [2](Int)(Value) ;  
+ a = [3](Int)(Value) ;  
 
 Expr:Expr:1 Elements
- a = 2 [;](EndLine)(Flow)  
+ a = 3 [;](EndLine)(Flow)  
 
 End of assign:
- a = 2 [;](EndLine)(Flow)  
-
-Parsing Assign
- for ( [a](Id)(Id) = 1 ; a < 10 ; a = a + 1 )  
-
-Parsing Var:a
- for ( [a](Id)(Id) = 1 ; a < 10 ; a = a + 1 )  
+ a = 3 [;](EndLine)(Flow)  
 
 Parsing expressionj
- for ( a = [1](Int)(Value) ; a < 10 ; a = a + 1 )  
+ if ( [a](Id)(Id) = 5 )  
+
+VarInExpr:a
+ if ( [a](Id)(Id) = 5 )  
+
+Expr:Expr:3 Elements
+ if ( a = 5 [)](RightPara)(Scope)  
+
+Begun parsing code body
+ if ( a = 5 [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [printf](Id)(Id) ( True!: ) ;  
+
+BeginFS:
+ [printf](Id)(Id) ( True!: ) ;  
+
+Func:printf
+
+Parsing expressionj
+ printf ( [True!:](String)(Value) ) ;  
 
 Expr:Expr:1 Elements
- for ( a = 1 [;](EndLine)(Flow) a < 10 ; a = a + 1 )  
-
-End of assign:
- for ( a = 1 [;](EndLine)(Flow) a < 10 ; a = a + 1 )  
+ printf ( True!: [)](RightPara)(Scope) ;  
 
 Parsing expressionj
- for ( a = 1 ; [a](Id)(Id) < 10 ; a = a + 1 )  
+ else if ( [a](Id)(Id) = 4 )  
 
 VarInExpr:a
- for ( a = 1 ; [a](Id)(Id) < 10 ; a = a + 1 )  
+ else if ( [a](Id)(Id) = 4 )  
 
 Expr:Expr:3 Elements
- for ( a = 1 ; a < 10 [;](EndLine)(Flow) a = a + 1 )  
+ else if ( a = 4 [)](RightPara)(Scope)  
 
-Parsing Assign
- for ( a = 1 ; a < 10 ; [a](Id)(Id) = a + 1 )  
+Begun parsing code body
+ else if ( a = 4 [)](RightPara)(Scope)  
 
-Parsing Var:a
- for ( a = 1 ; a < 10 ; [a](Id)(Id) = a + 1 )  
+Parsing flat-statement.
+ [printf](Id)(Id) ( Else! ) ;  
+
+BeginFS:
+ [printf](Id)(Id) ( Else! ) ;  
+
+Func:printf
 
 Parsing expressionj
- for ( a = 1 ; a < 10 ; a = [a](Id)(Id) + 1 )  
+ printf ( [Else!](String)(Value) ) ;  
+
+Expr:Expr:1 Elements
+ printf ( Else! [)](RightPara)(Scope) ;  
+
+Parsing expressionj
+ else if ( [a](Id)(Id) = 7 )  
 
 VarInExpr:a
- for ( a = 1 ; a < 10 ; a = [a](Id)(Id) + 1 )  
+ else if ( [a](Id)(Id) = 7 )  
 
 Expr:Expr:3 Elements
- for ( a = 1 ; a < 10 ; a = a + 1 [)](RightPara)(Scope)  
+ else if ( a = 7 [)](RightPara)(Scope)  
 
-End of assign:
- for ( a = 1 ; a < 10 ; a = a + 1 [)](RightPara)(Scope)  
+Begun parsing code body
+ else if ( a = 7 [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [printf](Id)(Id) ( Else2 ) ;  
+
+BeginFS:
+ [printf](Id)(Id) ( Else2 ) ;  
+
+Func:printf
+
+Parsing expressionj
+ printf ( [Else2](String)(Value) ) ;  
+
+Expr:Expr:1 Elements
+ printf ( Else2 [)](RightPara)(Scope) ;  
 
 Begun parsing code body
 [](BeginLine)(BeginLine) 
 
 Parsing flat-statement.
- [printf](Id)(Id) ( A: + a ) ;  
+ [printf](Id)(Id) ( Final ) ;  
 
 BeginFS:
- [printf](Id)(Id) ( A: + a ) ;  
+ [printf](Id)(Id) ( Final ) ;  
 
 Func:printf
 
 Parsing expressionj
- printf ( [A:](String)(Value) + a ) ;  
+ printf ( [Final](String)(Value) ) ;  
 
-VarInExpr:a
- printf ( A: + [a](Id)(Id) ) ;  
-
-Expr:Expr:3 Elements
- printf ( A: + a [)](RightPara)(Scope) ;  
+Expr:Expr:1 Elements
+ printf ( Final [)](RightPara)(Scope) ;  
 
 Parsed code-body.
 EOF

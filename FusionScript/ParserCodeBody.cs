@@ -25,6 +25,12 @@ namespace FusionScript
                 {
                     return code;
                 }
+                if(Get(i).Token == Token.Else)
+                {
+
+                    return code;
+
+                }
                 var st = Predict(i);
                 switch (st)
                 {
@@ -73,6 +79,37 @@ namespace FusionScript
                         cl_if.Condition = ParseExp(ref i);
 
                         cl_if.TrueCode = ParseCodeBody(ref i);
+
+
+                        //    i++;
+                        while (true)
+                        {
+                            if (Get(i).Token == Token.Else)
+                            {
+                                i++;
+                                if (Get(i).Token == Token.If)
+                                {
+                                    i = i + 2;
+                                    cl_if.ElseIf.Add(ParseExp(ref i));
+                                    cl_if.ElseIfCode.Add(ParseCodeBody(ref i));
+                                }
+                                else
+                                {
+                                    cl_if.ElseCode = ParseCodeBody(ref i);
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                            //else
+                            
+                     
+                                //Console.WriteLine("Else");
+                            //}
+                        //}/
 
                         code.Lines.Add(cl_if);
 

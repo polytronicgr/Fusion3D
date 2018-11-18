@@ -1,11 +1,23 @@
 func test()
 
-	a = 2;
+	a = 3;
 	
 	
-	for(a = 1;a<10;a=a+1)
+	if(a=5)
 	
-		printf("A:"+a);
+		printf("True!:");
+	
+	else if (a=4)
+	
+		printf("Else!");
+	
+	else if (a = 7)
+	
+		printf("Else2");
+	
+	else
+	
+		printf("Final");
 	
 	end
 

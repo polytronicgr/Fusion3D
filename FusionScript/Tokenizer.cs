@@ -196,10 +196,18 @@ namespace FusionScript
             List<string> elements = new List<string>();
             string cur = "";
             bool string_on=false;
+            bool num_on = false;
             for ( int c = 0; c < code.Length; c++ )
             {
                 string ch = code[c].ToString();
 
+                if(ch[0]>="0"[0] && ch[0]<="9"[0])
+                {
+                    if (string_on == false)
+                    {
+                        num_on = true;
+                    }
+                }
                 if ( ch == "\"" )
                 {
                     if ( !string_on )
@@ -210,6 +218,7 @@ namespace FusionScript
                             elements.Add ( cur );
                         }
                         cur = "";
+                        num_on = false;
                         continue;
                     }
                     else
@@ -217,6 +226,7 @@ namespace FusionScript
                         elements.Add ( "\"" + cur + "\"" );
                         string_on = false;
                         cur = "";
+                        num_on = false;
                         continue;
                     }
                 }
@@ -226,10 +236,20 @@ namespace FusionScript
                     continue;
                 }
 
+                if (num_on)
+                {
+                    if (ch == ".")
+                    {
+                        cur = cur + ch;
+                        continue;
+                    }
+                }
+
                 if ( ConvTable.ContainsKey ( cur ) )
                 {
                     elements.Add ( cur );
                     cur = "";
+                    num_on = false;
                 }
 
                 switch ( ch )
@@ -254,6 +274,7 @@ namespace FusionScript
                             elements.Add ( cur );
                         }
                         cur = "";
+                        num_on = false;
                         continue;
                         break;
 
@@ -283,7 +304,7 @@ namespace FusionScript
 
                         elements.Add ( ch );
                         cur = "";
-
+                        num_on = false;
                         continue;
                         break;
                 }
@@ -333,6 +354,11 @@ namespace FusionScript
                 {
                     tok.Class = TokenClass.Value;
                     tok.Token = Token.Int;
+                    if (tok.Text.Contains("."))
+                    {
+                        tok.Token = Token.Float;
+                        tok.FVal = float.Parse(tok.Text);
+                    }
                 }
                 if ( tok.Text == "=" )
                 {

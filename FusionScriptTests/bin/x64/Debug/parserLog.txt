@@ -1,52 +1,5 @@
 Begun parsing source.
- [module](Module)(Define) other  
-
-Begun parsing module
- [module](Module)(Define) other  
-
-Parsing expressionj
- var c = [3](Int)(Value) ;  
-
-Expr:Expr:1 Elements
- var c = 3 [;](EndLine)(Flow)  
-
-Begun parsing module
- [module](Module)(Define) draw  
-
-Parsing expressionj
- var a = [2](Int)(Value) ;  
-
-Expr:Expr:1 Elements
- var a = 2 [;](EndLine)(Flow)  
-
-Parsing expressionj
- var l = [new](New)(New) other ( ) ;  
-
-New Class:other
-
-Begun parsing function
- [func](Func)(Define) test ( time )  
-
-Checking parameters.
- func test [(](LeftPara)(Scope) time )  
-
-ParsPassed:
- func test ( time [)](RightPara)(Scope)  
-
-Begun parsing code body
- func test ( time [)](RightPara)(Scope)  
-
-Parsing expressionj
- return [30](Int)(Value) + time ;  
-
-VarInExpr:time
- return 30 + [time](Id)(Id) ;  
-
-Expr:Expr:3 Elements
- return 30 + time [;](EndLine)(Flow)  
-
-Parsed code-body.
- [end](End)(Flow)  
+ [func](Func)(Define) test ( )  
 
 Begun parsing function
  [func](Func)(Define) test ( )  
@@ -61,41 +14,36 @@ Begun parsing code body
  func test ( [)](RightPara)(Scope)  
 
 Parsing assignment.
- [ant](Id)(Id) = new draw ( ) ;  
+ [val](Id)(Id) = 5.4 ;  
 
 Parsing Assign
- [ant](Id)(Id) = new draw ( ) ;  
+ [val](Id)(Id) = 5.4 ;  
 
 Parsing expressionj
- ant = [new](New)(New) draw ( ) ;  
+ val = [5.4](Float)(Value) ;  
 
-New Class:draw
+Expr:Expr:1 Elements
+ val = 5.4 [;](EndLine)(Flow)  
 
 End of assign:
- ant = new draw ( [)](RightPara)(Scope) ;  
+ val = 5.4 [;](EndLine)(Flow)  
 
 Parsing flat-statement.
- [printf](Id)(Id) ( Test: + ant . test ( 20 ) ) ;  
+ [printf](Id)(Id) ( val: + val ) ;  
 
 BeginFS:
- [printf](Id)(Id) ( Test: + ant . test ( 20 ) ) ;  
+ [printf](Id)(Id) ( val: + val ) ;  
 
 Func:printf
 
 Parsing expressionj
- printf ( [Test:](String)(Value) + ant . test ( 20 ) ) ;  
+ printf ( [val:](String)(Value) + val ) ;  
 
-VarInExpr:ant
- printf ( Test: + [ant](Id)(Id) . test ( 20 ) ) ;  
-
-Parsing expressionj
- printf ( Test: + ant . test ( [20](Int)(Value) ) ) ;  
-
-Expr:Expr:1 Elements
- printf ( Test: + ant . test ( 20 [)](RightPara)(Scope) ) ;  
+VarInExpr:val
+ printf ( val: + [val](Id)(Id) ) ;  
 
 Expr:Expr:3 Elements
- printf ( Test: + ant . test ( 20 ) [)](RightPara)(Scope) ;  
+ printf ( val: + val [)](RightPara)(Scope) ;  
 
 Parsing expressionj
  return [5](Int)(Value) ;  

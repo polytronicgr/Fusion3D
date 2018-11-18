@@ -253,8 +253,21 @@ namespace FusionScript
                         first_toke = false;
 
                         break;
-                    case Token.Int:
                     case Token.Float:
+                        if (!prev_op && !first_toke)
+                        {
+                            Error(i, "Expecting operator.");
+                        }
+                        prev_op = false;
+                        var evf = new StructExpr();
+                        evf.floatV = float.Parse(Get(i).Text);
+                        evf.Type = ExprType.FloatValue;
+                        exp.Expr.Add(evf);
+                        first_toke = false;
+
+                        break;
+                    case Token.Int:
+
                     case Token.Short:
                     case Token.Long:
                     case Token.Double:

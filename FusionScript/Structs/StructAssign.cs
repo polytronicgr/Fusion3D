@@ -28,6 +28,13 @@ namespace FusionScript.Structs
             if (Vars.Count == 1)
             {
                 Vars[0].Value = Expr[0].Exec();
+                if(Vars[0].Value is float)
+                {
+                    Vars[0].Type = VarType.Float;
+                }else if(Vars[0].Value is int)
+                {
+                    Vars[0].Type = VarType.Int;
+                }
             }
             else
             {

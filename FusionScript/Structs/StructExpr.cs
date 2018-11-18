@@ -92,6 +92,9 @@ namespace FusionScript.Structs
                                 var ser = se.Exec();
                                 rs = rs + se.Exec();
                                 break;
+                            case ExprType.FloatValue:
+                                rs = rs + se.floatV.ToString();
+                                break;
                             case ExprType.IntValue:
                                 rs = rs + se.intV.ToString();
                                 break;
@@ -101,22 +104,78 @@ namespace FusionScript.Structs
 
                                 break;
                             case ExprType.ClassVar:
-                                rs = rs + se.Exec();
+                                var r3 = se.Exec();
+                                rs = rs + r3;
+                                Console.WriteLine("!");
                                 break;
+
                         }
                     }
                     return rs;
                     break;
                 case ExprType.IntValue:
-                case ExprType.VarValue:
-                case ExprType.ClassVar:
+
                     Stack.Clear();
                     Output.Clear();
                     ToRPNInt(Expr);
-                    var res = CalcInt();
+                    var resi2 = CalcInt();
 
 
-                    return res.intV;
+                    return resi2.intV;
+
+                    break;
+                case ExprType.VarValue:
+                case ExprType.ClassVar:
+
+                    dynamic varc = null;
+                    int ec = 0;
+                    while (true)
+                    {
+                        if (varc == null)
+                        {
+                            varc = ManagedHost.CurrentScope.FindVar(Expr[ec].VarName, true);
+                        }
+                        else
+                        {
+                            varc = varc.Value.FindVar(Expr[ec]);
+                        }
+                        ec++;
+                        if (ec == Expr.Count)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (varc.Type == VarType.Float)
+                    {
+                        Stack.Clear();
+                        Output.Clear();
+                        ToRPNFloat(Expr);
+                        var resf2 = CalcFloat();
+                        return resf2.floatV;
+                    }
+                    else if (varc.Type == VarType.Int)
+                    {
+                        Stack.Clear();
+                        Output.Clear();
+                        ToRPNInt(Expr);
+                        var res = CalcInt();
+
+
+                        return res.intV;
+                    }
+                    break;
+                case ExprType.FloatValue:
+
+                    Stack.Clear();
+                    Output.Clear();
+                    ToRPNFloat(Expr);
+                    var resf = CalcFloat();
+
+
+                    return resf.floatV;
+
+
                     break;
             }
 
@@ -186,6 +245,71 @@ namespace FusionScript.Structs
             return Stack.Peek();
           
         }
+
+
+        public StructExpr CalcFloat ()
+        {
+            Stack.Clear();
+            for (int i = 0; i < Output.Count; i++)
+            {
+                if (Output[i].Type == ExprType.Operator)
+                {
+                    var left = Stack.Pop();
+                    var right = Stack.Pop();
+                    switch (Output[i].Op)
+                    {
+                        case OpType.LessThan:
+
+                            var lt1 = new StructExpr();
+                            lt1.floatV = (left.floatV > right.floatV) ? 1 : 0;
+                            Stack.Push(lt1);
+                            break;
+
+                        case OpType.MoreThan:
+
+                            var mt1 = new StructExpr();
+                            mt1.floatV = (left.floatV < right.floatV) ? 1 : 0;
+                            Stack.Push(mt1);
+                            break;
+                        case OpType.EqualTo:
+                            var et1 = new StructExpr();
+                            et1.floatV = (left.floatV == right.floatV) ? 1 : 0;
+                            Stack.Push(et1);
+                            break;
+                        case OpType.Plus:
+                            var ne1 = new StructExpr();
+                            ne1.floatV = left.floatV + right.floatV;
+                            Stack.Push(ne1);
+                            break;
+                        case OpType.Times:
+                            var ne2 = new StructExpr();
+                            ne2.floatV = left.floatV * right.floatV;
+                            Stack.Push(ne2);
+                            break;
+                        case OpType.Divide:
+                            var ne3 = new StructExpr();
+                            ne3.floatV = left.floatV / right.floatV;
+                            Stack.Push(ne3);
+                            break;
+                        case OpType.Minus:
+                            var ne4 = new StructExpr();
+                            ne4.floatV = left.floatV - right.floatV;
+                            Stack.Push(ne4);
+                            break;
+                    }
+                    //switch(Output[i].)
+
+                }
+                else
+                {
+                    Stack.Push(Output[i]);
+                }
+
+            }
+            return Stack.Peek();
+
+        }
+
         List<StructExpr> Output = new List<StructExpr>();
         Stack<StructExpr> Stack = new Stack<StructExpr>();
         public StructCallPars CallPars;
@@ -241,7 +365,7 @@ namespace FusionScript.Structs
                                 else
                                 {
                                     var nnn = new StructExpr();
-                                    nnn.intV = av.Value;
+                                    nnn.intV = (int)av.Value;
                                     Output.Add(nnn);
                                 }
                             }
@@ -328,7 +452,143 @@ namespace FusionScript.Structs
                 Output.Add(Stack.Pop());
         }
 
-      
+        public void ToRPNFloat(List<StructExpr> exp)
+        {
+
+            Output.Clear();
+            dynamic av = null;
+            for (int i = 0; i < exp.Count; i++)
+            {
+                switch (exp[i].Type)
+                {
+                    case ExprType.ClassVar:
+
+                        dynamic basev = null;
+                        foreach (var cve in exp[i].Expr)
+                        {
+                            if (basev == null)
+                            {
+                                basev = ManagedHost.CurrentScope.FindVar(cve.VarName, true);
+                                if (basev == null)
+                                {
+                                    Console.WriteLine("No var:" + cve.VarName);
+                                    while (true)
+                                    {
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                basev = basev.Value.FindVar(cve.VarName);
+
+                            }
+                        }
+
+                        var cv = new StructExpr();
+                        cv.floatV = basev.Value;
+                        Output.Add(cv);
+
+                        break;
+                    case ExprType.VarValue:
+                        try
+                        {
+                            if (av == null)
+                            {
+                                av = ManagedHost.CurrentScope.FindVar(exp[i].VarName, true);
+                                if (av.Value is StructModule || av.Value is Module)
+                                {
+
+                                }
+                                else
+                                {
+                                    var nnn = new StructExpr();
+                                    nnn.floatV = av.Value;
+                                    Output.Add(nnn);
+                                }
+                            }
+                            else
+                            {
+
+                                if (av.Value is Module)
+                                {
+                                    if (av.Value.CMod != null)
+                                    {
+                                        if (av.Value.CMod.HasStaticVar(exp[i].VarName))
+                                        {
+                                            av = av.Value.CMod.GetStaticValue(exp[i].VarName);
+                                            var ne = new StructExpr();
+                                            ne.floatV = av;
+                                            Output.Add(ne);
+                                        }
+                                    }
+                                }
+                                else if (av.Value is StructModule)
+                                {
+                                    if (av.Value.IsFunc(exp[i].VarName))
+                                    {
+                                        if (exp[i].CallPars != null)
+                                        {
+                                            dynamic[] pars = new dynamic[exp[i].CallPars.Pars.Count];
+                                            for (int cpi = 0; cpi < exp[i].CallPars.Pars.Count; cpi++)
+                                            {
+                                                pars[cpi] = exp[i].CallPars.Pars[cpi].Exec();
+                                            }
+
+                                            av = av.Value.ExecFunc(exp[i].VarName, pars);
+                                        }
+                                        else
+                                        {
+                                            av = av.Value.ExecFunc(exp[i].VarName, null);
+                                        }
+                                        var fr = new StructExpr();
+                                        fr.floatV = av;
+                                        Output.Add(fr);
+                                    }
+                                    else
+                                    {
+                                        av = av.Value.FindVar(exp[i].VarName);
+                                        if (av.Value is int)
+                                        {
+                                            var ni = new StructExpr();
+                                            ni.floatV = av.Value;
+                                            Output.Add(ni);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Variable retrival error.");
+                            ManagedHost.RaiseError("Variable retrival error.");
+
+                        }
+                        break;
+                    case ExprType.SubExpr:
+                        var ns = new StructExpr();
+                        ns.floatV = exp[i].Exec();
+                        Output.Add(ns);
+                        break;
+                    case ExprType.FloatValue:
+                        Output.Add(exp[i]);
+                        break;
+                    case ExprType.Operator:
+                        while (Stack.Count > 0 && Priority(Stack.Peek()) >= Priority(exp[i]))
+                            Output.Add(Stack.Pop());
+                        Stack.Push(exp[i]);
+                        //{
+                        //   o
+                        //}
+                        break;
+
+                }
+
+            }
+            while (Stack.Count > 0)
+                Output.Add(Stack.Pop());
+        }
 
         public int ParseInt(Stack<StructExpr> vals)
         {

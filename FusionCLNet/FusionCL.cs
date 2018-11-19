@@ -43,7 +43,7 @@ namespace FusionCLNet
             }
         }
         int _Size = 0;
-        public CLMemBuffer(int bytes,CLBufferType type)
+        public CLMemBuffer(int bytes, CLBufferType type)
         {
 
             handle = CreateBuf(bytes, (int)type, IntPtr.Zero);
@@ -80,6 +80,24 @@ namespace FusionCLNet
             Console.WriteLine("ComQueueHandle:" + handle);
         }
 
+        public byte[] Read(CLMemBuffer mem,bool block,int size=-1)
+        {
+            if (size == -1)
+            {
+                size = mem.Size;
+            }
+            byte[] data = new byte[size];
+            unsafe
+            {
+                fixed(byte *p = data)
+                {
+                    IntPtr pp = (IntPtr)p;
+                    QueueReadBuffer(handle, mem.handle, block, size, pp);
+                }
+            }
+            return data;
+        }
+
         public void Write(CLMemBuffer mem, bool blocking, int offset = 0, int size = -1)
         {
 
@@ -90,11 +108,11 @@ namespace FusionCLNet
             //        if(size)
 
             QueueWriteBuffer(handle, mem.handle, blocking, offset, size, IntPtr.Zero);
-                
+
 
         }
 
-        public void Write(CLMemBuffer mem,bool blocking,byte[] data,int offset=0,int size=-1)
+        public void Write(CLMemBuffer mem, bool blocking, byte[] data, int offset = 0, int size = -1)
         {
             if (size == -1)
             {
@@ -102,7 +120,7 @@ namespace FusionCLNet
             }
             unsafe
             {
-                fixed(byte *pp = data)
+                fixed (byte* pp = data)
                 {
                     IntPtr bp = (IntPtr)pp;
                     QueueWriteBuffer(handle, mem.handle, blocking, offset, size, bp);
@@ -110,12 +128,25 @@ namespace FusionCLNet
 
             }
 
+
         }
+
+        public bool Range(CLKernel kernel,int total, int sub)
+        {
+            return ExecRange(handle, kernel.handle, total, sub);
+        }
+
         [DllImport("FusionCLNative.dll")]
+        public static extern bool ExecRange(int queue, int kern, int global, int sub);
+
+       [DllImport("FusionCLNative.dll")]
         private static extern int CreateComQueue();
 
         [DllImport("FusionCLNative.dll")]
-        private static extern void QueueWriteBuffer(int queue, int mem, bool blocking, int offset, int size, IntPtr ptr);
+        private static extern bool QueueWriteBuffer(int queue, int mem, bool blocking, int offset, int size, IntPtr ptr);
+
+        [DllImport("FusionCLNative.dll")]
+        private static extern bool QueueReadBuffer(int queue, int mem, bool block, int size, IntPtr ptr);
 
     }
     public static class FUtil
@@ -124,7 +155,7 @@ namespace FusionCLNet
         {
 
             return Marshal.StringToHGlobalAnsi(str);
-                       
+
         }
         public static void FreeCString(IntPtr cstr)
         {
@@ -136,6 +167,62 @@ namespace FusionCLNet
     {
         public int handle;
 
+       
+
+        public bool SetArg(int index, int value)
+        {
+
+            unsafe
+            {
+
+                int* ptr = &value;
+                var ip = new IntPtr(ptr);
+                return KernSetArgPtr(handle, index, sizeof(int), ip);
+
+            }
+
+        }
+
+        public bool SetArg(int index,float v)
+        {
+
+            unsafe
+            {
+
+                float* ptr = &v;
+                var ip = new IntPtr(ptr);
+                return KernSetArgPtr(handle, index, sizeof(float), ip);
+            }
+
+
+        }
+
+        public bool SetArg(int index,bool v)
+        {
+
+            unsafe
+            {
+
+                bool* bp = &v;
+                IntPtr ip = new IntPtr(bp);
+                return KernSetArgPtr(handle, index, sizeof(bool), ip);
+
+            }
+
+        }
+
+        public bool SetArg(int index,CLMemBuffer mem)
+        {
+
+            return KernSetArgMem(handle, index, mem.Size, mem.handle);
+
+        }
+
+        [DllImport("FusionCLNative.dll")]
+        public static extern bool KernSetArgMem(int kern, int par, int size, int mem);
+
+        [DllImport("FusionCLNative.dll")]
+        public static extern bool KernSetArgPtr(int kern, int par, int size, IntPtr p);
     }
 
     public class CLProgram

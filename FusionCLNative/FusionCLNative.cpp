@@ -70,7 +70,10 @@ extern "C" FUSIONCL_API cl_command_queue CreateComQueue()
 extern "C" FUSIONCL_API cl_mem CreateBuf(int bytes,cl_mem_flags flags,void * ptr) {
 
 	cl_int ret = 0;
-	cl_mem mem_obj = clCreateBuffer(context, CL_MEM_READ_ONLY, bytes, ptr, &ret);
+	cl_mem mem_obj = clCreateBuffer(context, flags, (size_t)bytes, ptr, &ret);
+
+	printf("CB:%d : %d : %d", flags, bytes, (int)ptr);
+	printf("--\n");
 
 	printf("CreateBuf:");
 	if (ret == CL_SUCCESS) {
@@ -84,7 +87,7 @@ extern "C" FUSIONCL_API cl_mem CreateBuf(int bytes,cl_mem_flags flags,void * ptr
 
 }
 
-extern "C" FUSIONCL_API void QueueWriteBuffer(cl_command_queue queue, cl_mem mem, bool blocking, int offset, int cb, const void *ptr)
+extern "C" FUSIONCL_API bool QueueWriteBuffer(cl_command_queue queue, cl_mem mem, bool blocking, int offset, int cb, const void *ptr)
 {
 
 	cl_int ret = clEnqueueWriteBuffer(queue, mem, blocking ? CL_TRUE : CL_FALSE, offset,
@@ -94,9 +97,11 @@ extern "C" FUSIONCL_API void QueueWriteBuffer(cl_command_queue queue, cl_mem mem
 	if (ret == CL_SUCCESS)
 	{
 		printf("Yes\n");
+		return true;
 	}
 	else {
 		printf("No\n");
+		return false;
 	}
 	
 }
@@ -164,4 +169,84 @@ extern "C" FUSIONCL_API cl_kernel CreateKern(cl_program prog, const char *name)
 		return NULL;
 	}
 
+}
+
+extern "C" FUSIONCL_API bool KernSetArgPtr(cl_kernel kern,int par,int size,const void *ptr) {
+
+	cl_int ret = 0;
+
+
+
+
+
+	clSetKernelArg(kern, (cl_uint)par, (size_t)size, ptr);
+
+	printf("SetArgPtr:");
+	if (ret == CL_SUCCESS)
+	{
+		printf("Yes\n");
+		return true;
+	}
+	else {
+		printf("No\n");
+		return false;
+	}
+
+}
+
+extern "C" FUSIONCL_API bool KernSetArgMem(cl_kernel kern, int par, int size, cl_mem mem) {
+
+	cl_int ret = 0;
+
+	ret = clSetKernelArg(kern, (cl_uint)par, sizeof(mem) , (const void *)&mem);
+	printf("Kern:%d :%d %d",kern, size, mem);
+	printf("!!\n");
+
+	printf("SetArgMem:");
+	if (ret == CL_SUCCESS)
+	{
+		printf("Yes\n");
+		return true;
+	}
+	else {
+		printf("No\n");
+		return false;
+	}
+
+}
+
+extern "C" FUSIONCL_API bool ExecRange(cl_command_queue queue, cl_kernel kernel, int global, int sub) {
+
+	cl_int ret = 0;
+
+	ret=clEnqueueNDRangeKernel(queue, kernel, 1, NULL,(const size_t *)&global, (const size_t *)&sub, 0, NULL, NULL);
+
+	printf("ExecRange:");
+	if (ret == CL_SUCCESS) {
+		printf("Yes\n");
+		return true;
+	}
+	else {
+		printf("No\n");
+		return false;
+	}
+}
+
+extern "C" FUSIONCL_API bool QueueReadBuffer(cl_command_queue queue, cl_mem mem, bool block,int size, void *ptr)
+{
+
+	cl_int ret = 0;
+
+	ret = clEnqueueReadBuffer(queue, mem, block, 0, size, ptr, 0, NULL, NULL);
+
+	printf("ReadBuf:");
+	if(ret==CL_SUCCESS)
+	{
+		printf("Yes\n");
+		return true;
+	}
+	else {
+		printf("No\n");
+		return false;
+	}
 }

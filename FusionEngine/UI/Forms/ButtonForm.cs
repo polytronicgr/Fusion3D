@@ -27,7 +27,7 @@ namespace Fusion3D.Resonance.Forms
                 Pen2D.BlendMod = PenBlend.Alpha;
 
                 DrawForm ( CoreTex );
-                DrawText ( Text, W / 2 - UI.Font.Width ( Text ) / 2, H / 2 - UI.Font.Height ( ) / 2 );
+                DrawText ( Text, W / 2 - UI.Font.Width ( Text ) / 2, H / 2 - UI.Font.Height ( ) / 2,Col );
             }
 
             void MouseEnterFunc ( )

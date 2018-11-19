@@ -84,7 +84,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FusionScript\FusionScript.csproj">
       <Project>{fd078afc-101a-4ee8-b67b-066255154f59}</Project>
-      <Name>VividScript</Name>
+      <Name>FusionScript</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

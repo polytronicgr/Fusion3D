@@ -50,6 +50,18 @@ namespace FusionScript.Structs
             }
             return false;
         }
+        public bool HasFunc(string name)
+        {
+            foreach(var m in Methods)
+            {
+                if(m.FuncName == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
         public dynamic ExecFunc(string name,dynamic[] pars)
         {
             foreach(var m in Methods)

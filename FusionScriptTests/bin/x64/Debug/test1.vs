@@ -1,8 +1,23 @@
+module test
+
+	func test()
+	
+	end
+	
+	func genString()
+	
+		return "Hey!";
+	
+	end
+
+end
+
+
 func test()
 
-	val = 5.4;
+	tc = new test();
 	
-	printf("val:"+val);
+	printf("Out:"+tc.genString());
 
 	return 5;
 

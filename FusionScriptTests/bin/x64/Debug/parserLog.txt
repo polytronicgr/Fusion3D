@@ -1,5 +1,44 @@
 Begun parsing source.
+ [module](Module)(Define) test  
+
+Begun parsing module
+ [module](Module)(Define) test  
+
+Begun parsing function
  [func](Func)(Define) test ( )  
+
+Checking parameters.
+ func test [(](LeftPara)(Scope) )  
+
+ParsPassed:
+ func test ( [)](RightPara)(Scope)  
+
+Begun parsing code body
+ func test ( [)](RightPara)(Scope)  
+
+Parsed code-body.
+ [end](End)(Flow)  
+
+Begun parsing function
+ [func](Func)(Define) genString ( )  
+
+Checking parameters.
+ func genString [(](LeftPara)(Scope) )  
+
+ParsPassed:
+ func genString ( [)](RightPara)(Scope)  
+
+Begun parsing code body
+ func genString ( [)](RightPara)(Scope)  
+
+Parsing expressionj
+ return [Hey!](String)(Value) ;  
+
+Expr:Expr:1 Elements
+ return Hey! [;](EndLine)(Flow)  
+
+Parsed code-body.
+ [end](End)(Flow)  
 
 Begun parsing function
  [func](Func)(Define) test ( )  
@@ -14,36 +53,35 @@ Begun parsing code body
  func test ( [)](RightPara)(Scope)  
 
 Parsing assignment.
- [val](Id)(Id) = 5.4 ;  
+ [tc](Id)(Id) = new test ( ) ;  
 
 Parsing Assign
- [val](Id)(Id) = 5.4 ;  
+ [tc](Id)(Id) = new test ( ) ;  
 
 Parsing expressionj
- val = [5.4](Float)(Value) ;  
+ tc = [new](New)(New) test ( ) ;  
 
-Expr:Expr:1 Elements
- val = 5.4 [;](EndLine)(Flow)  
+New Class:test
 
 End of assign:
- val = 5.4 [;](EndLine)(Flow)  
+ tc = new test ( [)](RightPara)(Scope) ;  
 
 Parsing flat-statement.
- [printf](Id)(Id) ( val: + val ) ;  
+ [printf](Id)(Id) ( Out: + tc . genString ( ) ) ;  
 
 BeginFS:
- [printf](Id)(Id) ( val: + val ) ;  
+ [printf](Id)(Id) ( Out: + tc . genString ( ) ) ;  
 
 Func:printf
 
 Parsing expressionj
- printf ( [val:](String)(Value) + val ) ;  
+ printf ( [Out:](String)(Value) + tc . genString ( ) ) ;  
 
-VarInExpr:val
- printf ( val: + [val](Id)(Id) ) ;  
+VarInExpr:tc
+ printf ( Out: + [tc](Id)(Id) . genString ( ) ) ;  
 
 Expr:Expr:3 Elements
- printf ( val: + val [)](RightPara)(Scope) ;  
+ printf ( Out: + tc . genString ( ) [)](RightPara)(Scope) ;  
 
 Parsing expressionj
  return [5](Int)(Value) ;  

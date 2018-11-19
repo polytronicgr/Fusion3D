@@ -137,13 +137,36 @@ namespace FusionScript.Structs
                         }
                         else
                         {
-                            varc = varc.Value.FindVar(Expr[ec]);
+
+                            if (varc.Value.HasFunc(Expr[ec].VarName))
+                            {
+                                varc = varc.Value.ExecFunc(Expr[ec].VarName,null);
+
+                            }else
+                            {
+                                varc = varc.Value.FindVar(Expr[ec].VarName);
+                                if (varc == null)
+                                {
+
+                                }
+                            }
                         }
                         ec++;
                         if (ec == Expr.Count)
                         {
                             break;
                         }
+                    }
+
+                    if(varc is string)
+                    {
+                        return varc;
+                    }
+                    if(varc.Type == VarType.String)
+                    {
+
+                        return varc.Value;
+
                     }
 
                     if (varc.Type == VarType.Float)

@@ -34,6 +34,9 @@ namespace FusionScript.Structs
                 }else if(Vars[0].Value is int)
                 {
                     Vars[0].Type = VarType.Int;
+                }else if(Vars[0].Value is string)
+                {
+                    Vars[0].Type = VarType.String;
                 }
             }
             else

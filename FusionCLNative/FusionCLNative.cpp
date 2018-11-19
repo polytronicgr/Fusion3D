@@ -83,3 +83,85 @@ extern "C" FUSIONCL_API cl_mem CreateBuf(int bytes,cl_mem_flags flags,void * ptr
 	return mem_obj;
 
 }
+
+extern "C" FUSIONCL_API void QueueWriteBuffer(cl_command_queue queue, cl_mem mem, bool blocking, int offset, int cb, const void *ptr)
+{
+
+	cl_int ret = clEnqueueWriteBuffer(queue, mem, blocking ? CL_TRUE : CL_FALSE, offset,
+		cb, ptr, 0, NULL, NULL);
+
+	printf("QueueWrite:");
+	if (ret == CL_SUCCESS)
+	{
+		printf("Yes\n");
+	}
+	else {
+		printf("No\n");
+	}
+	
+}
+
+extern "C" FUSIONCL_API cl_program CreateProgram(const char * source,int size)
+{
+
+	printf("Prog:\n");
+	printf(source);
+	printf(":\n");
+
+	cl_int ret = 0;
+	cl_program program = clCreateProgramWithSource(context, 1,
+		(const char **)&source, (const size_t *)&size, &ret);
+
+	printf("CreateProg:");
+	if (ret == CL_SUCCESS)
+	{
+		printf("Yes\n");
+
+	}
+	else {
+		printf("No\n");
+		return NULL;
+	}
+
+	return program;
+
+}
+
+extern "C" FUSIONCL_API bool BuildProgram(cl_program prog)
+{
+
+	cl_int ret = 0;
+
+	ret = clBuildProgram(prog, 1, &device_id, NULL, NULL, NULL);
+
+	printf("BuildProg:");
+	if (ret == CL_SUCCESS) {
+		printf("Yes\n");
+		return true;
+	}
+	else {
+		printf("No\n");
+		return false;
+	}
+
+}
+
+extern "C" FUSIONCL_API cl_kernel CreateKern(cl_program prog, const char *name)
+{
+
+	cl_int ret = 0;
+	cl_kernel kern = clCreateKernel(prog, name, &ret);
+
+
+	printf("CreateKern:");
+	if (ret == CL_SUCCESS)
+	{
+		printf("Yes\n");
+		return kern;
+	}
+	else {
+		printf("No\n");
+		return NULL;
+	}
+
+}

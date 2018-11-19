@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
@@ -13,7 +14,7 @@ namespace FusionCLNet
 
     }
 
-    public enum BufferType
+    public enum CLBufferType
     {
         Read_Only = (1 << 2),
         Write_Only = (1 << 1),
@@ -27,16 +28,28 @@ namespace FusionCLNet
 
     }
 
-    public class MemBuffer
+    public class CLMemBuffer
     {
-        int handle;
-        public MemBuffer(int bytes,BufferType type)
+        public int handle;
+        public int Size
+        {
+            get
+            {
+                return _Size;
+            }
+            set
+            {
+                _Size = value;
+            }
+        }
+        int _Size = 0;
+        public CLMemBuffer(int bytes,CLBufferType type)
         {
 
             handle = CreateBuf(bytes, (int)type, IntPtr.Zero);
-
+            _Size = bytes;
         }
-        public MemBuffer(BufferType type, byte[] ptr)
+        public CLMemBuffer(CLBufferType type, byte[] ptr)
         {
 
             if (ptr != null)
@@ -52,21 +65,118 @@ namespace FusionCLNet
 
 
             }
+            _Size = ptr.Length;
         }
         [DllImport("FusionCLNative.dll")]
         private static extern int CreateBuf(int bytes, int flags, IntPtr ptr);
 
     }
-    public class CommandQueue
+    public class CLCommandQueue
     {
-        int handle = 0;
-        public CommandQueue()
+        public int handle = 0;
+        public CLCommandQueue()
         {
             handle = CreateComQueue();
             Console.WriteLine("ComQueueHandle:" + handle);
         }
 
+        public void Write(CLMemBuffer mem, bool blocking, int offset = 0, int size = -1)
+        {
+
+            if (size == -1)
+            {
+                size = mem.Size;
+            }
+            //        if(size)
+
+            QueueWriteBuffer(handle, mem.handle, blocking, offset, size, IntPtr.Zero);
+                
+
+        }
+
+        public void Write(CLMemBuffer mem,bool blocking,byte[] data,int offset=0,int size=-1)
+        {
+            if (size == -1)
+            {
+                size = data.Length;
+            }
+            unsafe
+            {
+                fixed(byte *pp = data)
+                {
+                    IntPtr bp = (IntPtr)pp;
+                    QueueWriteBuffer(handle, mem.handle, blocking, offset, size, bp);
+                }
+
+            }
+
+        }
         [DllImport("FusionCLNative.dll")]
         private static extern int CreateComQueue();
+
+        [DllImport("FusionCLNative.dll")]
+        private static extern void QueueWriteBuffer(int queue, int mem, bool blocking, int offset, int size, IntPtr ptr);
+
     }
+    public static class FUtil
+    {
+        public static IntPtr ToCString(this String str)
+        {
+
+            return Marshal.StringToHGlobalAnsi(str);
+                       
+        }
+        public static void FreeCString(IntPtr cstr)
+        {
+            Marshal.FreeHGlobal(cstr);
+        }
+    }
+
+    public class CLKernel
+    {
+        public int handle;
+
+    }
+
+    public class CLProgram
+    {
+        public int handle;
+
+        public CLProgram(string path)
+        {
+            var src = File.ReadAllText(path);
+
+            int size = src.Length + 1;
+
+            var src_c = src.ToCString();
+
+            handle = CreateProgram(src_c, size);
+
+        }
+
+        public bool Build()
+        {
+            bool res = BuildProgram(handle);
+
+            return res;
+        }
+
+        public CLKernel CreateKernel(string name)
+        {
+            CLKernel k = new CLKernel();
+            k.handle = CreateKern(handle, name.ToCString());
+            return k;
+        }
+
+        [DllImport("FusionCLNative.dll")]
+        public static extern int CreateProgram(IntPtr source, int size);
+
+        [DllImport("FusionCLNative.dll")]
+        public static extern bool BuildProgram(int prog);
+
+        [DllImport("FusionCLNative.dll")]
+        public static extern int CreateKern(int prog, IntPtr name);
+    }
+    
+
 }

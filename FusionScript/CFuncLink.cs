@@ -35,5 +35,5 @@
         public string Value = "";
     }
 
-    public delegate CFuncVar CFunc ( params dynamic [ ] pars );
+    public delegate dynamic CFunc ( params dynamic [ ] pars );
 }

@@ -39,6 +39,14 @@ namespace FusionScript
 
         }
 
+        public void RegFunc(string name,CFuncLink link)
+        {
+
+            AddCFunc(name, link);
+
+        }
+        
+
         public void AddClass(Type type)
         {
 

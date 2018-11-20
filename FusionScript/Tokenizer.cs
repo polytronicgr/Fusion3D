@@ -53,6 +53,11 @@ namespace FusionScript
             AddConv ( ">=", new CodeToken ( TokenClass.Op, Token.GreatEqual, ">=" ) );
             AddConv ( "=", new CodeToken ( TokenClass.Assign, Token.Equal, "=" ) );
 
+            Types.Add("vec2");
+            Types.Add("vec3");
+            Types.Add("vec4");
+            Types.Add("matrix4");
+            Types.Add("matrix3");
             Types.Add ( "byte" );
             Types.Add ( "short" );
             Types.Add ( "int" );
@@ -61,6 +66,13 @@ namespace FusionScript
             Types.Add ( "double" );
             Types.Add ( "string" );
             Types.Add ( "bool" );
+            AddConv("compute", TokenClass.Compute, Token.Compute);
+            AddConv("computeinput", TokenClass.Compute, Token.ComputeInput);
+            AddConv("vec2", TokenClass.Type, Token.Vec2);
+            AddConv("vec3", TokenClass.Type, Token.Vec3);
+            AddConv("vec4", TokenClass.Type, Token.Vec4);
+            AddConv("matrix4", TokenClass.Type, Token.Matrix4);
+            AddConv("matrix3", TokenClass.Type, Token.Matrix3);
             AddConv ( "byte", TokenClass.Type, Token.Byte );
             AddConv ( "short", TokenClass.Type, Token.Short );
             AddConv ( "int", TokenClass.Type, Token.Int );
@@ -245,12 +257,7 @@ namespace FusionScript
                     }
                 }
 
-                if ( ConvTable.ContainsKey ( cur ) )
-                {
-                    elements.Add ( cur );
-                    cur = "";
-                    num_on = false;
-                }
+               
 
                 switch ( ch )
                 {

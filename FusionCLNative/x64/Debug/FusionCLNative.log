@@ -1,14 +1,4 @@
 ﻿  FusionCLNative.cpp
-c:\git\fusion3d\fusionclnative\fusionclnative.cpp(75): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
-c:\git\fusion3d\fusionclnative\fusionclnative.cpp(75): warning C4302: 'type cast': truncation from 'void *' to 'int'
-c:\git\fusion3d\fusionclnative\fusionclnative.cpp(75): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'cl_mem_flags'
-  c:\git\fusion3d\fusionclnative\fusionclnative.cpp(75): note: consider using '%lld' in the format string
-  c:\git\fusion3d\fusionclnative\fusionclnative.cpp(75): note: consider using '%Id' in the format string
-  c:\git\fusion3d\fusionclnative\fusionclnative.cpp(75): note: consider using '%I64d' in the format string
-c:\git\fusion3d\fusionclnative\fusionclnative.cpp(202): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'cl_kernel'
-c:\git\fusion3d\fusionclnative\fusionclnative.cpp(202): warning C4313: 'printf': '%d' in format string conflicts with argument 1 of type 'cl_kernel'
-c:\git\fusion3d\fusionclnative\fusionclnative.cpp(202): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 3 has type 'cl_mem'
-c:\git\fusion3d\fusionclnative\fusionclnative.cpp(202): warning C4313: 'printf': '%d' in format string conflicts with argument 3 of type 'cl_mem'
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1216,5): warning MSB8012: TargetPath(C:\Git\Fusion3D\x64\Debug\FusionCLNative.dll) does not match the Linker's OutputFile property value (C:\Git\Fusion3D\Foom\bin\x64\Debug\FusionCLNative.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
      Creating library C:\Git\Fusion3D\x64\Debug\FusionCLNative.lib and object C:\Git\Fusion3D\x64\Debug\FusionCLNative.exp
   FusionCLNative.vcxproj -> C:\Git\Fusion3D\x64\Debug\FusionCLNative.dll

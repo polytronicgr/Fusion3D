@@ -1,6 +1,15 @@
-module Foom
+computeinput pos
 
-end 
+	vec3 test;
+
+end
+
+compute
+
+	pos p1;
+	
+
+end
 
 
 func Entry()

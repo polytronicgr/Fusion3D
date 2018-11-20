@@ -9,6 +9,8 @@ namespace FusionScript.Structs
 
         public List<StructModule> Modules = new List<StructModule>();
         public List<StructFunc> SystemFuncs = new List<StructFunc>();
+        public List<Compute.StructComputeInput> ComInputs = new List<Compute.StructComputeInput>();
+        public List<Compute.StructCompute> Coms = new List<Compute.StructCompute>();
 
         public override string DebugString ( )
         {

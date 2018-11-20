@@ -5,14 +5,14 @@ namespace FusionScript
 {
     public enum TokenClass
     {
-        Type, Value, Statement, Define, Op, Flow, Id, Sep, Scope, Array, New, Bool, Assign, BeginLine
+        Type, Value, Statement, Define, Op, Flow, Id, Sep, Scope, Array, New, Bool, Assign, BeginLine,Compute
     }
 
     public enum Token
     {
         If, Else, End, Module, Method, Func, Equal, Plus, Minus, Multi, Div, Comma, Peroid, Colon, SemiColon, StringMark, Int, Short, Byte, Long, Float, Double, String,
         Var, Transient, State, Auto, Link, Pow, ElseIf, For, Next, While, Id, LeftPara, RightPara, LeftArray, RightArray, New, Bool, True, False, Greater, Lesser, Not,
-        GreatEqual, LessEqual, EndLine, Wend, BeginLine,Percent,Return
+        GreatEqual, LessEqual, EndLine, Wend, BeginLine,Percent,Return,Compute,ComputeInput,Vec2,Vec3,Vec4,Matrix4,Matrix3
     }
 
     public class CodeToken

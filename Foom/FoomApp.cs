@@ -15,8 +15,10 @@ namespace Foom
         public FoomApp() : base("Foom - A Fusion powred game.", 1024, 768, false)
         {
 
+            /*
             FusionCL.InitFusionCL();
 
+            
             var cq = new CLCommandQueue();
 
             //var buf1 = new CLMemBuffer(1024, CLBufferType.Read_Only);
@@ -56,7 +58,7 @@ namespace Foom
             {
                 Console.WriteLine("I:" + i + " V:" + pdat[i]);
             }
-
+            */
 
             InitState = new FoomMenuState();
 

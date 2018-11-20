@@ -33,6 +33,14 @@ namespace FusionScript
 
                 switch (tok.Token)
                 {
+                    case Token.ComputeInput:
+
+                        var com_in = ParseComputeInput(ref i);
+                        Entry.ComInputs.Add(com_in);
+
+
+
+                    break;
                     case Token.Func:
 
                         var func = ParseFunc(ref i);

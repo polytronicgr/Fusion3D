@@ -1,8 +1,5 @@
 Begun parsing source.
- [module](Module)(Define) Foom  
-
-Begun parsing module
- [module](Module)(Define) Foom  
+ [computeinput](ComputeInput)(Compute) pos  
 
 Begun parsing function
  [func](Func)(Define) Entry ( )  

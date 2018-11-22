@@ -11,15 +11,15 @@ namespace Fusion3D.Resonance.Forms
         private Vector4 NormCol = new Vector4(0.9f, 0.9f, 0.9f, 0.9f);
         private Vector4 OverCol = new Vector4(0.8f, 0.8f, 0.8f, 0.9f);
         private Vector4 PressCol = new Vector4(1, 1, 1, 1);
-        public static Audio.VSoundSource BeepSound;
+       // public static Audio.VSoundSource BeepSound;
         public ButtonForm ( )
         {
-            if (BeepSound == null)
-            {
-                BeepSound = new Audio.VSoundSource("data/audio/button1.wav");
-            }
+         //   if (BeepSound == null)
+          //  {
+          //      BeepSound = new Audio.VSoundSource("data/audio/button1.wav");
+           // }
             
-                SetImage ( new Texture2D ( "data/UI/Skin/but_normal.png", LoadMethod.Single, true ) );
+                SetImage ( new Texture2D ( "data/ui/skin/but_normal.png", LoadMethod.Single, true ) );
             Col = NormCol;
 
             void DrawFunc ( )
@@ -60,7 +60,7 @@ namespace Fusion3D.Resonance.Forms
             {
                 Col = PressCol;
                 Pressed = true;
-                BeepSound.Play2D();
+               // BeepSound.Play2D();
             }
 
             void MouseUpFunc ( int b )

@@ -35,8 +35,8 @@ namespace FusionScript
                 {
                     case Token.ComputeInput:
 
-                        var com_in = ParseComputeInput(ref i);
-                        Entry.ComInputs.Add(com_in);
+                     //   var com_in = ParseComputeInput(ref i);
+                      //  Entry.ComInputs.Add(com_in);
 
 
 

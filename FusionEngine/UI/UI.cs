@@ -41,8 +41,8 @@ namespace Fusion3D.Resonance
 
         private float TopB = 0.0f;
 
-        public Audio.VSoundSource WindRush = null;
-        public Audio.VSound WindSound = null;
+       // public Audio.VSoundSource WindRush = null;
+       // public Audio.VSound WindSound = null;
         public UI()
         {
             InitUI();
@@ -51,10 +51,10 @@ namespace Fusion3D.Resonance
                 Pressed[i] = null;
             }
             Root = new UIForm().Set(0, 0, App.AppInfo.W, App.AppInfo.H);
-            WindRush = new Audio.VSoundSource("data/audio/wind1.wav");
-            WindSound = WindRush.Play2D(true);
-            WindSound.Pitch = 0;
-            WindSound.Vol = 0;
+         //   WindRush = new Audio.VSoundSource("data/audio/wind1.wav");
+          //  WindSound = WindRush.Play2D(true);
+          //  WindSound.Pitch = 0;
+          //  WindSound.Vol = 0;
 
         }
         public void InitUI()
@@ -361,10 +361,10 @@ namespace Fusion3D.Resonance
                 if (WindS > 1.5f) WindS = 1.5f;
             }
 
-            WindSound.Pitch = 1.0f + (-0.2f + WindS * 0.2f);
-                WindSound.Vol = WindS;
+           // WindSound.Pitch = 1.0f + (-0.2f + WindS * 0.2f);
+            //    WindSound.Vol = WindS;
 
-                WindS = WindS + (0.0f - WindS) * 0.08f;
+             //   WindS = WindS + (0.0f - WindS) * 0.08f;
 
             
         }

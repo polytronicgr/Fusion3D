@@ -8,28 +8,29 @@ using Fusion3D.Resonance;
 using Fusion3D.Resonance.Forms;
 using Fusion3D.State;
 using Fusion3D.App;
-using Fusion3D.Audio;
+//using Fusion3D.Audio;
 using Fusion3D.Texture;
 namespace Foom.States
 {
     public class FoomMenuState : FusionState
     {
 
-        public Fusion3D.Audio.VSoundSource MenuSongSrc;
-        public VSound MenuSongSound;
+    //    public Fusion3D.Audio.VSoundSource MenuSongSrc;
+  //      public VSound MenuSongSound;
         public override void InitState()
         {
             base.InitState();
 
-            MenuSongSrc = new VSoundSource("Foom/Song/menu1.mp3");
-            MenuSongSound = MenuSongSrc.Play2D(true);
+           // MenuSongSrc = new VSoundSource("Foom/Song/menu1.mp3");
+           //e2
+            //MenuSongSound = MenuSongSrc.Play2D(true);
 
 
             SUI = new Fusion3D.Resonance.UI();
 
             var TitleBG = new ImageForm().Set(0, 0, AppInfo.W, AppInfo.H).SetImage(new Texture2D("Foom/Img/titlebg1.jpg", LoadMethod.Single, false));
 
-            var foomLab = new ImageForm().Set(AppInfo.W / 2 - 350, 40, 700, 356).SetImage(new Texture2D("foom/Img/foom1.png", LoadMethod.Single, true));
+            var foomLab = new ImageForm().Set(AppInfo.W / 2 - 350, 40, 700, 356).SetImage(new Texture2D("Foom/Img/foom1.png", LoadMethod.Single, true));
 
             TitleBG.Add(foomLab);
 

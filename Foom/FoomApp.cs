@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Fusion3D;
 using Fusion3D.App;
 using Foom.States;
-using FusionCLNet;
+//using FusionCLNet;
 namespace Foom
 {
     public class FoomApp : FusionApp

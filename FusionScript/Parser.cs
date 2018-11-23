@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FusionScript.Structs;
+using FusionScript.Structs.Compute;
 using System.IO;
+
 namespace FusionScript
 {
     public partial class Parser
@@ -15,6 +17,286 @@ namespace FusionScript
         public FileStream fs;
         public TextWriter wr;
         TokenStream toks = null;
+        List<StructComputeStruct> ComStructs = new List<StructComputeStruct>();
+
+   
+        public StructComputeStruct ParseComputeStruct(ref int i)
+        {
+            var rs = new StructComputeStruct();
+
+            i++;
+
+            rs.StructName = Get(i).Text;
+
+            i++;
+
+            for (i = i; i < toks.Len; i++)
+            {
+
+                var tok = Get(i);
+
+                switch (tok.Token)
+                {
+                    case Token.End:
+                        return rs;
+                        break;
+                    case Token.Vec3:
+
+                        var vec3 = new ComputeVar();
+                        vec3.Type = ComputeVarType.Vec3;
+                        vec3.Name = Get(i + 1).Text;
+                        i += 2;
+                        Console.WriteLine("CV:" + vec3.Name + " Type:" + vec3.Type.ToString());
+
+                        rs.Vars.Add(vec3);
+
+                        break;
+                }
+
+            }
+
+            return rs;
+
+        }
+        public enum ComputeStrandType
+        {
+            Assign,Statement,Return,Unknown
+        }
+        public ComputeStrandType PredictCompute(int i)
+        {
+
+            for (i = i; i < toks.Len; i++)
+            {
+
+                var tok = Get(i);
+
+                if(tok.Text=="=")
+                {
+                    return ComputeStrandType.Assign;
+                }
+                if(tok.Text =="(")
+                {
+                    return ComputeStrandType.Statement;
+                }
+                if(tok.Text == "return")
+                {
+                    return ComputeStrandType.Return;
+                }
+
+
+            }
+            return ComputeStrandType.Unknown;
+
+        }
+
+        public StructComputeCode ParseComputeCode(ref int i)
+        {
+            var rs = new StructComputeCode();
+            bool fin = false;
+            for (i = i; i < toks.Len; i++)
+            {
+                bool done = false;
+            fin = false;
+                switch (Get(i).Text)
+                {
+                    case "end":
+                        done = true;
+                        fin = true;
+                        break;
+                    case "int":
+                    case "vec3":
+                    case "return":
+                        done = true;
+
+                        break;
+                    default:
+                        if (Get(i).Token == Token.Id)
+                        {
+                            done = true;
+                        }
+                        break;
+                }
+                if (done) break;
+            }
+
+            if (fin) return rs;
+
+            var tok = Get(i);
+
+            PredictCompute(i);
+
+
+                
+
+            
+
+
+            Console.WriteLine("CodeBegin:" + tok);
+
+            return rs;
+
+        }
+        public StructCompute ParseCompute(ref int i)
+        {
+
+            var rs = new StructCompute();
+
+            i++;
+
+            rs.ComputeName = Get(i).Text;
+
+            Console.WriteLine("Compute Name:" + rs.ComputeName);
+
+            i++;
+
+            for (i = i; i < toks.Len; i++)
+            {
+
+                var tok = Get(i);
+
+                if(tok.Token == Token.Func)
+                {
+
+                    var rt = Get(i + 1);
+
+                    var fname = Get(i + 2).Text;
+
+                    i += 3;
+
+                    Console.WriteLine("ComputeFunc:"+fname+" ReturnType:"+rt.Text);
+
+                    var com_f = new StructComputeFunc();
+                    com_f.FuncName = fname;
+                    rs.Funcs.Add(com_f);
+                    switch (rt.Text)
+                    {
+                        case "void":
+                            com_f.ReturnType = ComputeVarType.Void;
+                            break;
+                        case "vec3":
+                            com_f.ReturnType = ComputeVarType.Vec3;
+                            break;
+                    }
+
+                    if(Get(i).Token == Token.LeftPara)
+                    {
+                        Console.WriteLine("Parsing inputs");
+                        i++;
+                        for (i = i; i < toks.Len; i++)
+                        {
+
+                            var var_t = Get(i);
+                            if(var_t.Token == Token.RightPara)
+                            {
+                                break;
+                            }
+
+                            var cv = new ComputeVar();
+
+
+                            switch (var_t.Text)
+                            {
+                                case "int":
+
+                                    cv.Type = ComputeVarType.Int;
+                                   
+                                    var v_name = Get(i + 1).Text;
+                                    i++;
+                                    Console.WriteLine("int:" + v_name);
+                                    cv.Name = v_name;
+
+                                    com_f.InVars.Add(cv);
+
+                                    break;
+                            }
+
+
+                        }
+
+                        var com_c = ParseComputeCode(ref i);
+
+                    }
+
+                    if(tok.Token == Token.End)
+                    {
+                        tok.Token = Token.BeginLine;
+                        break;
+                    }
+
+                }
+
+                if(tok.Token == Token.End)
+                {
+                    return rs;
+                }
+
+                if (tok.Token == Token.Id)
+                {
+
+                    Console.WriteLine("Struct:" + tok.Text);
+
+                    StructComputeStruct str = null;
+
+                    foreach (var sr in ComStructs)
+                    {
+                        if (sr.StructName == tok.Text)
+                        {
+                            str = sr;
+                        }
+                    }
+
+                    str = str.Copy();
+
+
+                    if (str == null)
+                    {
+                        Error(i, "Struct:" + tok.Text + " not found.");
+                    }
+
+                    var local_name = Get(i + 1).Text;
+                    i += 2;
+                    str.LocalName = local_name;
+
+                    bool is_in = false;
+
+                    switch (Get(i).Text)
+                    {
+                        case "in":
+
+                            is_in = true;
+                            rs.Inputs.Add(str);
+
+                            break;
+                        case "out":
+
+                            rs.Outputs.Add(str);
+
+                            break;
+                    }
+
+                    bool found = false;
+                    foreach(var ts in rs.Unique)
+                    {
+                        if(ts.StructName == str.StructName)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                    {
+                        rs.Unique.Add(str);
+                    }
+
+                    Console.WriteLine("Struct:" + str.StructName + " LocalName:" + str.LocalName + " In:" + is_in);
+
+                }
+
+
+
+            }
+            return rs;
+
+        }
 
         public Parser(TokenStream stream)
         {
@@ -33,11 +315,22 @@ namespace FusionScript
 
                 switch (tok.Token)
                 {
-                    case Token.ComputeInput:
 
-                     //   var com_in = ParseComputeInput(ref i);
-                      //  Entry.ComInputs.Add(com_in);
+                    case Token.Compute:
 
+                        var com = ParseCompute(ref i);
+                        Entry.Coms.Add(com);
+
+                        break;
+                    case Token.ComputeStruct:
+
+                        
+
+                           var com_str = ParseComputeStruct(ref i);
+                        //  Entry.ComInputs.Add(com_in);
+                        Console.WriteLine("StructCom");
+                        Entry.ComStructs.Add(com_str);
+                        ComStructs.Add(com_str);
 
 
                     break;
@@ -66,6 +359,11 @@ namespace FusionScript
 
             wr.Flush();
             wr.Close();
+
+            foreach(var com in Entry.Coms)
+            {
+                com.GenCode();
+            }
 
         }
 

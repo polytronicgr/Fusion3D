@@ -67,7 +67,7 @@ namespace FusionScript
             Types.Add ( "string" );
             Types.Add ( "bool" );
             AddConv("compute", TokenClass.Compute, Token.Compute);
-            AddConv("computeinput", TokenClass.Compute, Token.ComputeInput);
+            AddConv("computestruct", TokenClass.Compute, Token.ComputeStruct);
             AddConv("vec2", TokenClass.Type, Token.Vec2);
             AddConv("vec3", TokenClass.Type, Token.Vec3);
             AddConv("vec4", TokenClass.Type, Token.Vec4);

@@ -69,8 +69,12 @@
     <Compile Include="ParserExpr.cs" />
     <Compile Include="ParserFunc.cs" />
     <Compile Include="ParserMod.cs" />
+    <Compile Include="Structs\Compute\ComputeCodeTypes\ComputeCodeAssign.cs" />
+    <Compile Include="Structs\Compute\ComputeCodeTypes\ComputeCodeExpr.cs" />
     <Compile Include="Structs\Compute\StructCompute.cs" />
-    <Compile Include="Structs\Compute\StructComputeInput.cs" />
+    <Compile Include="Structs\Compute\StructComputeCode.cs" />
+    <Compile Include="Structs\Compute\StructComputeFunc.cs" />
+    <Compile Include="Structs\Compute\StructComputeStruct.cs" />
     <Compile Include="Structs\StructParameters.cs" />
     <Compile Include="Structs\StructReturn.cs" />
     <Compile Include="Structs\StructStop.cs" />

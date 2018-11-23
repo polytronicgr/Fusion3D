@@ -12,7 +12,7 @@ namespace FusionScript
     {
         If, Else, End, Module, Method, Func, Equal, Plus, Minus, Multi, Div, Comma, Peroid, Colon, SemiColon, StringMark, Int, Short, Byte, Long, Float, Double, String,
         Var, Transient, State, Auto, Link, Pow, ElseIf, For, Next, While, Id, LeftPara, RightPara, LeftArray, RightArray, New, Bool, True, False, Greater, Lesser, Not,
-        GreatEqual, LessEqual, EndLine, Wend, BeginLine,Percent,Return,Compute,ComputeInput,Vec2,Vec3,Vec4,Matrix4,Matrix3
+        GreatEqual, LessEqual, EndLine, Wend, BeginLine,Percent,Return,Compute,ComputeStruct,Vec2,Vec3,Vec4,Matrix4,Matrix3
     }
 
     public class CodeToken

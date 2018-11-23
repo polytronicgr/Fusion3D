@@ -1,12 +1,19 @@
-computeinput pos
+computestruct pos
 
 	vec3 test;
 
 end
 
-compute
+compute test1
 
-	pos p1;
+	pos pp in;
+	pos mp out;
+	
+	func void drawRect(int x,int y,int w,int h)
+	
+		int rv = 0;
+	
+	end
 	
 
 end

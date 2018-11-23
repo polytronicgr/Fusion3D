@@ -61,7 +61,7 @@ namespace Fusion3D.Resonance.Forms
                 Col = PressCol;
                 Pressed = true;
                var s = BeepSound.Play2D();
-                s.Vol = 0;
+            
             }
 
             void MouseUpFunc ( int b )

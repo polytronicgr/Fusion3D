@@ -1,4 +1,1 @@
-﻿  FusionCLNative.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1216,5): warning MSB8012: TargetPath(C:\Git\Fusion3D\x64\Debug\FusionCLNative.dll) does not match the Linker's OutputFile property value (C:\Git\Fusion3D\Foom\bin\x64\Debug\FusionCLNative.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
-     Creating library C:\Git\Fusion3D\x64\Debug\FusionCLNative.lib and object C:\Git\Fusion3D\x64\Debug\FusionCLNative.exp
-  FusionCLNative.vcxproj -> C:\Git\Fusion3D\x64\Debug\FusionCLNative.dll
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.WindowsSDK.targets(46,5): error MSB8036: The Windows SDK version 10.0.17763.0 was not found. Install the required version of Windows SDK or change the SDK version in the project property pages or by right-clicking the solution and selecting "Retarget solution".

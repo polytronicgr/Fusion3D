@@ -183,8 +183,8 @@ namespace Fusion3D.App
             RH = height;
             Import.Import.RegDefaults ( );
             Pen2D.InitDraw ( );
-       //     CursorVisible = false;
-           // Audio.StarSoundSys.Init();
+            CursorVisible = false;
+            Audio.StarSoundSys.Init();
            
         }
 
@@ -311,7 +311,7 @@ namespace Fusion3D.App
 
         protected override void OnRenderFrame ( FrameEventArgs e )
         {
-            //CursorVisible = false;
+            CursorVisible = false;
 
             if ( Environment.TickCount > fpsL + 1000 )
             {

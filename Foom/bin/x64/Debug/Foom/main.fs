@@ -1,17 +1,40 @@
-computestruct pos
+computestruct display
 
-	vec3 test;
+	int width;
+	int height;
+	byte* rgb;
 
 end
 
-compute test1
+computestruct rect
 
-	pos pp in;
-	pos mp out;
+	int x;
+	int y;
+	int w;
+	int h;
 	
-	func void drawRect(int x,int y,int w,int h)
+end
+
+compute imageRender
+
+	rect draw in;
+	display dis1 out one;
 	
-		int rv = 0;
+	func void drawRect(int x,int y,int w,int h,rect do)
+	
+		int dx;
+		int dy;
+	
+		for(int dy = y;dy<(y+h);dy=dy+1)
+		
+			for(dx=x;dx<(x+w);dx=dx+1)
+			
+				
+			
+			end
+		
+		end
+		
 	
 	end
 	

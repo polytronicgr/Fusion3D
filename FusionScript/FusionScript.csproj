@@ -70,7 +70,9 @@
     <Compile Include="ParserFunc.cs" />
     <Compile Include="ParserMod.cs" />
     <Compile Include="Structs\Compute\ComputeCodeTypes\ComputeCodeAssign.cs" />
+    <Compile Include="Structs\Compute\ComputeCodeTypes\ComputeCodeBase.cs" />
     <Compile Include="Structs\Compute\ComputeCodeTypes\ComputeCodeExpr.cs" />
+    <Compile Include="Structs\Compute\ComputeCodeTypes\ComputeCodeFor.cs" />
     <Compile Include="Structs\Compute\StructCompute.cs" />
     <Compile Include="Structs\Compute\StructComputeCode.cs" />
     <Compile Include="Structs\Compute\StructComputeFunc.cs" />

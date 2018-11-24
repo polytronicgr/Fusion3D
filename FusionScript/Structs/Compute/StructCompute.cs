@@ -30,14 +30,41 @@ namespace FusionScript.Structs.Compute
                 string head = "typedef struct tag_" + s.StructName + "{";
                 tw.WriteLine(head);
 
-                foreach(var v in s.Vars)
+                foreach (var v in s.Vars)
                 {
 
                     string var_l = "";
                     switch (v.Type)
                     {
+                        case ComputeVarType.Byte:
+                            if (v.Pointer)
+                            {
+                                var_l = "   byte *" + v.Name + ";";
+                            }
+                            else
+                            {
+                                var_l = "   byte " + v.Name + ";";
+                            }
+                            break;
                         case ComputeVarType.Vec3:
-                            var_l = "   float3 " + v.Name + ";";
+                            if (v.Pointer)
+                            {
+                                var_l = "   float3 *" + v.Name + ";";
+                            }
+                            else
+                            {
+                                var_l = "   float3 " + v.Name + ";";
+                            }
+                                break;
+                        case ComputeVarType.Int:
+                            if (v.Pointer)
+                            {
+                                var_l = "   int *" + v.Name + ";";
+                            }
+                            else
+                            {
+                                var_l = "   int " + v.Name + ";";
+                            }
                             break;
                     }
 
@@ -51,12 +78,15 @@ namespace FusionScript.Structs.Compute
             }
             tw.WriteLine(" ");
 
-            foreach(var fun in Funcs)
+            foreach (var fun in Funcs)
             {
 
                 string f_b = "";
                 switch (fun.ReturnType)
                 {
+                    case ComputeVarType.Int:
+                        f_b = "int ";
+                        break;
                     case ComputeVarType.Void:
                         f_b = "void ";
                         break;
@@ -67,7 +97,7 @@ namespace FusionScript.Structs.Compute
                 }
                 bool first2 = true;
                 f_b += fun.FuncName + "(";
-                foreach(var vv in fun.InVars)
+                foreach (var vv in fun.InVars)
                 {
                     if (!first2)
                     {
@@ -77,10 +107,34 @@ namespace FusionScript.Structs.Compute
                     switch (vv.Type)
                     {
                         case ComputeVarType.Int:
-                            f_b += " int " + vv.Name;
+                            if (vv.Pointer)
+                            {
+                                f_b += " int * " + vv.Name;
+                            }
+                            else
+                            {
+                                f_b += " int " + vv.Name;
+                            }
                             break;
                         case ComputeVarType.Vec3:
-                            f_b += " float3 " + vv.Name;
+                            if (vv.Pointer)
+                            {
+                                f_b += " float3 * " + vv.Name;
+                            }
+                            else
+                            {
+                                f_b += " float3 " + vv.Name;
+                            }
+                            break;
+                        case ComputeVarType.Struct:
+                            if (vv.Pointer)
+                            {
+                                f_b += " " + vv.StructName + " * " + vv.Name;
+                            }
+                            else
+                            {
+                                f_b += " " + vv.StructName + " " + vv.Name;
+                            }
                             break;
                     }
                 }
@@ -88,6 +142,9 @@ namespace FusionScript.Structs.Compute
 
                 tw.WriteLine(f_b);
                 tw.WriteLine("{");
+
+                WriteCode(tw,fun.Code);
+
                 tw.WriteLine("}");
 
             }
@@ -96,16 +153,40 @@ namespace FusionScript.Structs.Compute
             string kern_head = "__kernel void " + ComputeName + "(";
 
             bool first = true;
-            foreach(var iv in Inputs)
+            int fvv = 0;
+            foreach (var iv in Inputs)
             {
 
                 kern_head += "__global " + iv.StructName + " *" + iv.LocalName;
-                if (!first)
+                if(Inputs.Count>(fvv+1)) 
                 {
                     kern_head += " , ";
                 }
                 first = false;
 
+                fvv++;
+
+            }
+            if (Outputs.Count > 0 && Inputs.Count>0)
+            {
+                kern_head += " , ";
+            }
+            fvv = 0;
+            foreach(var ov in Outputs)
+            {
+
+                if (ov.One)
+                {
+                    kern_head += "__global " + ov.StructName + " " + ov.LocalName;
+                }
+                else
+                {
+                    kern_head += "__global " + ov.StructName + " *" + ov.LocalName;
+                }
+                if (Outputs.Count > (fvv + 1))
+                {
+                    kern_head += " , ";
+                }
 
             }
 
@@ -121,6 +202,86 @@ namespace FusionScript.Structs.Compute
             tw.Close();
 
         }
+        public void WriteCode(TextWriter tw, StructComputeCode code)
+        {
+
+            foreach(var l in code.Lines)
+            {
+                if(l is Compute.ComputeCodeTypes.ComputeCodeFor)
+                {
+
+                    var lf = l as ComputeCodeTypes.ComputeCodeFor;
+
+                    var line = "    ";
+
+                    line += "for(";
+
+                    var l_as = lf.InitAssign;
+
+                    if (l_as.Init)
+                    {
+
+                        
+
+                    }
+
+                    
+
+
+                }
+                if(l is Compute.ComputeCodeTypes.ComputeCodeAssign)
+                {
+
+                    var la = l as ComputeCodeTypes.ComputeCodeAssign;
+
+                    var line = "    ";
+
+                    if (la.Init)
+                    {
+
+                        switch (la.Type)
+                        {
+                            case ComputeVarType.Int:
+                                line += "int ";
+                                break;
+                            case ComputeVarType.Vec3:
+                                line += "float3 ";
+                                break;
+                        }
+                    }
+                        line += la.VarName;
+                        if(la.Value == null)
+                        {
+                            line += ";";
+                            tw.WriteLine(line);
+                        }
+                        else
+                        {
+                            tw.Write(line + " = ");
+                            WriteExpr(tw, la.Value);
+                            tw.Write(";");
+                            tw.WriteLine("");
+                        }
+
+                    }
+
+                    
+                
+
+                
+            }
+
+        }
+
+        public void WriteExpr(TextWriter tw,ComputeCodeTypes.ComputeCodeExpr exp)
+        {
+            foreach(var s in exp.Seq)
+            {
+                tw.Write(s + " ");
+            }
+           
+        }
 
     }
+    
 }

@@ -11,6 +11,7 @@ namespace FusionScript.Structs.Compute
         public string StructName = "";
         public List<ComputeVar> Vars = new List<ComputeVar>();
         public string LocalName = "";
+        public bool One = false;
         public StructComputeStruct()
         {
 
@@ -30,9 +31,11 @@ namespace FusionScript.Structs.Compute
     {
         public string Name = "";
         public ComputeVarType Type = ComputeVarType.Int;
+        public bool Pointer = false;
+        public string StructName = "";
     }
     public enum ComputeVarType
     {
-        Vec2,Vec3,Vec4,Matrix4,Matrix3,Float,Int,Bool,Byte,Void
+        Vec2,Vec3,Vec4,Matrix4,Matrix3,Float,Int,Bool,Byte,Void,Struct
     }
 }

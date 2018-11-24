@@ -11,6 +11,7 @@ namespace FusionScript.Structs.Compute
         public ComputeVarType ReturnType = ComputeVarType.Void;
         public List<ComputeVar> InVars = new List<ComputeVar>();
         public string FuncName = "";
+        public StructComputeCode Code = null;
 
     }
 }

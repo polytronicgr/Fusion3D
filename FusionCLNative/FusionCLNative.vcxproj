@@ -23,7 +23,7 @@
     <ProjectGuid>{F4500E67-469C-48BA-A6F9-D00B7A0EA77C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>FusionCLNative</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -95,7 +95,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>C:\Git\Fusion3D\Foom\bin\x64\Debug\FusionCLNative.dll</OutputFile>
+      <OutputFile>C:\Git\F3D\Fusion3D\FusionCLTest1\bin\x64\Debug\FusionCLNative.dll</OutputFile>
       <AdditionalLibraryDirectories>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>

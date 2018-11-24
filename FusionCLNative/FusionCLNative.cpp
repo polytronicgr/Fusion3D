@@ -24,7 +24,7 @@ cl_context context;
 
 extern "C" FUSIONCL_API void InitFusionCL()
 {
-	//printf("Init FusionCLNative begun.\n");
+	printf("Init FusionCLNative begun.\n");
 	
 	cl_int ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
 	ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_GPU, 1,
@@ -38,9 +38,9 @@ extern "C" FUSIONCL_API void InitFusionCL()
 
 	clGetDeviceInfo(device_id, CL_DEVICE_NAME, 255, (void *)dev_name, &asize);
 
-	//printf("Dev:");
-	//printf(dev_name);
-	//printf("!\n");
+	printf("Dev:");
+	printf(dev_name);
+	printf("!\n");
 
 	// Create an OpenCL context
 	context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
@@ -55,15 +55,15 @@ extern "C" FUSIONCL_API cl_command_queue CreateComQueue()
 
 	cl_command_queue command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
 
-	//printf("CreateQueue:");
+	printf("CreateQueue:");
 	if (ret == CL_SUCCESS) {
-		//printf("Yes\n");
+		printf("Yes\n");
 	}
 	else {
 		return NULL;
-		//printf("No\n");
+		printf("No\n");
 	}
-	//printf("\n");
+	printf("\n");
 	return command_queue;
 
 }
@@ -73,12 +73,12 @@ extern "C" FUSIONCL_API cl_mem CreateBuf(int bytes,cl_mem_flags flags,void * ptr
 	cl_int ret = 0;
 	cl_mem mem_obj = clCreateBuffer(context, flags, (size_t)bytes, ptr, &ret);
 
-	//printf("CB:%d : %d : %d", flags, bytes, (int)ptr);
-	//printf("--\n");
+	printf("CB:%d : %d : %d", flags, bytes, (int)ptr);
+	printf("--\n");
 
-	//printf("CreateBuf:");
+	printf("CreateBuf:");
 	if (ret == CL_SUCCESS) {
-	//	printf("Yes\n");
+		printf("Yes\n");
 	}
 	else {
 		return NULL;
@@ -91,10 +91,10 @@ extern "C" FUSIONCL_API cl_mem CreateBuf(int bytes,cl_mem_flags flags,void * ptr
 
 extern "C" FUSIONCL_API bool QueueWriteBuffer(cl_command_queue queue, cl_mem mem, bool blocking, int offset, int cb, const void *ptr)
 {
-
+	printf("Writing>\n");
 	cl_int ret = clEnqueueWriteBuffer(queue, mem, blocking ? CL_TRUE : CL_FALSE, offset,
 		cb, ptr, 0, NULL, NULL);
-
+	printf("Wrote:\n");
 	//printf("QueueWrite:");
 	if (ret == CL_SUCCESS)
 	{
@@ -111,22 +111,25 @@ extern "C" FUSIONCL_API bool QueueWriteBuffer(cl_command_queue queue, cl_mem mem
 extern "C" FUSIONCL_API cl_program CreateProgram(const char * source,int size)
 {
 
-	//printf("Prog:\n");
-	//printf(source);
-	//printf(":\n");
+	printf("Prog:\n");
+	printf(source);
+	printf(":\n");
 
 	cl_int ret = 0;
 	cl_program program = clCreateProgramWithSource(context, 1,
 		(const char **)&source, (const size_t *)&size, &ret);
 
-	//printf("CreateProg:");
+	printf("CreateProg:");
 	if (ret == CL_SUCCESS)
 	{
-		//printf("Yes\n");
+		printf("Yes\n");
 
 	}
 	else {
-	///	printf("No\n");
+		printf("No\n");
+		printf("Code:");
+		printf("%d", ret);
+		printf("\n");
 		return NULL;
 	}
 
@@ -141,13 +144,19 @@ extern "C" FUSIONCL_API bool BuildProgram(cl_program prog)
 
 	ret = clBuildProgram(prog, 1, &device_id, NULL, NULL, NULL);
 
+	cl_build_status bs;
+
+	clGetProgramBuildInfo(prog, device_id, CL_PROGRAM_BUILD_STATUS, sizeof(cl_build_status), &bs, NULL);
+
+
+
 	//printf("BuildProg:");
 	if (ret == CL_SUCCESS) {
-		//printf("Yes\n");
+		printf("Yes\n");
 		return true;
 	}
 	else {
-		//printf("No\n");
+		printf("No\n");
 		return false;
 	}
 

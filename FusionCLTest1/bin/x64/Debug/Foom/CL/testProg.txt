@@ -1,0 +1,8 @@
+__kernel void vector_add(__global const unsigned char *A, __global unsigned char *B) {
+ 
+    // Get the index of the current element to be processed
+    uint i = get_global_id(0);
+ 
+    // Do the operation
+    B[i] = A[i]/2;
+}

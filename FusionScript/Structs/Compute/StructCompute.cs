@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using FusionCLNet;
 namespace FusionScript.Structs.Compute
 {
     public class StructCompute : Struct
@@ -27,7 +28,7 @@ namespace FusionScript.Structs.Compute
             foreach (var s in Unique)
             {
 
-                string head = "typedef struct tag_" + s.StructName + "{";
+                string head = "typedef struct __attribute__ ((packed)) tag_" + s.StructName + "{";
                 tw.WriteLine(head);
 
                 foreach (var v in s.Vars)
@@ -201,6 +202,20 @@ namespace FusionScript.Structs.Compute
             tw.Flush();
             tw.Close();
 
+            FusionCL.InitFusionCL();
+
+            var prog = new CLProgram("CLGen/CLOut1.cl");
+            if (!prog.Build())
+            {
+                Console.WriteLine("Not built!-cl");
+            }
+
+            var kern = prog.CreateKernel("imageRender");
+
+            while (true)
+            {
+
+            }
 
 
         }

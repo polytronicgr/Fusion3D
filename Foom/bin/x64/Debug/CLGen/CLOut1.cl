@@ -1,11 +1,11 @@
-typedef struct tag_rect{
+typedef struct __attribute__ ((packed)) tag_rect{
    int x;
    int y;
    int w;
    int h;
 }rect;
  
-typedef struct tag_display{
+typedef struct __attribute__ ((packed)) tag_display{
    int width;
    int height;
    byte *rgb;

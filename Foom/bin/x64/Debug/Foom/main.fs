@@ -20,16 +20,17 @@ compute imageRender
 	rect draw in;
 	display dis1 out one;
 	
-	func void drawRect(int x,int y,int w,int h,rect do)
+	func void drawRect(rect do)
 	
 		int dx;
 		int dy;
 	
-		for(int dy = y;dy<(y+h);dy=dy+1)
+		for(int dy = do.y;dy<(do.y+do.h);dy=dy+1)
 		
-			for(dx=x;dx<(x+w);dx=dx+1)
+			for(dx=do.x;dx<(do.x+do.w);dx=dx+1)
 			
-				
+					int loc = (dy * do.w) * 3;
+					loc = loc + (dx * 3);
 			
 			end
 		

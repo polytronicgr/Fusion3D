@@ -201,6 +201,8 @@ namespace FusionScript.Structs.Compute
             tw.Flush();
             tw.Close();
 
+
+
         }
         public void WriteCode(TextWriter tw, StructComputeCode code)
         {
@@ -221,9 +223,55 @@ namespace FusionScript.Structs.Compute
                     if (l_as.Init)
                     {
 
-                        
+                        switch (l_as.Type)
+                        {
+                            case ComputeVarType.Int:
+                                line += " int ";
+                                break;
+                            case ComputeVarType.Vec3:
+                                line += " float3 ";
+                                break;
+                            
+
+                        }
 
                     }
+
+                    line += l_as.VarName;
+
+                    if (l_as.Value != null)
+                    {
+                        line += " = ";
+                        foreach(var le in l_as.Value.Seq)
+                        {
+                            line += le;
+                        }
+                    }
+
+                    line += ";";
+
+                    foreach(var ce in lf.Condition.Seq)
+                    {
+                        line += ce;
+                    }
+
+                    line += ";";
+
+                    var f_as = lf.Inc;
+
+                    line += f_as.VarName + " = ";
+                    foreach(var ie in f_as.Value.Seq)
+                    {
+                        line += ie;
+                    }
+
+                    line += ")";
+                    tw.WriteLine(line);
+                    tw.WriteLine("  {");
+                    WriteCode(tw, lf.Code);
+                    tw.WriteLine("  }");
+
+
 
                     
 
@@ -277,7 +325,7 @@ namespace FusionScript.Structs.Compute
         {
             foreach(var s in exp.Seq)
             {
-                tw.Write(s + " ");
+                tw.Write(s);
             }
            
         }

@@ -205,6 +205,9 @@ namespace FusionScript
                         fin = true;
                         break;
                     case "int":
+                    case "for":
+                    case "while":
+                    case "if":
                     case "vec3":
                     case "return":
                         done = true;
@@ -276,9 +279,12 @@ namespace FusionScript
 
                         rs.Lines.Add(c_for);
 
+                        i++;
+
                         tok2 = Get(i);
 
-                        
+                        c_for.Code = ParseComputeCode(ref i);
+
 
 
                         break;

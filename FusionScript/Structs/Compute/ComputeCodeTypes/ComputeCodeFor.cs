@@ -11,6 +11,7 @@ namespace FusionScript.Structs.Compute.ComputeCodeTypes
         public ComputeCodeAssign InitAssign;
         public ComputeCodeExpr Condition;
         public ComputeCodeAssign Inc;
+        public StructComputeCode Code;
 
     }
 }

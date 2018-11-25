@@ -12,6 +12,7 @@ namespace FusionScript.Structs.Compute
         public List<ComputeVar> Vars = new List<ComputeVar>();
         public string LocalName = "";
         public bool One = false;
+        public bool LinearData = false;
         public StructComputeStruct()
         {
 
@@ -23,6 +24,7 @@ namespace FusionScript.Structs.Compute
             r.StructName = StructName;
             r.Vars = Vars;
             r.LocalName = "";
+            r.LinearData = LinearData;
             return r;
         }
 

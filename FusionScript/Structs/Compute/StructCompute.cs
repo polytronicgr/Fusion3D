@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using FusionCLNet;
+using Cloo;
 namespace FusionScript.Structs.Compute
 {
     public class StructCompute : Struct
@@ -27,7 +27,7 @@ namespace FusionScript.Structs.Compute
 
             foreach (var s in Unique)
             {
-
+                if (s.LinearData == true) continue;
                 string head = "typedef struct __attribute__ ((packed)) tag_" + s.StructName + "{";
                 tw.WriteLine(head);
 
@@ -40,11 +40,11 @@ namespace FusionScript.Structs.Compute
                         case ComputeVarType.Byte:
                             if (v.Pointer)
                             {
-                                var_l = "   byte *" + v.Name + ";";
+                                var_l = "   unsigned char *" + v.Name + ";";
                             }
                             else
                             {
-                                var_l = "   byte " + v.Name + ";";
+                                var_l = "   unsigned char " + v.Name + ";";
                             }
                             break;
                         case ComputeVarType.Vec3:
@@ -134,7 +134,7 @@ namespace FusionScript.Structs.Compute
                             }
                             else
                             {
-                                f_b += " " + vv.StructName + " " + vv.Name;
+                                f_b += "  " + vv.StructName + " " + vv.Name;
                             }
                             break;
                     }
@@ -176,13 +176,47 @@ namespace FusionScript.Structs.Compute
             foreach(var ov in Outputs)
             {
 
-                if (ov.One)
+
+                if (ov.LinearData)
                 {
-                    kern_head += "__global " + ov.StructName + " " + ov.LocalName;
+                    string v_t = "__global ";
+                    switch (ov.Vars[0].Type)
+                    {
+                        case ComputeVarType.Byte:
+                            v_t = "__global unsigned char";
+                            break;
+                        case ComputeVarType.Int:
+                            v_t = "__global int";
+                            break;
+                        case ComputeVarType.Float:
+                            v_t = "__global float";
+                            break;
+                        case ComputeVarType.Vec3:
+                            v_t = "__global float3";
+                            break;
+                        case ComputeVarType.Vec4:
+                            v_t = "__global float4";
+                            break;
+                    }
+                    v_t += " ";
+                    if (ov.Vars[0].Pointer)
+                    {
+                        v_t += "* ";
+                    }
+                    v_t += ov.LocalName;
+                    kern_head += v_t;
                 }
                 else
-                {
-                    kern_head += "__global " + ov.StructName + " *" + ov.LocalName;
+                { 
+                    if (ov.One)
+                    {
+
+                        kern_head += ov.StructName + " " + ov.LocalName;
+                    }
+                    else
+                    {
+                        kern_head += ov.StructName + " *" + ov.LocalName;
+                    }
                 }
                 if (Outputs.Count > (fvv + 1))
                 {
@@ -202,21 +236,34 @@ namespace FusionScript.Structs.Compute
             tw.Flush();
             tw.Close();
 
-            FusionCL.InitFusionCL();
 
-            var prog = new CLProgram("CLGen/CLOut1.cl");
-            if (!prog.Build())
+            ComputePlatform plat = ComputePlatform.Platforms[0];
+            Console.WriteLine("Plat:" + plat.Name);
+
+            ComputeContext context = new ComputeContext(ComputeDeviceTypes.Gpu, new ComputeContextPropertyList(plat), null, IntPtr.Zero);
+
+            ComputeCommandQueue queue = new ComputeCommandQueue(context, context.Devices[0], ComputeCommandQueueFlags.None);
+
+            StreamReader rs = new StreamReader("CLGen/CLOut1.cl");
+
+            string clSrc = rs.ReadToEnd();
+
+            rs.Close();
+
+            ComputeProgram prog = new ComputeProgram(context, clSrc);
+
+            try
             {
-                Console.WriteLine("Not built!-cl");
+                prog.Build(null, null, null, IntPtr.Zero);
             }
-
-            var kern = prog.CreateKernel("imageRender");
-
-            while (true)
+            catch
             {
 
             }
+            Console.WriteLine("BS:" + prog.GetBuildStatus(context.Devices[0]).ToString());
+            Console.WriteLine("Info:" + prog.GetBuildLog(context.Devices[0]));
 
+            ComputeKernel kern = prog.CreateKernel("imageRender");
 
         }
         public void WriteCode(TextWriter tw, StructComputeCode code)

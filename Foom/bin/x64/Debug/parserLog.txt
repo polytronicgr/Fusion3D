@@ -1,5 +1,5 @@
 Begun parsing source.
- [computestruct](ComputeStruct)(Compute) display  
+ [computestruct](ComputeStruct)(Compute) display = byte * ;  
 
 Begun parsing function
  [func](Func)(Define) Entry ( )  

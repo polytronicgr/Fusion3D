@@ -5,28 +5,22 @@ typedef struct __attribute__ ((packed)) tag_rect{
    int h;
 }rect;
  
-typedef struct __attribute__ ((packed)) tag_display{
-   int width;
-   int height;
-   byte *rgb;
-}display;
  
- 
-void drawRect( rect do )
+void drawRect(  rect r1 )
 {
     int dx;
     int dy;
-    for( int dy = do.y;dy<(do.y+do.h);dy = dy+1)
+    for( int dy = r1.y;dy<(r1.y+r1.h);dy = dy+1)
   {
-    for(dx = do.x;dx<(do.x+do.w);dx = dx+1)
+    for(dx = r1.x;dx<(r1.x+r1.w);dx = dx+1)
   {
-    int loc = (dy*do.w)*3;
+    int loc = (dy*r1.w)*3;
     loc = loc+(dx*3);
   }
   }
 }
  
-__kernel void imageRender(__global rect *draw , __global display dis1)
+__kernel void imageRender(__global rect *draw , __global unsigned char * dis)
 {
   int index = get_global_id(0);
 }

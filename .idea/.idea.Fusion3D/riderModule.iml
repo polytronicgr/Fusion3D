@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RIDER_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../.." />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PhysX3CharacterKinematicDEBUG_x64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PhysX3CommonDEBUG_x64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PhysX3CookingDEBUG_x64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PhysX3DEBUG_x64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PhysX3GpuDEBUG_x64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PhysXDevice64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PxFoundationDEBUG_x64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/PxPvdSDKDEBUG_x64.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/physx.net/0.11.0-alpha/lib/x64/nvToolsExt64_1.dll" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

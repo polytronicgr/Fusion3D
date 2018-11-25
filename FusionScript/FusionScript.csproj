@@ -50,6 +50,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cloo">
+      <HintPath>..\..\..\cloo\Cloo\bin\x64\Release\Cloo.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -106,12 +109,6 @@
     <Compile Include="Struct.cs" />
     <Compile Include="Tokenizer.cs" />
     <Compile Include="CodeToken.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FusionCLNet\FusionCLNet.csproj">
-      <Project>{2c81fa47-36b5-47d5-a98e-55b7d9561bbf}</Project>
-      <Name>FusionCLNet</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

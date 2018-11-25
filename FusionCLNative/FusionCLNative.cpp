@@ -60,7 +60,6 @@ extern "C" FUSIONCL_API cl_command_queue CreateComQueue()
 		printf("Yes\n");
 	}
 	else {
-		return NULL;
 		printf("No\n");
 	}
 	printf("\n");
@@ -81,8 +80,7 @@ extern "C" FUSIONCL_API cl_mem CreateBuf(int bytes,cl_mem_flags flags,void * ptr
 		printf("Yes\n");
 	}
 	else {
-		return NULL;
-		//printf("No\n");
+		printf("No\n");
 	}
 
 	return mem_obj;
@@ -91,18 +89,18 @@ extern "C" FUSIONCL_API cl_mem CreateBuf(int bytes,cl_mem_flags flags,void * ptr
 
 extern "C" FUSIONCL_API bool QueueWriteBuffer(cl_command_queue queue, cl_mem mem, bool blocking, int offset, int cb, const void *ptr)
 {
-	printf("Writing>\n");
+
 	cl_int ret = clEnqueueWriteBuffer(queue, mem, blocking ? CL_TRUE : CL_FALSE, offset,
 		cb, ptr, 0, NULL, NULL);
-	printf("Wrote:\n");
-	//printf("QueueWrite:");
+
+	printf("QueueWrite:");
 	if (ret == CL_SUCCESS)
 	{
-		//printf("Yes\n");
+		printf("Yes\n");
 		return true;
 	}
 	else {
-	//	printf("No\n");
+		printf("No\n");
 		return false;
 	}
 	
@@ -114,10 +112,10 @@ extern "C" FUSIONCL_API cl_program CreateProgram(const char * source,int size)
 	printf("Prog:\n");
 	printf(source);
 	printf(":\n");
-
+    const char ** src = (const char **)source;
 	cl_int ret = 0;
 	cl_program program = clCreateProgramWithSource(context, 1,
-		(const char **)&source, (const size_t *)&size, &ret);
+		src, (const size_t *)&size, &ret);
 
 	printf("CreateProg:");
 	if (ret == CL_SUCCESS)
@@ -127,9 +125,6 @@ extern "C" FUSIONCL_API cl_program CreateProgram(const char * source,int size)
 	}
 	else {
 		printf("No\n");
-		printf("Code:");
-		printf("%d", ret);
-		printf("\n");
 		return NULL;
 	}
 
@@ -144,13 +139,7 @@ extern "C" FUSIONCL_API bool BuildProgram(cl_program prog)
 
 	ret = clBuildProgram(prog, 1, &device_id, NULL, NULL, NULL);
 
-	cl_build_status bs;
-
-	clGetProgramBuildInfo(prog, device_id, CL_PROGRAM_BUILD_STATUS, sizeof(cl_build_status), &bs, NULL);
-
-
-
-	//printf("BuildProg:");
+	printf("BuildProg:");
 	if (ret == CL_SUCCESS) {
 		printf("Yes\n");
 		return true;
@@ -169,14 +158,14 @@ extern "C" FUSIONCL_API cl_kernel CreateKern(cl_program prog, const char *name)
 	cl_kernel kern = clCreateKernel(prog, name, &ret);
 
 
-	//printf("CreateKern:");
+	printf("CreateKern:");
 	if (ret == CL_SUCCESS)
 	{
-		//printf("Yes\n");
+		printf("Yes\n");
 		return kern;
 	}
 	else {
-		//printf("No\n");
+		printf("No\n");
 		return NULL;
 	}
 
@@ -192,14 +181,14 @@ extern "C" FUSIONCL_API bool KernSetArgPtr(cl_kernel kern,int par,int size,const
 
 	clSetKernelArg(kern, (cl_uint)par, (size_t)size, ptr);
 
-	//printf("SetArgPtr:");
+	printf("SetArgPtr:");
 	if (ret == CL_SUCCESS)
 	{
-		//printf("Yes\n");
+		printf("Yes\n");
 		return true;
 	}
 	else {
-		//printf("No\n");
+		printf("No\n");
 		return false;
 	}
 
@@ -210,17 +199,17 @@ extern "C" FUSIONCL_API bool KernSetArgMem(cl_kernel kern, int par, int size, cl
 	cl_int ret = 0;
 
 	ret = clSetKernelArg(kern, (cl_uint)par, sizeof(mem) , (const void *)&mem);
-	//printf("Kern:%d :%d %d",kern, size, mem);
-	//printf("!!\n");
+	printf("Kern:%d :%d %d",kern, size, mem);
+	printf("!!\n");
 
-	//printf("SetArgMem:");
+	printf("SetArgMem:");
 	if (ret == CL_SUCCESS)
 	{
-		//printf("Yes\n");
+		printf("Yes\n");
 		return true;
 	}
 	else {
-		//printf("No\n");
+		printf("No\n");
 		return false;
 	}
 
@@ -232,13 +221,13 @@ extern "C" FUSIONCL_API bool ExecRange(cl_command_queue queue, cl_kernel kernel,
 
 	ret=clEnqueueNDRangeKernel(queue, kernel, 1, NULL,(const size_t *)&global, (const size_t *)&sub, 0, NULL, NULL);
 
-	//printf("ExecRange:");
+	printf("ExecRange:");
 	if (ret == CL_SUCCESS) {
-		//printf("Yes\n");
+		printf("Yes\n");
 		return true;
 	}
 	else {
-		//printf("No\n");
+		printf("No\n");
 		return false;
 	}
 }
@@ -250,14 +239,14 @@ extern "C" FUSIONCL_API bool QueueReadBuffer(cl_command_queue queue, cl_mem mem,
 
 	ret = clEnqueueReadBuffer(queue, mem, block, 0, size, ptr, 0, NULL, NULL);
 
-	//printf("ReadBuf:");
+	printf("ReadBuf:");
 	if(ret==CL_SUCCESS)
 	{
-		//printf("Yes\n");
+		printf("Yes\n");
 		return true;
 	}
 	else {
-		//printf("No\n");
+		printf("No\n");
 		return false;
 	}
 }

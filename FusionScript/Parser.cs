@@ -32,6 +32,42 @@ namespace FusionScript
 
             i++;
 
+            if(Get(i).Text=="=")
+            {
+
+                i++;
+                var tt = Get(i).Text;
+                bool pointer = false;
+                if (Get(i + 1).Text == "*")
+                {
+                    pointer = true;
+                }
+                var var = new ComputeVar();
+                var.Name = rs.StructName;
+                var.Pointer = pointer;
+
+                rs.LinearData = true;
+
+                switch (tt)
+                {
+                    case "byte":
+                        var.Type = ComputeVarType.Byte;
+                        break;
+                    case "float":
+                        var.Type = ComputeVarType.Float;
+                        break;
+                    case "vec3":
+                        var.Type = ComputeVarType.Vec3;
+                        break;
+                    case "vec4":
+                        var.Type = ComputeVarType.Vec4;
+                        break;
+                }
+                rs.Vars.Add(var);
+                i++;
+                return rs;
+            }
+
             for (i = i; i < toks.Len; i++)
             {
 

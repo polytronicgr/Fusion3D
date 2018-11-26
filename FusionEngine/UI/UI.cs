@@ -148,12 +148,12 @@ namespace Fusion3D.Resonance
             Fusion3D.Draw.Pen2D.Rect(MX, MY, 24, 24, CursorImg, new OpenTK.Vector4(1, 1, 1,1));
 
         }
-
+        public static float TarAlpha = 1.0f;
         public void Update()
         {
-            if (BootAlpha < 1)
+            if (BootAlpha!= TarAlpha)
             {
-                BootAlpha += (1.0f - BootAlpha) * 0.07f;
+                BootAlpha += (TarAlpha - BootAlpha) * 0.07f;
             }
             Logics.SmartUpdate();
 

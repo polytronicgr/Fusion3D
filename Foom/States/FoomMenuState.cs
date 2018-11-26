@@ -42,6 +42,13 @@ namespace Foom.States
 
             SUI.Root.Add(TitleBG);
 
+            StartGame.Click = (b) =>
+            {
+                MenuSongSound.Stop();
+                FusionApp.PushState(new IntroState(), true);
+
+            };
+
 
         }
 

@@ -16,6 +16,7 @@ namespace FusionScript.Structs.Compute
         public List<Compute.StructComputeStruct> Outputs = new List<StructComputeStruct>();
         public List<ComputeVar> LocalVars = new List<ComputeVar>();
         public List<StructComputeFunc> Funcs = new List<StructComputeFunc>();
+        public StructComputeFunc Entry = null;
         public string CodeName = "";
         public static int cl_num = 0;
         public void GenCode()

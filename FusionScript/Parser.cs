@@ -279,6 +279,11 @@ namespace FusionScript
                 var cp = PredictCompute(i);
                 switch (cp)
                 {
+                    case ComputeStrandType.Statement:
+
+                        Console.WriteLine("Parsing statement");
+
+                        break;
                     case ComputeStrandType.For:
 
                         var c_for = new ComputeCodeFor();
@@ -425,6 +430,17 @@ namespace FusionScript
                 {
 
                     var rt = Get(i + 1);
+
+                    if(rt.Text==">")
+                    {
+
+                        var mf = new StructComputeFunc();
+                        mf.FuncName = rs.ComputeName + "_main";
+                        i++;
+                        mf.Code = ParseComputeCode(ref i);
+                        return rs;
+
+                    }
 
                     var fname = Get(i + 2).Text;
 

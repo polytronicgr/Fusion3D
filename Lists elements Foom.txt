@@ -1,0 +1,26 @@
+Ok then !
+Cant wait to see the firsts gameplay test !
+
+Intro :
+-Pictures cut scene X 3 or 4,5 .
+
+Characters we choose :
+-Picture heroine, hero
+-UI picture heroine, hero
+-Maybe their hands ? or them from behind forsome cutscenes ? we will see later
+
+Weapons :
+-Futristic gun, Laser gun
+
+Spaceship Earth
+-Roof,  Walls, ground, stairs, objects, Teleports (? ), Animated textures (for walls, etc ), Humans (we gonna talk to them , quick text to explain the scenario ), Aliens humanoid 
+-Space background
+Spaceship Alien
+-Roof,  Walls, ground, stairs, objects, Teleports (? ), Animated textures (for walls, etc ), Aliens humanoid (we gonna fight them, they already appear in the spaceship earth ), Aliens humanoid upper version
+-Space bakcground
+
+Jupiter Moon landing :
+Space Background, ground, mysterious structure, ennemies, objects, Moons (in the sky )
+
+
+

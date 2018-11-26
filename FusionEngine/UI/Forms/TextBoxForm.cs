@@ -3,6 +3,7 @@ using System;
 
 namespace Fusion3D.Resonance.Forms
 {
+    public delegate void OnEnter(string text);
     public class TextBoxForm : UIForm
     {
         public int ClaretI = 0;
@@ -11,7 +12,7 @@ namespace Fusion3D.Resonance.Forms
         public bool ShowClaret = false;
         public int NextClaret;
         public int ClaretE = 0;
-
+        public OnEnter Enter = null;
         public TextBoxForm ( )
         {
             void KeyPressFunc ( OpenTK.Input.Key key, bool shift )
@@ -130,7 +131,43 @@ namespace Fusion3D.Resonance.Forms
                         k = " ";
                         break;
 
+                    case OpenTK.Input.Key.Number0:
+                        k = "0";
+                        break;
+                        case OpenTK.Input.Key.Number1:
+                        k = "1";
+                        break;
+                    case OpenTK.Input.Key.Number2:
+                        k = "2";
+                        break;
+                    case OpenTK.Input.Key.Number3:
+                        k = "3";
+                        break;
+                    case OpenTK.Input.Key.Number4:
+                        k = "4";
+                        break;
+                    case OpenTK.Input.Key.Number5:
+                        k = "5";
+                        break;
+                    case OpenTK.Input.Key.Number6:
+                        k = "6";
+                        break; ;
+                    case OpenTK.Input.Key.Number7:
+                        k = "7";
+                        break;
+                    case OpenTK.Input.Key.Number8:
+                        k = "8";
+                        break;
+                    case OpenTK.Input.Key.Number9:
+                        k = "9";
+                        break;
+                    case OpenTK.Input.Key.Enter:
+                    case OpenTK.Input.Key.KeypadEnter:
+                        Enter?.Invoke(Text);
+                        return;
+                        break;
                     default:
+
                         k = shift ? key.ToString ( ).ToUpper ( ) : key.ToString ( ).ToLower ( );
                         break;
                 }

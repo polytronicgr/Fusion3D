@@ -18,7 +18,7 @@ namespace Fusion3D.Resonance.Forms
         {
             Shadow = new Texture2D ( "data/UI/Shadow1.png", LoadMethod.Single, true );
             TitleImg = new Texture2D ( "data/UI/Skin/wintitle.png", LoadMethod.Single, true );
-            BodyImg = new Texture2D ( "data/UI/Skin/windowbg6.jpg", LoadMethod.Single, true );
+            BodyImg = new Texture2D ( "data/UI/Skin/windowsbg7.jpg", LoadMethod.Single, true );
             BodyNorm = new Texture2D ( "data/UI/normal/winnorm5.jpg", LoadMethod.Single, false );
 
             UIForm title = new ButtonForm().Set(0, 0, W, 20, "").SetImage(TitleImg);

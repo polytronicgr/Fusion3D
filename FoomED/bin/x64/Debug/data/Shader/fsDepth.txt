@@ -1,0 +1,30 @@
+#version 330 core
+
+uniform mat4 model;
+uniform vec3 camP;
+uniform float minZ;
+uniform float maxZ;
+
+
+
+
+in vec3 fVert;
+
+// Ouput data
+out vec3 color;
+
+void main(){
+ 
+	float dis = length(fVert-camP);
+
+	dis = dis / maxZ;
+
+	if(dis<0){
+		dis=0;
+	}
+	if(dis>1){
+		dis = 1;
+	}
+
+    color = vec3(dis,dis,dis);
+}

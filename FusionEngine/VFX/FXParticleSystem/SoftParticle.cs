@@ -1,7 +1,7 @@
 ﻿using OpenTK;
-using Fusion3D.Util;
+using FusionEngine.Util;
 
-namespace Fusion3D.VFX
+namespace FusionEngine.VFX
 {
     public class SoftParticle : ParticleBase
     {
@@ -14,8 +14,8 @@ namespace Fusion3D.VFX
         {
             Scene.SceneGraph g = VFX.VisualFX.Graph;
 
-            int sw = Fusion3D.App.FusionApp.W;
-            int sh = Fusion3D.App.FusionApp.H;
+            int sw = FusionEngine.App.FusionApp.W;
+            int sh = FusionEngine.App.FusionApp.H;
 
             float[] ox = new float[4];
             float[] oy = new float[4];

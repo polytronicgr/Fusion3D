@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Data
+﻿namespace FusionEngine.Data
 {
     public class VertexData<T>
     {

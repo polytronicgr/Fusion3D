@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Fusion3D.Texture;
+using FusionEngine.Texture;
 
-namespace Fusion3D.Font
+namespace FusionEngine.Font
 {
     public class Font2D
     {

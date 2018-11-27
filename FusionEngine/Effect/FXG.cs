@@ -1,8 +1,8 @@
 ﻿using OpenTK;
-using Fusion3D.Data;
-using Fusion3D.Scene;
+using FusionEngine.Data;
+using FusionEngine.Scene;
 
-namespace Fusion3D.Effect
+namespace FusionEngine.Effect
 {
     public static class FXG
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fusion3D.Data
+namespace FusionEngine.Data
 {
     public class VInfoMap<T, D>
     {

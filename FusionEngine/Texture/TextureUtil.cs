@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.IO;
 
-namespace Fusion3D.Texture
+namespace FusionEngine.Texture
 {
     public class TextureUtil
     {

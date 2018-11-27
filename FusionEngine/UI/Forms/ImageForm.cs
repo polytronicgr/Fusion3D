@@ -1,9 +1,15 @@
-﻿namespace Fusion3D.Resonance.Forms
+﻿namespace FusionEngine.Resonance.Forms
 {
     public class ImageForm : UIForm
     {
         public ImageForm ( )
         {
+            MouseDown = (b) =>
+            {
+
+                Click?.Invoke(0);
+
+            };
             Col = new OpenTK.Vector4 ( 1, 1, 1, 1 );
             void DrawFunc ( )
             {

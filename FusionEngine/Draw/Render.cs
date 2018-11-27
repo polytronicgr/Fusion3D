@@ -1,9 +1,9 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Fusion3D.App;
-using Fusion3D.Tex;
+using FusionEngine.App;
+using FusionEngine.Tex;
 
-namespace Fusion3D.Draw
+namespace FusionEngine.Draw
 {
     public enum BlendMode
     {
@@ -16,7 +16,7 @@ namespace Fusion3D.Draw
 
         public static void To2D ( )
         {
-            Matrix4 pm = Matrix4.CreateOrthographicOffCenter(0, Fusion3D.App.FusionApp.RW, FusionApp.RH, 0, 0, 1);
+            Matrix4 pm = Matrix4.CreateOrthographicOffCenter(0, FusionEngine.App.FusionApp.RW, FusionApp.RH, 0, 0, 1);
 
             //pm = Matrix4.CreateOrthographic(StarKnightsAPP.RW, StarKnightsAPP.RH, 0, 1);
 

@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Input
+﻿namespace FusionEngine.Input
 {
     public class AppInput
     {

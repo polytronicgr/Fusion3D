@@ -1,9 +1,9 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
-using Fusion3D.App;
-using Fusion3D.Texture;
+using FusionEngine.App;
+using FusionEngine.Texture;
 
-namespace Fusion3D.FrameBuffer
+namespace FusionEngine.FrameBuffer
 {
     public class FrameBufferCube
     {

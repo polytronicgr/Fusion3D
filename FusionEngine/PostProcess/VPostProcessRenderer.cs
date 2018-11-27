@@ -1,11 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
-using Fusion3D.Effect;
-using Fusion3D.FrameBuffer;
-using Fusion3D.Scene;
+using FusionEngine.Effect;
+using FusionEngine.FrameBuffer;
+using FusionEngine.Scene;
 
-namespace Fusion3D.PostProcess
+namespace FusionEngine.PostProcess
 {
     public class PostProcessRender
     {

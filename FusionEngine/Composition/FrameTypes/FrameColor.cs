@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Composition.FrameTypes
+﻿namespace FusionEngine.Composition.FrameTypes
 {
     public class FrameColor : FrameType
     {

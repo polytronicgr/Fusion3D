@@ -1,7 +1,7 @@
 ﻿using OpenTK;
-using Fusion3D.Draw;
+using FusionEngine.Draw;
 
-namespace Fusion3D.Font
+namespace FusionEngine.Font
 {
     public class FontRenderer
     {

@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Physics
+﻿namespace FusionEngine.Physics
 {
     public enum PyType
     {

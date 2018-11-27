@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fusion3D.Util.Texture
+namespace FusionEngine.Util.Texture
 {
     public class TexTree
     {
@@ -12,21 +12,21 @@ namespace Fusion3D.Util.Texture
             set;
         }
 
-        public Fusion3D.Texture.TextureRaw Raw;
+        public FusionEngine.Texture.TextureRaw Raw;
 
         public Rect RC;
 
         public TexTree ( int w, int h )
         {
             RC = new Rect ( 0, 0, w, h );
-            Raw = new Fusion3D.Texture.TextureRaw ( w, h, false );
+            Raw = new FusionEngine.Texture.TextureRaw ( w, h, false );
             //Root = ne
             //w TreeLeaf (new Rect(0,0,w,h));
         }
 
-        public Fusion3D.Texture.Texture2D GetMap ( )
+        public FusionEngine.Texture.Texture2D GetMap ( )
         {
-            return new Fusion3D.Texture.Texture2D ( Raw );
+            return new FusionEngine.Texture.Texture2D ( Raw );
         }
 
         public TreeLeaf Insert ( int w, int h, int id = -1 )

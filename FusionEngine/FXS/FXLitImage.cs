@@ -1,8 +1,8 @@
-﻿using Fusion3D.FX;
-using Fusion3D.Scene;
-using Fusion3D.Util;
+﻿using FusionEngine.FX;
+using FusionEngine.Scene;
+using FusionEngine.Util;
 
-namespace Fusion3D.FXS
+namespace FusionEngine.FXS
 {
     public class FXLitImage : VEffect
     {
@@ -25,8 +25,8 @@ namespace Fusion3D.FXS
         public override void SetPars ( )
         {
             float sw, sh;
-            sw = Fusion3D.App.FusionApp.W;
-            sh = Fusion3D.App.FusionApp.H;
+            sw = FusionEngine.App.FusionApp.W;
+            sh = FusionEngine.App.FusionApp.H;
             float px, py;
 
             // px = Light.X + Graph.X; py = Light.Y + Graph.Y;
@@ -49,8 +49,8 @@ namespace Fusion3D.FXS
             SetVec3 ( "lSpec", Light.Specular );
             SetFloat ( "lShiny", Light.Shiny );
             SetFloat ( "lRange", Light.Range * Graph.Z );
-            SetFloat ( "sWidth", Fusion3D.App.FusionApp.W );
-            SetFloat ( "sHeight", Fusion3D.App.FusionApp.H );
+            SetFloat ( "sWidth", FusionEngine.App.FusionApp.W );
+            SetFloat ( "sHeight", FusionEngine.App.FusionApp.H );
         }
     }
 }

@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Fusion3D.Data;
-using Fusion3D.Scene;
+using FusionEngine.Data;
+using FusionEngine.Scene;
 
-namespace Fusion3D.Import
+namespace FusionEngine.Import
 {
     public class AssImpImport : Importer
     {
@@ -95,8 +95,8 @@ namespace Fusion3D.Import
 
             // root.Animator.InitAssImp(model);
 
-            List<Fusion3D.Data.Vertex> _vertices = new List<Vertex>();
-            List<Fusion3D.Data.Tri> _tris = new List<Tri>();
+            List<FusionEngine.Data.Vertex> _vertices = new List<Vertex>();
+            List<FusionEngine.Data.Tri> _tris = new List<Tri>();
 
             List<Vertex> ExtractVertices ( Mesh m, Dictionary<uint, List<VertexWeight>> vtb )
             {
@@ -152,7 +152,7 @@ namespace Fusion3D.Import
             foreach ( Mesh m in s.Meshes )
             {
                 ExtractBoneWeightsFromMesh ( m, vertToBoneWeight );
-                Mesh3D.Subset sub = new Fusion3D.Data.Mesh3D.Subset
+                Mesh3D.Subset sub = new FusionEngine.Data.Mesh3D.Subset
                 {
                     VertexCount = m.VertexCount ,
                     VertexStart = _vertices.Count ,
@@ -232,7 +232,7 @@ namespace Fusion3D.Import
             {
                 TextureSlot ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
                 Console.WriteLine ( "Norm:" + ntt.FilePath );
-                m1.TNorm = new Texture.Texture2D ( IPath + "/" + ntt.FilePath, Fusion3D.Texture.LoadMethod.Single, false );
+                m1.TNorm = new Texture.Texture2D ( IPath + "/" + ntt.FilePath, FusionEngine.Texture.LoadMethod.Single, false );
             }
 
             if ( mat.GetMaterialTextureCount ( TextureType.Diffuse ) > 0 )
@@ -557,7 +557,7 @@ namespace Fusion3D.Import
                 {
                     TextureSlot ntt = mat.GetMaterialTextures(TextureType.Normals)[0];
                     Console.WriteLine ( "Norm:" + ntt.FilePath );
-                    vm.TNorm = new Texture.Texture2D ( IPath + "/" + ntt.FilePath, Fusion3D.Texture.LoadMethod.Single, false );
+                    vm.TNorm = new Texture.Texture2D ( IPath + "/" + ntt.FilePath, FusionEngine.Texture.LoadMethod.Single, false );
                 }
 
                 if ( mat.GetMaterialTextureCount ( TextureType.Diffuse ) > 0 )

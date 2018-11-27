@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 
-namespace Fusion3D.Texture
+namespace FusionEngine.Texture
 {
     public class TextureDepth : TextureBase
     {

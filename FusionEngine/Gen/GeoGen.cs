@@ -1,8 +1,8 @@
 ﻿using OpenTK;
-using Fusion3D.Data;
-using Fusion3D.Scene;
+using FusionEngine.Data;
+using FusionEngine.Scene;
 
-namespace Fusion3D.Gen
+namespace FusionEngine.Gen
 {
     public class GeoGen
     {

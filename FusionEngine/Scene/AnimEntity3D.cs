@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public class AnimEntity3D : Entity3D
     {
         public Animation.AnimEvaluator _Anim;
         public double _timePos = 0;
         public Animation.Animator Animator = null;
-        public Fusion3D.Data.Mesh3D Mesh = null;
-        public List<Fusion3D.Data.Mesh3D.Subset> Subsets = new List<Data.Mesh3D.Subset>();
+        public FusionEngine.Data.Mesh3D Mesh = null;
+        public List<FusionEngine.Data.Mesh3D.Subset> Subsets = new List<Data.Mesh3D.Subset>();
 
         // new Animation.Animator();
 

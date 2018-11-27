@@ -1,6 +1,6 @@
-﻿using Fusion3D.Logic;
+﻿using FusionEngine.Logic;
 
-namespace Fusion3D.State
+namespace FusionEngine.State
 {
     public class FusionState
     {

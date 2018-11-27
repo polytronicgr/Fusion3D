@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Util.Texture
+﻿namespace FusionEngine.Util.Texture
 {
     public class NextPixelMap
     {

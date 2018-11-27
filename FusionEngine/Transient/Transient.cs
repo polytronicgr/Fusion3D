@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Fusion3D.Transient
+namespace FusionEngine.Transient
 {
     public delegate void Process ( );
 

@@ -1,6 +1,6 @@
-﻿using Fusion3D.Scene;
+﻿using FusionEngine.Scene;
 
-namespace Fusion3D.Resonance.Forms
+namespace FusionEngine.Resonance.Forms
 {
     public class Graph3DForm : UIForm
     {

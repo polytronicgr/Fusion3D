@@ -1,7 +1,7 @@
-﻿using Fusion3D.Effect;
-using Fusion3D.Texture;
+﻿using FusionEngine.Effect;
+using FusionEngine.Texture;
 
-namespace Fusion3D.PostProcess.Processes
+namespace FusionEngine.PostProcess.Processes
 {
     public class VPPBlur : VPostProcess
     {

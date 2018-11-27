@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL4;
 using System;
 using System.IO;
 
-namespace Fusion3D.Effect
+namespace FusionEngine.Effect
 {
     public class Effect3D
     {

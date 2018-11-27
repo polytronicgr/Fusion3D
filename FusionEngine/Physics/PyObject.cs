@@ -1,7 +1,7 @@
 ﻿using PhysX;
 using System.IO;
 
-namespace Fusion3D.Physics
+namespace FusionEngine.Physics
 {
     public class PyObject
     {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fusion3D.Resonance;
-using Fusion3D.Resonance.Forms;
-using Fusion3D.Texture;
-using Fusion3D.App;
-using Fusion3D.State;
+using FusionEngine.Resonance;
+using FusionEngine.Resonance.Forms;
+using FusionEngine.Texture;
+using FusionEngine.App;
+using FusionEngine.State;
 using FusionIDE.Forms;
 namespace FusionIDE.States
 {

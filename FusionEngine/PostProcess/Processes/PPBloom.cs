@@ -1,7 +1,7 @@
-﻿using Fusion3D.Effect;
-using Fusion3D.Texture;
+﻿using FusionEngine.Effect;
+using FusionEngine.Texture;
 
-namespace Fusion3D.PostProcess.Processes
+namespace FusionEngine.PostProcess.Processes
 {
     public class PPBloom : VPostProcess
     {
@@ -46,13 +46,13 @@ namespace Fusion3D.PostProcess.Processes
         {
             BBloom.Bind ( );
 
-            Fusion3D.PostProcess.PostProcessRender.PBuf.BB.Bind ( 0 );
+            FusionEngine.PostProcess.PostProcessRender.PBuf.BB.Bind ( 0 );
             pi.Bind ( 1 );
 
             DrawQuad ( );
 
             pi.Release ( 1 );
-            Fusion3D.PostProcess.PostProcessRender.PBuf.BB.Release ( 0 );
+            FusionEngine.PostProcess.PostProcessRender.PBuf.BB.Release ( 0 );
             BBloom.Release ( );
         }
     }

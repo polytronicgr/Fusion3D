@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Texture
+﻿namespace FusionEngine.Texture
 {
     public class TextureRaw
     {

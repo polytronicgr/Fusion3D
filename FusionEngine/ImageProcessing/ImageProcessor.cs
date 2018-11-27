@@ -1,24 +1,24 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 
-namespace Fusion3D.ImageProcessing
+namespace FusionEngine.ImageProcessing
 {
     public static class ImageProcessor
     {
-        public static Fusion3D.PostProcess.Processes.VEBlur FXBlur;
-        public static Fusion3D.FrameBuffer.FrameBufferColor FB;
+        public static FusionEngine.PostProcess.Processes.VEBlur FXBlur;
+        public static FusionEngine.FrameBuffer.FrameBufferColor FB;
         public static int IW, IH;
-        public static Fusion3D.PostProcess.VEQuadR QFX = null;
+        public static FusionEngine.PostProcess.VEQuadR QFX = null;
 
         public static void InitIP ( )
         {
             FXBlur = new PostProcess.Processes.VEBlur ( );
             FB = new FrameBuffer.FrameBufferColor ( App.AppInfo.W, App.AppInfo.H );
-            QFX = new Fusion3D.PostProcess.VEQuadR ( );
+            QFX = new FusionEngine.PostProcess.VEQuadR ( );
             GenQuad ( );
         }
 
-        public static Fusion3D.Texture.Texture2D BlurImage ( Fusion3D.Texture.Texture2D img, float blur )
+        public static FusionEngine.Texture.Texture2D BlurImage ( FusionEngine.Texture.Texture2D img, float blur )
         {
             FXBlur.Blur = blur;
 

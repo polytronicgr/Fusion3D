@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using Fusion3D.Archive;
+using FusionEngine.Archive;
 
-namespace Fusion3D.Tex
+namespace FusionEngine.Tex
 {
     public class Tex2D : TexBase
     {

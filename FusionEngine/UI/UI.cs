@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Fusion3D.Font;
-using Fusion3D.Input;
-using Fusion3D.Logic;
+using FusionEngine.Font;
+using FusionEngine.Input;
+using FusionEngine.Logic;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK;
-namespace Fusion3D.Resonance
+namespace FusionEngine.Resonance
 {
     public class UI
     {
@@ -26,7 +26,7 @@ namespace Fusion3D.Resonance
         public UIForm Top = null;
         public List<UIForm> UpdateList = new List<UIForm>();
         public static float BootAlpha = 0.0f;
-        public Fusion3D.Texture.Texture2D CursorImg;
+        public FusionEngine.Texture.Texture2D CursorImg;
         private readonly int ux;
 
         private readonly int uy;
@@ -61,7 +61,7 @@ namespace Fusion3D.Resonance
         {
             Black = new Texture.Texture2D("data/ui/black.png", Texture.LoadMethod.Single, false);
             Font = new Font2D("data/font/times.ttf.vf");
-            CursorImg = new Texture.Texture2D("data/ui/cursor1.png", Fusion3D.Texture.LoadMethod.Single, true);
+            CursorImg = new Texture.Texture2D("data/ui/cursor1.png", FusionEngine.Texture.LoadMethod.Single, true);
         }
         public void Render()
         {
@@ -99,11 +99,11 @@ namespace Fusion3D.Resonance
                     form.Draw?.Invoke();
                     prev = form;
                 }
-                Texture.Texture2D ntex = new Texture.Texture2D(Fusion3D.App.FusionApp.W, Fusion3D.App.FusionApp.H);
+                Texture.Texture2D ntex = new Texture.Texture2D(FusionEngine.App.FusionApp.W, FusionEngine.App.FusionApp.H);
 
                 ntex.CopyTex(0, 0);
                 OpenTK.Graphics.OpenGL4.GL.Clear(OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit);
-                Fusion3D.Draw.Pen2D.RectBlur2(0, 0, Fusion3D.App.FusionApp.W, Fusion3D.App.FusionApp.H, ntex, new OpenTK.Vector4(1, 1, 1, 1), TopB);
+                FusionEngine.Draw.Pen2D.RectBlur2(0, 0, FusionEngine.App.FusionApp.W, FusionEngine.App.FusionApp.H, ntex, new OpenTK.Vector4(1, 1, 1, 1), TopB);
 
                 UpdateRenderList(Top);
 
@@ -116,7 +116,9 @@ namespace Fusion3D.Resonance
             }
             else
             {
-                UpdateRenderList(Root);
+             
+                    UpdateRenderList(Root);
+          
                // GL.Enable(EnableCap.ScissorTest);
                 foreach (UIForm form in RenderList)
                 {
@@ -135,17 +137,17 @@ namespace Fusion3D.Resonance
                 }
                 if (TopB > 0)
                 {
-                    Texture.Texture2D ntex = new Texture.Texture2D(Fusion3D.App.FusionApp.W, Fusion3D.App.FusionApp.H);
+                    Texture.Texture2D ntex = new Texture.Texture2D(FusionEngine.App.FusionApp.W, FusionEngine.App.FusionApp.H);
                     ntex.CopyTex(0, 0);
                     OpenTK.Graphics.OpenGL4.GL.Clear(OpenTK.Graphics.OpenGL4.ClearBufferMask.ColorBufferBit);
-                    Fusion3D.Draw.Pen2D.RectBlur2(0, 0, Fusion3D.App.FusionApp.W, Fusion3D.App.FusionApp.H, ntex, new OpenTK.Vector4(1, 1, 1, 1), TopB);
+                    FusionEngine.Draw.Pen2D.RectBlur2(0, 0, FusionEngine.App.FusionApp.W, FusionEngine.App.FusionApp.H, ntex, new OpenTK.Vector4(1, 1, 1, 1), TopB);
                     ntex.Delete();
                 }
             }
           //  GL.Disable(EnableCap.ScissorTest);
-            Fusion3D.Draw.Pen2D.SetProj(0, 0, Fusion3D.App.AppInfo.W, Fusion3D.App.AppInfo.H);
-            Fusion3D.Draw.Pen2D.BlendMod = Fusion3D.Draw.PenBlend.Alpha;
-            Fusion3D.Draw.Pen2D.Rect(MX, MY, 24, 24, CursorImg, new OpenTK.Vector4(1, 1, 1,1));
+            FusionEngine.Draw.Pen2D.SetProj(0, 0, FusionEngine.App.AppInfo.W, FusionEngine.App.AppInfo.H);
+            FusionEngine.Draw.Pen2D.BlendMod = FusionEngine.Draw.PenBlend.Alpha;
+            FusionEngine.Draw.Pen2D.Rect(MX, MY, 24, 24, CursorImg, new OpenTK.Vector4(1, 1, 1,1));
 
         }
         public static float TarAlpha = 1.0f;
@@ -285,6 +287,18 @@ namespace Fusion3D.Resonance
                         }
                         lastClick = Environment.TickCount;
                         TopForm.MouseDown?.Invoke(0);
+
+                        if (TopForm is Forms.WindowForm)
+                        {
+                            Console.WriteLine("WF!:");  
+                          
+                        }
+                        else
+                        {
+                            Console.WriteLine("WFNo");
+                        }
+
+                       
                         Pressed[0] = TopForm;
                         if (Active != TopForm)
                         {

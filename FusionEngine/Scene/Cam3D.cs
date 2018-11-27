@@ -1,8 +1,8 @@
 ﻿using OpenTK;
-using Fusion3D.App;
-using Fusion3D.Help;
+using FusionEngine.App;
+using FusionEngine.Help;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public class Cam3D : Node3D
     {

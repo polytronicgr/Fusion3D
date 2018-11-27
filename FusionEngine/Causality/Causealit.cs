@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Fusion3D.Logic
+namespace FusionEngine.Logic
 {
     public delegate void Act ( );
 

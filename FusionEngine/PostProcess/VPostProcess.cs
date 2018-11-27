@@ -1,9 +1,9 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
-using Fusion3D.Texture;
+using FusionEngine.Texture;
 
-namespace Fusion3D.PostProcess
+namespace FusionEngine.PostProcess
 {
     public class VPostProcess
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fusion3D.Composition.Compositers
+namespace FusionEngine.Composition.Compositers
 {
     public class BloomUICompositer : Compositer
     {

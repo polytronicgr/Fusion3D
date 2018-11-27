@@ -1,6 +1,6 @@
-﻿using Fusion3D.Texture;
+﻿using FusionEngine.Texture;
 
-namespace Fusion3D.Resonance.Forms
+namespace FusionEngine.Resonance.Forms
 {
     public class PanelForm : UIForm
     {

@@ -1,7 +1,7 @@
-﻿using Fusion3D.Scene;
-using Fusion3D.Util.Texture;
+﻿using FusionEngine.Scene;
+using FusionEngine.Util.Texture;
 
-namespace Fusion3D.Lighting.LightMapper
+namespace FusionEngine.Lighting.LightMapper
 {
     public class Omni
     {

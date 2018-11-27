@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Visuals
+﻿namespace FusionEngine.Visuals
 {
     public class RendererSimple : Renderer
     {

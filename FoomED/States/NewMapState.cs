@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fusion3D;
-using Fusion3D.Resonance;
-using Fusion3D.Resonance.Forms;
-using Fusion3D.State;
-using Fusion3D.App;
-using Fusion3D.Audio;
-using Fusion3D.Texture;
+using FusionEngine;
+using FusionEngine.Resonance;
+using FusionEngine.Resonance.Forms;
+using FusionEngine.State;
+using FusionEngine.App;
+using FusionEngine.Audio;
+using FusionEngine.Texture;
 using System.IO;
 namespace FoomED.States
 {
@@ -49,7 +49,9 @@ namespace FoomED.States
             {
 
                 Directory.CreateDirectory("Game/Maps/" + txt + "/");
-                
+
+                var edit_state = new EditMapState(txt);
+                FusionApp.PushState(edit_state);
 
             };
 

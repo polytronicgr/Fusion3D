@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK;
-namespace Fusion3D.Resonance.Forms
+namespace FusionEngine.Resonance.Forms
 {
     public class TextAreaForm : UIForm 
     {

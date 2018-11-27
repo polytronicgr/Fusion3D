@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Tex
+﻿namespace FusionEngine.Tex
 {
     public class TexBase
     {

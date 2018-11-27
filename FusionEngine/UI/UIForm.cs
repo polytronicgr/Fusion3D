@@ -1,11 +1,11 @@
 ﻿using OpenTK;
 using System.Collections.Generic;
-using Fusion3D.Draw;
-using Fusion3D.Font;
-using Fusion3D.Logic;
-using Fusion3D.Texture;
+using FusionEngine.Draw;
+using FusionEngine.Font;
+using FusionEngine.Logic;
+using FusionEngine.Texture;
 
-namespace Fusion3D.Resonance
+namespace FusionEngine.Resonance
 {
     public delegate void Draw ( );
 

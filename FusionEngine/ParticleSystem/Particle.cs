@@ -1,9 +1,9 @@
 ﻿using OpenTK;
-using Fusion3D.Data;
-using Fusion3D.Scene;
-using Fusion3D.Texture;
+using FusionEngine.Data;
+using FusionEngine.Scene;
+using FusionEngine.Texture;
 
-namespace Fusion3D.ParticleSystem
+namespace FusionEngine.ParticleSystem
 {
     public class Particle : Entity3D
     {

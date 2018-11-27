@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Material
+﻿namespace FusionEngine.Material
 {
     public class MaterialParticle3D : Material3D
     {

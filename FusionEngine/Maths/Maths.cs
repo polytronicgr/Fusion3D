@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using System;
 
-namespace Fusion3D.Util
+namespace FusionEngine.Util
 {
     public static class Maths
     {

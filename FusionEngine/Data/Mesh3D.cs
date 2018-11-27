@@ -1,9 +1,9 @@
 ﻿using OpenTK;
 using System.Collections.Generic;
-using Fusion3D.Material;
-using Fusion3D.Visuals;
+using FusionEngine.Material;
+using FusionEngine.Visuals;
 
-namespace Fusion3D.Data
+namespace FusionEngine.Data
 {
     public struct Tri
     {

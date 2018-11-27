@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.VFX
+﻿namespace FusionEngine.VFX
 {
     public class VFXBase
     {

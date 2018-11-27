@@ -1,6 +1,6 @@
-﻿using Fusion3D.Archive;
+﻿using FusionEngine.Archive;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public class SceneInfo
     {

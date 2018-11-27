@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Fusion3D.VFX
+namespace FusionEngine.VFX
 {
     public class VFXParticleSystem : VFXBase
     {

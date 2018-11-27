@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fusion3D.Texture;
-using Fusion3D.Resonance;
-using Fusion3D.Resonance.Forms;
+using FusionEngine.Texture;
+using FusionEngine.Resonance;
+using FusionEngine.Resonance.Forms;
 namespace FusionIDE.Forms
 {
     public class CodeEditorForm : WindowForm

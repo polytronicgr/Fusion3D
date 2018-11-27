@@ -1,7 +1,7 @@
-﻿using Fusion3D.Data;
-using Fusion3D.Effect;
+﻿using FusionEngine.Data;
+using FusionEngine.Effect;
 
-namespace Fusion3D.Visuals
+namespace FusionEngine.Visuals
 {
     public class RLParticle : RenderLayer
     {

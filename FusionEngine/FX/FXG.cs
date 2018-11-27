@@ -1,3 +1,3 @@
-﻿namespace Fusion3D.Effect
+﻿namespace FusionEngine.Effect
 {
 }

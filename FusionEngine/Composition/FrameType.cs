@@ -1,9 +1,9 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
-using Fusion3D.FrameBuffer;
+using FusionEngine.FrameBuffer;
 
-namespace Fusion3D.Composition
+namespace FusionEngine.Composition
 {
     public class FrameType
     {

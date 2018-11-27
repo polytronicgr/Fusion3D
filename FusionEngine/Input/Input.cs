@@ -1,7 +1,7 @@
 ﻿using OpenTK.Input;
 using System.Collections.Generic;
 
-namespace Fusion3D.Input
+namespace FusionEngine.Input
 {
     public class Input
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Fusion3D.App;
-using Fusion3D.Texture;
+using FusionEngine.App;
+using FusionEngine.Texture;
 
-namespace Fusion3D.Resonance.Forms
+namespace FusionEngine.Resonance.Forms
 {
     public delegate void SelectFile ( string pth );
 

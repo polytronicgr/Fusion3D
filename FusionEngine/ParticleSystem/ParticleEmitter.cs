@@ -1,10 +1,10 @@
 ﻿using OpenTK;
 using System.Collections.Generic;
-using Fusion3D.Effect;
-using Fusion3D.Material;
-using Fusion3D.Visuals;
+using FusionEngine.Effect;
+using FusionEngine.Material;
+using FusionEngine.Visuals;
 
-namespace Fusion3D.ParticleSystem
+namespace FusionEngine.ParticleSystem
 {
     public class ParticleEmitter
     {

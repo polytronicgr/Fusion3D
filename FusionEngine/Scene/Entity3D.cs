@@ -1,10 +1,10 @@
 ﻿using OpenTK;
 using System.Collections.Generic;
-using Fusion3D.Data;
-using Fusion3D.Material;
-using Fusion3D.Visuals;
+using FusionEngine.Data;
+using FusionEngine.Material;
+using FusionEngine.Visuals;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public class LightMapOptions
     {

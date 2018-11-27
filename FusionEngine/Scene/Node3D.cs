@@ -1,11 +1,11 @@
 ﻿using OpenTK;
 using System;
 using System.Collections.Generic;
-using Fusion3D.Data;
-using Fusion3D.Reflect;
-using Fusion3D.Script;
+using FusionEngine.Data;
+using FusionEngine.Reflect;
+using FusionEngine.Script;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public delegate void NodeSelected ( Node3D node );
 
@@ -191,7 +191,7 @@ namespace Fusion3D.Scene
             node.Top = this;
         }
 
-        public virtual void SetLightmapTex ( Fusion3D.Texture.Texture2D tex )
+        public virtual void SetLightmapTex ( FusionEngine.Texture.Texture2D tex )
         {
         }
 

@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Scene
+﻿namespace FusionEngine.Scene
 {
     public class FusionBase
     {

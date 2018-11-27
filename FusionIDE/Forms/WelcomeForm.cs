@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fusion3D.Resonance;
-using Fusion3D.Resonance.Forms;
-using Fusion3D.Resonance;
+using FusionEngine.Resonance;
+using FusionEngine.Resonance.Forms;
+using FusionEngine.Resonance;
 namespace FusionIDE.Forms
 {
     public class WelcomeForm :  WindowForm

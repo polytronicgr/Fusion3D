@@ -5,7 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 
-namespace Fusion3D.Texture
+namespace FusionEngine.Texture
 {
     public enum LoadMethod
     {

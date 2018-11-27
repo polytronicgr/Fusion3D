@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Fusion3D.Reflect
+namespace FusionEngine.Reflect
 {
     public class ClassProperty
     {

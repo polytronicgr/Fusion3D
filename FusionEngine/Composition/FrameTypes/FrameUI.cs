@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fusion3D.Composition.FrameTypes
+namespace FusionEngine.Composition.FrameTypes
 {
     public class FrameUI : FrameType
     {
-        public Fusion3D.Resonance.UI GUI = null;
+        public FusionEngine.Resonance.UI GUI = null;
         public override void Generate()
         {
             if (Regenerate == false)

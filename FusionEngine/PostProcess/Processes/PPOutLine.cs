@@ -1,9 +1,9 @@
 ﻿using OpenTK.Graphics.OpenGL4;
-using Fusion3D.FrameBuffer;
-using Fusion3D.Scene;
-using Fusion3D.Texture;
+using FusionEngine.FrameBuffer;
+using FusionEngine.Scene;
+using FusionEngine.Texture;
 
-namespace Fusion3D.PostProcess.Processes
+namespace FusionEngine.PostProcess.Processes
 {
     public class PPOutLine : VPostProcess
     {
@@ -23,7 +23,7 @@ namespace Fusion3D.PostProcess.Processes
             NeedsPostRender = true;
         }
 
-        private Fusion3D.Texture.Texture2D ib = null;
+        private FusionEngine.Texture.Texture2D ib = null;
 
         public override void Bind ( Texture2D bb )
         {
@@ -55,7 +55,7 @@ namespace Fusion3D.PostProcess.Processes
             pi = ImageProcessing.ImageProcessor.BlurImage ( bb, 0.03f );
         }
 
-        public Fusion3D.Texture.Texture2D pi = null;
+        public FusionEngine.Texture.Texture2D pi = null;
 
         public override void PostRender ( Texture2D bb )
         {
@@ -63,11 +63,11 @@ namespace Fusion3D.PostProcess.Processes
             QCT.Level = 0.7f;
             QCT.Bind ( );
 
-            Fusion3D.PostProcess.PostProcessRender.PBuf.BB.Bind ( 0 );
+            FusionEngine.PostProcess.PostProcessRender.PBuf.BB.Bind ( 0 );
             pi.Bind ( 1 );
             DrawQuad ( );
             pi.Release ( 1 );
-            Fusion3D.PostProcess.PostProcessRender.PBuf.BB.Release ( 0 );
+            FusionEngine.PostProcess.PostProcessRender.PBuf.BB.Release ( 0 );
 
             QCT.Release ( );
         }
@@ -80,7 +80,7 @@ namespace Fusion3D.PostProcess.Processes
         }
     }
 
-    public class VEOutLine : Fusion3D.Effect.Effect3D
+    public class VEOutLine : FusionEngine.Effect.Effect3D
     {
         public VEOutLine ( ) : base ( "", "data/Shader/outLineVS.txt", "data/Shader/outLineFS.txt" )
         {
@@ -93,7 +93,7 @@ namespace Fusion3D.PostProcess.Processes
         }
     }
 
-    public class VECombineTex : Fusion3D.Effect.Effect3D
+    public class VECombineTex : FusionEngine.Effect.Effect3D
     {
         public float Level = 0.5f;
 

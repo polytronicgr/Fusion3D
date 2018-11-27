@@ -1,6 +1,6 @@
-﻿using Fusion3D.Texture;
+﻿using FusionEngine.Texture;
 
-namespace Fusion3D.Material
+namespace FusionEngine.Material
 {
     public class Material3D
     {

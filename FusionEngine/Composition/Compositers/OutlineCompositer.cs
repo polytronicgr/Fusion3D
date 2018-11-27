@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Composition.Compositers
+﻿namespace FusionEngine.Composition.Compositers
 {
     public class OutlineCompositer : Compositer
     {

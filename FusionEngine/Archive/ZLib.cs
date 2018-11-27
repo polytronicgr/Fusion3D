@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using zlib;
 
-namespace Fusion3D.Archive
+namespace FusionEngine.Archive
 {
     public class ZLib
     {

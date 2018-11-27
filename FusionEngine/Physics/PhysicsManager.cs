@@ -3,7 +3,7 @@ using PhysX.VisualDebugger;
 using System;
 using System.Collections.Generic;
 
-namespace Fusion3D.Physics
+namespace FusionEngine.Physics
 {
     public class PhysicsManager
     {

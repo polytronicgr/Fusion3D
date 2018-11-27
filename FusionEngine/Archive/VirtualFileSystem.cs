@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Fusion3D.Archive
+namespace FusionEngine.Archive
 {
     public class VirtualFileSystem
     {

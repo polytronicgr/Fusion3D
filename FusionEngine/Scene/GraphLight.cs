@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using System.IO;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public class GraphLight : GraphNode
     {

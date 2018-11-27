@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Fusion3D.Help
+namespace FusionEngine.Help
 {
     public class IOHelp
     {

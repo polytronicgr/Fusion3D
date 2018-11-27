@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Settings
+﻿namespace FusionEngine.Settings
 {
     public static class Quality
     {

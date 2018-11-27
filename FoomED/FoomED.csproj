@@ -67,8 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FoomEDApp.cs" />
+    <Compile Include="Forms\EditMapForm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\EditMapState.cs" />
     <Compile Include="States\MainMenuState.cs" />
     <Compile Include="States\NewMapState.cs" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fusion3D.Animation
+namespace FusionEngine.Animation
 {
     public class Bone
     {

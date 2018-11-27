@@ -1,4 +1,4 @@
-﻿using Fusion3D.App;
+﻿using FusionEngine.App;
 using FusionScript;
 
 namespace FusionIDE.App

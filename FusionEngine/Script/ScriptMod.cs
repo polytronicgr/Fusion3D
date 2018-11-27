@@ -1,6 +1,6 @@
-﻿using Fusion3D.Scene;
+﻿using FusionEngine.Scene;
 
-namespace Fusion3D.Script
+namespace FusionEngine.Script
 {
     public class ScriptMod
     {

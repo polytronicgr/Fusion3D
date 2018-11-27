@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fusion3D.Script
+namespace FusionEngine.Script
 {
     public class ScriptTemplate : ScriptMod
     {

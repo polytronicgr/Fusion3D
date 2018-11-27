@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using Fusion3D.Reflect;
-using Fusion3D.Util;
+using FusionEngine.Reflect;
+using FusionEngine.Util;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     [DefaultProperty ( "Name" )]
     public class GraphNode
@@ -134,8 +134,8 @@ namespace Fusion3D.Scene
 
         public void SyncCoords ( )
         {
-            int sw = Fusion3D.App.FusionApp.W;
-            int sh = Fusion3D.App.FusionApp.H;
+            int sw = FusionEngine.App.FusionApp.W;
+            int sh = FusionEngine.App.FusionApp.H;
 
             float[] ox = new float[4];
             float[] oy = new float[4];

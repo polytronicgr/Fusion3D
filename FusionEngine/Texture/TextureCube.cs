@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Fusion3D.Texture
+namespace FusionEngine.Texture
 {
     public class TextureCube : TextureBase
     {

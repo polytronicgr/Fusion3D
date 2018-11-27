@@ -1,7 +1,7 @@
 ﻿using OpenTK;
-using Fusion3D.Texture;
+using FusionEngine.Texture;
 
-namespace Fusion3D.Resonance.Forms
+namespace FusionEngine.Resonance.Forms
 {
     public class WindowForm : UIForm
     {
@@ -13,6 +13,7 @@ namespace Fusion3D.Resonance.Forms
         public bool LockedPos = false;
         public bool LockedSize = false;
         public Texture2D Shadow = null;
+        public UIForm body;
 
         public WindowForm ( )
         {
@@ -23,9 +24,15 @@ namespace Fusion3D.Resonance.Forms
 
             UIForm title = new ButtonForm().Set(0, 0, W, 20, "").SetImage(TitleImg);
 
-            UIForm body = new ImageForm().Set(0, 20, W, H - 22, "").SetImage(BodyImg, BodyNorm).SetPeak(true, false);
+            body = new ImageForm().Set(0, 20, W, H - 22, "").SetImage(BodyImg, BodyNorm).SetPeak(true, false);
             body.Blur = 0.1f;
             body.RefractV = 0.72f;
+
+            body.Click = (b) =>
+            {
+                Root.Forms.Remove(this);
+                Root.Forms.Add(this);
+            };
 
             resize = ( ButtonForm ) new ButtonForm ( ).Set ( W - 14, H - 14, 14, 14, "" );
 
@@ -77,7 +84,7 @@ namespace Fusion3D.Resonance.Forms
 
             void DrawFunc ( )
             {
-                DrawFormBlur ( Shadow, 0.1f, new Vector4 ( 0.9f, 0.9f, 0.9f, 0.98f ), 30, 30, W + 50, H + 50 );
+                DrawFormBlur ( Shadow, 0.1f, new Vector4 ( 0.9f, 0.9f, 0.9f, 0.98f ), 15, 15, W + 50, H + 50 );
                 //DrawForm(TitleImg, 0, 0, W, 20);
             }
 

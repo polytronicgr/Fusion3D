@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Fusion3D.Reflect
+namespace FusionEngine.Reflect
 {
     public class ClassIO
     {

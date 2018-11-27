@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Effect
+﻿namespace FusionEngine.Effect
 {
     public class FXNoFX : Effect3D
     {

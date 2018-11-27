@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using IrrKlang;
 using System.Collections.Generic;
 
-namespace Fusion3D.Audio
+namespace FusionEngine.Audio
 {
 
 

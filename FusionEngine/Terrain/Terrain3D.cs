@@ -1,9 +1,9 @@
 ﻿using OpenTK;
 using System.Collections.Generic;
-using Fusion3D.Data;
-using Fusion3D.Scene;
+using FusionEngine.Data;
+using FusionEngine.Scene;
 
-namespace Fusion3D.Terrain
+namespace FusionEngine.Terrain
 {
     public class Terrain3D : Entity3D
     {

@@ -1,6 +1,6 @@
-﻿using Fusion3D.Scene;
+﻿using FusionEngine.Scene;
 
-namespace Fusion3D.Import
+namespace FusionEngine.Import
 {
     public class Importer
     {

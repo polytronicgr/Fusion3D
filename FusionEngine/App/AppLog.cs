@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fusion3D.App
+namespace FusionEngine.App
 {
     public static class AppLog
     {

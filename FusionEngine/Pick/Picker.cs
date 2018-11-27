@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Fusion3D.Pick
+namespace FusionEngine.Pick
 {
     public struct Ray
     {
@@ -33,9 +33,9 @@ namespace Fusion3D.Pick
             return new Vector2 ( pos.X, screenHeight - pos.Y );
         }
 
-        public static Vector2 CamTo2D ( Fusion3D.Scene.Cam3D cam, Vector3 pos )
+        public static Vector2 CamTo2D ( FusionEngine.Scene.Cam3D cam, Vector3 pos )
         {
-            return Convert ( pos, cam.CamWorld, cam.ProjMat, Fusion3D.App.AppInfo.W, Fusion3D.App.AppInfo.H );
+            return Convert ( pos, cam.CamWorld, cam.ProjMat, FusionEngine.App.AppInfo.W, FusionEngine.App.AppInfo.H );
         }
 
         private const double Epsilon = 0.000001d;
@@ -142,9 +142,9 @@ namespace Fusion3D.Pick
             return new Ray ( pos1, pos2 );
         }
 
-        public static Ray CamRay ( Fusion3D.Scene.Cam3D cam, int x, int y )
+        public static Ray CamRay ( FusionEngine.Scene.Cam3D cam, int x, int y )
         {
-            return MouseRay ( cam.ProjMat, cam.CamWorld, new System.Drawing.Size ( Fusion3D.App.AppInfo.W, Fusion3D.App.AppInfo.H ), new Vector2 ( x, y ) );
+            return MouseRay ( cam.ProjMat, cam.CamWorld, new System.Drawing.Size ( FusionEngine.App.AppInfo.W, FusionEngine.App.AppInfo.H ), new Vector2 ( x, y ) );
         }
     }
 }

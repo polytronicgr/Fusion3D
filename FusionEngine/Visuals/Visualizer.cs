@@ -1,6 +1,6 @@
-﻿using Fusion3D.Data;
+﻿using FusionEngine.Data;
 
-namespace Fusion3D.Visuals
+namespace FusionEngine.Visuals
 {
     public class Visualizer
     {

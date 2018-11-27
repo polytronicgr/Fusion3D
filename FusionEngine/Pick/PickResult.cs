@@ -1,7 +1,7 @@
 ﻿using OpenTK;
-using Fusion3D.Scene;
+using FusionEngine.Scene;
 
-namespace Fusion3D.Pick
+namespace FusionEngine.Pick
 {
     public class PickResult
     {

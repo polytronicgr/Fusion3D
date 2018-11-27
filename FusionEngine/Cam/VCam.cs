@@ -1,4 +1,4 @@
-﻿namespace Fusion3D.Cam
+﻿namespace FusionEngine.Cam
 {
     internal class VCam
     {

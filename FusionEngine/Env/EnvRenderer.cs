@@ -1,9 +1,9 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Fusion3D.FrameBuffer;
-using Fusion3D.Scene;
+using FusionEngine.FrameBuffer;
+using FusionEngine.Scene;
 
-namespace Fusion3D.Enviro
+namespace FusionEngine.Enviro
 {
     public class EnvRenderer
     {

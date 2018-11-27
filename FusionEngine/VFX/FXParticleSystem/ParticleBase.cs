@@ -1,6 +1,6 @@
-﻿using Fusion3D.Tex;
+﻿using FusionEngine.Tex;
 
-namespace Fusion3D.VFX
+namespace FusionEngine.VFX
 {
     public class ParticleBase
     {

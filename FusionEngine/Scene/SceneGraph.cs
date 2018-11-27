@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Fusion3D.Draw;
-using Fusion3D.FXS;
-using Fusion3D.Reflect;
+using FusionEngine.Draw;
+using FusionEngine.FXS;
+using FusionEngine.Reflect;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public class SceneGraph
     {

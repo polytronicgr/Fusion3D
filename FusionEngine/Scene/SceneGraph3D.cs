@@ -2,10 +2,10 @@
 using OpenTK.Graphics.OpenGL4;
 using System.Collections.Generic;
 using System.IO;
-using Fusion3D.Lighting;
-using Fusion3D.Reflect;
+using FusionEngine.Lighting;
+using FusionEngine.Reflect;
 
-namespace Fusion3D.Scene
+namespace FusionEngine.Scene
 {
     public class SceneGraph3D
     {
@@ -76,7 +76,7 @@ namespace Fusion3D.Scene
         {
         }
 
-        public Fusion3D.Pick.PickResult CamPick ( int x, int y )
+        public FusionEngine.Pick.PickResult CamPick ( int x, int y )
         {
             Pick.PickResult res = new Pick.PickResult ( );
 
@@ -189,7 +189,7 @@ namespace Fusion3D.Scene
             int lc = r.ReadInt32();
             for ( int i = 0; i < lc; i++ )
             {
-                Light3D nl = new Fusion3D.Lighting.Light3D();
+                Light3D nl = new FusionEngine.Lighting.Light3D();
                 nl.Read ( );
                 Lights.Add ( nl );
             }

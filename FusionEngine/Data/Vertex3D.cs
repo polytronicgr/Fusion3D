@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Fusion3D.Data
+namespace FusionEngine.Data
 {
     public class Vertex3D : VertexData<float>
     {

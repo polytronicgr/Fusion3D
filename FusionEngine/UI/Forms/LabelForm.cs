@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fusion3D.Resonance;
-namespace Fusion3D.Resonance.Forms
+using FusionEngine.Resonance;
+namespace FusionEngine.Resonance.Forms
 {
     public class LabelForm : UIForm 
     {

@@ -2,11 +2,11 @@
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using System;
-using Fusion3D.App;
-using Fusion3D.Effect;
-using Fusion3D.Texture;
+using FusionEngine.App;
+using FusionEngine.Effect;
+using FusionEngine.Texture;
 
-namespace Fusion3D.Draw
+namespace FusionEngine.Draw
 {
     public class FXQuadBlur2 : Effect3D
     {

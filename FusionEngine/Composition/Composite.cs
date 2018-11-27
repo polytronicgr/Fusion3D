@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Fusion3D.Composition
+namespace FusionEngine.Composition
 {
     public enum MixMode
     {
@@ -13,7 +13,7 @@ namespace Fusion3D.Composition
     {
         public int qva = 0, qvb = 0;
 
-        private Fusion3D.Scene.SceneGraph3D _G;
+        private FusionEngine.Scene.SceneGraph3D _G;
 
         private  PostProcess.VEQuadR QuadFX;
 
@@ -31,7 +31,7 @@ namespace Fusion3D.Composition
             set;
         }
 
-        public Fusion3D.Scene.SceneGraph3D Graph
+        public FusionEngine.Scene.SceneGraph3D Graph
         {
             get => _G;
             set

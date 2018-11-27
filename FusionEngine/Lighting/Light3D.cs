@@ -1,10 +1,10 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Fusion3D.FrameBuffer;
-using Fusion3D.Scene;
-using Fusion3D.Settings;
+using FusionEngine.FrameBuffer;
+using FusionEngine.Scene;
+using FusionEngine.Settings;
 
-namespace Fusion3D.Lighting
+namespace FusionEngine.Lighting
 {
     public enum LightType
     {

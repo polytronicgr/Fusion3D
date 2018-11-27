@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using System;
 
-namespace Fusion3D.Resonance.Forms
+namespace FusionEngine.Resonance.Forms
 {
     public delegate void OnEnter(string text);
     public class TextBoxForm : UIForm

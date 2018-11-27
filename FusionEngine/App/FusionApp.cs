@@ -3,11 +3,11 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
 using System;
 using System.Collections.Generic;
-using Fusion3D.Draw;
-using Fusion3D.Input;
-using Fusion3D.State;
+using FusionEngine.Draw;
+using FusionEngine.Input;
+using FusionEngine.State;
 
-namespace Fusion3D.App
+namespace FusionEngine.App
 {
     public static class AppInfo
     {

@@ -74,15 +74,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FusionCLNative\FusionCLNative.vcxproj">
-      <Project>{f4500e67-469c-48ba-a6f9-d00b7a0ea77c}</Project>
-      <Name>FusionCLNative</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FusionCLNet\FusionCLNet.csproj">
-      <Project>{2c81fa47-36b5-47d5-a98e-55b7d9561bbf}</Project>
-      <Name>FusionCLNet</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

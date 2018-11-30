@@ -1,0 +1,45 @@
+---Talk to PNGs
+---PNG talking between them and to you
+---Dash attack (when you press advance twice, player rush and uses his kick or hands to attack) 
+   Useful if you are with no weapons and can be good finishers attacks
+---Dash back, good to avoid close attacks
+---Dash left or right, fast strife moves
+---Shield gameplay -> the shield gameplay will be a protective screen wich will appear in front of the heroine/hero
+   The shield doesnt appear long in order to preserve the batteries
+   So the shield must be used at the right time when the attack occurs
+   If done right -> you can protect yourself cause the shield will absorve the ennemy's energy
+   If done at the perfect time -> you send back the projectile or the attack to the ennemy !
+
+   We can change stuff around it, i thought we could add a little png style to the shield, more you kill ennemies and more the shield evolves
+   At high levels, the shield would be more effective and easy to use ?
+
+   Since we gonna have the regular double weapon handed, i think the shield should come up from something on their body (like a device strapped on their bodies )
+   So gameplay example
+   Someone appears, shoot you 1 projectile, you activate the shield right and the projectile returns him, making him slow and you can easier finish him
+
+   Some aliens later could have the same type of shield and send you back your projectiles !
+
+   Two types of shield
+   Square shield : opacity heavy (you can see much ), energy reduced all the time or quick
+   Circle shield : opacity low (you can see ), energy heavy
+
+   Hidden move :
+   At high xp shield, you can hold assigned mouse click and launch a spectral version of that shield
+
+---For example mapping :
+   Left mouse : Shield
+   Right mouse : attacks (or the oppposite )
+
+---Making the jumps auto (if possible)
+
+---Duck, for maybe avoid giant middle attacks ?
+
+
+
+---Games modes to unlock with Kickstarter
+   Mini games (like super 7 mode games)
+   Multiplayer , playing story being two
+   Cinematic modes
+   Survival mode, waves etc
+   Multi survival mode
+ 

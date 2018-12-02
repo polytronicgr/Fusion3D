@@ -126,14 +126,15 @@ namespace FusionScript.Structs
                     break;
                 case ExprType.VarValue:
                 case ExprType.ClassVar:
-
+                   
                     dynamic varc = null;
                     int ec = 0;
                     while (true)
                     {
+
                         if (varc == null)
                         {
-                            varc = ManagedHost.CurrentScope.FindVar(Expr[ec].VarName, true);
+                            varc = ManagedHost.CurrentScope.FindVar(Expr[ec].Expr[0].VarName, true);
                         }
                         else
                         {

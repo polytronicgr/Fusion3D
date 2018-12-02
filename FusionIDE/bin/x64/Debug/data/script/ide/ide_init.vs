@@ -1,14 +1,14 @@
 
 func Entry()
 
-    printf("Initializing FusionIDE.");
+
 
     app_width = 1280;
     app_height = 768;
-    full_screen = false;
+    full_screen = 1;
 
-    printf("AppWidth:"+app_width+" AppHeight:"+app_height+" AppFullScreen:"+full_screen);
-    
+	InitIDE(app_width,app_height,full_screen);
+	
 
 
 end

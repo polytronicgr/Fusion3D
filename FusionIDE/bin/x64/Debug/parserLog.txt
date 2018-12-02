@@ -1,0 +1,35 @@
+Begun parsing source.
+ [module](Module)(Define) draw  
+
+Begun parsing module
+ [module](Module)(Define) draw  
+
+Begun parsing function
+ [func](Func)(Define) rect ( x , y , w , h )  
+
+Checking parameters.
+ func rect [(](LeftPara)(Scope) x , y , w , h )  
+
+ParsPassed:
+ func rect ( x , y , w , h [)](RightPara)(Scope)  
+
+Begun parsing code body
+ func rect ( x , y , w , h [)](RightPara)(Scope)  
+
+Parsing flat-statement.
+ [prinft](Id)(Id) ( Tested! ) ;  
+
+BeginFS:
+ [prinft](Id)(Id) ( Tested! ) ;  
+
+Func:prinft
+
+Parsing expressionj
+ prinft ( [Tested!](String)(Value) ) ;  
+
+Expr:Expr:1 Elements
+ prinft ( Tested! [)](RightPara)(Scope) ;  
+
+Parsed code-body.
+ [end](End)(Flow)  
+

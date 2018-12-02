@@ -869,7 +869,11 @@ namespace FusionScript
 
             for (i = i; i < toks.Len; i++)
             {
-
+                var ct = Get(i);
+                if(ct.Text == ",")
+                {
+                    continue;
+                }
                 if (Get(i).Token == Token.RightPara)
                 {
                     return cp;

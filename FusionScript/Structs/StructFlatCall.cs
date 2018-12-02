@@ -24,6 +24,7 @@ namespace FusionScript.Structs
                 foreach ( StructExpr exp in CallPars.Pars )
                 {
                     par [ i ] = exp.Exec ( );
+                    i++;
                 }
 
                 switch ( funcLink.Type )

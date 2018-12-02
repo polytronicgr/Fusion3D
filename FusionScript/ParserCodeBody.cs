@@ -32,6 +32,7 @@ namespace FusionScript
 
                 }
                 var st = Predict(i);
+                Console.WriteLine("PCD:" + st);
                 switch (st)
                 {
                     case StrandType.Return:

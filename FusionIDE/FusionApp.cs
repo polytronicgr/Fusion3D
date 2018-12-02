@@ -20,18 +20,30 @@ namespace FusionIDE.App
 
             MainVM.SetEntry ( init_ide_compiled.EntryPoint );
 
+            void InitIDE(int w,int h,int fs)
+            {
+                App = new FusionIDE(w, h, fs == 1);
+                InitState = new States.CodeScreen();
+
+                App.Run();
+            }
+
+            CFuncLink initIDE = new CFuncLink
+            {
+                Link = (t) =>
+                {
+                    InitIDE(t[0], t[1], t[2]);
+                    return null;
+                }
+            };
+            MainVM.AddCFunc("InitIDE", initIDE);
             CodeScope scope = MainVM.RunEntry ( );
 
-            dynamic width = scope.FindVar("app_width",false).Value;
-            dynamic height = scope.FindVar("app_height",false).Value;
-            dynamic full_screen = scope.FindVar("full_screen",false).Value;
+   
 
-            App = new FusionIDE ( width, height, full_screen );
-            InitState = new States.CodeScreen();
-
-            App.Run ( );
+          
         }
-
+       
         public FusionIDE ( int width, int height, bool full_screen ) : base ( "FusionIDE", width, height, full_screen )
         {
         }

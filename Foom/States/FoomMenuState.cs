@@ -12,7 +12,7 @@ using FusionEngine.Audio;
 using FusionEngine.Texture;
 namespace Foom.States
 {
-    public class FoomMenuState : FusionState
+    public class InvaderMenuState : FusionState
     {
 
         public FusionEngine.Audio.VSoundSource MenuSongSrc;

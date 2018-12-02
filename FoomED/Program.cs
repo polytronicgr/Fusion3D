@@ -11,7 +11,7 @@ namespace FoomED
         static void Main(string[] args)
         {
 
-            var app = new FoomEDApp();
+            var app = new InvaderEDApp();
 
 
         }

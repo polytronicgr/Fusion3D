@@ -62,7 +62,7 @@ namespace FusionEngine.Draw
             SetTex ( "tR", 0 );
             SetVec4 ( "col", Col );
             SetMat ( "proj", Matrix4.CreateOrthographicOffCenter ( 0, AppInfo.RW, AppInfo.RH, 0, -1, 1 ) );
-
+           // Console.WriteLine("OW:" + AppInfo.RW + " OH:" + AppInfo.RH);
             // Console.WriteLine("W:" + AppInfo.RW + " H:" + AppInfo.RH);
         }
     }

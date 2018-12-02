@@ -21,13 +21,13 @@ namespace Foom
             ManagedHost test_vme = new ManagedHost();
             test_vme.AddModule(new Module(s.EntryPoint));
 
-            FoomApp Foom = null;
+            InvaderAPP Foom = null;
 
             dynamic F_InitFoom(dynamic[] pars)
             {
                 Console.WriteLine("Foom booting up.");
 
-                Foom = new FoomApp();
+                Foom = new InvaderAPP();
 
                 return null;
             }

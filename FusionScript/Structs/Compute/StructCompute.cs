@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Cloo;
 namespace FusionScript.Structs.Compute
 {
     public class StructCompute : Struct
@@ -238,33 +237,7 @@ namespace FusionScript.Structs.Compute
             tw.Close();
 
 
-            ComputePlatform plat = ComputePlatform.Platforms[0];
-            Console.WriteLine("Plat:" + plat.Name);
-
-            ComputeContext context = new ComputeContext(ComputeDeviceTypes.Gpu, new ComputeContextPropertyList(plat), null, IntPtr.Zero);
-
-            ComputeCommandQueue queue = new ComputeCommandQueue(context, context.Devices[0], ComputeCommandQueueFlags.None);
-
-            StreamReader rs = new StreamReader("CLGen/CLOut1.cl");
-
-            string clSrc = rs.ReadToEnd();
-
-            rs.Close();
-
-            ComputeProgram prog = new ComputeProgram(context, clSrc);
-
-            try
-            {
-                prog.Build(null, null, null, IntPtr.Zero);
-            }
-            catch
-            {
-
-            }
-            Console.WriteLine("BS:" + prog.GetBuildStatus(context.Devices[0]).ToString());
-            Console.WriteLine("Info:" + prog.GetBuildLog(context.Devices[0]));
-
-            ComputeKernel kern = prog.CreateKernel("imageRender");
+        
 
         }
         public void WriteCode(TextWriter tw, StructComputeCode code)

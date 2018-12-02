@@ -16,40 +16,48 @@ namespace FoomED.Forms
     {
         public ImageForm IMG;
         public FrameBufferColor FB = null;
+        public InvaderEng.Map.Map EditMap = null;
+        public float EditZ = 1.0f;
+        public MapForm Edit = null;
         public EditMapForm()
         {
-            FB = new FrameBufferColor(1024, 1024);
-            IMG = new ImageForm();
-            IMG.SetImage(FB.BB);
+            EditMap = new InvaderEng.Map.Map();
+            EditMap.WallBox(0, 0, 100, 30);
+            Edit = new MapForm();
+            Edit.Map = EditMap;
+
+
+            //this.body.Add(Edit);
+
             //body.Add(IMG);
 
-            RenderMap();
+            //RenderMap();
+
             SubChanged = () =>
             {
 
-                IMG.Set(5, 30, W - 10, H - 80);
-                IMG.SetImage(FB.BB);
-                if (!body.Forms.Contains(this))
+              //  FB = new FrameBufferColor(W - 10, H - 80);
+                Edit.Set(5, 30, body.W - 10, body.H - 40);
+                //IMG.SetImage(FB.BB);
+
+              
+                if (!body.Forms.Contains(Edit))
                 {
-                    body.Add(IMG);
+                    body.Add(Edit);
                 }
-                IMG.MouseDown = (b) =>
+                Edit.MouseDown = (b) =>
                 {
                     Root.Forms.Remove(this);
                     Root.Forms.Add(this);
                 };
-                RenderMap();
+                //RenderMap();
             };
 
         }
 
         public void RenderMap()
         {
-            FB.Bind();
-            GL.ClearColor(0, 0, 0.15f, 1.0f);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            FB.Release();
-
+      
 
         }
 

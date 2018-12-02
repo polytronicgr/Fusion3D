@@ -11,6 +11,7 @@ using FusionEngine.App;
 using FusionEngine.Audio;
 using FusionEngine.Texture;
 using System.IO;
+using InvaderEng;
 using FusionEngine.FrameBuffer;
 namespace FoomED.States
 {
@@ -18,6 +19,9 @@ namespace FoomED.States
     {
         public string MapName = "";
         public FrameBufferColor EditFB;
+
+        public InvaderEng.Map.Map CurMap = null;
+
         public EditMapState(string name)
         {
             MapName = name;
@@ -33,7 +37,7 @@ namespace FoomED.States
 
             SUI.Root.Add(bg);
 
-            var edit_win = new Forms.EditMapForm().Set(30, 200, AppInfo.W - 80, AppInfo.H - 250, "Edit:" + MapName);
+            var edit_win = new Forms.EditMapForm().Set(30, 200, AppInfo.W - 80, AppInfo.H - 250, "Edit:" + MapName) as Forms.EditMapForm;
 
             bg.Add(edit_win);
 
@@ -41,6 +45,19 @@ namespace FoomED.States
 
             bg.Add(tool_win);
 
+            CurMap = new InvaderEng.Map.Map();
+
+            CurMap.WallBox(0, 0, 200, 30);
+            edit_win.EditMap = CurMap;
+            edit_win.RenderMap();
+
+            var mapRen = new Forms.MapRenderForm().Set(300, 80, 512, 512, "Map Preview") as Forms.MapRenderForm;
+
+            mapRen.Map = edit_win.EditMap;
+            mapRen.Render = new InvaderEng.Render.MapRenderer();
+            mapRen.Render.Map = mapRen.Map;
+
+            bg.Add(mapRen);
 
         }
 

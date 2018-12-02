@@ -8,10 +8,10 @@ using FusionEngine.App;
 using FoomED.States;
 namespace FoomED
 {
-    public class FoomEDApp : FusionApp
+    public class InvaderEDApp : FusionApp
     {
         
-        public FoomEDApp() : base("Foom Editor",1280,768,false)
+        public InvaderEDApp() : base("Foom Editor",1280,768,false)
         {
 
             InitState = new FoomED.States.MainMenuState();

@@ -139,7 +139,7 @@ namespace FusionEngine.Resonance
 
             Pen2D.BlendMod = PenBlend.Solid;
 
-            Pen2D.Line(x, y, x2, y2);
+            Pen2D.Line(GX+x, GY+y, GX+x2, GY+y2);
 
         }
         public void DrawForm ( Texture2D tex, int x = 0, int y = 0, int w = -1, int h = -1 )

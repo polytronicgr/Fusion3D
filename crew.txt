@@ -1,0 +1,175 @@
+Crew people
+Spaceship Earth : 13 Members (in covert art, we can show them all and the heroine in the middle or the spaceship )
+
+
+
+
+-Heroine Playable
+-Hero Playable
+-Journalist(Radical activist ), 
+-Botanist
+-Linguist  
+-Scientist chief (Will provide the best weapons , earth-side )
+-Scientist female 1 (radical activist ), 
+-Scientist female 2, 
+-Scientist Male
+-Mecanic robot Male (could create robot sidekicks for us )
+-Medic female
+-Rich Male
+-Captain Male
+
+Maybe if we have success we can add more playable characters as replay mode ?
+
+
+---Heroine Private Military currently, before she was a cop back on earth, a bit before changing to a private company
+ Her officially mission is to protect the space Crew with her Teammate (secret lover )
+ Physically she is african type person, Her parents are from Namibia and Benin
+ She is a strong, heavy type woman of 36 years old
+ Her strenght is that she is eloquent, logical and very good at her work, brings always in bad situations the best viable solutions (she have huge exp of this type of work )
+ her weakness is that she wants to control everything, wich can leads to some big issues sometimes, she also listens too much people
+ Gameplay-wise : She will have guns, laser etc, police batons, weapons that extend themselves type ones + some common weapons to both
+                 Her dashes would be way slower than her Teammate
+                 Her moves around (run, left, right etc) are a bit slower than the hero
+                 Her shield would be way better than her Male counterpart, better features in general
+                 She have the ability to talk, command people (not the captain, he is above the private military team )
+                 -We can add one ability later
+
+---Hero Private Military currently (started at that company, he is there longer than the heroine )
+ His officially mission is to protect the space Crew with his Female Teammate
+ Physically he is a young white person, his parents are from Europe (i can change to USA or else if you want )
+ He is "thinner" but Taller than the heroine, he is way faster and agile as a cat
+ His age is 28 years old
+ His strenght is that he is loyal, and very pro and very agile guy, he can also be surprising in a good way sometimes
+ His Weakness is that he is too zealous aka takes his job too seriously, very hard minded on that sector, 
+ also very inexperienced even though he is in the private military since longer time than the heroine
+ He is above rookie though, his grade is under the heroine but they get good together
+ He might have an headphones on his head.
+ Gameplay-wise : He will have guns, laser etc, guns military, grenades and bombs
+                 His dashes are way faster than the heroine
+                 His moves around (run, left, right etc) are a bit faster than the heroine
+                 His shield is less good than her female counterpart (since the dashes are way better, you can compensate with that )
+                 He have the ability to talk, command people (not the captain, he is above the private military team )
+                 -We can add one ability later
+
+
+-
+ ---Journalist(Radical activist )
+    First time we see her, she will tell she is working for a bogus Journal
+    Her officially mission is to Blow up the Gun/weapon Lab of the Chief scientist of the Fleet
+    The Goal is to force the Fleet to meet the space Point who emitted that strange signal, unarmed in order to avoid possible Killings.
+    She belongs to a female terrorist antiwar/environmentalist group and was actually looked by the Police down Earth after the many protest she started.
+    That mission is a good way to escape the Police for a while and sabotage the Space earth mission in order to force her views onto the Crew and the people who financed it
+    Physically she will be very mature, small and very active and provocative :especially with the Authority in general.
+    Her age would be around 55 years old
+    Her strenght is that she is active, and good at attacking people, she should not be underestimated
+    His Weakness is that she will be very annoying and talk a lot mostly cause of her ideologies (Against war, space colonisation and guns )
+    She is very driven and hard minded and have tendency to go against us
+    Also her green bandana is very symbolic of the terrorist group visual identity.
+    Gameplay-wise : We dont play her but there will commands for her depending if we keep her or not, if we have her or not
+                    Command example : Attack (will look around and go attack anyone but us regardless )
+                                      Defense (will mostly attack when we got attacked )
+                                      Neutral (if possible, a mixture of both )
+                                      Look (she will look for ammo, armor and such )
+                                      >Note : Protesters as sidekicks would have better armors for us than the scientists sidekicks
+                                      That woman would be actually the first Boss on the game, we gonna learn basic gameplay with her and her activist partner
+                                      Her partner would be the first Miniboss
+                                      We gonna learn basic of the shield use, shield use, counter attack , etc
+                                      We dont kill them, mostly beat them and put them in jail
+                                      After that when we go see them, a gigantic explosion is heard and we think they might have a third radical girl in there
+                                      We discover after seeing the couple Botanist and linguist killed that it's a new form of life attacking us
+                                      The captain before dying tell us that we are invadedand we have to find the Hole where they come from and secure the place with our male teammate
+                                      If we pick the male hero, the beginning is a bit different but it would be the same eventually ( we will go more with the scientist and talk to them more )
+
+                                      
+
+---Botanist ( Woman with glasses )
+   Non playable Character
+   She embarks with her husband to know more about that space point emitter, also to have a chance to work on something new and incredible
+   She is joyful and very impressive with her plant skills
+   She is 40 years old
+   She would get killed by the alien invasion (or not, maybe we can save all characters )
+
+
+---Linguist  ( Male )
+   Non playable Character
+   He embarks to be helpful to the crew with possible Alien humanoid encounters
+   He is very smart and talk cautiously, he is 45 years old
+   He is killed by the alien invasion trying to save her wife (or not, maybe we can save all characters )
+   They are one of the few couple officially out there in the fleet
+
+---Scientist chief (Will provide the best weapons, earth-side )
+   Non Playable character
+   He is the expedition chief officially, most advanced science knowledge and will be an ennemy of the female activists especially when his favorite second is turned against him by the Journalist
+   He is a genius with a very bad socially behaviour -> he hates people, especially their "under intelligence".
+   If we pick the male hero, we will get him and her third scientist female as sidekicks
+   They will create weapons either on place or in the lab
+   He is 48 years old, and single.
+   He is kind of tall, thin, not suited for physical battle, get scared kick into the heat of combats.
+
+---Scientist female 1 (radical activist )
+   Non Playable character
+   She is a part of the official Scientist chief team, she is the most admired teammate of the scientist crew, until she reveals her true nature
+   She becomes a radical activist during the beginning and helps the female journalist to get inside the lab and destroy everything
+   Back on Earth she was already approached and pushed into activism by the Journalist, so they knew each other since.
+   She is a genius also, aged 26 years old, in love with the fake journalist character.
+   She will be the first Mini boss of the game.
+   I think to defeat her, we might have to use the shield features, for example if she throw us an object, we activate the shield and it send the projectile back to her
+   So it brings an overture to attack her and lock her up, otherwise classical attacks wont work on her.
+   
+   Alien actions invasion of our spaceship will start after we caught the two female protesters
+   When we do, we gonna make all the characters gather and speak about that issue with the two girls in jail
+   When the attack occurs, with the space cameras we see the aliens humanoid goin in with guns
+   Characters will establish a strategy and then the gamer will choose who he wants in for the adventure
+   The rest would go in jail since it's almost impossible to break the entry there.
+   If the gamer wants to swap characters, go to jail any time and make those swap characters sidekick
+
+---Scientist female 2
+   Non Playable character
+   She is a part of the official Scientist chief team, she is very talented but not the favorite of the scientist chief, wich makes her jealous of the other female one
+   She is righteous, strong minded and very hateful of activism and civil disobedience
+   She will be a rival/ennemy of the Radical female scientist
+   She helps the scientist team chief to create weapons and have no problem with that unlike her rival
+   She loves Police and authority and will always take our side
+   She is 28 years old and married.
+
+
+---Scientist Male
+   Non Playable character
+   He is a huge man but very kind, doesnt want much problems and is one of the best scientist in the world back there on Earth
+   He secretly loves Scientist female 2 , he sometimes have the plane fly illness and make him sick sometimes
+   He is 33 Years old single.
+   
+---Mecanic robot Male 
+   Non Playable character
+   Very silent and lonely guy, and also very bizarre, he speaks to himself when he is alone working on his stuff
+   He is 45 years old and married.
+
+
+---Medic female
+   Non Playable character
+   Very Joyful, always smiling, heartful, she is the main medic of the crew and also a very advanced one back on Earth
+   She is not afraid of space discovery and wants to be a part of something unique in mankind's history
+   She admires (too much) the captain of the crew and went in because of him
+   I dont know if we can use her ingame for the Health system or no but she could be a good finder of health kits and even fix you in some instances 
+   (for example in the end , in the Moon , we can get poisoned or blind by creatures up there )
+   She is 35 years old and single, she also get scared quick in tense situation, panic mode and all
+
+
+---Rich Male
+   Non Playable character
+   Dense character, huge man and very imposing man, he is one of the main money contributor to this spatial fleet
+   Also one of the owners of the spaceship itself
+   He is very Corporate and was a banker before going solo and start his own space company
+   He is very good at negotating and is very hard to approach socially wise.
+   he is 56 years old and Married
+
+
+---Captain Male
+   Non Playable character
+   Well versed into communications and navigation, he is the commander of the Fleet
+   All members of the spaceship would respond to him with an exception of the Rich man
+   Former Military he is mostly specialised into driving machines
+   Since i'm not sure about killing all, we could keep him for the next part into the alien invasion, 
+   especially when the crew would try to go back to earth
+   He have some experience in combat still
+   He is 40 Years old. he doesnt know much the Medic woman is in love with him. He is married
